@@ -1,9 +1,9 @@
 
 # Best resources:
 
-- **Oauth**
+- Oauth
   - [https://developer.okta.com/blog/2017/06/21/what-the-heck-is-oauth](https://developer.okta.com/blog/2017/06/21/what-the-heck-is-oauth)
-- **JWT**
+- JWT
   - [https://jwt.io/introduction](https://jwt.io/introduction)
 
 # OAuth
@@ -19,16 +19,16 @@ Decouples authentication from authorization.
 
 ## OAuth components
 
-- **scopes and consent**
+- scopes and consent
   - Scopes are bundles of permissions asked by the client when requesting a token.
   - Consent is the permission that the user gives to the application to access data.
-- **actors**
-  - **Resource Owner**
+- actors
+  - Resource Owner
     - Owner of the data that the client wants to access.
     - Example: Bob's cloud storage service is a resource server. It stores Bob's files securely. When a client requests access to specific files the resource server checks the validity of the access token before providing the requested files.
-  - **Resource Server**
+  - Resource Server
     - API that stores the information that the application wants to access.
-  - **Client**
+  - Client
     - Application that wants to access your data.
     - Public clients (client identification):
       - Browsers
@@ -37,16 +37,16 @@ Decouples authentication from authorization.
     - Confidential clients (client authentication):
       - Also IoT devices (e.g., smart TVs)
       - APIs
-  - **Authorization Server**
+  - Authorization Server
     - Is responsible for authenticating the resource owner.
     - Issues access tokens to the client after the resource owner grants authorization.
-- **tokens**
+- tokens
   - Usually are Json Web Tokens (JWT).
-  - **Access token**
+  - Access token
     - Short lived (can last minutes or hours).
     - Can scale out.
     - Can't be revoked.
-  - **Refresh token**
+  - Refresh token
     - Long lived (can last days, months, or years).
     - Can be revoked.
 
@@ -71,7 +71,7 @@ Handles authorization and information exchange.
 
 ## Structure
 
-- **Header**
+- Header
   - Example of a header:
     ```json
     {
@@ -79,7 +79,7 @@ Handles authorization and information exchange.
       "typ": "JWT"
     }
     ```
-- **Payload**
+- Payload
   - Example of a payload:
     ```json
     {
@@ -91,16 +91,16 @@ Handles authorization and information exchange.
   - Contains claims.
     - claims are statements about an entity (typically, the user) and additional data
   - 3 types of claims:
-    - **Registered claims**
+    - Registered claims
       - iss (issuer)
       - exp (expiration time)
       - sub (subject)
       - aud (audience)
-    - **Public claims**
+    - Public claims
       - Can be defined at will by those using JWTs.
-    - **Private claims**
+    - Private claims
       - Custom claims created to share information between parties that agree on using them.
-- **Signature**
+- Signature
   - To create a signature:
     - Encode payload + a secret + the algorithm specified in the header.
   - The signature is used to check if the message wasn't changed along the way.
