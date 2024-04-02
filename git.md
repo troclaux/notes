@@ -12,6 +12,8 @@
 - Work tree/working tree
   - Set of files that represent your project
   - Is set up by `git init` or `git clone`
+- Main working tree
+  - when you run `git init`, git creates the main working tree
 
 # What I learned
 - Upstream vs downstream branches
@@ -44,11 +46,26 @@
   - Create an alias for a command
 - `git config --list`
   - Show the git configuration
-- 
+- `git log --grep <pattern> -p`
+  - Show the commits that match the pattern
+  - `-p` shows the diff
+- `git bisect start`
+  - Start the bisect process
+  - `git bisect bad`
+    - Mark the current commit as bad 
+  - `git bisect good <commit>`
+    - Mark a commit as good
+  - `git bisect reset`
+    - Stop the bisect process
+  - `git bisect run <command> --run`
+    - Automatically find the commit that introduced a bug
+    - `--run` is the command to run
+- `git worktree add ../<new-dir/branch`
+  - Create a new worktree
 
 # Questions
 - merging branch with upstream problems
-  - i dont understand why it is necessary to create 2 merge commits to fix the different past of the branch
+  - i dont understand why it is necessary to create 2 merge commits to fix the different past of the branch when rebasing
 - should i rebase private branch into public branch before pushing?
 
 

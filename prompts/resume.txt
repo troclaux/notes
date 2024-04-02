@@ -1,0 +1,11 @@
+"Your task is to generate a resume that will help me secure a job. I will provide you with two sets of information. The first set includes my work experience, educational background, skills, and any relevant certifications or awards. The second set is a detailed description of the job I'm applying for, including the company name, job title, responsibilities, and required qualifications.
+
+Based on this information, create a resume that highlights the skills and experiences that align most closely with the job requirements. Emphasize the value I can bring to the company and how my qualifications make me a strong candidate for the position. The language should be formal, concise, and positive.
+
+Here's my information:
+
+Work Experience and Qualifications: [Provide a detailed list of your work experience, educational background, skills, and any relevant certifications or awards]
+
+Job Description: [Provide a detailed description of the job you're applying for, including the company name, job title, responsibilities, and required qualifications]"
+
+This revised prompt provides clearer instructions and expectations, which should result in a more effective resume.
