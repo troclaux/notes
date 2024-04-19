@@ -1,0 +1,5 @@
+Prototipagem de páginas para projetos da empresa.
+Desenvolvimento de páginas para o site oficial da empresa EJCM (seção 'quem somos') https://ejcm.com.br/
+Implementação de componentes React.js em múltiplos projetos.
+
+Atuei como desenvolvedor front-end para a empresa EJCM (https://ejcm.com.br/), onde prototipei páginas para o site oficial da empresa júnior e implementei várias funcionalidades e componentes com React.js. Participei de múltiplos projetos na EJCM, dentre eles o site Contexto Revisor (https://contextorevisor.com.br/).
