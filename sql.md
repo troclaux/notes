@@ -2,7 +2,7 @@
 
 ## Create table
 
-```
+```sql
 CREATE TABLE employees(
     id INTEGER,
     name TEXT,
