@@ -1,0 +1,1 @@
+I'm curious and eager to learn. I enjoy learning CLI tools in my free time, and I have written an Ansible playbook that sets up a Linux machine with all my configurations and tools (Neovim, packages, dotfiles, and my scripts). So, if you hire me, onboarding will be fast.
