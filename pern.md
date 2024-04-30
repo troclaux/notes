@@ -69,10 +69,13 @@
 ## React hooks
 
 - useState: Update state of a variable.
+  - `const [todos, setTodos] = useState('');`
+    - Returns an array with two elements: the variable and a function to update it.
+    - Initial value is an empty string.
 - useEffect: Manage component lifecycle, which includes:
-  - Create component.
-  - Update component.
-  - Delete component.
+  - Create component
+  - Update component
+  - Delete component
 
 ## React events
 
@@ -86,3 +89,4 @@ import React, { Fragment, useState } from "react";
 const <component_name> = () => {
   const [attribute, setAttribute] = useState(<object.attribute>);
 };
+```

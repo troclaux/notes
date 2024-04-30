@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "alg_graph.md",
+                "file": "pern.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "alg_graph.md",
+                "file": "pern.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "alg_graph.md",
+                "file": "pern.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "alg_graph.md"
+                "file": "pern.md"
               }
             }
           }
@@ -148,6 +148,12 @@
   },
   "active": "07add316c368c3ba",
   "lastOpenFiles": [
+    "sql.md~",
+    "alg_graph.md~",
+    "auth.md~",
+    "leetcode.md~",
+    "README.md~",
+    "README.md",
     "pern.md",
     "alg_graph.md",
     "pern.md~",
