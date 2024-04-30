@@ -1,4 +1,5 @@
-# Git jargon
+## Jargon
+
 - HEAD
   - The current branch
 - SHA-1 hash
@@ -15,55 +16,155 @@
 - Main working tree
   - when you run `git init`, git creates the main working tree
 
-# What I learned
-- Upstream vs downstream branches
-- How to use SHA-1 hash
-  - `git cat-file -p <hash>`
-    - Can be used to see the contents of a commit
-- `git log -S`
-- `git branch --set-upstream-to=origin/master master`
-  - Set the default upstream branch for the master branch
-- `git log --oneline --graph`
-- `git remote -v`
-  - Show the remote repositories
-- `git remote add <name> <url>`
-  - Add a remote repository
-  - The remote can be local or on the internet
-    - eg: `git remote add origin ~/Documents/remote-git`
-- `git reset --soft HEAD~1`
-  - Undo the last commit while keeping the changes
-- `git stash list`
-  - Show the list of stashes
-- `git stash -m 'message'`
-  - Create a stash with a message
-- `git stash pop --index <stash index>`
-  - Apply the last stash
-- `git cherry-pick <commit>`
-  - Apply a commit to the current branch
-- `git reflog`
-  - Show the history of the HEAD
-- `git config --global alias.<alias> <command>`
-  - Create an alias for a command
-- `git config --list`
-  - Show the git configuration
-- `git log --grep <pattern> -p`
-  - Show the commits that match the pattern
-  - `-p` shows the diff
-- `git bisect start`
-  - Start the bisect process
-  - `git bisect bad`
-    - Mark the current commit as bad 
-  - `git bisect good <commit>`
-    - Mark a commit as good
-  - `git bisect reset`
-    - Stop the bisect process
-  - `git bisect run <command> --run`
-    - Automatically find the commit that introduced a bug
-    - `--run` is the command to run
-- `git worktree add ../<new-dir/branch`
-  - Create a new worktree
+## What I learned
 
-# Questions
+- Upstream vs downstream branches
+  - Upstream branch is the branch that the current branch is tracking
+  - Downstream branch is the branch that is tracking the current branch
+- How to use SHA-1 hash
+  - Can be used to see the contents of a commit
+
+```shell
+git cat-file -p <hash>
+```
+
+- Search commits for a specific string
+
+
+```shell
+- git log -S
+```
+
+- Set the default upstream branch for the master branch
+
+```shell
+- git branch --set-upstream-to=origin/master master
+```
+
+- Show history of commits in a graph
+
+```shell
+- git log --oneline --graph
+```
+
+### git remote
+
+- Show the remote repositories
+
+```shell
+- git remote -v
+```
+
+- Add a remote repository
+
+```shell
+- git remote add <name> <url>
+```
+
+- The remote can be local or on the internet
+
+```shell
+- git remote add origin ~/Documents/remote-git
+```
+
+- Undo the last commit while keeping the changes
+
+```shell
+git reset --soft HEAD~1
+```
+
+### git stash
+
+- Show the list of stashes
+
+```shell
+git stash list
+```
+
+- Create a stash with a message
+
+```shell
+git stash -m 'message'
+```
+
+- Apply the last stash
+
+```shell
+git stash pop --index <stash index>
+```
+
+- Apply a commit to the current branch
+
+```shell
+git cherry-pick <commit>
+```
+
+- Show the history of the HEAD
+
+```shell
+git reflog
+```
+
+- Create an alias for a command
+
+```shell
+git config --global alias.<alias> <command>
+```
+
+- Show the git configuration
+
+```shell
+git config --list
+```
+
+- Show the commits that match the pattern
+  - `-p` shows the diff
+
+```shell
+git log --grep <pattern> -p
+```
+
+### git bisect
+
+- Start the bisect process
+
+```shell
+git bisect start
+```
+
+- Mark the current commit as bad 
+
+```shell
+git bisect bad
+```
+
+- Mark a commit as good
+
+```shell
+git bisect good <commit>
+```
+
+- Stop the bisect process
+
+```shell
+git bisect reset
+```
+
+- Automatically find the commit that introduced a bug
+  - `--run` is the command to run
+
+```shell
+git bisect run <command> --run
+```
+
+- Create a new worktree
+
+```shell
+git worktree add ../<new-dir/branch
+```
+
+## Questions
+
 - merging branch with upstream problems
   - i dont understand why it is necessary to create 2 merge commits to fix the different past of the branch when rebasing
 - should i rebase private branch into public branch before pushing?

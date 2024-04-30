@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "pern.md",
+                "file": "git.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "pern.md",
+                "file": "git.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "pern.md",
+                "file": "git.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "pern.md"
+                "file": "git.md"
               }
             }
           }
@@ -148,18 +148,20 @@
   },
   "active": "07add316c368c3ba",
   "lastOpenFiles": [
+    "git.md~",
+    "alg_graph.md",
+    "auth.md",
+    "images/postgres_config.png",
+    "images/big_o_complexity_chart.jpg",
+    "pern.md",
     "sql.md~",
     "alg_graph.md~",
     "auth.md~",
     "leetcode.md~",
     "README.md~",
     "README.md",
-    "pern.md",
-    "alg_graph.md",
     "pern.md~",
-    "images/postgres_config.png",
     "images/Screenshot from 2024-03-28 10-57-42.png",
-    "auth.md",
     "leetcode.md"
   ]
 }
