@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "2748ce6746a649fe",
+        "id": "2249acaa2f99d1da",
         "type": "tabs",
         "children": [
           {
-            "id": "07add316c368c3ba",
+            "id": "669597b1d94cfe71",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "git.md",
+                "file": "auth.md",
                 "mode": "source",
                 "source": false
               }
@@ -69,7 +69,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 238.5
   },
   "right": {
     "id": "4702d396f194ede8",
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "git.md",
+                "file": "auth.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "git.md",
+                "file": "auth.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,16 +125,16 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "git.md"
+                "file": "auth.md"
               }
             }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 284.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -146,22 +146,26 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "07add316c368c3ba",
+  "active": "669597b1d94cfe71",
   "lastOpenFiles": [
-    "git.md~",
     "alg_graph.md",
+    "pern.md",
     "auth.md",
+    "images/encoded-jwt3.png",
+    "auth.md~",
+    "UNIX.md",
+    "git.md",
+    "leetcode.md",
+    "README.md",
+    "sql.md",
+    "git.md~",
     "images/postgres_config.png",
     "images/big_o_complexity_chart.jpg",
-    "pern.md",
     "sql.md~",
     "alg_graph.md~",
-    "auth.md~",
     "leetcode.md~",
     "README.md~",
-    "README.md",
     "pern.md~",
-    "images/Screenshot from 2024-03-28 10-57-42.png",
-    "leetcode.md"
+    "images/Screenshot from 2024-03-28 10-57-42.png"
   ]
 }

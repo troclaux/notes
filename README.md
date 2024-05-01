@@ -1,4 +1,3 @@
-# Cheat sheets
 
 ## Table of Contents
 
