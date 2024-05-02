@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "2249acaa2f99d1da",
+        "id": "88ae4bcfe08d97ab",
         "type": "tabs",
         "children": [
           {
-            "id": "669597b1d94cfe71",
+            "id": "81b7b1ad24666465",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "auth.md",
+                "file": "nginx.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "auth.md",
+                "file": "nginx.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "auth.md",
+                "file": "nginx.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "auth.md"
+                "file": "nginx.md"
               }
             }
           }
@@ -146,11 +146,15 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "669597b1d94cfe71",
+  "active": "81b7b1ad24666465",
   "lastOpenFiles": [
+    "nginx.md~",
+    "nginx.md",
+    "protocols.md~",
+    "protocols.md",
+    "auth.md",
     "alg_graph.md",
     "pern.md",
-    "auth.md",
     "images/encoded-jwt3.png",
     "auth.md~",
     "UNIX.md",
