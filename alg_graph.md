@@ -56,3 +56,48 @@
 ## Linked List
 
 ## Queue
+
+---
+
+## Bubble Sort
+
+- Summary
+    - Switch pair of elements n² times, so that the largest element is at the end of the array
+    - Easy to implement
+    - Slow
+    - low memory usage
+- Time complexity
+    - O(n²)
+- Space complexity
+    - O(1)
+
+## Insertion Sort
+
+- Time complexity
+    - O(n²)
+- Space complexity
+    - O(1)
+
+## Merge Sort
+
+- Time complexity
+    - O(n log(n))
+- Space complexity
+    - O(n)
+
+## Quick Sort
+
+- Summary
+    - Divide and conquer
+    - Pick a pivot element and partition the array around the pivot
+    - Recursively sort the sub-arrays
+        - all elements less than the pivot are on the left
+        - all elements greater than the pivot are on the right
+        - the pivot is in the correct position
+    - In-place
+    - Fast
+    - High memory usage
+- Time complexity
+    - O(n log(n))
+- Space complexity
+    - O(log(n))

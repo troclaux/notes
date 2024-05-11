@@ -113,7 +113,7 @@ ls -lh
 # -rw-r--r-- 1 root root 3.0K Feb  4  2019 win-utf
 ```
 
-to restart the NGINX service, run the following command:
+run the following command to restart the NGINX service:
 
 ```shell
 sudo systemctl restart nginx
@@ -152,6 +152,12 @@ http {
 }
 ```
 
+## Configuration file structure
+
+composed by modules
+- each module is controlled directives
+- directives specifications are defined by nginx.conf
+
 There are two types of directives in NGINX:
 1. simple directives (terminated by a semicolon)
   - directive name
@@ -165,12 +171,53 @@ There are two types of directives in NGINX:
       - only one `events` block is allowed in the configuration file
     - `http`
       - contains all the configuration related to HTTP or HTTPS requests
+      - contains `server` blocks
       - only one `http` block is allowed in the configuration file
+      - `upstream`
+        - defines a group of servers that NGINX can send proxy requests to
     - `server`
       - defines the configuration for a virtual server
       - contained within the `http` block
       - There can be multiple server contexts in a valid configuration file
+      - `location`
+        - defines how NGINX should handle requests for a specific URL
+        - contained within the `server` block
     - `main`
       - contains the main configuration settings for NGINX
       - only one `main` block is allowed in the configuration file
-      - anything written outside of the three previously mentioned contexts is on the `main` context
+      - contains `events` and `http`
+
+Example of a `upstream` block:
+```conf
+http {
+  upstream test {
+    # uses round-robin by default
+
+    server test1.exemple.com;
+    server test2.exemple.com;
+    server test3.exemple.com;
+  }
+}
+```
+
+Example of a `proxy_pass` block:
+```conf
+http {
+  # ...
+
+  server {
+    listen 80;
+    location / {
+      proxy_pass http://test;
+    }
+  }
+
+  # ...
+}
+```
+in the example above:
+- NGINX listens to port 80
+- forwards requests to the `test` upstream block
+- proxy_pass directive is used to specify the URL to which the requests should be forwarded to
+
+
