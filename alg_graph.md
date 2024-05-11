@@ -8,12 +8,26 @@
   - Switch pair of elements n² times so that the bigger element goes to the right
   - Easy to implement
   - Slow
+  - low memory usage
 - Time complexity
   - O(n²)
+- Space complexity
+  - O(1)
+
 
 ## Quick Sort
+
 - Summary
-  - Not always fast (worst case is n²)
+  - Divide and conquer
+  - Pick a pivot element and partition the array around the pivot
+  - Recursively sort the sub-arrays
+    - all elements less than the pivot are on the left
+    - all elements greater than the pivot are on the right
+    - the pivot is in the correct position
+  - In-place
+  - Fast
+  - High memory usage
+- Not always fast (worst case is n²)
 - Pseudocode
   - Select an element that will be the pivot
   - Move all elements that are smaller than the pivot on the left of the pivot
@@ -23,6 +37,8 @@
 - Time complexity
   - Average: O(n * log n)
   - Worst case: O(n²)
+- Space complexity
+  - O(log(n))
 
 ## Merge Sort
 - Summary
@@ -33,7 +49,9 @@
   - Splits unsorted array recursively in two
   - After splitting, it merges 2 arrays by creating a third and iterating through the 2 initial arrays, comparing the elements and adding the smallest
 - Time complexity
-  - Average: O(n * log n)
+  - Average: O(n log(n))
+- Space complexity
+  - O(n)
 
 ## Insertion Sort
 - Summary
@@ -50,6 +68,12 @@
   - Pick the first element of the unsorted and compare with the last of the sorted
   - Put the unsorted element in the correct position in the sorted section
   - Pick the next element of the sorted section
+- Time complexity
+  - O(n²)
+- Space complexity
+  - O(1)
+
+---
 
 # Data Structures
 
@@ -57,47 +81,3 @@
 
 ## Queue
 
----
-
-## Bubble Sort
-
-- Summary
-    - Switch pair of elements n² times, so that the largest element is at the end of the array
-    - Easy to implement
-    - Slow
-    - low memory usage
-- Time complexity
-    - O(n²)
-- Space complexity
-    - O(1)
-
-## Insertion Sort
-
-- Time complexity
-    - O(n²)
-- Space complexity
-    - O(1)
-
-## Merge Sort
-
-- Time complexity
-    - O(n log(n))
-- Space complexity
-    - O(n)
-
-## Quick Sort
-
-- Summary
-    - Divide and conquer
-    - Pick a pivot element and partition the array around the pivot
-    - Recursively sort the sub-arrays
-        - all elements less than the pivot are on the left
-        - all elements greater than the pivot are on the right
-        - the pivot is in the correct position
-    - In-place
-    - Fast
-    - High memory usage
-- Time complexity
-    - O(n log(n))
-- Space complexity
-    - O(log(n))
