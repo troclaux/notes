@@ -34,6 +34,15 @@ git cat-file -p <hash>
 ```shell
 - git log -S
 ```
+The git log command isn't only useful for your local repo. You can log the commits of a remote repo as well!
+
+```shell
+git log remote/branch
+```
+
+```shell
+git log origin/primeagen
+```
 
 - Set the default upstream branch for the master branch
 
@@ -45,6 +54,26 @@ git cat-file -p <hash>
 
 ```shell
 - git log --oneline --graph
+```
+
+### git switch
+
+- Switch to a branch
+
+```shell
+- git switch <branch>
+```
+
+- Create a new branch and switch to it
+
+```shell
+- git switch -c <branch>
+```
+
+- Create a new branch from a specific commit
+
+```shell
+- git switch -c <branch> <commit_hash>
 ```
 
 ### git remote
@@ -162,6 +191,16 @@ git bisect run <command> --run
 ```shell
 git worktree add ../<new-dir/branch
 ```
+
+- Rebase from branch1 onto branch2
+
+`from branch1`
+```shell
+git rebase <branch2>
+```
+*WARNING*
+- You should never rebase a public branch (like main) onto anything else. Other developers have it checked out, and if you change its history, you'll cause a lot of problems for them.
+- However, with your own branch, you can rebase onto other branches (including a public branch like main) as much as you want.
 
 ## Questions
 
