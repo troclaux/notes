@@ -1,6 +1,6 @@
 # Back up with rsync
 
-### Command to back up:
+### To back up
 
 ```shell
 rsync -av --progress --delete ~/source/directory ~/backups
@@ -9,7 +9,7 @@ rsync -av --progress --delete ~/source/directory ~/backups
 ### Backing up home directory from another storage device
 
 ```shell
-rsync -av --progress --delete ~/backups /mnt/backups/troclaux-backups
+rsync -av --progress --delete /mnt/backups/directory ~/backups
 ```
 
 ### To back up regularly:
@@ -20,25 +20,29 @@ rsync -av --progress --delete ~/backups /mnt/backups/troclaux-backups
   ```
 2. Add a Cron job to back up every Sunday at 2 AM:
   ```shell
-  0 15 * * 0 rsync -av --delete ~/.config/nvim ~/backups/nvim
+  0 15 * * 0 rsync -av --delete ~/.config/nvim ~/backups
   ```
 
-### Restore home directory
+### To restore
 
 ```shell
-rsync -av --delete ~/backups/nvim ~/.config/nvim/
+rsync -av --delete ~/backups/nvim ~/.config
+```
+
+```shell
+rsync -av --delete ~/backups/troclaux /home
 ```
 
 ### Restore with a Dry Run
 
 Allows you to see what changes will be made without actually applying them
 ```shell
-sudo rsync -av --delete --dry-run /mnt/backups/directory_backup ~/backups/directory_backup
+sudo rsync -av --delete --dry-run ~/backups/nvim ~/.config
 ```
 
 ### Verifying the Cron Job
 
-After saving the crontab file, you can verify that the cron job has been added correctly by listing the current cron jobs:
+After saving, verify that the cron job has been added correctly by listing the current cron jobs:
 ```shell
 crontab -l
 ```
