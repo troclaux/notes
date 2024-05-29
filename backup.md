@@ -12,7 +12,7 @@ rsync -av --progress --delete ~/source/directory ~/backups
 rsync -av --progress --delete /mnt/backups/directory ~/backups
 ```
 
-### To back up regularly:
+### To back up regularly on a specific schedule
 
 1. Edit 'crontab' file:
   ```shell
