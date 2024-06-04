@@ -51,17 +51,49 @@ Implementation:
 
 > allows objects with incompatible interfaces to collaborate
 
-- e.g. 
+![example](./images/adapter_example.png)
 
 ### Bridge
 
+> allows to split a large class or a set of closely related classes into two separate hierarchies—abstraction and implementation—which can be developed independently of each other
+
+- problem occurs when you when you extend two independent dimensions
+- the bridge pattern solves this problem by creating two separate hierarchies
+  - abstraction
+    - e.g.: GUI of the app
+  - implementation
+    - e.g.: the operating system's API
+
 ### Composite
 
-### Decorator
+> Composite is a structural design pattern that lets you compose objects into tree structures and then work with these structures as if they were individual objects
+
+- this design pattern is used when you need to implement a tree-like structure
+
+
+### Decorator/Wrapper
+
+> lets you attach new behaviors to objects by placing these objects inside special wrapper objects that contain the behaviors
 
 ### Facade
 
+> provides a simplified interface to a library, a framework, or any other complex set of classes
+
+- it's a filter for functionalities
+- hides the complexity of the system
+
 ### Flyweight
+
+> improves RAM usage by sharing data between multiple objects instead of keeping all of the data in each object
+
+- intrinsic state: data that is shared across multiple objects
+  - other objects can read it, but not change it
+- extrinsic state: data/attributes that is NOT shared across multiple objects
+  - don't store it inside the object
+  - pass this state to specific methods
+
+- implementation
+  - create 
 
 ### Proxy
 
@@ -70,6 +102,7 @@ Implementation:
 > Focus on algorithms and assignment of responsibilities between objects
 
 ### Chain of Responsibility
+
 
 ### Command
 
