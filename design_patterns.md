@@ -86,14 +86,15 @@ Implementation:
 
 > improves RAM usage by sharing data between multiple objects instead of keeping all of the data in each object
 
-- intrinsic state: data that is shared across multiple objects
-  - other objects can read it, but not change it
-- extrinsic state: data/attributes that is NOT shared across multiple objects
-  - don't store it inside the object
-  - pass this state to specific methods
+- each object's attributes define its state, there are 2 types of state:
+  - intrinsic state: data that is shared across multiple objects
+    - other objects can read it, but not change it
+    - an object that only stores the intrinsic state is called a flyweight
+    - flyweight objects are immutable
+  - extrinsic state: data that is NOT shared across multiple objects
+    - don't store it inside the object
+    - pass this state to specific methods
 
-- implementation
-  - create 
 
 ### Proxy
 

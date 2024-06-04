@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "nginx.md",
+                "file": "design_patterns.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "nginx.md",
+                "file": "design_patterns.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "nginx.md",
+                "file": "design_patterns.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "nginx.md"
+                "file": "design_patterns.md"
               }
             }
           }
@@ -148,8 +148,11 @@
   },
   "active": "81b7b1ad24666465",
   "lastOpenFiles": [
-    "nginx.md~",
+    "images/adapter_example.png",
+    "design_patterns.md",
+    "java.md",
     "nginx.md",
+    "nginx.md~",
     "protocols.md~",
     "protocols.md",
     "auth.md",
