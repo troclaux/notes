@@ -294,6 +294,18 @@ LEFT JOIN departments d
 ON e.department_id = d.id;
 ```
 
+## View
+
+> alias for a SQL query that can be treated as a table
+
+example:
+```sql
+CREATE VIEW it_employees AS
+SELECT id, first_name, last_name, salary
+FROM employees
+WHERE department = 'IT';
+```
+
 ## Performance
 
 ### Index

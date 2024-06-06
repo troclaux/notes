@@ -86,6 +86,7 @@ Implementation:
 
 > improves RAM usage by sharing data between multiple objects instead of keeping all of the data in each object
 
+- use this pattern only when your program must support a huge number of objects which barely fit into available RAM
 - each object's attributes define its state, there are 2 types of state:
   - intrinsic state: data that is shared across multiple objects
     - other objects can read it, but not change it
@@ -95,19 +96,46 @@ Implementation:
     - don't store it inside the object
     - pass this state to specific methods
 
-
 ### Proxy
+
+> a proxy intermediates communication to the original object, allowing you to perform something either before or after the request gets through the original object
+
+- use cases:
+  - when a heavyweight service object can't be always available because it wastes too many resources
+  - when only specific clients should use it, restrict access to the service object
 
 ## Behavioral patterns
 
 > Focus on algorithms and assignment of responsibilities between objects
 
-### Chain of Responsibility
+### Chain of Responsibility (CoR)
 
+> passes request along a chain of handlers. Upon receiving a request, each handler decides either to process the request or to pass it to the next handler in the chain
+
+- similar to telecom companies' services
+- you will create many objects called handlers
+- each handler has a field that stores a reference to next handler
+- all handlers will implement the same interface (look at the link at the beginning of this .md file)
+
+- use cases:
+  - you need process different types of requests in various ways and the exact types of requests beforehand are unknown
+  - when it's essential to execute several handlers in a particular order
+  - when the set of handlers and their order are supposed to change at runtime
 
 ### Command
 
+> converts request into a stand-alone object that contains all info about request
+
+- real world comparison: waiter taking orders in restaurants
+- lets you:
+  - pass requests as method arguments
+  - delay request's execution
+  - queue request's execution
+  - support undoable operations
+
 ### Iterator
+
+> 
 
 ### Mediator
 

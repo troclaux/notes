@@ -1,10 +1,10 @@
 
 # Best resources:
 
-- Oauth
-  - [https://developer.okta.com/blog/2017/06/21/what-the-heck-is-oauth](https://developer.okta.com/blog/2017/06/21/what-the-heck-is-oauth)
 - JWT
   - [https://jwt.io/introduction](https://jwt.io/introduction)
+- Oauth
+  - [https://developer.okta.com/blog/2017/06/21/what-the-heck-is-oauth](https://developer.okta.com/blog/2017/06/21/what-the-heck-is-oauth)
 
 # OAuth
 
@@ -186,3 +186,22 @@ Let's break down the different parts
   - random string that acts as pointer to the actual user record in the database
 - JWT
   - stateless
+
+---
+
+# Auth Providers
+
+What is the best auth provider?
+- choices:
+  - Firebase auth
+    - good documentation
+    - easy to use
+  - Supabase
+    - built on top of PostgreSQL
+    - open-source
+    - easy to use
+    - bad documentation
+  - Auth0
+    - expensive
+    - good documentation
+
