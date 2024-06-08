@@ -193,14 +193,14 @@ Let's break down the different parts
 
 What is the best auth provider?
 - choices:
-  - Firebase auth
-    - good documentation
-    - easy to use
-  - Supabase
+  - Supabase (most recommended for beginners)
     - built on top of PostgreSQL
     - open-source
     - easy to use
     - bad documentation
+  - Firebase auth
+    - good documentation
+    - easy to use
   - Auth0
     - expensive
     - good documentation

@@ -43,6 +43,12 @@ list tables
 \dt
 ```
 
+list users
+
+```
+\du
+```
+
 exit postgres prompt
 
 ```
