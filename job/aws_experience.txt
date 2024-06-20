@@ -1,0 +1,1 @@
+Experiência com permissões e políticas IAM. Criação e gerenciamento de instâncias EC2 (acesso com SSH para gerenciar servidor web). Configuração de VPC e banco de dados PostgreSQL no RDS.
