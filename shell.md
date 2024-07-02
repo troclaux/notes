@@ -28,19 +28,21 @@ mkdir dir1 dir2 dir3
 - (>>)
   - Append output of previous command to the file after the separator
   - ```echo "append this at the end of file" >> ~/Documents/file.txt```
-- (|)
-  - forward the output of a cli program as the input for the next program
-  - `cat file.txt | wc -l`
-- (||)
-  - Executes the next command only if the previous command fails
-  - `ls this_file_does_not_exist.txt || echo 'file not found'`
-- (&&)
-  - Run multiple commands at once only if the previous command was successful
-  - ```command_1 && command_2 && command_3```
+- ( \ )
+  - split shell command into multiple lines
 - (;)
   - Run multiple commands at once regardless of whether previous command was successful or not
   - **Default behaviour between commands in a shell script when there isn't separators between**
   - ```command1; command2; command3```
+- (|)
+  - forward the output of a cli program as the input for the next program
+  - `cat file.txt | wc -l`
+- (||)
+  - Executes the second command only if the first command fails
+  - `ls this_file_does_not_exist.txt || echo 'file not found'`
+- (&&)
+  - Runs the next command only if the previous command was successful
+  - ```command_1 && command_2 && command_3```
 - (2>)
   - redirect stderr
   - ```command 2> error.log```
@@ -141,4 +143,10 @@ for i in {1..5}
 do
   echo $i
 done
+```
+
+you can also use loops simplify operations on multiple files with similar names
+
+```shell
+for i in {5..7}; do touch cnu_eixo_5_aula_0$i.md; done
 ```
