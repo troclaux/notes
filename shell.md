@@ -136,6 +136,8 @@ done
 
 ### for loops
 
+[loop through files](https://www.digitalocean.com/community/tutorials/workflow-loop-through-files-in-a-directory)
+
 ```shell
 #!/bin/bash
 

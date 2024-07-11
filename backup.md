@@ -46,3 +46,9 @@ After saving, verify that the cron job has been added correctly by listing the c
 ```shell
 crontab -l
 ```
+
+### example of cronjob command
+
+```shell
+0 15 * * 2 rsync -av --delete ~/Music/chill_game_ost ~/backups >> ~/backups/logs/chill_game_ost.log 2>&1
+```
