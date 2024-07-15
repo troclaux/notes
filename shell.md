@@ -152,3 +152,15 @@ you can also use loops simplify operations on multiple files with similar names
 ```shell
 for i in {5..7}; do touch cnu_eixo_5_aula_0$i.md; done
 ```
+
+### renaming files
+
+changing filenames in pwd
+```shell
+for file in ./cnu_*; do mv "$file" "${file#./cnu_}"; done
+```
+
+changing filenames in another directory
+```shell
+for file in pdfs/cnu_*; do mv "$file" "pdfs/${file#pdfs/cnu_}"; done
+```
