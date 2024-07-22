@@ -1,4 +1,9 @@
 
+- endpoint: specific URL where the server provides a resource/service
+  - example:
+    - endpoint url: https://api.example.com/books
+    - app.get('/books', ...): This line defines an endpoint that listens for GET requests at the /books URL.
+
 
 ## Single Page Application
 
