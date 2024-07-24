@@ -1,14 +1,19 @@
 
+[web development](./web_development.md)
+[protocols](./protocols.md)
 
 # OSI model
+
+[osi-model explained in a simple way](https://osi-model.com)
 
 layers:
 1. physical
   - transmits bit stream to physical medium
-  - RJ45
-2. data link
+  - USB, RJ45
+2. data link/enlace
   - defines format of data on the network
-  - MAC, switches
+  - transfers data between network nodes to WAN (Wide Area Network)
+  - MAC addresses, ethernet, switches
 3. network
   - decides which physical path the data will take
   - IP
@@ -21,10 +26,10 @@ layers:
 6. presentation
   - ensures data is in a readable format
   - encryption happens here
-  - ASCII, PNG
+  - ASCII, JPEG
 7. application
-  - 
   - HTTP, FTP
+
 ## network layer 3
 
 
@@ -34,5 +39,6 @@ layers:
   - 128 bits = 16 bytes
 
 OBS:
+IPv4 32 bits => 432
 ipv4 * 2² = ipv6
 32 bits * 2² = 128 bits

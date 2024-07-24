@@ -1,3 +1,5 @@
+[design patterns](./design_patterns.md)
+
 # Design Patterns
 
 [catalog of design patterns](https://refactoring.guru/design-patterns/catalog)

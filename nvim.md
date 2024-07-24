@@ -8,6 +8,26 @@ indent and unindent line:
 - ctrl-d
 
 
+## registers
+
+- black hole register
+  - discards any text you yank or delete into it
+  - to delete without saving
+    - "_d
+- read-only registers
+  - current file name
+    - %
+  - run last command
+    - :@:
+  - print directory/name of file
+    - :echo @%
+  - print name of file ('tail')
+    - :echo expand('%:t')
+  - print full path
+    - :echo expand('%:p')
+  - print directory containing file ('head')
+    - :echo expand('%:p:h')
+
 ## range
 
 range can be specified before most commands
