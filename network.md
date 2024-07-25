@@ -42,3 +42,18 @@ OBS:
 IPv4 32 bits => 432
 ipv4 * 2² = ipv6
 32 bits * 2² = 128 bits
+
+
+# TCP/IP model
+
+1. application layer
+  - application layer
+  - presentation layer
+  - session layer
+2. transport layer
+  - transport layer
+3. network layer
+  - network layer
+4. network access layer
+  - data link layer layer
+  - physical layer
