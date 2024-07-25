@@ -146,6 +146,15 @@ do
   echo $i
 done
 ```
+```shell
+for FILE in *; do cp $FILE "$FILE.bak"; done;
+```
+
+reminder: ranges are simpler than loops
+
+```shell
+touch eixo_5/cnu_eixo_5_mq_aula_0{3..9}.md
+```
 
 you can also use loops simplify operations on multiple files with similar names
 
