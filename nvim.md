@@ -50,7 +50,7 @@ range can be specified before most commands
 
 ## substitute command :%s/
 
-After you run the command :%s/oldword/newword/c in Vim, the prompt "replace with nova palavra (y/n/a/q/l/^E/^Y)?" appears, which provides you with several options to respond to each replacement:
+After you run the command :%s/old/new/c in Vim, the prompt "replace with new (y/n/a/q/l/^E/^Y)?" appears, which provides you with several options to respond to each replacement:
 - y (yes): replace the current instance of the old word with the new word
 - n (no): do not replace the current instance of the old word, and move on to the next instance
 - a (all): replace all remaining instances of the old word with the new word, without prompting again
@@ -58,6 +58,26 @@ After you run the command :%s/oldword/newword/c in Vim, the prompt "replace with
 - l (last): replace the current instance of the old word with the new word, and stop prompting for replacements
 - ^E (scroll down): scroll the screen down one line
 - ^Y (scroll up): scroll the screen up one line
+
+you can use other delimiters for the s command:
+- s#old#new# (using # instead of /)
+- s|old|new| (using | instead of /)
+- s@old@new@ (using @ instead of /)
+- s^old^new^ (using ^ instead of /)
+
+### format
+
+:range s/old/new/cgil
+  - c: confirm each substitution
+  - g: replace all occurrences in the line
+  - i: ignore case for pattern
+  - l: don't ignore case for pattern
+
+### grouping and backreferences
+
+- \0: whole matched pattern
+- \1: matched pattern in the first pair of \(\)
+- \2: matched pattern in the second pair of \(\)
 
 # plugins
 
