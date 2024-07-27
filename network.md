@@ -48,8 +48,6 @@ ipv4 * 2² = ipv6
 
 - tcp/ip model != tcp and ip protocols
 
-
-
 1. application layer
   - application layer
   - presentation layer
