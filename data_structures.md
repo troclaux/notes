@@ -17,7 +17,32 @@
 - queue.size()
   - Returns the number of items in the queue
 
-## Red-black tree
+## trees
+
+### tree traversal
+
+- preorder
+  1. visit parent node
+    - root gets visited first
+  2. visit node on left subtree then visit the rest of the left subtree
+  3. visit node on right subtree then visit the rest of the right subtree
+    - rightmost node gets visited last
+- inorder
+  1. visit left subtree in inorder
+    - leftmost leaf gets visited first
+  2. visit parent node
+    - root gets visited in the middle
+  3. visit right subtree in inorder
+    - rightmost node gets visited last
+- postorder
+  1. visit left subtree in postorder
+    - leftmost leaf gets visited first
+  2. visit right subtree in postorder (on the same level as previous step)
+  3. visit parent node
+    - root gets visited last
+
+
+### Red-black tree
 
 - Summary
   - Tree that self-balances to reduce time complexity of basic operations (insert, remove, etc)

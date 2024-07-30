@@ -4,15 +4,81 @@
 ![Big O complexity chart](./images/big_o_complexity_chart.jpg)
 
 ## Bubble Sort
+
 - Summary
   - Switch pair of elements n² times so that the bigger element goes to the right
   - Easy to implement
   - Slow
   - low memory usage
 - Time complexity
-  - O(n²)
+  - worst case: O(n²)
+  - average case: O(n²)
+  - best case: O(n)
 - Space complexity
   - O(1)
+
+```python
+def bubblesort(nums):
+    for j in range(len(nums)):
+        for i in range(len(nums)-1-j):
+            print(nums)
+            if nums[i] > nums[i+1]:
+                buffer = nums[i+1]
+                nums[i+1] = nums[i]
+                nums[i] = buffer
+    return nums
+```
+
+## Selection Sort
+
+- summary
+  - slow
+  - in-place
+  - not stable
+  - simple implementation
+- pseudocode
+  - split values into sorted and unsorted
+    - sorted section begins empty
+  - find smallest value in unsorted section
+  - swap smallest value with last position of sorted section
+  - repeat
+- time complexity
+  - average: O(n²)
+- space complexity
+  - O(1)
+
+## Insertion Sort
+
+- Summary
+  - OBS: (insert) unsorted element into sorted section
+  - Slow
+  - Simple implementation, easy to write
+  - Faster than other simple sorting algorithms like Bubble Sort
+  - Adaptive: Faster for partially sorted data sets
+  - Stable: Does not change the relative order of elements with equal keys
+  - In-Place: Only requires a constant amount of memory
+  - Online: Can sort a list as it receives it
+- Pseudocode
+  - Separate the array into 2 parts: sorted and unsorted section
+  - Pick the first element of the unsorted and insert it into correct position in sorted section
+  - Put the unsorted element in the correct position in the sorted section
+  - Pick the next element of the sorted section
+- Time complexity
+  - worst case: O(n²)
+  - average case: O(n²)
+  - best case: O(n²)
+- Space complexity
+  - O(1)
+
+```python
+def insertion_sort(nums):
+    for i in range(len(nums)):
+        j = i
+        while j > 0 and nums[j - 1] > nums[j]:
+            nums[j], nums[j - 1] = nums[j - 1], nums[j]
+            j -= 1
+    return nums
+```
 
 
 ## Quick Sort
@@ -27,7 +93,6 @@
   - In-place
   - Fast
   - High memory usage
-- Not always fast (worst case is n²)
 - Pseudocode
   - Select an element that will be the pivot
   - Move all elements that are smaller than the pivot on the left of the pivot
@@ -53,25 +118,6 @@
 - Space complexity
   - O(n)
 
-## Insertion Sort
-- Summary
-  - Slow
-  - Simple implementation, easy to write
-  - Fast for very small data sets
-  - Faster than other simple sorting algorithms like Bubble Sort
-  - Adaptive: Faster for partially sorted data sets
-  - Stable: Does not change the relative order of elements with equal keys
-  - In-Place: Only requires a constant amount of memory
-  - Online: Can sort a list as it receives it
-- Pseudocode
-  - Separate the array into 2 parts: sorted and unsorted section
-  - Pick the first element of the unsorted and compare with the last of the sorted
-  - Put the unsorted element in the correct position in the sorted section
-  - Pick the next element of the sorted section
-- Time complexity
-  - O(n²)
-- Space complexity
-  - O(1)
 
 ---
 
