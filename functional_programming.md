@@ -6,6 +6,8 @@
   2. Running them causes no side effects
     - site effect: any observable change in the state of the program or its interaction with the outside world that occurs when a function is executed
 
+## anonymous/lambda functions
+
 ## recursion instead of loops
 
 ## function transformation
