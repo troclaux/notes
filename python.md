@@ -12,6 +12,7 @@
 - can also be used for functional programming
 - huge variety of libraries
 
+- parenthesis in `if` statements are optional
 - immutable strings
 
 ## basic methods
@@ -35,10 +36,24 @@
 - list1.insert(idx, elem1): inserts elem1 at index idx of the list
 - list1.push(elem1): inserts elem1 at the end of list1
 - list1.pop(): removes and returns last element of list1
+  - if you provide a number as input, `pop()` will try to remove the number at that index
+- list1.remove(elem1): first instance of elem1, if there's no instance of elem1 raises `ValueError`
+  - removes element by value
+- `del list1[1:3]`: removes element by index
 - list1.clear(): removes all elements of list1
 - list1.reverse(): reverse the order of elements in list1
 - list1.sort(): sort elements in list1
+- dict1.clear(): removes all elements in dict1
+- dict1.copy(): returns copy of dict1
+- dict1.keys(): returns a list with all keys in dict1
+- dict1.values(): returns a list with all values in dict1
+- dict1.items(): returns a list containing a tuple for each key-value pair
 
+```python
+fruits = ["apple", "banana", "cherry", "date"]
+del fruits[1:3]  # Removes "banana" and "cherry" (index 1 to 2)
+print(fruits)    # Output: ["apple", "date"]
+```
 
 ```python
 s = "Hello, World!"
@@ -65,6 +80,33 @@ s2 = "Hello, World!"
 print(s1.isalnum())  # Outputs: True
 print(s2.isalnum())  # Outputs: False
 ```
+
+## functions
+
+```python
+def my_function(input1, input2):
+  print(input1, input2)
+
+my_function('hello', 'world')
+```
+
+## lambda functions
+
+> basically small functions that are declared with the `lambda` keyword
+
+lambda input1: operation which result will be returned
+
+```python
+add_nums = lambda x, y: x + y
+print(add_nums(2, 3)) # 5
+```
+
+```python
+numbers = [1, 2, 3, 4, 5]
+squared = map(lambda x: x ** 2, numbers)
+print(list(squared))  # Outputs: [1, 4, 9, 16, 25]
+```
+
 
 ## data types
 
@@ -106,7 +148,43 @@ my_set.add(4)  # Now my_set is {1, 2, 3, 4}
 my_frozenset = frozenset([1, 2, 3])
 ```
 
-type casting:
+```python
+# Initialize a dictionary
+person = {
+    "name": "John",
+    "age": 30,
+    "city": "New York"
+}
+
+# Accessing elements
+print(person["name"])  # Outputs: "John"
+
+# Adding a new key-value pair
+person["profession"] = "Engineer"
+
+# Updating a value
+person["city"] = "San Francisco"
+
+# Removing a key-value pair
+del person["age"]
+
+# Iterating over a dictionary
+for key, value in person.items():
+    print(f"{key}: {value}")
+
+# Checking if a key exists
+if "name" in person:
+    print("Name is present in the dictionary")
+
+# Get the number of key-value pairs
+print(len(person))
+
+# Removing all items
+person.clear()
+```
+
+
+### type casting
 
 ```python
 # converts float number into int
@@ -118,3 +196,62 @@ float_num = float(4)
 # converts number into string
 str_num = (5)
 ```
+### dates
+
+```python
+import datetime
+x = datetime.datetime.now()
+```
+
+## classes/objects
+
+```python
+# Define a class
+class Dog:
+    def __init__(self, name):
+        self.name = name
+
+    def bark(self):
+        return "Woof!"
+
+# Create an object of the class Dog
+my_dog = Dog("Fido")
+
+# Access the object's attribute
+print(my_dog.name)  # Outputs: "Fido"
+
+# Call the object's method
+print(my_dog.bark())  # Outputs: "Woof!"
+```
+## iterators
+
+> object that contains a countable amount of values
+
+
+## modules/libraries
+
+```python
+import my_module as mm
+import pandas as pd
+
+x = dir(pd)
+# list the names of all functions and variables in a module
+```
+
+## automation with scripts
+
+- PyAutoGUI: allows scripts to control mouse and keyboard to automate interaction with apps
+- pywinauto: automates GUI testing for windows applications
+- selenium: automates web browser interaction for testing web applications
+- splinter: simplifies web application testing by 
+- scrapy: web crawling framework for extracting data from websites
+- windmill: tests web applications with automation and debugging tools
+- pytest: testing framework
+- ReportLab: creates pdf reports programmatically
+- PDFMiner: extracts texts, images, and metadata from pdfs
+- Borb: library for creating and manipulating pdfs
+- OpenPyXL: reads and writes excel files
+- PyXLL: allows you to create excel functions with python
+- XlsxWriter: creates excel files
+- Tagui: 
+- Robot Framework: 
