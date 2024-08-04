@@ -1,9 +1,54 @@
 [databases](./databases.md)
 [postgresql](./postgresql.md)
 
+[ER model cardinality explained with examples](https://www.gleek.io/blog/er-model-cardinality)
+
 # SQL
 
-## Create table
+
+- select: retrieve data from database
+  - `*`: select all
+  - where: filter records based on conditions
+    - between: selects values within given range (values can be numbers, text or dates)
+    - like: filter records that matches the string
+      - wildcards: used for pattern matching, like regex
+        - %: zero or more chars
+        - _: single char
+        - []: any single char within the brackets
+        - ^: any char NOT in the brackets
+          - `[^abc]`: matches any char that is not `a` or `b` or `c`
+        - `-`: any single char within specified range
+          - `[A-Z]` matches any uppercase letter
+          - `[0-9]` matches any digit
+          - `[a-zA-Z]` to match any letter regardless of case
+          - `[a-zA-Z0-9]` to match any alphanumeric character
+  - having: similar to the `WHERE` clause, but
+    - operates on groups after they've been grouped, rather than rows before they've been grouped
+  - order by: order records based on one or more columns
+  - group by: group records based on one or more columns
+    - joins rows with same attribute (the column chosen)
+    - `SELECT column1, COUNT(*) FROM table_name GROUP BY column1;`
+  - limit: restrict the number of matches
+- insert: add new rows to a table
+- update: modify existing data in a table
+- delete: remove data from a table
+
+- create table: create new table in the database
+- alter table: modify existing table in the database
+- drop table: delete a table and its data from the database
+
+- create database: create new database
+- drop database: delete a database and all its contents
+
+- sum()
+- count(): returns the number of rows that match
+- min()
+- max()
+- avg()
+
+
+
+## Examples
 
 ```sql
 CREATE TABLE employees(
@@ -15,8 +60,6 @@ CREATE TABLE employees(
 );
 ```
 
-## Alter table
-
 ```sql
 ALTER TABLE employees
 RENAME TO contractors;
@@ -27,15 +70,11 @@ ALTER TABLE contractors
 RENAME COLUMN salary TO invoice;
 ```
 
-## Basic query
-
 ```sql
 SELECT id, name
 WHERE id = 1
 FROM users;
 ```
-
-## Primary and Foreign keys
 
 ```sql
 CREATE TABLE departments (
@@ -55,10 +94,6 @@ CREATE TABLE employees (
 );
 ```
 
-## Functions
-
-### COUNT()
-
 ```sql
 SELECT COUNT(*) FROM tableName;
 ```
@@ -67,8 +102,6 @@ SELECT COUNT(*) FROM tableName;
 SELECT COUNT(columnName) FROM tableName WHERE condition;
 ```
 
-### SUM()
-
 ```sql
 SELECT SUM(columnName) FROM tableName;
 ```
@@ -76,10 +109,6 @@ SELECT SUM(columnName) FROM tableName;
 ```sql
 SELECT SUM(columnName) FROM tableName WHERE condition;
 ```
-
-## Aggregating functions
-
-### MAX() MIN()
 
 ```sql
 SELECT max(price)
@@ -91,7 +120,6 @@ SELECT product_name, min(price)
 FROM products;
 ```
 
-### AVG()
 
 ```sql
 SELECT AVG(columnName) FROM tableName;
@@ -101,17 +129,12 @@ SELECT AVG(columnName) FROM tableName;
 SELECT AVG(columnName) FROM tableName WHERE condition;
 ```
 
-### GROUP BY
 
 ```sql
 SELECT album_id, count(song_id)
 FROM songs
 GROUP BY album_id;
 ```
-
-### HAVING
-
-The `HAVING` clause is similar to the `WHERE` clause, but it operates on groups after they've been grouped, rather than rows before they've been grouped
 
 ## Subqueries
 
@@ -209,7 +232,6 @@ ON e.department_id = d.id;
 ### FULL JOIN (not supported by SQLite)
 
 
-
 ## NULL values
 
 ```sql
@@ -236,6 +258,12 @@ WHERE salary BETWEEN 30000 and 60000;
 SELECT product_name, quantity
 FROM products
 WHERE quantity NOT BETWEEN 20 and 100;
+```
+
+```sql
+SELECT *
+FROM Orders
+WHERE OrderDate BETWEEN '01/07/1996' AND '31/07/1996';
 ```
 
 ## BETWEEN
@@ -271,7 +299,6 @@ FROM products
 WHERE product_name LIKE '__oot';
 ```
 
-## LIMIT
 
 ```sql
 SELECT *
@@ -280,7 +307,6 @@ WHERE product_name LIKE '%berry%'
 LIMIT 50;
 ```
 
-## ORDER BY
 
 ```sql
 SELECT name, price, quantity
@@ -338,3 +364,30 @@ A multi-column index is sorted by the first column first, the second column next
 CREATE INDEX first_name_last_name_age_idx
 ON users (first_name, last_name, age);
 ```
+
+---
+
+# theory
+
+- SQL sublanguages
+  - DDL (Data Definition Languague): object definition
+    - create
+    - alter
+    - drop
+    - truncate
+  - DML (Data Manipulation Languague): data manipulation
+    - delete
+    - update
+    - select
+    - DQL (Data Query Languague)
+      - select
+  - DTL (Data Transaction Languague): transactions control
+    - commit
+    - rollback
+    - savepoint
+  - DCL (Data Control Languague): safety and access control
+    - grant
+    - revoke
+
+- grau de tabela: nº de colunas na tabela
+- cardinalidade: nº de linhas na tabela
