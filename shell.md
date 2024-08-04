@@ -3,21 +3,29 @@
 
 - *: matches zero or more characters except slashes (/)
 - **: matches zero or more directories
-- ?: match any single ocurrence of anycharacter
+- ?: match any single ocurrence of any character
 - [abcd]: matches any character inside the square brackets
 - ranges:
   - [A-Z]: matches strings that go from uppercase A to uppercase Z
-  - [A-Za-z0-9 ]: matches any alphanumerical string
-- [!abcd]: matches any character that is NOT inside the square brackets
+  - [A-Za-z0-9]: matches any alphanumerical string
+- [!abcd] or [^abcd]: matches any character that is NOT inside the square brackets
 - {}: match a group of names/Wildcard patterns
+  - {3..9}: defines range inside curly braces
 
 e.g.:
 ```shell
 mkdir dir{1,2,3}
+mkdir dir{1..3}
 ```
 is equivalent to:
 ```shell
 mkdir dir1 dir2 dir3
+```
+
+more examples:
+```shell
+ls *.pdf *.docx
+ls *[0-9]?.{jpg,png}
 ```
 
 ## Command separators
