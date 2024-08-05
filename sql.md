@@ -5,59 +5,260 @@
 
 # SQL
 
+order of operations in SQL query:
+```
+SELECT => FROM => WHERE => GROUP BY => HAVING => ORDER BY
+```
 
-- select: retrieve data from database
+- SELECT: retrieve data from database
   - `*`: select all
-  - where: filter records based on conditions
-    - between: selects values within given range (values can be numbers, text or dates)
-    - like: filter records that matches the string
-      - wildcards: used for pattern matching, like regex
-        - %: zero or more chars
-        - _: single char
-        - []: any single char within the brackets
-        - ^: any char NOT in the brackets
-          - `[^abc]`: matches any char that is not `a` or `b` or `c`
-        - `-`: any single char within specified range
-          - `[A-Z]` matches any uppercase letter
-          - `[0-9]` matches any digit
-          - `[a-zA-Z]` to match any letter regardless of case
-          - `[a-zA-Z0-9]` to match any alphanumeric character
-  - having: similar to the `WHERE` clause, but
-    - operates on groups after they've been grouped, rather than rows before they've been grouped
-  - order by: order records based on one or more columns
-  - group by: group records based on one or more columns
-    - joins rows with same attribute (the column chosen)
-    - `SELECT column1, COUNT(*) FROM table_name GROUP BY column1;`
+- FROM: select the target table
+- WHERE: filter records based on conditions
+  - BETWEEN: selects values within given range (values can be numbers, text or dates)
+  - LIKE: filter records that matches the string
+    - wildcards: used for pattern matching, like regex
+      - %: zero or more chars
+        - `SELECT * FROM products WHERE product_name LIKE 'banana%';`
+      - _: single char
+        - `SELECT * FROM products WHERE product_name LIKE '__oot';`
+      - []: any single char within the brackets
+      - ^: any char NOT in the brackets
+        - `[^abc]`: matches any char that is not `a` or `b` or `c`
+      - `-`: any single char within specified range
+        - `[A-Z]` matches any uppercase letter
+        - `[0-9]` matches any digit
+        - `[a-zA-Z]` to match any letter regardless of case
+        - `[a-zA-Z0-9]` to match any alphanumeric character
+- GROUP BY: group records based on one or more columns
+  - joins rows with same attribute (the column chosen)
+  - `SELECT column1, COUNT(*) FROM table_name GROUP BY column1;`
+- HAVING: similar to the `WHERE` clause, but
+  - operates on groups after they've been grouped, rather than rows before they've been grouped
+- ORDER BY: order records based on one or more columns
   - limit: restrict the number of matches
-- insert: add new rows to a table
-- update: modify existing data in a table
-- delete: remove data from a table
 
-- create table: create new table in the database
-- alter table: modify existing table in the database
-- drop table: delete a table and its data from the database
+- INSERT: add new rows to a table
+  - data types: syntax is different depending on the DB (mysql, postgresql, etc)
+    - numeric
+      - data types that exist on mysql and postgresql
+        - SMALLINT
+        - BIGINT
+        - INTEGER
+      - only mysql
+        - DECIMAL
+        - FLOAT
+        - DOUBLE
+      - only postgresql
+        - NUMERIC(precision, scale) precision: total number of digits that can be stored
+          - scale: maximum number of digits to the right of the decimal point
+        - REAL
+        - DOUBLE PRECISION
+    - character string: CHAR, VARCHAR
+    - binary: binary
+    - boolean: BOOLEAN
+    - data and time: data, datetime
+- UPDATE: modify existing data in a table
+- DELETE: remove data from a table
 
-- create database: create new database
-- drop database: delete a database and all its contents
 
-- sum()
-- count(): returns the number of rows that match
-- min()
-- max()
-- avg()
+- CREATE TABLE: create new table in the database
+  - FOREIGN KEY: creates a column with the values of the column of another table
+    - CASCADE: defines what happens to foreign keys when the reference is changed
+      - ON DELETE: when a record in the primary table is deleted, any records in the foreign key table that reference the deleted primary key will also be deleted
+      - ON UPDATE: changes on primary table also apply to child tables
+- ALTER table: modify existing table in the database
+- DROP table: delete a table and its data from the database
+- TRUNCATE table: delete all rows from a table without deleting the table itself
 
+- CREATE database: create new database
+- DROP database: delete a database and all its contents
+
+TODO
+restrictions:
+- table restrictions
+  - column restrictions
+    - NULL
+    - NOT NULL
+    - UNIQUE
+    - FOREIGN KEY
+    - CHECK table restrictions
+- assertions
+- domain restrictions
+  - check
+
+- constraints: enforce rules on table's data
+  - PRIMARY KEY: value can't be NULL and has to be UNIQUE
+  - FOREIGN KEY: links the value of a column in table1 to the value of another column in table2
+    - CASCADE: explained before
+  - UNIQUE: all values in the column are distinct
+  - CHECK: all values in the column satisfy a condition
+    - `CONSTRAINT chk_stock CHECK (stock_quantity >= 0)`
+  - DEFAULT: defines the initial value of a column when inserting a new row
+    - `balance DECIMAL(10, 2) DEFAULT 0.00`
+  - NOT NULL: a column cannot have NULL value
+    - `email VARCHAR(100) NOT NULL`
+
+- ALIAS: temporary name for column
+  - `SELECT FirstName AS "First Name", LastName AS "Last Name" FROM Employees;`
+- DISTINCT: removes duplicate rows from the results of a query
+  - `SELECT DISTINCT City FROM Customers;`
+
+- SUM()
+- COUNT(): returns the number of rows that match
+- MIN()
+- MAX()
+- AVG()
+
+
+## Subqueries
+
+subqueries queries:
+- IN: filter results from another sql query
+- EXISTS
+- ALL
+- SOME
+- ANY
+
+
+Use `IN` when the subquery may return one or more values. This operator checks if a value matches any value in a list and is suitable for one-to-many comparisons
+
+```sql
+SELECT id, song_name, artist_id
+FROM songs
+WHERE artist_id IN (
+    SELECT id
+    FROM artists
+    WHERE artist_name LIKE 'Rick%'
+);
+```
+Use `=` when the subquery is expected to return a single value. If the subquery returns more than one value, the query will fail with an error. This operator is used for one-to-one comparisons
+
+```sql
+SELECT *
+FROM transactions
+WHERE user_id = (
+    SELECT id
+    FROM users
+    WHERE name = 'David'
+);
+```
+
+
+
+
+## Joins
+
+### INNER JOIN
+
+```sql
+SELECT *
+FROM employees
+INNER JOIN departments 
+ON employees.department_id = departments.id;
+```
+
+```sql
+SELECT students.name, classes.name
+FROM students
+INNER JOIN classes on classes.class_id = students.class_id;
+```
+
+- table_name.column_name
+- The `ON` clause specifies the condition to join the tables
+    - If the columns on the `ON` clause have the same name, the column won't appear twice in the result
+- When joining tables, if there are columns with same name, they will appear twice in the result
+
+### LEFT OUTER JOIN = LEFT JOIN
+
+```sql
+SELECT e.name, d.name
+FROM employees e
+LEFT JOIN departments d
+ON e.department_id = d.id;
+```
+
+### RIGHT OUTER JOIN (not supported by SQLite)
+
+
+### FULL OUTER JOIN = FULL JOIN (not supported by SQLite)
+
+
+## View
+
+> alias for a SQL query that can be treated as a table
+
+```sql
+CREATE VIEW it_employees AS SELECT id, first_name, last_name, salary
+FROM employees
+WHERE department = 'IT';
+```
+
+## Performance
+
+### Index
+
+- Creates a binary tree
+- Faster to look up values in a column
+    - O(log n)
+- Primary keys are indexed by default
+- It's fairly common to name an index after the column it's created on with a suffix of `_idx`
+- You shouldn't index too many columns
+    - Indexes take up space
+    - Create performance overhead when inserting or updating data
+    - Each time you insert a record, that record needs to be added to many trees
+
+```sql
+CREATE INDEX email_idx ON users(email);
+```
+
+### Multi-column indexes
+
+- Speed up look ups that depend on multiple columns
+- Only add multi-column indexes if you're doing frequent lookups on a specific combination of columns
+
+A multi-column index is sorted by the first column first, the second column next, and so forth. A lookup on only the first column in a multi-column index gets almost all of the performance improvements that it would get from its own single-column index. However, lookups on only the second or third column will have very degraded performance
+
+```sql
+CREATE INDEX first_name_last_name_age_idx
+ON users (first_name, last_name, age);
+```
 
 
 ## Examples
 
 ```sql
 CREATE TABLE employees(
-    id INTEGER,
-    name TEXT,
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
     age INTEGER,
     is_manager BOOLEAN,
     salary INTEGER
 );
+```
+
+```sql
+SELECT employee_name, salary
+FROM employees
+WHERE salary BETWEEN 30000 and 60000;
+```
+
+
+```sql
+SELECT product_name, quantity
+FROM products
+WHERE quantity NOT BETWEEN 20 and 100;
+```
+
+```sql
+SELECT *
+FROM Orders
+WHERE OrderDate BETWEEN '01/07/1996' AND '31/07/1996';
+```
+
+```sql
+SELECT name, price, quantity
+FROM products
+ORDER BY price DESC;
 ```
 
 ```sql
@@ -129,36 +330,10 @@ SELECT AVG(columnName) FROM tableName;
 SELECT AVG(columnName) FROM tableName WHERE condition;
 ```
 
-
 ```sql
 SELECT album_id, count(song_id)
 FROM songs
 GROUP BY album_id;
-```
-
-## Subqueries
-
-Use `IN` when the subquery may return one or more values. This operator checks if a value matches any value in a list and is suitable for one-to-many comparisons
-
-```sql
-SELECT id, song_name, artist_id
-FROM songs
-WHERE artist_id IN (
-    SELECT id
-    FROM artists
-    WHERE artist_name LIKE 'Rick%'
-);
-```
-Use `=` when the subquery is expected to return a single value. If the subquery returns more than one value, the query will fail with an error. This operator is used for one-to-one comparisons
-
-```sql
-SELECT *
-FROM transactions
-WHERE user_id = (
-    SELECT id
-    FROM users
-    WHERE name = 'David'
-);
 ```
 
 ```sql
@@ -168,112 +343,59 @@ GROUP BY album_id
 HAVING count > 5;
 ```
 
-## Normal forms
-
-- BCNF contains 3NF, which contains 2NF, which contains 1NF
-
-### First normal form (1NF)
-
-- It must have a unique primary key
-A cell can't have a nested table as its value (depending on the database you're using, this may not even be possible)
-
-### Second normal form (2NF)
-
-- All columns that are not part of the primary key are dependent on the entire primary key, and not just one of the columns in the primary key
-
-### Third normal form (3NF)
-
-- All columns that aren't part of the primary are dependent solely on the primary key
-
-### Boyce-Codd normal form (BCNF)
-
-- A column that's part of a primary key can not be entirely dependent on a column that's not part of that primary key
-
-## Rules of thumb for database design
-
-1. Every table should always have a unique identifier (primary key)
-2. 90% of the time, that unique identifier will be a single column named id
-3. Avoid duplicate data
-4. Avoid storing data that is completely dependent on other data. Instead, compute it on the fly when you need it
-5. Keep your schema as simple as you can. Optimize for a normalized database first. Only denormalize for speed's sake when you start to run into performance problems
-
-
-## Joins
-
-### INNER JOIN
-
 ```sql
-SELECT *
-FROM employees
-INNER JOIN departments 
-ON employees.department_id = departments.id;
+CREATE TABLE Customers (
+    CustomerID INT PRIMARY KEY,
+    Name VARCHAR(100)
+);
+
+CREATE TABLE Orders (
+    OrderID INT PRIMARY KEY,
+    CustomerID INT,
+    Product VARCHAR(100),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID) ON DELETE CASCADE
+);
 ```
 
 ```sql
-SELECT students.name, classes.name
-FROM students
-INNER JOIN classes on classes.class_id = students.class_id;
-```
-
-- table_name.column_name
-- The `ON` clause specifies the condition to join the tables
-    - If the columns on the `ON` clause have the same name, the column won't appear twice in the result
-- When joining tables, if there are columns with same name, they will appear twice in the result
-
-### LEFT JOIN
-
-```sql
-SELECT e.name, d.name
-FROM employees e
-LEFT JOIN departments d
-ON e.department_id = d.id;
-```
-
-### FULL JOIN (not supported by SQLite)
-
-
-## NULL values
-
-```sql
-SELECT name
-FROM users
-WHERE first_name IS NULL;
+TRUNCATE TABLE Employees;
 ```
 
 ```sql
-SELECT name
-FROM users
-WHERE first_name IS NOT NULL;
+CREATE TABLE Departments (
+    DeptID INT PRIMARY KEY,
+    DeptName VARCHAR(100)
+);
+
+CREATE TABLE Employees (
+    EmpID INT PRIMARY KEY,
+    EmpName VARCHAR(100),
+    DeptID INT,
+    FOREIGN KEY (DeptID) REFERENCES Departments(DeptID) ON UPDATE CASCADE
+);
 ```
 
-## BETWEEN
-
+example combining several constraints:
 ```sql
-SELECT employee_name, salary
-FROM employees
-WHERE salary BETWEEN 30000 and 60000;
+CREATE TABLE employees (
+    employee_id INT PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE,
+    department_id INT,
+    manager_id INT,
+    salary DECIMAL(10, 2) CHECK (salary > 0),
+    hire_date DATE DEFAULT CURRENT_DATE,
+    CONSTRAINT fk_department
+    FOREIGN KEY (department_id) REFERENCES departments (department_id)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE,
+    CONSTRAINT fk_manager
+    FOREIGN KEY (manager_id) REFERENCES employees (employee_id)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE
+);
 ```
-
-```sql
-SELECT product_name, quantity
-FROM products
-WHERE quantity NOT BETWEEN 20 and 100;
-```
-
-```sql
-SELECT *
-FROM Orders
-WHERE OrderDate BETWEEN '01/07/1996' AND '31/07/1996';
-```
-
-## BETWEEN
-
-```sql
-SELECT DISTINCT previous_company
-FROM employees;
-```
-
-## IN
 
 ```sql
 SELECT product_name, shipment_status
@@ -281,93 +403,18 @@ FROM products
 WHERE shipment_status IN ('shipped', 'preparing', 'out of stock');
 ```
 
-## LIKE
-
-% wildcard operator matches zero or more characters
-
 ```sql
-SELECT *
-FROM products
-WHERE product_name LIKE 'banana%';
-```
-
-_ wildcard operator matches a single character
-
-```sql
-SELECT *
-FROM products
-WHERE product_name LIKE '__oot';
-```
-
-
-```sql
-SELECT *
-FROM products
-WHERE product_name LIKE '%berry%'
-LIMIT 50;
-```
-
-
-```sql
-SELECT name, price, quantity
-FROM products
-ORDER BY price DESC;
-```
-
-### Left join
-
-```sql
-SELECT e.name, d.name
-FROM employees e
-LEFT JOIN departments d
-ON e.department_id = d.id;
-```
-
-## View
-
-> alias for a SQL query that can be treated as a table
-
-example:
-```sql
-CREATE VIEW it_employees AS
-SELECT id, first_name, last_name, salary
-FROM employees
-WHERE department = 'IT';
-```
-
-## Performance
-
-### Index
-
-- Creates a binary tree
-- Faster to look up values in a column
-    - O(log n)
-- Primary keys are indexed by default
-- It's fairly common to name an index after the column it's created on with a suffix of `_idx`
-- You shouldn't index too many columns
-    - Indexes take up space
-    - Create performance overhead when inserting or updating data
-    - Each time you insert a record, that record needs to be added to many trees
-
-```sql
-CREATE INDEX email_idx ON users(email);
-```
-
-### Multi-column indexes
-
-- Speed up look ups that depend on multiple columns
-- Only add multi-column indexes if you're doing frequent lookups on a specific combination of columns
-
-A multi-column index is sorted by the first column first, the second column next, and so forth. A lookup on only the first column in a multi-column index gets almost all of the performance improvements that it would get from its own single-column index. However, lookups on only the second or third column will have very degraded performance
-
-```sql
-CREATE INDEX first_name_last_name_age_idx
-ON users (first_name, last_name, age);
+SELECT EmployeeName
+FROM Employees
+WHERE EmployeeID IN (SELECT EmployeeID FROM Orders WHERE OrderDate > '2020-01-01');
 ```
 
 ---
 
 # theory
+
+- grau de tabela: nº de colunas na tabela
+- cardinalidade: nº de linhas na tabela
 
 - SQL sublanguages
   - DDL (Data Definition Languague): object definition
@@ -389,5 +436,32 @@ ON users (first_name, last_name, age);
     - grant
     - revoke
 
-- grau de tabela: nº de colunas na tabela
-- cardinalidade: nº de linhas na tabela
+## Normal Forms
+
+- BCNF contains 3NF, which contains 2NF, which contains 1NF
+
+### First Normal Form (1NF)
+
+- It must have a unique primary key
+- A cell can't have a nested table as its value (depending on the database you're using, this may not even be possible)
+
+### Second Normal Form (2NF)
+
+- All columns that are not part of the primary key are dependent on the entire primary key, and not just one of the columns in the primary key
+
+### Third Normal Form (3NF)
+
+- All columns that aren't part of the primary are dependent solely on the primary key
+
+### Boyce-Codd Normal Form (BCNF)
+
+- A column that's part of a primary key can not be entirely dependent on a column that's not part of that primary key
+
+
+## Rules of thumb for database design
+
+1. Every table should always have a unique identifier (primary key)
+2. 90% of the time, that unique identifier will be a single column named id
+3. Avoid duplicate data
+4. Avoid storing data that is completely dependent on other data. Instead, compute it on the fly when you need it
+5. Keep your schema as simple as you can. Optimize for a normalized database first. Only denormalize for speed's sake when you start to run into performance problems
