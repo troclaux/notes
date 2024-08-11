@@ -7,7 +7,7 @@
 
 order of operations in SQL query:
 ```
-SELECT => FROM => WHERE => GROUP BY => HAVING => ORDER BY
+FROM => WHERE => GROUP BY => HAVING => SELECT => ORDER BY => LIMIT
 ```
 
 - SELECT: retrieve data from database
@@ -226,15 +226,15 @@ WHERE department = 'IT';
 
 ### Index
 
-- Creates a binary tree
-- Faster to look up values in a column
-    - O(log n)
-- Primary keys are indexed by default
-- It's fairly common to name an index after the column it's created on with a suffix of `_idx`
-- You shouldn't index too many columns
-    - Indexes take up space
-    - Create performance overhead when inserting or updating data
-    - Each time you insert a record, that record needs to be added to many trees
+- creates a binary tree
+- faster to look up values in a column
+    - o(log n)
+- primary keys are indexed by default
+- it's fairly common to name an index after the column it's created on with a suffix of `_idx`
+- you shouldn't index too many columns
+    - indexes take up space
+    - create performance overhead when inserting or updating data
+    - each time you insert a record, that record needs to be added to many trees
 
 ```sql
 CREATE INDEX email_idx ON users(email);
@@ -242,8 +242,8 @@ CREATE INDEX email_idx ON users(email);
 
 ### Multi-column indexes
 
-- Speed up look ups that depend on multiple columns
-- Only add multi-column indexes if you're doing frequent lookups on a specific combination of columns
+- speed up look ups that depend on multiple columns
+- only add multi-column indexes if you're doing frequent lookups on a specific combination of columns
 
 A multi-column index is sorted by the first column first, the second column next, and so forth. A lookup on only the first column in a multi-column index gets almost all of the performance improvements that it would get from its own single-column index. However, lookups on only the second or third column will have very degraded performance
 
@@ -466,26 +466,26 @@ FROM contractors;
 
 # theory
 
-- grau de tabela: nº de colunas na tabela
-- cardinalidade: nº de linhas na tabela
+- grau de tabela: nº of columns in table
+- cardinality: nº of rows in table
 
 - SQL sublanguages
-  - DDL (Data Definition Languague): object definition
+  - DDL (Data Definition Language): object definition
     - create
     - alter
     - drop
     - truncate
-  - DML (Data Manipulation Languague): data manipulation
+  - DML (Data Manipulation Language): data manipulation
     - delete
     - update
     - select
-    - DQL (Data Query Languague)
+    - DQL (Data Query Language)
       - select
-  - DTL (Data Transaction Languague): transactions control
+  - DTL (Data Transaction Language): transactions control
     - commit
     - rollback
     - savepoint
-  - DCL (Data Control Languague): safety and access control
+  - DCL (Data Control Language): safety and access control
     - grant
     - revoke
 
@@ -518,26 +518,38 @@ FROM contractors;
   - example: employees ⨝ employees.department_id = departments.department_id departments
 
 
-## Normal Forms
+## Normal Forms and Data Normalization
 
-- BCNF contains 3NF, which contains 2NF, which contains 1NF
+- BCNF ⊂ 3NF ⊂ 2NF ⊂ 1NF
+
+- IMPORTANT: primary key in SQL != primary key in data normalization/normal forms
+  - in data normalization, primary key is the collections that uniquely identifies a row
+  - in SQL, primary key is a single column that uniquely identifies a row
 
 ### First Normal Form (1NF)
 
-- It must have a unique primary key
-- A cell can't have a nested table as its value (depending on the database you're using, this may not even be possible)
+- it must have a unique primary key
+- a cell can't have a nested table as its value
+  - a cell can't have multiple values
+    - may not even be possible
+- OBS: 1NF = 1 value per cell
 
 ### Second Normal Form (2NF)
 
-- All columns that are not part of the primary key are dependent on the entire primary key, and not just one of the columns in the primary key
+- table must be in 1NF
+- all non-key attributes must be fully dependent on the entire primary key
+  - non-key attributes: columns that are not part of the primary key
+- REMINDER: tables can have composite primary keys (multiple columns that collectively functions as a single primary key
 
 ### Third Normal Form (3NF)
 
-- All columns that aren't part of the primary are dependent solely on the primary key
+- table must be in 2NF
+- all columns that aren't part of the primary key are dependent solely on the primary key
+- columns can't depend on other non-key attributes
 
 ### Boyce-Codd Normal Form (BCNF)
 
-- A column that's part of a primary key can not be entirely dependent on a column that's not part of that primary key
+- a column that's part of a primary key can not be entirely dependent on a column that's not part of that primary key
 
 
 ## Rules of thumb for database design
