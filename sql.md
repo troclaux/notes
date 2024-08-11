@@ -12,7 +12,8 @@ SELECT => FROM => WHERE => GROUP BY => HAVING => ORDER BY
 
 - SELECT: retrieve data from database
   - `*`: select all
-- FROM: select the target table
+- FROM: select the target(s) table(s)
+  - list the tables from where data is fetched
 - WHERE: filter records based on conditions
   - BETWEEN: selects values within given range (values can be numbers, text or dates)
   - LIKE: filter records that matches the string
@@ -34,6 +35,7 @@ SELECT => FROM => WHERE => GROUP BY => HAVING => ORDER BY
   - `SELECT column1, COUNT(*) FROM table_name GROUP BY column1;`
 - HAVING: similar to the `WHERE` clause, but
   - operates on groups after they've been grouped, rather than rows before they've been grouped
+  - IMPORTANT: you can't use `HAVING` before `GROUP BY`
 - ORDER BY: order records based on one or more columns
   - limit: restrict the number of matches
 
@@ -73,11 +75,18 @@ SELECT => FROM => WHERE => GROUP BY => HAVING => ORDER BY
 - CREATE database: create new database
 - DROP database: delete a database and all its contents
 
+set operations:
+- UNION
+- INTERSECT
+- MINUS or EXCEPT
+
 TODO
 restrictions:
 - table restrictions
   - column restrictions
     - NULL
+      - you can't compare `NULL` with equal sign (e.g. `WHERE NOME=NULL`)
+      - you should use `IS` keywork (e.g. `WHERE NOME IS NULL`)
     - NOT NULL
     - UNIQUE
     - FOREIGN KEY
@@ -103,11 +112,17 @@ restrictions:
 - DISTINCT: removes duplicate rows from the results of a query
   - `SELECT DISTINCT City FROM Customers;`
 
-- SUM()
-- COUNT(): returns the number of rows that match
-- MIN()
-- MAX()
-- AVG()
+aggregate functions: return only 1 result
+- SUM(): return the sum of all values in the column
+- AVG(): return the average value of the column
+- MIN(): return minimum value
+- MAX(): return maximum value
+- COUNT(column_or_table): count number of rows in result set with non-NULL values in specified column or table
+- IMPORTANT:
+  - aggregate functions CAN be used at:
+    - SELECT, HAVING, ORDER BY
+  - aggregate functions CANNOT be used at:
+    - FROM, WHERE
 
 
 ## Subqueries
@@ -148,12 +163,26 @@ WHERE user_id = (
 
 ## Joins
 
+| types of join   | join conditions    |
+|--------------- | --------------- |
+| INNER JOIN   | NATURAL   |
+| LEFT OUTER JOIN   | ON PREDICATE   |
+| RIGHT OUTER JOIN   | USING (A1, A2, ...)   |
+| FULL OUTER JOIN   | --- |
+
+- natural join: automatically joins matching values
+  - simpler join operation
+- inner join: intersection
+- left join: left table
+- right join: right table
+- full join: L U R
+
 ### INNER JOIN
 
 ```sql
 SELECT *
 FROM employees
-INNER JOIN departments 
+INNER JOIN departments
 ON employees.department_id = departments.id;
 ```
 
@@ -409,6 +438,30 @@ FROM Employees
 WHERE EmployeeID IN (SELECT EmployeeID FROM Orders WHERE OrderDate > '2020-01-01');
 ```
 
+```sql
+SELECT email
+FROM employees
+INTERSECT
+SELECT email
+FROM contractors;
+```
+
+```sql
+SELECT email
+FROM employees
+UNION
+SELECT email
+FROM contractors;
+```
+
+```sql
+SELECT email
+FROM employees
+MINUS
+SELECT email
+FROM contractors;
+```
+
 ---
 
 # theory
@@ -435,6 +488,35 @@ WHERE EmployeeID IN (SELECT EmployeeID FROM Orders WHERE OrderDate > '2020-01-01
   - DCL (Data Control Languague): safety and access control
     - grant
     - revoke
+
+## relational algebra
+
+- Selection (σ)
+  - example: σ(age > 30)(employees)
+  - ```SELECT * FROM employees WHERE age > 30; ```
+  - OBS: σ => Sigma => Select * => sElEct => whErE
+- Projection (π)
+  - example: π(name, age)(employees)
+  - ```SELECT name, age FROM employees;```
+  - OBS: π => PI => PIck => Projection
+- Union (∪)
+  - example: employees ∪ contractors
+  - ```SELECT email FROM employees UNION SELECT email FROM contractors;```
+- Intersection (∩)
+  - example: employees ∩ contractors
+  - ```SELECT email FROM employees INTERSECT SELECT email FROM contractors;```
+- Difference (−)
+  - example: employees − contractors
+  - ```SELECT email FROM employees EXCEPT SELECT email FROM contractors;```
+- Rename (ρ)
+  - example: ρ(name/employee_name)(employees)
+  - ```SELECT name AS employee_name FROM employees;```
+  - OBS: ρ => Rho => Rename
+- Cartesian Product (×)
+  - example: employees × departments
+- Join (⨝ or ٭)
+  - example: employees ⨝ employees.department_id = departments.department_id departments
+
 
 ## Normal Forms
 
