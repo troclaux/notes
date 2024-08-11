@@ -15,23 +15,24 @@
 | O(c^n) | exponential |
 | O(n!) | factorial |
 
-- Adaptive: Faster for partially sorted data sets
-- Stable: Does not change the relative order of elements with equal keys
-- In-Place: Only requires a constant amount of memory
-- Online: Can sort a list as it receives it
+- adaptive: faster for partially sorted data sets
+- stable: does not change the relative order of elements with equal keys
+- in-place: only requires a constant amount of memory
+- online: can sort a list as it receives it
 
-## Bubble Sort
 
-- Summary
-  - Switch pair of elements n² times so that the bigger element goes to the right
-  - Easy to implement
-  - Slow
+## bubble sort
+
+- summary
+  - switch pair of elements n² times so that the bigger element goes to the right
+  - easy to implement
+  - slow
   - low memory usage
-- Time complexity
+- time complexity
   - worst case: O(n²)
   - average case: O(n²)
   - best case: O(n)
-- Space complexity
+- space complexity
   - O(1)
 
 ```python
@@ -46,7 +47,8 @@ def bubblesort(nums):
     return nums
 ```
 
-## Selection Sort
+
+## selection sort
 
 - summary
   - slow
@@ -68,27 +70,28 @@ def bubblesort(nums):
 - space complexity
   - O(1)
 
-## Insertion Sort
 
-- Summary
+## insertion sort
+
+- summary
   - OBS: (insert) unsorted element into correct position
-  - Slow
-  - Simple implementation, easy to write
-  - Faster than other simple sorting algorithms like Bubble Sort
-  - Adaptive: Faster for partially sorted data sets
-  - Stable: Does not change the relative order of elements with equal keys
-  - In-Place: Only requires a constant amount of memory
-  - Online: Can sort a list as it receives it
-- Pseudocode
-  - Separate the array into 2 parts: sorted and unsorted section
-  - Pick the first element of the unsorted and insert it into correct position in sorted section
-  - Put the unsorted element in the correct position in the sorted section
+  - slow
+  - simple implementation, easy to write
+  - faster than other simple sorting algorithms like bubble sort
+  - adaptive: faster for partially sorted data sets
+  - stable: does not change the relative order of elements with equal keys
+  - in-place: only requires a constant amount of memory
+  - online: can sort a list as it receives it
+- pseudocode
+  - separate the array into 2 parts: sorted and unsorted section
+  - pick the first element of the unsorted and insert it into correct position in sorted section
+  - put the unsorted element in the correct position in the sorted section
   - sort the next element of the sorted section
-- Time complexity
+- time complexity
   - worst case: O(n²)
   - average case: O(n²)
   - best case: O(n²)
-- Space complexity
+- space complexity
   - O(1)
 
 ```python
@@ -102,47 +105,50 @@ def insertion_sort(nums):
 ```
 
 
-## Quick Sort
+## quick sort
 
-- Summary
-  - Divide and conquer
-  - Pick a pivot element and partition the array around the pivot
-  - Recursively sort the sub-arrays
+- summary
+  - divide and conquer
+  - pick a pivot element and partition the array around the pivot
+  - recursively sort the sub-arrays
     - all elements less than the pivot are on the left
     - all elements greater than the pivot are on the right
     - the pivot is in the correct position
-  - In-place
-  - Fast (but not always)
-  - High memory usage
-- Pseudocode
-  - Select an element that will be the pivot
-  - Move all elements that are smaller than the pivot on the left of the pivot
-  - Move all elements that are greater than the pivot on the right of the pivot
-  - Run quicksort on the left segment of the array
-  - Run quicksort on the right segment of the array
-- Time complexity
+  - in-place
+  - fast (but not always)
+  - high memory usage
+- pseudocode
+  - select an element that will be the pivot
+  - move all elements that are smaller than the pivot on the left of the pivot
+  - move all elements that are greater than the pivot on the right of the pivot
+  - run quicksort on the left segment of the array
+  - run quicksort on the right segment of the array
+- time complexity
   - best case: O(n * log n)
   - average case: O(n * log n)
   - worst case: O(n²)
-- Space complexity
+- space complexity
   - O(log(n))
 
-## Merge Sort
-- Summary
-  - Fast
-  - Uses a lot of memory
-  - Divide and conquer
-- Pseudocode
-  - Splits unsorted array recursively in two
-  - After splitting, it merges 2 arrays by creating a third and iterating through the 2 initial arrays, comparing the elements and adding the smallest
-- Time complexity
+
+## merge sort
+
+- summary
+  - fast
+  - uses a lot of memory
+  - divide and conquer
+- pseudocode
+  - splits unsorted array recursively in two
+  - after splitting, it merges 2 arrays by creating a third and iterating through the 2 initial arrays, comparing the elements and adding the smallest
+- time complexity
   - best case: O(n * log n)
   - average case: O(n * log n)
   - worst case: O(n * log n)
-- Space complexity
+- space complexity
   - O(n)
 
-## Shell Sort
+
+## shell sort
 
 - summary
   - improvement of Insertion sort
@@ -153,7 +159,8 @@ def insertion_sort(nums):
   - average case: depende do gap
   - worst case: O(n²)
 
-## Heap Sort
+
+## heap sort
 
 - summary
   - uses heap data structure
@@ -163,21 +170,14 @@ def insertion_sort(nums):
   - average case: O(n * log n)
   - worst case: O(n * log n)
 
+
 # data search
 
-- sequential/linear search
-- binary search
+
+## binary search
+
   - sort array
   - compare middle value with target value
   - if middle is equal to target, stop and return current position
   - if middle is bigger than target, discard the half with the bigger numbers and binary search the remaining array
   - if middle is smaller than target, discard the half with the smaller numbers and binary search the remaining array
-
----
-
-# Data Structures
-
-## Linked List
-
-## Queue
-
