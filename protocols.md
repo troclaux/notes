@@ -56,3 +56,16 @@ HTTPS vs TLS
 # layer 5
 # layer 6
 # layer 7
+
+---
+
+# default ports
+
+- FTP 20/21
+- SSH 22
+- TELNET 23
+- SMTP 25
+- DNS 53
+- DHCP 67/68
+- HTTP 80
+- HTTPS 443
