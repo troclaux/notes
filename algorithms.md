@@ -36,7 +36,7 @@
   - O(1)
 
 ```python
-def bubblesort(nums):
+def bubble_sort(nums):
     for j in range(len(nums)):
         for i in range(len(nums)-1-j):
             print(nums)
@@ -70,6 +70,20 @@ def bubblesort(nums):
 - space complexity
   - O(1)
 
+```python
+
+def selection_sort(nums):
+    if len(nums) <= 1:
+        return nums
+    for i in range(len(nums)):
+        min_idx = i
+        for j in range(i + 1, len(nums)):
+            if nums[j] < nums[min_idx]:
+                min_idx = j
+        nums[i], nums[min_idx] = nums[min_idx], nums[i]
+    return nums
+
+```
 
 ## insertion sort
 
@@ -132,7 +146,7 @@ def insertion_sort(nums):
 
 ```python
 
-def quicksort(nums):
+def quick_sort(nums):
     if len(nums) <= 1:
         return nums
     pivot = nums[0]
@@ -143,7 +157,7 @@ def quicksort(nums):
             greater.append(i)
         else:
             less.append(i)
-    return quicksort(less) + [pivot] + quicksort(greater)
+    return quick_sort(less) + [pivot] + quick_sort(greater)
 
 ```
 
@@ -163,6 +177,35 @@ def quicksort(nums):
 - space complexity
   - O(n)
 
+```python
+
+def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    mid = len(arr) // 2
+    left = arr[:mid]
+    print("left:", left)
+    right = arr[mid:]
+    print("right:", right)
+    return merge(merge_sort(left), merge_sort(right))
+
+
+def merge(arr1, arr2):
+    res = []
+    i = 0
+    j = 0
+    while i < len(arr1) and j < len(arr2):
+        if arr1[i] < arr2[j]:
+            res.append(arr1[i])
+            i += 1
+        else:
+            res.append(arr2[j])
+            j += 1
+    res.extend(arr1[i:])
+    res.extend(arr2[j:])
+    return res
+
+```
 
 ## shell sort
 
