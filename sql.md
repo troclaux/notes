@@ -159,8 +159,6 @@ WHERE user_id = (
 ```
 
 
-
-
 ## Joins
 
 | types of join   | join conditions    |
@@ -539,7 +537,7 @@ FROM contractors;
 - table must be in 1NF
 - all non-key attributes must be fully dependent on the entire primary key
   - non-key attributes: columns that are not part of the primary key
-- REMINDER: tables can have composite primary keys (multiple columns that collectively functions as a single primary key
+- IMPORTANT: tables can have composite primary keys (multiple columns that collectively functions as a single primary key
 
 ### Third Normal Form (3NF)
 
@@ -549,7 +547,7 @@ FROM contractors;
 
 ### Boyce-Codd Normal Form (BCNF)
 
-- a column that's part of a primary key can not be entirely dependent on a column that's not part of that primary key
+- a column that's part of a primary key can't be entirely dependent on a column that's not part of that primary key
 
 
 ## Rules of thumb for database design
