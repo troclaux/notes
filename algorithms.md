@@ -130,6 +130,22 @@ def insertion_sort(nums):
 - space complexity
   - O(log(n))
 
+```python
+
+def quicksort(nums):
+    if len(nums) <= 1:
+        return nums
+    pivot = nums[0]
+    less = []
+    greater = []
+    for i in nums[1:]:
+        if i > pivot:
+            greater.append(i)
+        else:
+            less.append(i)
+    return quicksort(less) + [pivot] + quicksort(greater)
+
+```
 
 ## merge sort
 
@@ -172,7 +188,6 @@ def insertion_sort(nums):
 
 
 # data search
-
 
 ## binary search
 
