@@ -47,6 +47,7 @@ Explanation:
 - block elements
   - `<br>`: Inserts a single line break
   - `<a>`: Defines a hyperlink
+    - OBS: `<a>` => Anchor
   - `<p>`: Defines a paragraph
   - `<div>`: Defines a section in a document
   - `<img>`: Defines an image
