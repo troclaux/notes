@@ -8,15 +8,21 @@
 - weak entity: rectangle that contains another rectangle or balloon with dotted underline
   - cannot be uniquely identified by its own attributes
   - depends on a strong entity to be identified
-- relationship: losangle
-  - id relationship: losangle that contains another losangle
+- relationship: diamond
+  - id relationship: diamond that contains another diamond
   - recursive relationship: occurs when an entity has multiple functions with itself
 - attribute: empty dot
   - identifying attribute: black dot or balloon with underlined attribute
   - multivalued attributes: balloon that contains another balloon
-  - derived attributes: dotted ballon
+  - derived attributes: dotted baloon
     - attribute that can be defined from another attributes
 - inheritance: triangle
+  - total or partial
+    - total: all instances of superclass must be instances of subclass
+    - partial: some instances of superclass must be instances of subclass
+  - overlapped or disjoint
+    - disjoint: entities in superclass can only be instance of one subclass
+    - overlapped: entities in superclass can instances of multiples subclasses simultaneously
 
 
 ### crow's notation
@@ -72,7 +78,7 @@
 
 - cardinality symbols
   - read diagram as:
-    - Entity1 can have 0..* Entity2
+    - Entity1 can have 0..* relations with Entity2
     - the multiplicity is closer to the entity it applies to
   - multiplicity
     - 1: one
@@ -86,10 +92,8 @@
 
 # theory
 
-
 - SGBD: Sistema Geral de Banco de Dados
 - SBD: Sistema de Banco de Dados
-  - 
 - SBD = SGBD + BD
 
 três categorias de modelos de dados:
@@ -106,7 +110,7 @@ três categorias de modelos de dados:
 
 Modelo Lógico de Dados para um Sistema de Vendas:
 
-| Tabela   | **Colunas**                                         |
+| Tabela   | Colunas |
 | --- | --- |
 | Clientes | ClienteID (INT, PK), Nome (VARCHAR), Email (VARCHAR)|
 | Pedidos  | PedidoID (INT, PK), ClienteID (INT, FK), Data (DATE)|
