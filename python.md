@@ -21,11 +21,12 @@
 - min(iter1): returns the minimum value of an iterable
 - max(iter1): returns the maximum value of an iterable
 - sum(iter1): returns the sum of all values in an iterable
+
 - str1.upper(): return str1 in upper case
 - str1.lower(): return str1 in lower case
 - str1.strip(): remove leading/trailing spaces and line breaks from input string
 - str1.replace(str2): if str2 is in str1, replace it
-- str1.split(): split string into a list of string
+- str1.split(): split string into a list of strings
   - by default, the delimiter is space
   - provide string/char as input to change default delimiter
 - str1.count(str2): return the number of times str2 occurs in str1
@@ -194,7 +195,7 @@ int_num = int(4.0)
 float_num = float(4)
 
 # converts number into string
-str_num = (5)
+str_num = str(5)
 ```
 ### dates
 
@@ -206,6 +207,7 @@ x = datetime.datetime.now()
 ## classes/objects
 
 ```python
+
 # Define a class
 class Dog:
     def __init__(self, name):
@@ -231,11 +233,12 @@ print(my_dog.bark())  # Outputs: "Woof!"
 ## modules/libraries
 
 ```python
+
 import my_module as mm
 import pandas as pd
 
-x = dir(pd)
-# list the names of all functions and variables in a module
+x = dir(pd) # list the names of all functions and variables in a module
+
 ```
 
 ## automation with scripts
@@ -243,9 +246,10 @@ x = dir(pd)
 - PyAutoGUI: allows scripts to control mouse and keyboard to automate interaction with apps
 - pywinauto: automates GUI testing for windows applications
 - selenium: automates web browser interaction for testing web applications
-- splinter: simplifies web application testing by 
+- splinter: simplifies web application testing
 - scrapy: web crawling framework for extracting data from websites
 - windmill: tests web applications with automation and debugging tools
+  - OBS: Windmill => Web
 - pytest: testing framework
 - ReportLab: creates pdf reports programmatically
 - PDFMiner: extracts texts, images, and metadata from pdfs
