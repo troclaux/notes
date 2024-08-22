@@ -8,9 +8,10 @@
 
 layers:
 1. physical
-  - transmits bit stream to physical medium
+  - transmits raw data bits over physical medium
   - USB, RJ45
 2. data link/enlace
+  - ensures error-free data transfer between two connected nodes
   - defines format of data on the network
   - transfers data between network nodes to WAN (Wide Area Network)
   - MAC addresses, ethernet, switches
@@ -29,6 +30,15 @@ layers:
   - ASCII, JPEG
 7. application
   - HTTP, FTP
+
+OBS: layer order
+1. physical
+2. data link => 2 words
+3. network => n3twork
+4. transport => tr4nsport
+5. session => 5e55ion
+6. presentation
+7. application
 
 ## network layer 3
 
