@@ -56,6 +56,14 @@ public class Main {
     System.out.println(myInt); // Outputs 9
     System.out.println(myDouble); // Outputs 9.0
 
+    String str = "2";
+    int myInt = Integer.parseInt(str); // Converts the string '2' to the integer 2
+    System.out.println("The integer value is: " + myInt);
+
+    String str = "3.14";
+    float myFloat = Float.parseFloat(str); // Converts the string '3.14' to the float 3.14
+    System.out.println("The float value is: " + myFloat);
+
   }
 }
 ```
@@ -204,7 +212,7 @@ to build a package, you must provide:
 - `protected`: can be accessed from within the same package and subclasses
 - `private`: can only by accessed from same class
   - creates the need for public methods inside the class that provide controlled access to private fields
-    - e.g.: getAccountNumeber(), getBalance(), deposit(), withdraw()
+    - e.g.: getAccountNumber(), getBalance(), deposit(), withdraw()
 
 ---
 
