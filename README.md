@@ -1,5 +1,4 @@
 
-## Table of Contents
+# Computer Science Notes
 
-- [PERN stack](./pern.md)
-
+Welcome to my repository of computer science notes! Here you'll find a collection of my notes, explanations, and code examples covering various topics in computer science.
