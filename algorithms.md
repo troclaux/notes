@@ -184,9 +184,7 @@ def merge_sort(arr):
         return arr
     mid = len(arr) // 2
     left = arr[:mid]
-    print("left:", left)
     right = arr[mid:]
-    print("right:", right)
     return merge(merge_sort(left), merge_sort(right))
 
 
