@@ -1,29 +1,29 @@
-# Back up with rsync
+# back up with rsync
 
-### To back up
+### to back up
 
 ```shell
 rsync -av --progress --delete ~/source/directory ~/backups
 ```
 
-### Backing up home directory from another storage device
+### backing up home directory from another storage device
 
 ```shell
 rsync -av --progress --delete /mnt/backups/directory ~/backups
 ```
 
-### To back up regularly on a specific schedule
+### to back up regularly on a specific schedule
 
-1. Edit 'crontab' file:
+1. edit 'crontab' file:
   ```shell
   crontab -e
   ```
-2. Add a Cron job to back up every Sunday at 2 AM:
+2. add a cron job to back up every sunday at 2 am:
   ```shell
   0 15 * * 0 rsync -av --delete ~/.config/nvim ~/backups
   ```
 
-### To restore
+### to restore
 
 ```shell
 rsync -av --delete ~/backups/nvim ~/.config
@@ -33,21 +33,21 @@ rsync -av --delete ~/backups/nvim ~/.config
 rsync -av --delete ~/backups/troclaux /home
 ```
 
-### Restore with a Dry Run
+### restore with a dry run
 
-Allows you to see what changes will be made without actually applying them
+allows you to see what changes will be made without actually applying them
 ```shell
 sudo rsync -av --delete --dry-run ~/backups/nvim ~/.config
 ```
 
-### Verifying the Cron Job
+### verifying the cron job
 
-After saving, verify that the cron job has been added correctly by listing the current cron jobs:
+after saving, verify that the cron job has been added correctly by listing the current cron jobs:
 ```shell
 crontab -l
 ```
 
-### example of cronjob command
+### example of cron job command
 
 ```shell
 0 15 * * 2 rsync -av --delete ~/Music/chill_game_ost ~/backups >> ~/backups/logs/chill_game_ost.log 2>&1
