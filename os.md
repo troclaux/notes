@@ -95,7 +95,7 @@ categories of scheduling algorithms:
 
 ## Deadlock
 
-> Occurs when a process depends on an event from another process and vice versa.
+> Occurs when a process depends on an event from another process and vice versa
 
 There are 4 conditions for a deadlock to occur, called Coffman's conditions:
 1. Mutual exclusion
