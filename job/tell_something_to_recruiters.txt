@@ -1,3 +1,3 @@
-I'm curious and eager to learn. I enjoy learning CLI tools in my free time, and I have written an Ansible playbook that sets up a Linux machine with all my configurations and tools (packages, dotfiles, and my scripts). So, if you hire me, onboarding will be fast ;).
+I'm curious and eager to learn. I enjoy learning CLI tools in my free time, and I have written an Ansible playbook that sets up a Linux machine with all my configurations and tools (packages, dotfiles, and my scripts). So, if you hire me, onboarding will be fast.  ;)
 
 Sou curioso e gosto de aprender. Após encerrar minha graduação, estou entusiasmado para ganhar experiência no mercado de trabalho e aprender mais sobre computação em nuvem. Gosto de ferramentas CLI e de automatizar a configuração do meu computador com ferramentas como Ansible playbook e stow. Assim, se você me contratar, o processo de integração na sua equipe será rápido ;)
