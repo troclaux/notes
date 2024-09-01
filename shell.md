@@ -1,4 +1,23 @@
 
+
+## basic shell commands
+
+- `!!`: run last command
+- `$(...)`: command substitution
+  - `nvim $(find . | fzf)`: open a file from a fuzzy find in neovim
+  - only works in strings with double quotes
+    - `name="Arthur" && echo 'Hello, '"$name"'! How are you today?'  # Output: Hello, Arthur! How are you today?`
+
+- `ls`: list items in current directory
+- `pwd`: print present working directory
+- `touch`: create new file
+- `cd`: change to directory
+- `mv`: rename or move file
+- `rm`: remove file or directory
+- `chmod`: 
+- `chown`: 
+
+
 ## Wildcard matching
 
 - *: matches zero or more characters except slashes (/)
@@ -181,3 +200,24 @@ changing filenames in another directory
 ```shell
 for file in pdfs/cnu_*; do mv "$file" "pdfs/${file#pdfs/cnu_}"; done
 ```
+
+# zsh
+
+
+
+## creating zsh keybinds
+
+```shell
+
+bindkey -s '^h' "nvim . -c 'Telescope find_files'\n"
+bindkey -s '^b' "!!\n\n"
+bindkey '^Y' autosuggest-accept
+
+```
+
+# oh-my-zsh
+
+- `omz update`: update oh-my-zsh
+- `zsh_stats`: list most used commands
+- `-`: go to previous directory
+- `d`: list last visited directories
