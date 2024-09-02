@@ -17,38 +17,38 @@
 
 ## basic methods
 
-- len(obj1): returns the number of elements in an object (string, list, set, etc)
-- min(iter1): returns the minimum value of an iterable
-- max(iter1): returns the maximum value of an iterable
-- sum(iter1): returns the sum of all values in an iterable
+- `len(obj1)`: returns the number of elements in an object (string, list, set, etc)
+- `min(iter1)`: returns the minimum value of an iterable
+- `max(iter1)`: returns the maximum value of an iterable
+- `sum(iter1)`: returns the sum of all values in an iterable
 
-- str1.upper(): return str1 in upper case
-- str1.lower(): return str1 in lower case
-- str1.strip(): remove leading/trailing spaces and line breaks from input string
-- str1.replace(str2): if str2 is in str1, replace it
-- str1.split(): split string into a list of strings
+- `str1.upper()`: return str1 in upper case
+- `str1.lower()`: return str1 in lower case
+- `str1.strip()`: remove leading/trailing spaces and line breaks from input string
+- `str1.replace(str2)`: if str2 is in str1, replace it
+- `str1.split()`: split string into a list of strings
   - by default, the delimiter is space
   - provide string/char as input to change default delimiter
-- str1.count(str2): return the number of times str2 occurs in str1
-- str1.isalnum(): returns True if all chars in string are alphanumeric, False otherwise
-- str1.isdigit(): returns True if all chars in string are numbers, False otherwise
-- list1.append(elem1): appends an element to the end of a list
-- list1.copy(): returns a copy of a list
-- list1.insert(idx, elem1): inserts elem1 at index idx of the list
-- list1.push(elem1): inserts elem1 at the end of list1
-- list1.pop(): removes and returns last element of list1
+- `str1.count(str2)`: return the number of times str2 occurs in str1
+- `str1.isalnum()`: returns True if all chars in string are alphanumeric, False otherwise
+- `str1.isdigit()`: returns True if all chars in string are numbers, False otherwise
+- `list1.append(elem1)`: appends an element to the end of a list
+- `list1.copy()`: returns a copy of a list
+- `list1.insert(idx, elem1)`: inserts elem1 at index idx of the list
+- `list1.push(elem1)`: inserts elem1 at the end of list1
+- `list1.pop()`: removes and returns last element of list1
   - if you provide a number as input, `pop()` will try to remove the number at that index
-- list1.remove(elem1): first instance of elem1, if there's no instance of elem1 raises `ValueError`
+- `list1.remove(elem1)`: first instance of elem1, if there's no instance of elem1 raises `ValueError`
   - removes element by value
 - `del list1[1:3]`: removes element by index
-- list1.clear(): removes all elements of list1
-- list1.reverse(): reverse the order of elements in list1
-- list1.sort(): sort elements in list1
-- dict1.clear(): removes all elements in dict1
-- dict1.copy(): returns copy of dict1
-- dict1.keys(): returns a list with all keys in dict1
-- dict1.values(): returns a list with all values in dict1
-- dict1.items(): returns a list containing a tuple for each key-value pair
+- `list1.clear()`: removes all elements of list1
+- `list1.reverse()`: reverse the order of elements in list1
+- `list1.sort()`: sort elements in list1
+- `dict1.clear()`: removes all elements in dict1
+- `dict1.copy()`: returns copy of dict1
+- `dict1.keys()`: returns a list with all keys in dict1
+- `dict1.values()`: returns a list with all values in dict1
+- `dict1.items()`: returns a list containing a tuple for each key-value pair
 
 ```python
 fruits = ["apple", "banana", "cherry", "date"]
@@ -89,6 +89,20 @@ def my_function(input1, input2):
   print(input1, input2)
 
 my_function('hello', 'world')
+```
+
+## enums
+
+> variable that can only take a set of fixed values
+
+```python
+
+from enum import Enum
+
+Color = Enum('Color', ['RED', 'GREEN', 'BLUE'])
+print(Color.RED)  # this works, prints 'Color.RED'
+print(Color.TEAL) # this raises an exception
+
 ```
 
 ## lambda functions
@@ -184,6 +198,17 @@ print(len(person))
 person.clear()
 ```
 
+### type checking
+```python
+
+elem = 5.1
+
+# checks if variable is a number
+isinstance(elem, (int, float)) # returns True
+isinstance(5, list) # returns False
+isinstance([5, 6], list) # returns True
+
+```
 
 ### type casting
 
