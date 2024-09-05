@@ -7,7 +7,7 @@
 - has strong standard library
 - syntax is similar to C
 - no implicit type conversion
-- doesn't have `while`
+- doesn't have `while`, uses `for` instead
 
 ## go commands
 
