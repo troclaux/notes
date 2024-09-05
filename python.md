@@ -250,6 +250,35 @@ print(my_dog.name)  # Outputs: "Fido"
 # Call the object's method
 print(my_dog.bark())  # Outputs: "Woof!"
 ```
+
+## inheritance
+
+```python
+
+class ParentClass:
+    def __init__(self, name):
+        self.name = name
+
+    def greet(self):
+        print(f"Hello, {self.name}!")
+
+# ChildClass inherits from ParentClass
+class ChildClass(ParentClass):
+    def __init__(self, name, age):
+        # Call the constructor of ParentClass
+        super().__init__(name)
+        self.age = age
+
+    def display_age(self):
+        print(f"{self.name} is {self.age} years old.")
+
+# Creating an object of the ChildClass
+child = ChildClass("Alice", 20)
+child.greet()         # Method inherited from ParentClass
+child.display_age()   # Method of ChildClass
+
+```
+
 ## iterators
 
 > object that contains a countable amount of values
