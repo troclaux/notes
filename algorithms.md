@@ -1,7 +1,6 @@
 
-# Algorithms
-
 ![Big O complexity chart](./images/big_o_complexity_chart.jpg)
+[Big O cheat sheet](https://www.bigocheatsheet.com/)
 
 | notation   | name    |
 |--------------- | --------------- |
@@ -15,11 +14,13 @@
 | O(c^n) | exponential |
 | O(n!) | factorial |
 
+jargons:
 - adaptive: faster for partially sorted data sets
 - stable: does not change the relative order of elements with equal keys
 - in-place: only requires a constant amount of memory
 - online: can sort a list as it receives it
 
+# sorting algorithms
 
 ## bubble sort
 
@@ -39,11 +40,8 @@
 def bubble_sort(nums):
     for j in range(len(nums)):
         for i in range(len(nums)-1-j):
-            print(nums)
             if nums[i] > nums[i+1]:
-                buffer = nums[i+1]
-                nums[i+1] = nums[i]
-                nums[i] = buffer
+                nums[i], nums[i+1] = nums[i+1], nums[i]
     return nums
 ```
 
@@ -228,12 +226,77 @@ def merge(arr1, arr2):
   - worst case: O(n * log n)
 
 
-# data search
+# search algorithms
 
 ## binary search
 
-  - sort array
-  - compare middle value with target value
-  - if middle is equal to target, stop and return current position
-  - if middle is bigger than target, discard the half with the bigger numbers and binary search the remaining array
-  - if middle is smaller than target, discard the half with the smaller numbers and binary search the remaining array
+- efficient search on sorted arrays
+- compare middle value with target value
+- if middle is equal to target, stop and return current position
+- if middle is bigger than target, discard the half with the bigger numbers and binary search the remaining array
+- if middle is smaller than target, discard the half with the smaller numbers and binary search the remaining array
+
+## depth-first search (DFS)
+
+- summary
+  - explore as far as possible along each branch before backtracking
+  - uses a stack
+  - recursive implementation
+
+
+## breadth-first search (BFS)
+
+- summary
+  - explore all neighbor nodes at the present depth prior to moving on to the nodes at the next depth level
+  - uses a queue
+  - iterative implementation
+
+# minimum spanning tree algorithms
+
+## kruskal's algorithm
+
+- summary
+  - find the minimum spanning tree in a graph
+  - greedy algorithm
+  - works with positive and negative weights
+
+## prim's algorithm
+
+- summary
+  - find the minimum spanning tree in a graph
+  - greedy algorithm
+  - works with positive weights
+
+
+
+# shortest path algorithms
+
+## dijkstra's algorithm
+
+- summary
+  - find the shortest path between source node and all other nodes in a graph
+  - greedy algorithm
+  - works with positive weights
+- time complexity
+  - O(V*E)
+    - V: number of vertices
+    - E: number of edges
+
+## bellman-ford algorithm
+
+- summary
+  - find the shortest path between nodes in a graph
+  - works with negative weights
+  - slower than dijkstra's algorithm
+- time complexity
+  - O(V²)
+    - V: number of vertices
+
+
+## a* algorithm
+
+- summary
+  - find the shortest path between nodes in a graph
+  - uses heuristics to find the best path
+  - uses a priority queue
+
