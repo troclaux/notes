@@ -57,15 +57,16 @@ def bubble_sort(nums):
   - slow
   - OBS: SeLectiOn sort => SLOw
   - OBS: SELECTION Sort => SELECT Smallest and Swap
+  - find smallest value and swap with rightmost value in sorted section
   - in-place
   - not stable
   - simple implementation
 - pseudocode
   - split values into sorted and unsorted
     - sorted section begins empty
-  - select smallest value in all unsorted section
-  - swap smallest value with rightmost/last position of sorted section
-  - repeat
+  - find smallest value in all unsorted section
+  - swap smallest value with rightmost value of sorted section
+  - repeat until array is sorted
 - time complexity
   - best case: Ω(n²)
   - average case ϴ(n²)
@@ -94,12 +95,14 @@ def selection_sort(nums):
   - OBS: (insert) unsorted element into correct position
   - slow
   - simple implementation, easy to write
+  - get first unsorted element, then insert it in correct position in sorted section
   - faster than other simple sorting algorithms like bubble sort
   - adaptive: faster for partially sorted data sets
   - stable: does not change the relative order of elements with equal keys
   - in-place: only requires a constant amount of memory
   - online: can sort a list as it receives it
 - pseudocode
+  - iterate over the array and position the current element in the correct position
   - separate the array into 2 parts: sorted and unsorted section
   - pick the first element of the unsorted and insert it into correct position in sorted section
   - put the unsorted element in the correct position in the sorted section
@@ -113,11 +116,13 @@ def selection_sort(nums):
 
 ```python
 def insertion_sort(nums):
-    for i in range(len(nums)):
-        j = i
-        while j > 0 and nums[j - 1] > nums[j]:
-            nums[j], nums[j - 1] = nums[j - 1], nums[j]
+    for i in range(1, len(nums)):
+        key = nums[i]
+        j = i - 1
+        while j >= 0 and nums[j] > key:
+            nums[j + 1] = nums[j]
             j -= 1
+        nums[j + 1] = key
     return nums
 ```
 
