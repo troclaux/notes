@@ -19,6 +19,11 @@ jargons:
 - stable: does not change the relative order of elements with equal keys
 - in-place: only requires a constant amount of memory
 - online: can sort a list as it receives it
+- space complexity: measure of the amount of memory used by an algorithm as the input size grows
+- time complexity: measure of the runtime of an algorithm as the input size grows
+  - best case => Ω()
+  - average case => ϴ()
+  - worst case => O()
 
 # sorting algorithms
 
@@ -30,9 +35,9 @@ jargons:
   - slow
   - low memory usage
 - time complexity
+  - best case: Ω(n)
+  - average case ϴ(n²)
   - worst case: O(n²)
-  - average case: O(n²)
-  - best case: O(n)
 - space complexity
   - O(1)
 
@@ -51,7 +56,7 @@ def bubble_sort(nums):
 - summary
   - slow
   - OBS: SeLectiOn sort => SLOw
-  - OBS: Select Smallest and Swap
+  - OBS: SELECTION Sort => SELECT Smallest and Swap
   - in-place
   - not stable
   - simple implementation
@@ -62,9 +67,9 @@ def bubble_sort(nums):
   - swap smallest value with rightmost/last position of sorted section
   - repeat
 - time complexity
+  - best case: Ω(n²)
+  - average case ϴ(n²)
   - worst case: O(n²)
-  - average case: O(n²)
-  - best case: O(n²)
 - space complexity
   - O(1)
 
@@ -100,9 +105,9 @@ def selection_sort(nums):
   - put the unsorted element in the correct position in the sorted section
   - sort the next element of the sorted section
 - time complexity
+  - best case: Ω(n²)
+  - average case ϴ(n²)
   - worst case: O(n²)
-  - average case: O(n²)
-  - best case: O(n²)
 - space complexity
   - O(1)
 
@@ -136,8 +141,8 @@ def insertion_sort(nums):
   - run quicksort on the left segment of the array
   - run quicksort on the right segment of the array
 - time complexity
-  - best case: O(n * log n)
-  - average case: O(n * log n)
+  - best case: Ω(n * log n)
+  - average case ϴ(n * log n)
   - worst case: O(n²)
 - space complexity
   - O(log(n))
@@ -169,8 +174,8 @@ def quick_sort(nums):
   - splits unsorted array recursively in two
   - after splitting, it merges 2 arrays by creating a third and iterating through the 2 initial arrays, comparing the elements and adding the smallest
 - time complexity
-  - best case: O(n * log n)
-  - average case: O(n * log n)
+  - best case: Ω(n * log n)
+  - average case ϴ(n * log n)
   - worst case: O(n * log n)
 - space complexity
   - O(n)
@@ -203,26 +208,14 @@ def merge(arr1, arr2):
 
 ```
 
-## shell sort
-
-- summary
-  - improvement of Insertion sort
-  - gap
-- pseudocode
-- time complexity
-  - best case: O(n * log n)
-  - average case: depende do gap
-  - worst case: O(n²)
-
-
 ## heap sort
 
 - summary
   - uses heap data structure
 - pseudocode
 - time complexity
-  - best case: O(n * log n)
-  - average case: O(n * log n)
+  - best case: Ω(n * log n)
+  - average case ϴ(n * log n)
   - worst case: O(n * log n)
 
 
