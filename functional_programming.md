@@ -37,6 +37,8 @@ pure functions have the 2 following properties:
 2. no side effects: the function does not alter any state or interact with the outside world
   - no modifying global variables
   - no input/output operations, etc
+  - exceptions are considered side effects
+    - in FP, represent error as data (e.g. the ParseError class), rather than raising exceptions
 
 ## function transformation
 
@@ -201,6 +203,12 @@ explanation:
 - `@prefix`: equivalent to `printer = prefix(printer)`
   - passes the `printer()` function as argument to `prefix()`
   - also renames `prefix(printer)` to `printer()`
+
+## sum types
+
+> type that can hold different kinds of values, but only one at a time
+
+- also known as tagged unions or variant types
 
 ## python functional programming
 
