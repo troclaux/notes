@@ -29,7 +29,8 @@ class Heap:
 
     def __str__(self):
         curr = self.head
+        values = []
         while curr:
-            print(curr.value)
+            values.append(str(curr.value))
             curr = curr.next
-        return ""
+        return " -> ".join(values)
