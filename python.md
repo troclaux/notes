@@ -284,15 +284,68 @@ child.display_age()   # Method of ChildClass
 > object that contains a countable amount of values
 
 
-## modules/libraries
+## modules
+
+> modules are individual python files (.py) that can be imported and reused in other python files.
 
 ```python
-
 import my_module as mm
 import pandas as pd
 
 x = dir(pd) # list the names of all functions and variables in a module
+```
 
+## packages
+
+> groups related modules into a directory structure
+
+- to make a directory a package, it must contain a special file called __init__.py
+- the file can be empty, but its presence makes the directory importable
+- you can also include initialization code in __init__.py, which will run when the package is imported
+
+```
+my_project/
+├── my_package/
+│   ├── __init__.py
+│   ├── module_a.py
+│   ├── module_b.py
+│
+├── tests/
+│   ├── __init__.py       # Makes tests a package
+│   ├── test_module_a.py  # Test file for module_a
+│   └── test_module_b.py  # Test file for module_b
+│
+├── requirements.txt      # Project dependencies
+└── main.py
+```
+
+to import a module from a package, use the following syntax:
+```python
+import math as m        # creates alias for module
+from module import *
+from my_package.module_a import *
+from my_package.module_b import Node
+```
+
+## libraries
+
+> collection of packages and modules that provide specific functionality
+
+- can be built-in (come with Python) or third-party (need to be installed, normally using pip)
+  - standard library
+    - included with python
+    - no need to install
+    - e.g.: `os`, `sys`, `math`, `random`, `datetime`, etc
+  - third-party libraries
+    - not included with python
+    - need to be installed
+    - e.g.: `numpy`, `pandas`, `matplotlib`, `requests`, etc
+
+standard library example
+```python
+import math
+
+print(math.sqrt(16))  # Outputs: 4.0
 ```
 
 ## automation with scripts
