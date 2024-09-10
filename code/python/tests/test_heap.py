@@ -1,6 +1,3 @@
-import pytest
-
-
 def test_heap():
     from python.heap import Heap
 
