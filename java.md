@@ -1,7 +1,7 @@
 - pass by value: actual value of the argument is passed
 - pass by reference: address to the actual argument is passed
 
-- namespace: declarative region that provides a scope to the identifiers (names of types, functions, variables )inside it
+- namespace: declarative region that provides a scope to the identifiers (names of types, functions, variables) inside it
 
 # introduction
 
@@ -19,56 +19,102 @@
 - JVM: allows java to run in any OS (Linux, Windows, Mac)
 - JRE: contains JVM and all the extra tools and libraries needed to run a Java program
 
+- `main()` method is required and you can only have one in a program
+  - `public static void main(String[] args)`
+  - entry point of a Java program
+- **ALL CODE IN JAVA MUST BE WRITTEN INSIDE A CLASS**
+
+```java
+
+// you can import outside classes
+import java.util.ArrayList;
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("Hello World");
+    }
+}
+
+```
 
 ## basic operations
 
 
 ```java
 import java.util.ArrayList;
+import java.util.Collections;
 
-ArrayList<Integer> dynamicArray = new ArrayList<>();
+public class Main {
+    public static void main(String[] args) {
 
-dynamicArray.add(10);
-dynamicArray.add(20);
-dynamicArray.add(30);
+        ArrayList<Integer> dynamicArray = new ArrayList<>();
 
-int element = dynamicArray.get(0);  // Gets the first element (10)
-dynamicArray.remove(1);  // Removes the element at index 1 (20)
+        dynamicArray.add(30);
+        dynamicArray.add(10);
+        dynamicArray.add(20);
 
-int[] myArray = {1, 2, 3, 4, 5};
-String[] cars = {"Volvo", "BMW", "Ford", "Mazda"};
+        Collections.sort(dynamicArray);  // Sorts the array in ascending order
+        System.out.println(dynamicArray);  // Outputs: [10, 20, 30]
 
-System.out.println (cars.length);
+        int element = dynamicArray.get(0);  // Gets the first element (10)
+        dynamicArray.remove(1);  // Removes the element at index 1 (20)
 
-for (int i = 0; i < cars.length; i++) {
-  System.out.println(cars[i]);
+        int[] myArray = {1, 2, 3, 4, 5};
+        String[] cars = {"Volvo", "BMW", "Ford", "Mazda"};
+
+        System.out.println (cars.length);
+
+        for (int i = 0; i < cars.length; i++) {
+          System.out.println(cars[i]);
+        }
+    }
 }
+
 ```
 
-type casting:
+## type casting
+
+2 types of casting:
+- widening casting (implicit): converting a smaller type to a larger type size
+  - smaller: means less memory, e.g. `int` is smaller than `double`
+  - no data loss, because the smaller type fits into the larger type
+- narrowing casting (explicit): converting a larger type to a smaller size type
+  - larger: means more memory, e.g. `double` is larger than `int`
+  - data loss, because the larger type does not fit into the smaller type
+
+- casting vs parsing
+  - casting: converting one data type to another
+  - parsing: converting a string to a primitive data type
 
 ```java
 public class Main {
-  public static void main(String[] args) {
+    public static void main(String[] args) {
 
-    int myInt = 9;
-    double myDouble = myInt; // Automatic casting: int to double
-    System.out.println(myInt); // Outputs 9
-    System.out.println(myDouble); // Outputs 9.0
+        // casting (widening and narrowing)
 
-    String str = "2";
-    int myInt = Integer.parseInt(str); // Converts the string '2' to the integer 2
-    System.out.println("The integer value is: " + myInt);
+        int myInt = 9;
+        double myDouble = myInt; // widening casting: int to double
+        System.out.println(myInt); // Outputs 9
+        System.out.println(myDouble); // Outputs 9.0
 
-    String str = "3.14";
-    float myFloat = Float.parseFloat(str); // Converts the string '3.14' to the float 3.14
-    System.out.println("The float value is: " + myFloat);
+        double myDouble = 3.14;
+        int myInt = (int) myDouble; // Narrowing casting: double to int
 
-  }
+        // parsing
+
+        String str = "2";
+        int myInt = Integer.parseInt(str); // Converts the string '2' to the integer 2
+        System.out.println("The integer value is: " + myInt);
+
+        String str = "3.14";
+        float myFloat = Float.parseFloat(str); // Converts the string '3.14' to the float 3.14
+        System.out.println("The float value is: " + myFloat);
+
+    }
 }
 ```
 
-# Class
+# class
 
 - compilation: process of translating source code into machine code or intermediary form
 
@@ -84,37 +130,145 @@ java program development:
 example of Java Class
 
 ```java
-class Student {
-  int id;
-  String name;
+public class Student {
+    int id;
+    String name;
 
-  public static void main(String args[]) {
-    // creating an object of Student
-    Student s1 = new Student();
-    System.out.println(s1.id);
-    System.out.println(s1.name);
-  }
+    public static void main(String args[]) {
+        // creating an object of Student
+        Student s1 = new Student();
+        System.out.println(s1.id);
+        System.out.println(s1.name);
+    }
 }
 ```
 
-## Java Data Types
+# data types
 
-### Primitive
+## primitive
 
 > Primitive data types: allow storing only one value at a particular location. They are predefined in the Java language and occupy a fixed amount of memory
 
 - There are only 8 primitive data types in Java:
   - `int`, `double`, `boolean`, `char`, `float`, `long`, `short`, `byte`
 
-### Object or Non-Primitive
+## object or non-primitive
 
-> Unlike primitive data types, non-primitive ones are created by the users in Java
+> unlike primitive data types, non-primitive ones are created by the users in java
 
-> Object data types can be used to store more complex data than primitive data types
+> object data types can be used to store more complex data than primitive data types
 
 - e.g. `String`, `Array`, `List`, `Set`, `Map` and `Class`
 
-# Interface
+
+# data structures
+
+types of collections:
+- list: ordered collection of elements
+- set: collection of unique elements
+- map: key-value pairs
+- tree: sorted elements
+
+- arrays
+  - fixed size
+  - fast access
+- `ArrayList`
+  - dynamic resizing
+  - fast access
+- `LinkedList`
+  - fast insertion/deletion
+  - slower access
+- `Stack`: avoid using, use `ArrayDeque` instead
+- `HashMap`
+  - implements Map interface
+- `HashSet`: stores unique elements with fast retrieval time
+  - implements Set interface
+- `TreeMap`: Red-Black tree based implementation of the Map interface
+  - stores sorted key-value pairs
+  - maintains the order of the keys
+  - implements Map interface
+- `TreeSet`: stores unique elements in sorted order
+  - implements Set interface
+- `PriorityQueue`: retrieves elements based on their priority
+  - ONLY IN JAVA: min-heap based implementation (not a priority queue property)
+  - elements are ordered based on their priority
+  - highest priority element is removed first
+  - time complexity (?)
+
+
+examples
+```java
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
+import java.util.PriorityQueue;
+import java.util.Stack;
+
+public class Main {
+    public static void main(String[] args) {
+
+        int[] arr = new int[5];  // Array of 5 integers
+        arr[0] = 10;
+        arr[1] = 20;
+        System.out.println(arr[1]);  // Outputs: 20
+
+
+        ArrayList<String> list = new ArrayList<>();
+        list.add("Alice");
+        list.add("Bob");
+        list.remove("Alice");
+        System.out.println(list.get(0));  // Outputs: Bob
+
+
+        LinkedList<String> list = new LinkedList<>();
+        list.add("Alice");
+        list.addFirst("Bob");
+        list.removeLast();
+        System.out.println(list.getFirst());  // Outputs: Bob
+
+        HashMap<String, Integer> fruit_counter = new HashMap<>();
+        fruit_counter.put("Apple", 50);
+        fruit_counter.put("Banana", 20);
+        System.out.println(fruit_counter.get("Apple"));  // Outputs: 50
+
+        HashSet<String> set = new HashSet<>();
+        set.add("Alice");
+        set.add("Bob");
+        set.add("Alice");  // Duplicate, will not be added
+        System.out.println(set.size());  // Outputs: 2
+
+        TreeMap<String, Integer> map = new TreeMap<>();
+        map.put("Charlie", 35);
+        map.put("Alice", 25);
+        map.put("Bob", 30);
+        System.out.println(map.firstKey());  // Outputs: Alice
+
+        TreeSet<String> set = new TreeSet<>();
+        set.add("Charlie");
+        set.add("Alice");
+        set.add("Bob");
+        System.out.println(set.first());  // Outputs: Alice
+
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        pq.add(20);
+        pq.add(15);
+        pq.add(30);
+        System.out.println(pq.poll());  // Outputs: 15 (smallest element)
+
+        Stack<Integer> stack = new Stack<>();
+        stack.push(10);
+        stack.push(20);
+        System.out.println(stack.pop());  // Outputs: 20
+    }
+}
+
+```
+
+# interface
 
 - a contract that defines a set of methods that a class must implement
 
@@ -132,20 +286,20 @@ implementing the interface:
 
 ```java
 class Smartphone implements Gadget {
-  @Override
-  public void turnOn() {
-    System.out.println("Smartphone is turning on.");
-  }
+    @Override
+    public void turnOn() {
+        System.out.println("Smartphone is turning on.");
+    }
 
-  @Override
-  public void turnOff() {
-    System.out.println("Smartphone is turning off.");
-  }
+    @Override
+    public void turnOff() {
+        System.out.println("Smartphone is turning off.");
+    }
 
-  @Override
-  public void charge() {
-    System.out.println("Smartphone is charging.");
-  }
+    @Override
+    public void charge() {
+        System.out.println("Smartphone is charging.");
+    }
 }
 ```
 # inheritance and encapsulation
@@ -161,20 +315,20 @@ example of polymorphism with method overloading:
 
 ```java
 class Example {
-  void display(int a) {
-    System.out.println("Argument: " + a);
-  }
-  void display(String a) {
-    System.out.println("Argument: " + a);
-  }
+    void display(int a) {
+        System.out.println("Argument: " + a);
+    }
+    void display(String a) {
+        System.out.println("Argument: " + a);
+    }
 }
 
 public class Main {
-  public static void main(String[] args) {
-    Example obj = new Example();
-    obj.display(10);          // Calls display(int a)
-    obj.display("Hello");     // Calls display(String a)
-  }
+    public static void main(String[] args) {
+        Example obj = new Example();
+        obj.display(10);          // Calls display(int a)
+        obj.display("Hello");     // Calls display(String a)
+    }
 }
 ```
 
