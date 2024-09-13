@@ -4,10 +4,10 @@
 
 | notation   | name    |
 |--------------- | --------------- |
-| O(1)   | constant   |
-| O(log n)   | logarithm   |
-| O(n)   | linear   |
-| O(n * log n)   | ---   |
+| O(1) | constant |
+| O(log n) | logarithmic |
+| O(n) | linear |
+| O(n * log n) | --- |
 | O(n²) | quadratic |
 | O(n³) | cubic |
 | O(n^c) | polinomial |
@@ -17,7 +17,7 @@
 jargons:
 - adaptive: faster for partially sorted data sets
 - stable: does not change the relative order of elements with equal keys
-- in-place: only requires a constant amount of memory
+- in-place: algorithm that operates on its input data structure without needing an auxiliary data structure
 - online: can sort a list as it receives it
 - space complexity: measure of the amount of memory used by an algorithm as the input size grows
 - time complexity: measure of the runtime of an algorithm as the input size grows
@@ -119,7 +119,7 @@ def insertion_sort(nums):
     for i in range(1, len(nums)):
         key = nums[i]
         j = i - 1
-        while j >= 0 and nums[j] > key:
+        while j >= 0 and key < nums[j]:
             nums[j + 1] = nums[j]
             j -= 1
         nums[j + 1] = key
