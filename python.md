@@ -4,6 +4,8 @@
 ## basics
 
 - easy to read and understand
+- dynamically typed
+- is interpreted and compiled programming language
 - multiplatform
 - blocks are defined by indentation
 - garbage collection
