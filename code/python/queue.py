@@ -33,7 +33,7 @@ class Queue:
         current = self.head
         for i in range(self.length):
             print(current.value)
-            if current.next != None:
+            if current.next is not None:
                 current = current.next
 
 
