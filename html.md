@@ -71,6 +71,8 @@ Explanation:
   - `<nav>`: Defines a set of navigation links
   - `<section>`: Defines a section in a document, such as chapters, tabs, etc
   - `<footer>`: Represents a container for the footer of a document or a section
+- other elements
+  - `<script>`: embed javascript code within html document
 
 
 ```html
