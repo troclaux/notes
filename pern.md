@@ -1,6 +1,19 @@
 
 [web development](./web_development.md)
 
+
+# basic steps
+
+1. create and clone github repository
+2. create a directory for client and another for server or setup the frameworks for each
+  - `mkdir my_project`
+  - `cd my_project`
+  - `npx create-next-app@latest .`
+    - initializes a new Next.js project in the current directory
+
+3. setup the frameworks for each 
+
+
 # Setting up PostgreSQL locally
 
 1. Install PostgreSQL on the official site
