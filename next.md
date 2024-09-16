@@ -1,6 +1,43 @@
 
 > react framework that enables server-side rendering and static site generation
 
+main features:
+- routing: how users navigate between different parts of your application
+  - file-based routing
+- rendering: 
+- data fetching
+- styling
+- optimizations
+- typescript
+
+# starting a new project
+
+1. create and clone github repository
+2. create a directory for client and another for server or setup the frameworks for each
+  - `mkdir my_project`
+  - `cd my_project`
+  - `npx create-next-app@latest .`
+    - initializes a new Next.js application in the current directory
+3. answer the questions
+  - would you like to use TypeScript? (y)
+  - would you like to use eslint? (N)
+  - would you like to use Tailwind CSS? (y)
+  - would you like to use src/ directory? (y)
+  - would you like to use App Router? Recommended (y)
+  - would you like to customize the default import alias (@/*)? (N)
+4. wait for the installation to finish
+5. `npm run dev` to start the development server
+6. start editing `src/pages/index.tsx` to see the changes in the browser
+
+
+# directory structure
+
+- `pages/`: contains the pages of the application
+- `public/`: contains static files like images, fonts, etc.
+- 
+
+
+
 # Client-Side Rendering vs Server-Side Rendering
 
 ## Client-Side Rendering (CSR)
