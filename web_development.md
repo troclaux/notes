@@ -1,9 +1,29 @@
 
+# basic concepts of web application
+
+- user interface
+- routing: how users navigate between different parts of your application
+- data fetching: where your data lives and how to get it
+- rendering: when and where you render static or dynamic content
+- integrations: what third-party services you use (auth, payments, etc)
+- infrastructure: where you deploy, store and run your application code
+- scalability: how your application adapts as your team, data and traffic grow
+
 - endpoint: specific URL where the server provides a resource/service
   - example:
     - endpoint url: https://api.example.com/books
     - app.get('/books', ...): This line defines an endpoint that listens for GET requests at the /books URL.
 
+when a user visits a webpage:
+1. client (browser) makes a request to the server
+2. server returns an HTML file to the browser
+3. the browser reads HTML and then constructs the DOM
+  - DOM (Document Object Model): representation of the HTML elements of a webpage as a tree of nodes and objects
+    - each part of the page becomes a node
+    - each node can be accessed and manipulated by programming languages like Javascript
+
+- HTML represents the **initial** page content
+- DOM represents the **updated** page content
 
 ## Single Page Application
 
