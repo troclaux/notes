@@ -375,8 +375,8 @@ to build a package, you must provide:
 > small application that is designed to be transmitted over the internet and executed by a web browser
 
 5 methods that define the life cycle of an applet:
-- init(): initializes the applet
-- start(): called after init, starts the applet
-- stop(): stops playing animation/audio/video
-- paint(): draws something on the applet
-- destroy(): free resources, called when the browser is closed
+- `init()`: initializes the applet
+- `start()`: called after init, starts the applet
+- `stop()`: stops playing animation/audio/video
+- `paint()`: draws something on the applet
+- `destroy()`: free resources, called when the browser is closed
