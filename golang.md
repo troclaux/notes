@@ -1,4 +1,6 @@
 
+# golang
+
 ## properties
 
 - functions in go are first-class citizens and can be used as values
@@ -9,7 +11,7 @@
 - no implicit type conversion
 - doesn't have `while`, uses `for` instead
 
-## go commands
+## go cli commands
 
 - `go mod init`:
 - `go fmt`:

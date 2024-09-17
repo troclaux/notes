@@ -1,5 +1,7 @@
 
-# basic concepts of web application
+# web development
+
+## basic concepts of web application
 
 - user interface
 - routing: how users navigate between different parts of your application
@@ -25,7 +27,7 @@ when a user visits a webpage:
 - HTML represents the **initial** page content
 - DOM represents the **updated** page content
 
-## Single Page Application
+### Single Page Application
 
 - composed by a single html page
 - client-side rendering
@@ -35,7 +37,7 @@ when a user visits a webpage:
 - examples
   - gmail, facebook, trello
 
-## Multi-Page Application
+### Multi-Page Application
 
 - each interaction/request loads a new HTML page from the server
 - server-side rendering
@@ -43,20 +45,20 @@ when a user visits a webpage:
 - examples
   - e-commerce sites, news sites
 
-## Progressive Web Application (PWA)
+### Progressive Web Application (PWA)
 
 - can work offline
 - can be installed on user's device
 - examples
   - starbucks
 
-## Server-side Rendered Application (SSR)
+### Server-side Rendered Application (SSR)
 
 - server generates de HTML for each page request
 - examples
   - next.js apps
 
-## Static Site Generator (SSG)
+### Static Site Generator (SSG)
 
 - examples
   - blogs, documentation sites

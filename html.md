@@ -1,5 +1,7 @@
 
-# basic concepts
+# HTML
+
+## basic concepts
 
 - HTML = HyperText Markup Language
 - describes the structure of a webpage
@@ -17,7 +19,7 @@
     - improvements for form controls
 
 
-# basic structure
+## basic structure
 
 ```html
 <!DOCTYPE html>
@@ -42,7 +44,7 @@ Explanation:
 - `<h1>`: This is a heading. HTML headings are defined with the `<h1>` to `<h6>` tags
 - `<p>`: This is a paragraph. It defines a block of text
 
-# elements
+## elements
 
 - block elements
   - `<br>`: Inserts a single line break
@@ -116,7 +118,7 @@ In this example:
 </table>
 ```
 
-## inline elements
+### inline elements
 
 > elements that don't occupy full width and also don't start a newline
 
@@ -126,7 +128,7 @@ In this example:
 - `<em>`
 - `<button>`
 
-# attributes
+## attributes
 
 ```html
 <a href="https://www.example.com">Visit Example</a>

@@ -123,7 +123,7 @@ Possible solutions:
 - Deadlock prevention
 - Deadlock avoidance
 
-# Memory Management
+## Memory Management
 
 - Memory leak: occurs when a program fails to release memory that is no longer needed, gradually reducing the available memory for the system
   - Can occur in two situations:
@@ -133,7 +133,7 @@ Possible solutions:
   - Used only when data is not present in RAM
 - Memory bus: allows data and instruction transfer between CPU and memory
 
-## Virtual Memory
+### Virtual Memory
 
 - Allows processes to use secondary memory instead of main memory (RAM)
 - Allows the system to run larger applications on machines with limited RAM
@@ -151,7 +151,7 @@ Types of virtual memory:
 - Dirty bit: indicates whether a memory page has been modified since it was loaded into memory
 - Thrashing: a phenomenon where the OS spends more time swapping pages between RAM and secondary memory than executing program instructions
 
-### Segmentation Replacement Algorithms
+#### Segmentation Replacement Algorithms
 
 - First-fit: allocates to the first space in memory that is larger or equal in size
 - Next-fit: saves the location of the last free space used. The next search will start from the saved location
@@ -159,7 +159,7 @@ Types of virtual memory:
 - Quick-fit
 - Circular-fit
 
-### Page Replacement Algorithms
+#### Page Replacement Algorithms
 
 - Optimal
 - NRU (Not Recently Used)
@@ -167,10 +167,10 @@ Types of virtual memory:
 - FIFO (First In First Out)
 - Clock
 
-# Input/Output Management
+## Input/Output Management
 
 TODO
 
-# File Systems
+## File Systems
 
 TODO

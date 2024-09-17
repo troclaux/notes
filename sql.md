@@ -462,7 +462,7 @@ FROM contractors;
 
 ---
 
-# theory
+## theory
 
 - grau de tabela: nº of columns in table
 - cardinality: nº of rows in table
@@ -487,7 +487,7 @@ FROM contractors;
     - grant
     - revoke
 
-## relational algebra
+### relational algebra
 
 - Selection (σ)
   - example: σ(age > 30)(employees)
@@ -516,7 +516,7 @@ FROM contractors;
   - example: employees ⨝ employees.department_id = departments.department_id departments
 
 
-## Normal Forms and Data Normalization
+### Normal Forms and Data Normalization
 
 - BCNF ⊂ 3NF ⊂ 2NF ⊂ 1NF
 
@@ -524,7 +524,7 @@ FROM contractors;
   - in data normalization, primary key is the collections that uniquely identifies a row
   - in SQL, primary key is a single column that uniquely identifies a row
 
-### First Normal Form (1NF)
+#### First Normal Form (1NF)
 
 - it must have a unique primary key
 - a cell can't have a nested table as its value
@@ -532,25 +532,25 @@ FROM contractors;
     - may not even be possible
 - OBS: 1NF = 1 value per cell
 
-### Second Normal Form (2NF)
+#### Second Normal Form (2NF)
 
 - table must be in 1NF
 - all non-key attributes must be fully dependent on the entire primary key
   - non-key attributes: columns that are not part of the primary key
 - IMPORTANT: tables can have composite primary keys (multiple columns that collectively functions as a single primary key
 
-### Third Normal Form (3NF)
+#### Third Normal Form (3NF)
 
 - table must be in 2NF
 - all columns that aren't part of the primary key are dependent solely on the primary key
 - columns can't depend on other non-key attributes
 
-### Boyce-Codd Normal Form (BCNF)
+#### Boyce-Codd Normal Form (BCNF)
 
 - a column that's part of a primary key can't be entirely dependent on a column that's not part of that primary key
 
 
-## Rules of thumb for database design
+### Rules of thumb for database design
 
 1. Every table should always have a unique identifier (primary key)
 2. 90% of the time, that unique identifier will be a single column named id

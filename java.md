@@ -3,7 +3,7 @@
 
 - namespace: declarative region that provides a scope to the identifiers (names of types, functions, variables) inside it
 
-# introduction
+## introduction
 
 - object oriented
 - multiplatform: can run on windows or linux or mac without changing the code
@@ -37,7 +37,7 @@ public class Main {
 
 ```
 
-## basic operations
+### basic operations
 
 
 ```java
@@ -72,7 +72,7 @@ public class Main {
 
 ```
 
-## type casting
+### type casting
 
 2 types of casting:
 - widening casting (implicit): converting a smaller type to a larger type size
@@ -114,7 +114,7 @@ public class Main {
 }
 ```
 
-# class
+## class
 
 - compilation: process of translating source code into machine code or intermediary form
 
@@ -143,16 +143,16 @@ public class Student {
 }
 ```
 
-# data types
+## data types
 
-## primitive
+### primitive
 
 > Primitive data types: allow storing only one value at a particular location. They are predefined in the Java language and occupy a fixed amount of memory
 
 - There are only 8 primitive data types in Java:
   - `int`, `double`, `boolean`, `char`, `float`, `long`, `short`, `byte`
 
-## object or non-primitive
+### object or non-primitive
 
 > unlike primitive data types, non-primitive ones are created by the users in java
 
@@ -161,7 +161,7 @@ public class Student {
 - e.g. `String`, `Array`, `List`, `Set`, `Map` and `Class`
 
 
-# data structures
+## data structures
 
 types of collections:
 - list: ordered collection of elements
@@ -268,7 +268,7 @@ public class Main {
 
 ```
 
-# interface
+## interface
 
 - a contract that defines a set of methods that a class must implement
 
@@ -302,12 +302,12 @@ class Smartphone implements Gadget {
     }
 }
 ```
-# inheritance and encapsulation
+## inheritance and encapsulation
 
 - inheritance: allows one class to inherit the properties/methods of another class
 - encapsulation: the concept of bundling data and methods that operate on data within a single class or object
 
-# polymorphism
+## polymorphism
 
 > allows one method to do different things based on the object it is acting upon
 
@@ -332,15 +332,15 @@ public class Main {
 }
 ```
 
-# exceptions
+## exceptions
 
 - [ ] TODO: learn java exceptions
 
-# synchronism and multithreading
+## synchronism and multithreading
 
 - [ ] TODO: learn java synchronism and multithreading
 
-# packages
+## packages
 
 > mechanism to organize and group together files/directories/classes/interfaces in a logical and reusable manner
 
@@ -350,7 +350,7 @@ to build a package, you must provide:
 - optional information files
 - optional installation scripts
 
-# Keywords
+## Keywords
 
 - `abstract`: abstract classes cannot be instantiated and are intended to be subclassed
   - can contain abstract methods (methods without body) that must be implemented by subclasses
@@ -370,7 +370,7 @@ to build a package, you must provide:
 
 ---
 
-# applet
+## applet
 
 > small application that is designed to be transmitted over the internet and executed by a web browser
 

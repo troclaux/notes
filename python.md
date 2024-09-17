@@ -17,114 +17,6 @@
 - parenthesis in `if` statements are optional
 - immutable strings
 
-## basic methods
-
-- `len(obj1)`: returns the number of elements in an object (string, list, set, etc)
-- `min(iter1)`: returns the minimum value of an iterable
-- `max(iter1)`: returns the maximum value of an iterable
-- `sum(iter1)`: returns the sum of all values in an iterable
-
-- `str1.upper()`: return str1 in upper case
-- `str1.lower()`: return str1 in lower case
-- `str1.strip()`: remove leading/trailing spaces and line breaks from input string
-- `str1.replace(str2)`: if str2 is in str1, replace it
-- `str1.split()`: split string into a list of strings
-  - by default, the delimiter is space
-  - provide string/char as input to change default delimiter
-- `str1.count(str2)`: return the number of times str2 occurs in str1
-- `str1.isalnum()`: returns True if all chars in string are alphanumeric, False otherwise
-- `str1.isdigit()`: returns True if all chars in string are numbers, False otherwise
-- `list1.append(elem1)`: appends an element to the end of a list
-- `list1.copy()`: returns a copy of a list
-- `list1.insert(idx, elem1)`: inserts elem1 at index idx of the list
-- `list1.push(elem1)`: inserts elem1 at the end of list1
-- `list1.pop()`: removes and returns last element of list1
-  - if you provide a number as input, `pop()` will try to remove the number at that index
-- `list1.remove(elem1)`: first instance of elem1, if there's no instance of elem1 raises `ValueError`
-  - removes element by value
-- `del list1[1:3]`: removes element by index
-- `list1.clear()`: removes all elements of list1
-- `list1.reverse()`: reverse the order of elements in list1
-- `list1.sort()`: sort elements in list1
-- `dict1.clear()`: removes all elements in dict1
-- `dict1.copy()`: returns copy of dict1
-- `dict1.keys()`: returns a list with all keys in dict1
-- `dict1.values()`: returns a list with all values in dict1
-- `dict1.items()`: returns a list containing a tuple for each key-value pair
-
-```python
-fruits = ["apple", "banana", "cherry", "date"]
-del fruits[1:3]  # Removes "banana" and "cherry" (index 1 to 2)
-print(fruits)    # Output: ["apple", "date"]
-```
-
-```python
-s = "Hello, World!"
-
-# Convert to uppercase
-upper_s = s.upper()
-print(upper_s)  # Outputs: "HELLO, WORLD!"
-
-# Convert to lowercase
-lower_s = s.lower()
-print(lower_s)  # Outputs: "hello, world!"
-```
-
-```python
-s = "Hello, World!"
-s = s.replace("World", "Python")
-print(s)  # Outputs: "Hello, Python!"
-```
-
-```python
-s1 = "Hello123"
-s2 = "Hello, World!"
-
-print(s1.isalnum())  # Outputs: True
-print(s2.isalnum())  # Outputs: False
-```
-
-## functions
-
-```python
-def my_function(input1, input2):
-  print(input1, input2)
-
-my_function('hello', 'world')
-```
-
-## enums
-
-> variable that can only take a set of fixed values
-
-```python
-
-from enum import Enum
-
-Color = Enum('Color', ['RED', 'GREEN', 'BLUE'])
-print(Color.RED)  # this works, prints 'Color.RED'
-print(Color.TEAL) # this raises an exception
-
-```
-
-## lambda functions
-
-> basically small functions that are declared with the `lambda` keyword
-
-lambda input1: operation which result will be returned
-
-```python
-add_nums = lambda x, y: x + y
-print(add_nums(2, 3)) # 5
-```
-
-```python
-numbers = [1, 2, 3, 4, 5]
-squared = map(lambda x: x ** 2, numbers)
-print(list(squared))  # Outputs: [1, 4, 9, 16, 25]
-```
-
-
 ## data types
 
 - text
@@ -200,7 +92,22 @@ print(len(person))
 person.clear()
 ```
 
+### f-strings
+
+- f prefix before the string
+- interpolation: use curly braces `{}` to insert variables
+- use `:` to format the output
+  - example: `:.2f` to format a float number with 2 decimal places
+
+```python
+pi = 3.14159
+
+formatted_pi = f"Pi is {pi:.2f}"
+print(formatted_pi)  # outputs "Pi is 3.14"
+```
+
 ### type checking
+
 ```python
 
 elem = 5.1
@@ -230,6 +137,87 @@ str_num = str(5)
 import datetime
 x = datetime.datetime.now()
 ```
+
+## functions
+
+```python
+def my_function(input1, input2):
+  print(input1, input2)
+
+my_function('hello', 'world')
+```
+
+## basic methods
+
+- `len(obj1)`: returns the number of elements in an object (string, list, set, etc)
+- `type(obj1)`: returns the type of an object
+- `min(iter1)`: returns the minimum value of an iterable
+- `max(iter1)`: returns the maximum value of an iterable
+- `sum(iter1)`: returns the sum of all values in an iterable
+
+- `str1.upper()`: return str1 in upper case
+- `str1.lower()`: return str1 in lower case
+- `str1.strip()`: remove leading/trailing spaces and line breaks from input string
+- `str1.replace(str2)`: if str2 is in str1, replace it
+- `str1.split()`: split string into a list of strings
+  - by default, the delimiter is space
+  - provide string/char as input to change default delimiter
+- `str1.count(str2)`: return the number of times str2 occurs in str1
+- `str1.isalnum()`: returns True if all chars in string are alphanumeric, False otherwise
+- `str1.isdigit()`: returns True if all chars in string are numbers, False otherwise
+- `list1.append(elem1)`: appends an element to the end of a list
+- `list1.copy()`: returns a copy of a list
+- `list1.insert(idx, elem1)`: inserts elem1 at index idx of the list
+- `list1.push(elem1)`: inserts elem1 at the end of list1
+- `list1.pop()`: removes and returns last element of list1
+  - if you provide a number as input, `pop()` will try to remove the number at that index
+- `list1.remove(elem1)`: first instance of elem1, if there's no instance of elem1 raises `ValueError`
+  - removes element by value
+- `del list1[1:3]`: removes element by index
+- `list1.clear()`: removes all elements of list1
+- `list1.reverse()`: reverse the order of elements in list1
+- `list1.sort()`: sort elements in list1
+- `dict1.clear()`: removes all elements in dict1
+- `dict1.copy()`: returns copy of dict1
+- `dict1.keys()`: returns a list with all keys in dict1
+- `dict1.values()`: returns a list with all values in dict1
+- `dict1.items()`: returns a list containing a tuple for each key-value pair
+
+```python
+fruits = ["apple", "banana", "cherry", "date"]
+del fruits[1:3]  # Removes "banana" and "cherry" (index 1 to 2)
+print(fruits)    # Output: ["apple", "date"]
+```
+
+```python
+s = "Hello, World!"
+
+# Convert to uppercase
+upper_s = s.upper()
+print(upper_s)  # Outputs: "HELLO, WORLD!"
+
+# Convert to lowercase
+lower_s = s.lower()
+print(lower_s)  # Outputs: "hello, world!"
+```
+
+```python
+s = "Hello, World!"
+s = s.replace("World", "Python")
+print(s)  # Outputs: "Hello, Python!"
+```
+
+```python
+s1 = "Hello123"
+s2 = "Hello, World!"
+
+print(s1.isalnum())  # Outputs: True
+print(s2.isalnum())  # Outputs: False
+```
+
+## iterators
+
+> object that contains a countable amount of values
 
 ## classes/objects
 
@@ -281,20 +269,25 @@ child.display_age()   # Method of ChildClass
 
 ```
 
-## iterators
-
-> object that contains a countable amount of values
-
-
 ## modules
 
 > modules are individual python files (.py) that can be imported and reused in other python files.
+
+types of imports:
+- importing the whole module
+  - `import module_name`
+- importing specific functions or variables from a module
+  - `from module_name import function_name`
+- importing all functions and variables from a module
+  - `from module_name import *`
+- renaming a module during import
+  - `import module_name as alias`
 
 ```python
 import my_module as mm
 import pandas as pd
 
-x = dir(pd) # list the names of all functions and variables in a module
+x = dir(pd)      # list the names of all functions and variables in a module
 ```
 
 ## packages
@@ -348,6 +341,37 @@ standard library example
 import math
 
 print(math.sqrt(16))  # Outputs: 4.0
+```
+
+## enums
+
+> variable that can only take a set of fixed values
+
+```python
+
+from enum import Enum
+
+Color = Enum('Color', ['RED', 'GREEN', 'BLUE'])
+print(Color.RED)  # this works, prints 'Color.RED'
+print(Color.TEAL) # this raises an exception
+
+```
+
+## lambda functions
+
+> basically small functions that are declared with the `lambda` keyword
+
+lambda input1: operation which result will be returned
+
+```python
+add_nums = lambda x, y: x + y
+print(add_nums(2, 3)) # 5
+```
+
+```python
+numbers = [1, 2, 3, 4, 5]
+squared = map(lambda x: x ** 2, numbers)
+print(list(squared))  # Outputs: [1, 4, 9, 16, 25]
 ```
 
 ## automation with scripts

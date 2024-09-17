@@ -1,4 +1,6 @@
 
+# interview tips
+
 - study:
   - data structures
     - queue

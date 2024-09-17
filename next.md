@@ -1,4 +1,6 @@
 
+# Next.js
+
 > react framework that enables server-side rendering and static site generation
 
 main features:
@@ -10,7 +12,7 @@ main features:
 - optimizations
 - typescript
 
-# starting a new project
+## starting a new project
 
 1. create and clone github repository
 2. create a directory for client and another for server or setup the frameworks for each
@@ -30,7 +32,7 @@ main features:
 6. start editing `src/pages/index.tsx` to see the changes in the browser
 
 
-# directory structure
+## directory structure
 
 - `pages/`: contains the pages of the application
 - `public/`: contains static files like images, fonts, etc.
@@ -38,21 +40,21 @@ main features:
 
 
 
-# Client-Side Rendering vs Server-Side Rendering
+## Client-Side Rendering vs Server-Side Rendering
 
-## Client-Side Rendering (CSR)
+### Client-Side Rendering (CSR)
 
 - client-side rendering is the most common way to render a web page
 - the browser downloads a minimal HTML page, then downloads and executes JavaScript that renders the page
 - the JavaScript can make requests to the server to fetch data and update the page
 
-## Server-Side Rendering (SSR)
+### Server-Side Rendering (SSR)
 
 - server-side rendering is when the server generates the HTML for the page and sends it to the browser
 - the browser receives a fully rendered page, which can be faster to load and better for SEO
 - server-side rendering can be more complex to set up and maintain
 
-# Static Site Generation (SSG)
+## Static Site Generation (SSG)
 
 > when the server generates the HTML for the page at build time
 

@@ -2,7 +2,7 @@
 [web development](./web_development.md)
 
 
-# basic steps
+## basic steps
 
 1. create and clone github repository
 2. create a directory for client and another for server or setup the frameworks for each
@@ -14,7 +14,7 @@
 3. setup the frameworks for each 
 
 
-# Setting up PostgreSQL locally
+## Setting up PostgreSQL locally
 
 1. Install PostgreSQL on the official site
   - You may need to use `sudo postgresql-setup --initdb`. Without `sudo`, it sometimes doesn't work.
@@ -38,7 +38,7 @@
     - Replace "ident" with "md5" or "trust"
     - I replaced with md5 on the todo pern project
 
-# REST API server with Node/Express
+## REST API server with Node/Express
 
 1. Create backend folder.
 2. `cd` into backend folder:
@@ -66,7 +66,7 @@
     - `console.log(results);`
     - `res.status(200).json`: send a response to the machine that originally made the request with the code of the operation (200) and the results in JSON format.
 
-# Setting up and connecting to RDS PostgreSQL instance
+## Setting up and connecting to RDS PostgreSQL instance
 
 1. Create RDS instance:
   - Choose PostgreSQL.
@@ -79,9 +79,9 @@
 
 ![PostgreSQL configuration](./images/postgres_config.png)
 
-# Front-end React
+## Front-end React
 
-## React hooks
+### React hooks
 
 - useState: Update state of a variable.
   - `const [todos, setTodos] = useState('');`
@@ -92,12 +92,12 @@
   - Update component
   - Delete component
 
-## React events
+### React events
 
 - Event types: User events, keyboard events, mouse events, asynchronous events, etc.
 - Examples of events: `onClick`, `onChange`, `onSubmit`, `onMouseOver/onMouseOut`, `onKeyPress/onKeyDown`.
 
-## Structure of functional React component
+### Structure of functional React component
 
 ```javascript
 import React, { Fragment, useState } from "react";

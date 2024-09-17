@@ -1,25 +1,25 @@
 
-# Best resources:
+## Best resources:
 
 - JWT
   - [https://jwt.io/introduction](https://jwt.io/introduction)
 - Oauth
   - [https://developer.okta.com/blog/2017/06/21/what-the-heck-is-oauth](https://developer.okta.com/blog/2017/06/21/what-the-heck-is-oauth)
 
-# OAuth
+## OAuth
 
 - Widely used authorization framework
 - Enables applications to secure designated access to user accounts on other applications and server
 - Decouples authentication from authorization
 
-## Step-by-step
+### Step-by-step
 
 1. App requests authorization from User
 2. User authorizes App and delivers proof
 3. App presents proof of authorization to server to get a Token
 4. Token is restricted to only access what the User authorized for the specific App
 
-## OAuth components
+### OAuth components
 
 ![OAuth protocol flow](./images/oauth_flow.png)
 
@@ -36,12 +36,12 @@
   - The application that wants to access the User's data
   - Example: Fitness Tracker App
 
-### scopes and consent
+#### scopes and consent
 
 - Scopes are bundles of permissions asked by the client when requesting a token
 - Consent is the permission that the user gives to the application to access data
 
-### actors
+#### actors
 
 - Resource Owner
   - Owner of the data that the client wants to access
@@ -61,7 +61,7 @@
   - Is responsible for authenticating the resource owner
   - Issues access tokens to the client after the resource owner grants authorization
 
-### tokens
+#### tokens
 
 - Usually are JSON Web Tokens (JWT)
 - Access token
@@ -73,22 +73,22 @@
   - Long lived (can last days, months, or years)
   - Can be revoked
 
-### authorize endpoint
+#### authorize endpoint
 
 - To get consent and authorization from the user
 - Returns an authorization grant that says the user has consented to it
 - Then authorization is passed to the token endpoint
 
-### token endpoint
+#### token endpoint
 
 - Processes the grant
 - Gives the refresh token and access token
 
-# JWT (JSON Web Tokens)
+## JWT (JSON Web Tokens)
 
 > Handles authorization and information exchange
 
-## JWT Structure
+### JWT Structure
 
 In its compact form, JSON Web Tokens consist of three parts separated by dots (.), which are:
 
@@ -104,7 +104,7 @@ The output is three Base64-URL strings separated by dots that can be easily pass
 
 Let's break down the different parts
 
-### Header
+#### Header
 
 - Consists of two parts:
   1. The type of the token, which is JWT
@@ -117,7 +117,7 @@ Let's break down the different parts
   "typ": "JWT"
 }
 ```
-### Payload
+#### Payload
 
 - Contains the claims
   - Claims are statements about an entity (typically, the user) and additional data
@@ -160,7 +160,7 @@ Let's break down the different parts
     - Private claims
       - Custom claims created to share information between parties that agree on using them
 
-### Signature
+#### Signature
 
 - Checks if the message wasn't changed along the way
 - To create a signature:
@@ -189,7 +189,7 @@ Let's break down the different parts
 
 ---
 
-# Auth Providers
+## Auth Providers
 
 What is the best auth provider?
 - choices:

@@ -1,5 +1,5 @@
 
-# LeetCode Notes
+# LeetCode
 
 ## General Tips
 

@@ -1,7 +1,7 @@
 
-[git](./git.md)
-
 # github
+
+[git](./git.md)
 
 ## use SSH keys to associate with your github account
 

@@ -1,7 +1,10 @@
+
+# databases
+
 [sql](./sql.md)
 [postgresql](./postgresql.md)
 
-## ER Diagram
+### ER Diagram
 
 - strong entity: rectangle/square
   - can be uniquely identified by its own attributes without relying on other entity
@@ -25,7 +28,7 @@
     - overlapped: entities in superclass can instances of multiples subclasses simultaneously
 
 
-### crow's notation
+#### crow's notation
 
 - relationships are bidirected
 - there are symbols on both sides that represent min:max cardinality
@@ -39,13 +42,13 @@
 - `--------||` = 1:1 (one and exactly one)
 - `--------|<` = 1:n
 
-### chen notation
+#### chen notation
 
 - `[ student ] 1----<has>---1 [ seat ]`
   - one student can have maximum of 1 seat
   - one seat belongs to maximum of 1 student
 
-### barker notation
+#### barker notation
 
 - `#`: primary key
 - `*` or `·`: obligatory attribute
@@ -74,7 +77,7 @@
                                            +------------+
 ```
 
-## Class diagram
+### Class diagram
 
 - cardinality symbols
   - read diagram as:
@@ -90,7 +93,7 @@
 
 ---
 
-# theory
+## theory
 
 - SGBD: Sistema Geral de Banco de Dados
 - SBD: Sistema de Banco de Dados

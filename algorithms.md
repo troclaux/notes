@@ -1,4 +1,6 @@
 
+# algorithms
+
 ![Big O complexity chart](./images/big_o_complexity_chart.jpg)
 [Big O cheat sheet](https://www.bigocheatsheet.com/)
 
@@ -25,9 +27,9 @@ jargons:
   - average case => ϴ()
   - worst case => O()
 
-# sorting algorithms
+## sorting algorithms
 
-## bubble sort
+### bubble sort
 
 - summary
   - switch pair of elements n² times so that the bigger element goes to the right
@@ -51,7 +53,7 @@ def bubble_sort(nums):
 ```
 
 
-## selection sort
+### selection sort
 
 - summary
   - slow
@@ -89,7 +91,7 @@ def selection_sort(nums):
 
 ```
 
-## insertion sort
+### insertion sort
 
 - summary
   - OBS: (insert) unsorted element into correct position
@@ -169,7 +171,7 @@ def quick_sort(nums):
 
 ```
 
-## merge sort
+### merge sort
 
 - summary
   - fast
@@ -213,7 +215,7 @@ def merge(arr1, arr2):
 
 ```
 
-## heap sort
+### heap sort
 
 - summary
   - uses heap data structure
@@ -224,9 +226,9 @@ def merge(arr1, arr2):
   - worst case: O(n * log n)
 
 
-# search algorithms
+## search algorithms
 
-## binary search
+### binary search
 
 - efficient search on sorted arrays
 - compare middle value with target value
@@ -234,7 +236,7 @@ def merge(arr1, arr2):
 - if middle is bigger than target, discard the half with the bigger numbers and binary search the remaining array
 - if middle is smaller than target, discard the half with the smaller numbers and binary search the remaining array
 
-## depth-first search (DFS)
+### depth-first search (DFS)
 
 - summary
   - explore as far as possible along each branch before backtracking
@@ -242,23 +244,23 @@ def merge(arr1, arr2):
   - recursive implementation
 
 
-## breadth-first search (BFS)
+### breadth-first search (BFS)
 
 - summary
   - explore all neighbor nodes at the present depth prior to moving on to the nodes at the next depth level
   - uses a queue
   - iterative implementation
 
-# minimum spanning tree algorithms
+## minimum spanning tree algorithms
 
-## kruskal's algorithm
+### kruskal's algorithm
 
 - summary
   - find the minimum spanning tree in a graph
   - greedy algorithm
   - works with positive and negative weights
 
-## prim's algorithm
+### prim's algorithm
 
 - summary
   - find the minimum spanning tree in a graph
@@ -267,9 +269,9 @@ def merge(arr1, arr2):
 
 
 
-# shortest path algorithms
+## shortest path algorithms
 
-## dijkstra's algorithm
+### dijkstra's algorithm
 
 - summary
   - find the shortest path between source node and all other nodes in a graph
@@ -280,7 +282,7 @@ def merge(arr1, arr2):
     - V: number of vertices
     - E: number of edges
 
-## bellman-ford algorithm
+### bellman-ford algorithm
 
 - summary
   - find the shortest path between nodes in a graph
@@ -291,7 +293,7 @@ def merge(arr1, arr2):
     - V: number of vertices
 
 
-## a* algorithm
+### a* algorithm
 
 - summary
   - find the shortest path between nodes in a graph

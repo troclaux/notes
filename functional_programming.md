@@ -1,4 +1,6 @@
 
+# functional programming
+
 ## prerequisite knowledge
 
 - passing value as an argument: reference vs value
@@ -212,8 +214,11 @@ explanation:
 
 ## python functional programming
 
-- nonlocal var: 
-- map(): 
+- lambda functions: anonymous functions that can have any number of arguments, but only one expression
+    - `lambda x: x + 1`
+- nonlocal var: used in [closures](#closures) to access variables from parent scope
+- map(): applies a function to each item in an iterable
+  - `squared_numbers = list(map(lambda x: x**2, [1, 2, 3, 4, 5]))`
 - filter(): 
 - reduce(): 
 - arguments that allow a function to accept a variable number of arguments

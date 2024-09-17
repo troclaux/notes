@@ -1,5 +1,5 @@
 
-# apache web server
+## apache web server
 
 - open source
 - multiplatform: linux, windows, Unix, FreeBSD, etc
@@ -38,7 +38,7 @@ command to start httpd in linux distributions (`start` can be replaced with `res
 - stop apache: `sudo systemctl stop apache2`
 - start apache: `sudo systemctl restart apache2`
 
-## parameters
+### parameters
 
 to learn more about parameters, use the terminal command `$ man httpd`:
 - -d serveroot: 
@@ -47,7 +47,7 @@ to learn more about parameters, use the terminal command `$ man httpd`:
 - 
 - configtest:
 - 
-## config files
+### config files
 
 - `httpd.conf` or `apache2.conf`: main config file
   - default path: `/etc/httpd/conf` or `/etc/apache2`
@@ -58,7 +58,7 @@ to learn more about parameters, use the terminal command `$ man httpd`:
     - paths, capacity and usage policies
 - `access.conf`: contains settings that control document access
 
-## modules
+### modules
 
 > elements that extend the functionality of Apache HTTP server, allowing it to handle tasks beyond basic web serving
 
@@ -81,6 +81,6 @@ types of modules:
 - mpmt_os2: 
 - mpm_winnt: 
 
-## sections and directives
-## log files
-## testing apache server
+### sections and directives
+### log files
+### testing apache server

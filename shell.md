@@ -1,6 +1,6 @@
 
 
-## basic shell commands
+### basic shell commands
 
 - `!!`: run last command
 - `$(...)`: command substitution
@@ -18,7 +18,7 @@
 - `chown`: 
 
 
-## Wildcard matching
+### Wildcard matching
 
 - *: matches zero or more characters except slashes (/)
 - **: matches zero or more directories
@@ -42,12 +42,13 @@ mkdir dir1 dir2 dir3
 ```
 
 more examples:
+
 ```shell
 ls *.pdf *.docx
 ls *[0-9]?.{jpg,png}
 ```
 
-## Command separators
+### Command separators
 
 - (>)
   - replace contents of file after the > with the output of command before the >
@@ -74,9 +75,9 @@ ls *[0-9]?.{jpg,png}
   - redirect stderr
   - ```command 2> error.log```
 
-## Shell scripting
+### Shell scripting
 
-### Variables
+#### Variables
 
 ```shell
 greeting=Hello
@@ -90,7 +91,7 @@ echo "$greeting $name"
 cd "$(find "$HOME" -type d | fzf)"
 ```
 
-### Strings
+#### Strings
 
 - single quotes
   - Literal Interpretation
@@ -105,14 +106,14 @@ cd "$(find "$HOME" -type d | fzf)"
     - While most special characters are preserved, $, `, and \ (when followed by certain characters) are interpreted
 
 
-### Read user input
+#### Read user input
 
 ```shell
 read -p "Enter your age" variable_name
 ```
 
 
-### if else statement
+#### if else statement
 
 The script belows does the following:
 1. checks if directory ~/.config/nvim exists
@@ -147,10 +148,10 @@ fi
 | Less than | num1 -lt num2 | is num1 less than num2 |
 | Not equal to | num1 -ne num2 | is num1 not equal to num2 |
 
-### while loops
+#### while loops
 
 ```shell
-#!/bin/sh
+##!/bin/sh
 
 INPUT_STRING=hello
 while [ "$INPUT_STRING" != "bye" ]
@@ -161,12 +162,12 @@ do
 done
 ```
 
-### for loops
+#### for loops
 
 [loop through files](https://www.digitalocean.com/community/tutorials/workflow-loop-through-files-in-a-directory)
 
 ```shell
-#!/bin/bash
+##!/bin/bash
 
 for i in {1..5}
 do
@@ -189,7 +190,7 @@ you can also use loops simplify operations on multiple files with similar names
 for i in {5..7}; do touch cnu_eixo_5_aula_0$i.md; done
 ```
 
-### renaming files
+#### renaming files
 
 changing filenames in pwd
 ```shell
@@ -201,11 +202,11 @@ changing filenames in another directory
 for file in pdfs/cnu_*; do mv "$file" "pdfs/${file#pdfs/cnu_}"; done
 ```
 
-# zsh
+## zsh
 
 
 
-## creating zsh keybinds
+### creating zsh keybinds
 
 ```shell
 
@@ -215,7 +216,7 @@ bindkey '^Y' autosuggest-accept
 
 ```
 
-# oh-my-zsh
+## oh-my-zsh
 
 - `omz update`: update oh-my-zsh
 - `zsh_stats`: list most used commands

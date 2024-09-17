@@ -8,6 +8,15 @@ let isDone: boolean = false;
 let count: number = 10;
 let name: string = "John";
 
+// not recommended
+let cpf: any = "123.456";
+
+// array declaration
+let numbers: number[] = [1, 2, 3];
+
+// tuple declaration
+let tuple: [string, number] = ["Alice", 25];
+
 // union types
 let value: string | number;
 let value = "Hello";  // Valid
@@ -109,5 +118,14 @@ const triangle: Shape = { kind: "triangle", sideA: 3, sideB: 4, sideC: 5 };
 console.log(getArea(circle));     // Output: 314.159...
 console.log(getArea(rectangle));  // Output: 50
 console.log(getArea(triangle));   // Output: 6
+
+```
+
+## modules
+
+```typescript
+
+export const name: string = "Alice";
+import { name } from './moduleFile';
 
 ```

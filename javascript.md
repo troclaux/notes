@@ -1,5 +1,5 @@
 
-# basics
+## basics
 
 - multiplatform
 - dynamically typed
@@ -15,7 +15,7 @@
 - immutable strings
 - hoisted declarations: variables and functions can be used before they are declared
 
-## data types
+### data types
 
 - String
 - Number
@@ -59,7 +59,25 @@ console.log(rest); // Expected output: Array [30, 40, 50]
   - avoid using `var`
   - function-scoped
 
-### type casting
+#### template literals
+
+> used to embed expressions into strings
+
+- are created using backticks instead of quotes
+- similar to f-strings in Python
+- interpolation is done using `${}`
+
+```javascript
+
+const name = 'John';
+const age = 30;
+
+const greeting = `Hello, my name is ${name} and I am ${age} years old.`;
+console.log(greeting); // outputs "Hello, my name is John and I am 30 years old."
+
+```
+
+#### type casting
 
 - `Number()`: converts a value to a number
   - if the value cannot be converted, it returns `NaN`
@@ -75,7 +93,7 @@ console.log(rest); // Expected output: Array [30, 40, 50]
 - `Boolean()`: converts a value to a boolean
   - `const bool = Boolean(0);`
 
-## if else
+### if else
 
 ```javascript
 
@@ -89,7 +107,7 @@ if (time < 10) {
 
 ```
 
-### ternary operator
+#### ternary operator
 
 > `condition ? return_this_value_if_true : return_this_value_if_false`
 
@@ -99,7 +117,7 @@ let y = (x < 10) ? "x is less than 10" : "x is greater than or equal to 10";
 console.log(y); // Output: "x is less than or equal to 10"
 ```
 
-### switch case
+#### switch case
 
 ```javascript
 let day = 3;
@@ -120,7 +138,7 @@ switch (day) {
 ```
 
 
-## loops
+### loops
 
 ```javascript
 
@@ -151,7 +169,7 @@ for (let fruit of fruits) {
 }
 
 ```
-## functions
+### functions
 
 types of function initialization:
 ```javascript
@@ -175,7 +193,7 @@ console.log(multiply(4, 5)); // Output: 20
 
 ```
 
-## objects
+### objects
 
 ```javascript
 
@@ -194,7 +212,7 @@ console.log(person.greet());   // Output: Hello, John
 ```
 
 
-## array methods
+### array methods
 
 - `push()`: adds an element to the end of an array
 - `pop()`: removes the last element of an array
@@ -229,7 +247,7 @@ array methods that don't mutate the original array:
 - `some()`: checks if at least one element in an array passes a test specified by a function
 - `every()`: checks if all elements in an array pass a test specified by a function
 
-## object oriented programming
+### object oriented programming
 
 - `class`: used to define a new class
 - `constructor()`: special method for creating and initializing an object created with a class
@@ -259,7 +277,7 @@ const myCar2 = new Car("Audi", 2019);
 
 ```
 
-### JSON (JavaScript Object Notation)
+#### JSON (JavaScript Object Notation)
 
 - lightweight data interchange format
 - contains name/value pairs
@@ -283,11 +301,25 @@ my_object = {
 - `JSON.parse()`: converts a JSON string to a JavaScript object
   - `const obj = JSON.parse(text);`
 
-## import/export
+### modules
+
+- to import a function from another file, it must be exported from the file where it’s defined
+- 2 types of exports:
+  - named exports: when you use only the `export` keyword
+  - default exports: when you use the `export default` keywords
 
 - `import`: used to import functions, objects, or primitive values from a file
 - `export`: used to export functions, objects, or primitive values from a file
+  - requires curly braces when importing
+  - you can use export before a function, class, or variable declaration
+  - OR you can use a single export statement at the end of the file for everything
+    - `export { name, draw, reportArea, reportPerimeter };`
+- `default`: used to export a single value from a file
+  - can be imported without curly braces
+  - `import greet from './module.js';`
 
+- OBS: you can have both named and default exports in the same file
+  - `import greet, { name, sayName } from './module.js';`
 
 ```javascript
 
@@ -307,14 +339,14 @@ in another file, you can import these named exports:
 ```javascript
 
 // main.js
-import { add, subtract } from './mathFunctions.js';
+import { addTwo as add, subtract } from './modules/mathFunctions.js';
 
 console.log(add(5, 3));  // Output: 8
 console.log(subtract(5, 3));  // Output: 2
 
 ```
 
-## error handling
+### error handling
 
 - `try`: defines a block of code to try
 - `catch`: defines a block of code to execute if an error occurs in the try block
@@ -333,7 +365,7 @@ try {
 
 ```
 
-## asynchronous operations
+### asynchronous operations
 
 - `async`: used to declare an asynchronous function
 - `await`: pauses the execution of the function until the promise is resolved
@@ -348,6 +380,5 @@ async function fetchData() {
 
 ```
 
-# keywords
+## keywords
 
-- `default`: used to export a single value from a file

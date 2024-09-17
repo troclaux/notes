@@ -1,5 +1,7 @@
 
-# CLI tools with its own markdown summaries
+# CLI Tools
+
+## CLI tools with its own markdown summaries
 
 - [basic shell commands](./shell.md)
 - [git](./git.md)
@@ -8,7 +10,7 @@
 - [ansible](./github.md)
 - [psql](./postgresql.md)
 
-# echo
+## echo
 
 > print strings to output
 
@@ -16,28 +18,28 @@
 
 ```shell
 
-# Print a message with environment variables
+## Print a message with environment variables
 echo "My path is $PATH"
 
-# Print a message without the trailing newline
+## Print a message without the trailing newline
 echo -n "Hello World"
 
 ```
-# cat
+## cat
 
-# find
+## find
 
-# grep
+## grep
 
-# wc
+## wc
 
-# xopen
+## xopen
 
-# sed
+## sed
 
-# jq
+## jq
 
-# curl
+## curl
 
 > used to transfer data using various protocols
 
@@ -53,7 +55,7 @@ echo -n "Hello World"
   - POP3
   - etc
 
-## use cases
+### use cases
 
 1. run basic GET request
 

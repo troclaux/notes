@@ -2,7 +2,7 @@
 [web development](./web_development.md)
 [protocols](./protocols.md)
 
-# OSI model
+## OSI model
 
 [osi-model explained in a simple way](https://osi-model.com)
 
@@ -40,7 +40,7 @@ OBS: layer order
 6. presentation
 7. application
 
-## network layer 3
+### network layer 3
 
 
 - IPv4
@@ -54,7 +54,7 @@ ipv4 * 2² = ipv6
 32 bits * 2² = 128 bits
 
 
-# TCP/IP model
+## TCP/IP model
 
 - tcp/ip model != tcp and ip protocols
 

@@ -1,27 +1,29 @@
 
+# data structures
+
 - when adding or removing elements, update the data structure's size accordingly
 - when adding elements, update the references on the previous element
 - when removing elements
   - update the references on the next element
   - check if data structure is empty and raise error if necessary
 
-# linked list
+## linked list
 
 > linear data structure where each element stores a reference of the address of the next element
 
-## Singly linked list
+### Singly linked list
 
 | element1 | => | element2 | => | element3 | => | element4 |
 
-## doubly linked list
+### doubly linked list
 
 | element1 | <=> | element2 | <=> | element3 | <=> | element5 |
 
-## circular linked list
+### circular linked list
 
 | element1 | => | element2 | => | element3 | => | element4 | => | element1 |
 
-# queue
+## queue
 
 - FIFO: First In First Out
 
@@ -31,26 +33,26 @@ basic methods:
 - queue.peek(): returns an item from the head of the queue
 - queue.size(): returns the number of items in the queue
 
-## priority queue
+### priority queue
 
 - retrieves elements based on their priority
 - elements are ordered based on their priority
 - highest priority element is removed first
 
-# stack
+## stack
 
 - LIFO: Last In First Out
 
 - `push()`/`append()`: add element to top of stack
 - `pop()`: remove element from top of stack
 
-# hash table
+## hash table
 
 - hash function: maps keys to values
 - hash collision: when two keys map to the same value
   - can be resolved by chaining (linked list) or open addressing (find next available slot)
 
-# graph
+## graph
 
 - node or vertex
 - edge: connection between two nodes in a graph can be directed or undirected
@@ -63,7 +65,7 @@ basic methods:
 
 <!--adjacency matrix-->
 
-# trees
+## trees
 
 - height: the number of elements from the root to the deepest branch
   - if a tree has only one element, its height is 1
@@ -81,7 +83,7 @@ vertex removal:
 - node with one child: remove the node and connect the child to the parent of the removed node
 - node with two children: remove the node and replace it with the smallest node in the right subtree
 
-### tree traversal order
+#### tree traversal order
 
 OBS: the name of each traversal order describes when the root is visited
 
@@ -110,19 +112,19 @@ OBS: the name of each traversal order describes when the root is visited
     - root gets visited last
 
 
-## binary tree
+### binary tree
 
 > tree where each node has at most 2 children
 
 - children don't follow any particular order based on the value of the node
 
-### complete binary tree
+#### complete binary tree
 
 binary tree where:
 - all levels are completely filled except possibly for the last level
 - all nodes are as far left as possible
 
-### heap
+#### heap
 
 > binary tree-based data structure that satisfies the heap property and also is a complete binary tree
 
@@ -137,14 +139,14 @@ key methods:
 - `size()`: return the number of elements in the heap
 - `heapify()`: convert an array into a heap
 
-### Binary Search Tree (BST)
+#### Binary Search Tree (BST)
 
 binary tree where:
 - left child is smaller than parent
 - right child is bigger than parent
 
 
-### AVL tree
+#### AVL tree
 
 > self-balancing binary search tree
 
@@ -170,7 +172,7 @@ Keys in both of the above trees follow the following order
 keys(T1) < key(x) < keys(T2) < key(y) < keys(T3)
 So BST property is not violated anywhere
 
-### red-black tree
+#### red-black tree
 
 - summary
   - tree that self-balances to reduce time complexity of basic operations (insert, remove, etc)
@@ -183,7 +185,7 @@ So BST property is not violated anywhere
   - keeps all the nodes and subtrees in the correct order
 
 
-### AVL vs red-black trees
+#### AVL vs red-black trees
 
 - insertion, deletion and loop-up are guaranteed O(n * log(n))
 - because AVL is balanced, lookups in AVL are faster than red-black
