@@ -62,9 +62,9 @@ Implementation:
 - problem occurs when you when you extend two independent dimensions
 - the bridge pattern solves this problem by creating two separate hierarchies
   - abstraction
-    - e.g.: GUI of the app
+    - e.g. GUI of the app
   - implementation
-    - e.g.: the operating system's API
+    - e.g. the operating system's API
 
 ### Composite
 

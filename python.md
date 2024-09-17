@@ -330,11 +330,11 @@ from my_package.module_b import Node
   - standard library
     - included with python
     - no need to install
-    - e.g.: `os`, `sys`, `math`, `random`, `datetime`, etc
+    - e.g. `os`, `sys`, `math`, `random`, `datetime`, etc
   - third-party libraries
     - not included with python
     - need to be installed
-    - e.g.: `numpy`, `pandas`, `matplotlib`, `requests`, etc
+    - e.g. `numpy`, `pandas`, `matplotlib`, `requests`, etc
 
 standard library example
 ```python
