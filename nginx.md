@@ -49,17 +49,17 @@
 
 ## Installation
 
-```shell
+```bash
 sudo apt update && sudo apt upgrade -y
 ```
 
-```shell
+```bash
 sudo apt install nginx -y
 ```
 
 To check if the installation was successful, run the following command:
 
-```shell
+```bash
 sudo systemctl status nginx
 
 # OUTPUT:
@@ -71,7 +71,7 @@ sudo systemctl status nginx
 
 If the status says `running`, then you're good to go. Otherwise you may start the service by executing this command:
 
-```shell
+```bash
 sudo systemctl start nginx
 ```
 
@@ -88,7 +88,7 @@ sudo systemctl start nginx
   - there are multiple configuration files
   - can be modified to suit your needs
 
-```shell
+```bash
 cd /etc/nginx
 
 ls -lh
@@ -115,13 +115,13 @@ ls -lh
 
 run the following command to restart the NGINX service:
 
-```shell
+```bash
 sudo systemctl restart nginx
 ```
 
 to send a signal to the NGINX master process, run the following command:
 - in the example below, the signal that is being sent is `reload`
-```shell
+```bash
 sudo nginx -s reload
 ```
 

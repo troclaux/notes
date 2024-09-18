@@ -27,35 +27,35 @@
 - How to use SHA-1 hash
   - Can be used to see the contents of a commit
 
-```shell
+```bash
 git cat-file -p <hash>
 ```
 
 - Search commits for a specific string
 
 
-```shell
+```bash
 - git log -S
 ```
 The git log command isn't only useful for your local repo. You can log the commits of a remote repo as well!
 
-```shell
+```bash
 git log remote/branch
 ```
 
-```shell
+```bash
 git log origin/primeagen
 ```
 
 - Set the default upstream branch for the master branch
 
-```shell
+```bash
 - git branch --set-upstream-to=origin/master master
 ```
 
 - Show history of commits in a graph
 
-```shell
+```bash
 - git log --oneline --graph
 ```
 
@@ -63,19 +63,19 @@ git log origin/primeagen
 
 - Switch to a branch
 
-```shell
+```bash
 - git switch <branch>
 ```
 
 - Create a new branch and switch to it
 
-```shell
+```bash
 - git switch -c <branch>
 ```
 
 - Create a new branch from a specific commit
 
-```shell
+```bash
 - git switch -c <branch> <commit_hash>
 ```
 
@@ -83,25 +83,25 @@ git log origin/primeagen
 
 - Show the remote repositories
 
-```shell
+```bash
 - git remote -v
 ```
 
 - Add a remote repository
 
-```shell
+```bash
 - git remote add <name> <url>
 ```
 
 - The remote can be local or on the internet
 
-```shell
+```bash
 - git remote add origin ~/Documents/remote-git
 ```
 
 - Undo the last commit while keeping the changes
 
-```shell
+```bash
 git reset --soft HEAD~1
 ```
 
@@ -109,50 +109,50 @@ git reset --soft HEAD~1
 
 - Show the list of stashes
 
-```shell
+```bash
 git stash list
 ```
 
 - Create a stash with a message
 
-```shell
+```bash
 git stash -m 'message'
 ```
 
 - Apply the last stash
 
-```shell
+```bash
 git stash pop --index <stash index>
 ```
 
 - Apply a commit to the current branch
 
-```shell
+```bash
 git cherry-pick <commit>
 ```
 
 - Show the history of the HEAD
 
-```shell
+```bash
 git reflog
 ```
 
 - Create an alias for a command
 
-```shell
+```bash
 git config --global alias.<alias> <command>
 ```
 
 - Show the git configuration
 
-```shell
+```bash
 git config --list
 ```
 
 - Show the commits that match the pattern
   - `-p` shows the diff
 
-```shell
+```bash
 git log --grep <pattern> -p
 ```
 
@@ -160,45 +160,45 @@ git log --grep <pattern> -p
 
 - Start the bisect process
 
-```shell
+```bash
 git bisect start
 ```
 
 - Mark the current commit as bad 
 
-```shell
+```bash
 git bisect bad
 ```
 
 - Mark a commit as good
 
-```shell
+```bash
 git bisect good <commit>
 ```
 
 - Stop the bisect process
 
-```shell
+```bash
 git bisect reset
 ```
 
 - Automatically find the commit that introduced a bug
   - `--run` is the command to run
 
-```shell
+```bash
 git bisect run <command> --run
 ```
 
 - Create a new worktree
 
-```shell
+```bash
 git worktree add ../<new-dir/branch
 ```
 
 - Rebase from branch1 onto branch2
 
 `from branch1`
-```shell
+```bash
 git rebase <branch2>
 ```
 *WARNING*

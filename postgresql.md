@@ -4,14 +4,14 @@
 # PostgreSQL
 
 switch to PostgreSQL user
-```shell
+```bash
 sudo -i -u postgres
 ```
 
 ## psql prompt
 
 enter psql prompt
-```shell
+```bash
 psql
 ```
 

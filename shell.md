@@ -1,6 +1,6 @@
+# Shell
 
-
-### basic shell commands
+## basic commands
 
 - `!!`: run last command
 - `$(...)`: command substitution
@@ -11,75 +11,87 @@
 - `ls`: list items in current directory
 - `pwd`: print present working directory
 - `touch`: create new file
+- `mkdir`: create new directory
 - `cd`: change to directory
 - `mv`: rename or move file
 - `rm`: remove file or directory
-- `chmod`: 
-- `chown`: 
+  - `rm -r`: remove directory and its contents
+  - `rm -rdf`: remove directory and its contents without confirmation
+- `cp`: copy file or directory
+- `chmod`: change file permissions
+  - e.g. `chmod +x script.sh`
+- `chown`: change ownership of file or directory
+  - e.g. `sudo chown -R $USER ~/.config/nvim/`
 
 
-### Wildcard matching
+## wildcard matching
 
-- *: matches zero or more characters except slashes (/)
-- **: matches zero or more directories
-- ?: match any single ocurrence of any character
-- [abcd]: matches any character inside the square brackets
+- `*`: matches zero or more characters except slashes `/`
+- `**`: matches zero or more directories
+- `?`: match any single ocurrence of any character
+- `[abcd]`: matches any character inside the square brackets
 - ranges:
-  - [A-Z]: matches strings that go from uppercase A to uppercase Z
-  - [A-Za-z0-9]: matches any alphanumerical string
-- [!abcd] or [^abcd]: matches any character that is NOT inside the square brackets
-- {}: match a group of names/Wildcard patterns
-  - {3..9}: defines range inside curly braces
+  - `[A-Z]`: matches strings that go from uppercase A to uppercase Z
+  - `[A-Za-z0-9]`: matches any alphanumerical string
+- `[!abcd]` or `[^abcd]`: matches any character that is NOT inside the square brackets
+- `{}`: match a group of names/wildcard patterns
+  - `{3..9}`: defines range inside curly braces
 
-e.g.:
-```shell
+example:
+
+```bash
 mkdir dir{1,2,3}
 mkdir dir{1..3}
 ```
+
 is equivalent to:
-```shell
+
+```bash
 mkdir dir1 dir2 dir3
 ```
 
 more examples:
 
-```shell
+```bash
 ls *.pdf *.docx
 ls *[0-9]?.{jpg,png}
 ```
 
-### Command separators
+## Command separators
 
-- (>)
-  - replace contents of file after the > with the output of command before the >
-  - ```echo "delete everything and write this sentence" > ~/Documents/new_file.txt```
-- (>>)
-  - Append output of previous command to the file after the separator
-  - ```echo "append this at the end of file" >> ~/Documents/file.txt```
-- ( \ )
-  - split shell command into multiple lines
-- (;)
-  - Run multiple commands at once regardless of whether previous command was successful or not
-  - **Default behaviour between commands in a shell script when there isn't separators between**
-  - ```command1; command2; command3```
-- (|)
-  - forward the output of a cli program as the input for the next program
+- `>`: replace contents of file after the > with the output of command before the >
+  - `echo "delete everything and write this sentence" > ~/Documents/new_file.txt`
+- `>>`: Append output of previous command to the file after the separator
+  - `echo "append this at the end of file" >> ~/Documents/file.txt`
+- `\`: split shell command into multiple lines
+- `;`: run multiple commands at once regardless of whether previous command was successful or not
+  - default behaviour between commands in a shell script when there isn't separators between
+  - `command1; command2; command3`
+- `|`: forward the output of a cli program as the input for the next program
   - `cat file.txt | wc -l`
-- (||)
-  - Executes the second command only if the first command fails
+- `||`: executes the second command only if the first command fails
   - `ls this_file_does_not_exist.txt || echo 'file not found'`
-- (&&)
-  - Runs the next command only if the previous command was successful
-  - ```command_1 && command_2 && command_3```
-- (2>)
-  - redirect stderr
-  - ```command 2> error.log```
+- `&&`: runs the next command only if the previous command was successful
+  - `command_1 && command_2 && command_3`
+- `2>`: redirect stderr
+  - `command 2> error.log`
 
-### Shell scripting
+## Shell scripting
 
-#### Variables
+- `#`: comment
+- `#!/bin/sh`: shebang
+  - used to specify the interpreter that will run the script
+- `chmod +x script.sh`: make script executable
+- `./script.sh`: run script
+- `echo $?`: print exit status of last command
+- `exit 0`: exit script with status 0
+  - 1: error
+- `exit 1`: exit script with status 1
+  - 0: success
 
-```shell
+### Variables
+
+```bash
 greeting=Hello
 name=Tux
 echo "$greeting $name"
@@ -87,11 +99,11 @@ echo "$greeting $name"
 
 - you can use the result of commands for another command
 
-```shell
+```bash
 cd "$(find "$HOME" -type d | fzf)"
 ```
 
-#### Strings
+### Strings
 
 - single quotes
   - Literal Interpretation
@@ -106,20 +118,20 @@ cd "$(find "$HOME" -type d | fzf)"
     - While most special characters are preserved, $, `, and \ (when followed by certain characters) are interpreted
 
 
-#### Read user input
+### Read user input
 
-```shell
+```bash
 read -p "Enter your age" variable_name
 ```
 
 
-#### if else statement
+### if else statement
 
 The script belows does the following:
 1. checks if directory ~/.config/nvim exists
 2. recursively change ownership of directory contents
 
-```shell
+```bash
 if [[ condition ]]
 then
   statement
@@ -130,7 +142,7 @@ else
 fi
 ```
 
-```shell
+```bash
 if [ -d "~/.config/nvim" ]; then
   sudo chown -R $USER ~/.config/nvim/
   echo "Successfully changed ownership of ~/.config/nvim/ directory"
@@ -148,9 +160,9 @@ fi
 | Less than | num1 -lt num2 | is num1 less than num2 |
 | Not equal to | num1 -ne num2 | is num1 not equal to num2 |
 
-#### while loops
+### while loops
 
-```shell
+```bash
 ##!/bin/sh
 
 INPUT_STRING=hello
@@ -162,11 +174,11 @@ do
 done
 ```
 
-#### for loops
+### for loops
 
 [loop through files](https://www.digitalocean.com/community/tutorials/workflow-loop-through-files-in-a-directory)
 
-```shell
+```bash
 ##!/bin/bash
 
 for i in {1..5}
@@ -174,41 +186,41 @@ do
   echo $i
 done
 ```
-```shell
+```bash
 for FILE in *; do cp $FILE "$FILE.bak"; done;
 ```
 
 reminder: ranges are simpler than loops
 
-```shell
+```bash
 touch eixo_5/cnu_eixo_5_mq_aula_0{3..9}.md
 ```
 
 you can also use loops simplify operations on multiple files with similar names
 
-```shell
+```bash
 for i in {5..7}; do touch cnu_eixo_5_aula_0$i.md; done
 ```
 
-#### renaming files
+### renaming files
 
 changing filenames in pwd
-```shell
+
+```bash
 for file in ./cnu_*; do mv "$file" "${file#./cnu_}"; done
 ```
 
 changing filenames in another directory
-```shell
+
+```bash
 for file in pdfs/cnu_*; do mv "$file" "pdfs/${file#pdfs/cnu_}"; done
 ```
 
 ## zsh
 
-
-
 ### creating zsh keybinds
 
-```shell
+```bash
 
 bindkey -s '^h' "nvim . -c 'Telescope find_files'\n"
 bindkey -s '^b' "!!\n\n"

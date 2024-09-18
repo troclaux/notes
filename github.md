@@ -5,13 +5,13 @@
 
 ## use SSH keys to associate with your github account
 
-```shell
+```bash
 rm ~/.ssh/id_ed25519 && rm ~/.ssh/id_ed25519.pub
 ```
 
 1. generate SSH keys
 
-```shell
+```bash
 ssh-keygen -t ed25519 -C "your_email@example.com"
 ```
 
@@ -21,7 +21,7 @@ ssh-keygen -t ed25519 -C "your_email@example.com"
 
 4. add SSH key to SSH agent
 
-```shell
+```bash
 eval "$(ssh-agent -s)"
 ```
 
@@ -31,7 +31,7 @@ reasons to add to SSH agent:
 - you won't need to enter the password every time you use the key
 - it's safer, because the agent will save the SSH keys encrypted in memory
 
-```shell
+```bash
 ssh-add ~/.ssh/id_ed25519
 ```
 
@@ -39,7 +39,7 @@ ssh-add ~/.ssh/id_ed25519
 
 copy ssh public key
 
-```shell
+```bash
 cat ~/.ssh/id_ed25519.pub | xclip -selection clipboard
 ```
 
@@ -55,7 +55,7 @@ paste public SSH key
 
 7. test SSH connection
 
-```shell
+```bash
 ssh -T git@github.com
 ```
 
@@ -67,30 +67,30 @@ Hi username! You've successfully authenticated, but GitHub does not provide shel
 
 8. update dotfiles repo
 
-```shell
+```bash
 rm ~/dotfiles/.ssh/id_ed25519 && rm ~/dotfiles/.ssh/id_ed25519.pub
 ```
 
-```shell
+```bash
 cp ~/.ssh/id_ed25519 ~/.ssh/id_ed25519.pub ~/dotfiles/.ssh
 ```
 
 **IMPORTANT**: don't forget to encrypt keys before adding to github repo
 
-```shell
+```bash
 ansible-vault encrypt ~/dotfiles/.ssh/id_ed25519
 ```
 
-```shell
+```bash
 ansible-vault encrypt ~/dotfiles/.ssh/id_ed25519.pub
 ```
 
 you can decrypt the SSH keys later if necessary:
 
-```shell
+```bash
 ansible-vault decrypt ~/dotfiles/.ssh/id_ed25519
 ```
 
-```shell
+```bash
 ansible-vault decrypt ~/dotfiles/.ssh/id_ed25519.pub
 ```

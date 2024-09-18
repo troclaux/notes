@@ -7,7 +7,7 @@
 
 ## Container
 
-```shell
+```bash
 docker container run -d -p 8080:80 --name webhost nginx
 ```
 - -d: detached mode
