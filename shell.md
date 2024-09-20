@@ -124,8 +124,9 @@ cd "$(find "$HOME" -type d | fzf)"
 read -p "Enter your age" variable_name
 ```
 
+## control flow statements
 
-### if else statement
+### conditionals
 
 The script belows does the following:
 1. checks if directory ~/.config/nvim exists
@@ -174,7 +175,7 @@ do
 done
 ```
 
-### for loops
+### loops
 
 [loop through files](https://www.digitalocean.com/community/tutorials/workflow-loop-through-files-in-a-directory)
 
@@ -216,6 +217,8 @@ changing filenames in another directory
 for file in pdfs/cnu_*; do mv "$file" "pdfs/${file#pdfs/cnu_}"; done
 ```
 
+---
+
 ## zsh
 
 ### creating zsh keybinds
@@ -227,6 +230,8 @@ bindkey -s '^b' "!!\n\n"
 bindkey '^Y' autosuggest-accept
 
 ```
+
+---
 
 ## oh-my-zsh
 
