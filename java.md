@@ -32,13 +32,18 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello World");
+        int x = 5;
+        if (x > 10) {
+            System.out.println("x is greater than 10");
+        } else {
+            System.out.println("x is less than or equal to 10");
+        }
     }
 }
 
 ```
 
-### basic operations
+## basic operations
 
 
 ```java
@@ -72,6 +77,10 @@ public class Main {
 }
 
 ```
+
+## data types
+
+TODO
 
 ### type casting
 
@@ -111,6 +120,51 @@ public class Main {
         float myFloat = Float.parseFloat(str); // Converts the string '3.14' to the float 3.14
         System.out.println("The float value is: " + myFloat);
 
+    }
+}
+```
+
+## control flow statements
+
+### conditionals
+
+```java
+public class IfElseExample {
+    public static void main(String[] args) {
+
+        int age = 25;
+        if (age >= 18) {
+            System.out.println("You are an adult.");
+        } else {
+            System.out.println("You are a minor.");
+        }
+    }
+}
+```
+
+### while
+
+```java
+public class WhileLoopExample {
+    public static void main(String[] args) {
+
+        int i = 0;
+        while (i < 5) {
+            System.out.println("Hello, World!");
+            i++;
+        }
+    }
+}
+```
+
+### loops
+
+```java
+public class ForLoopExample {
+    public static void main(String[] args) {
+        for (int i = 0; i < 5; i++) {
+            System.out.println("Hello, World!");
+        }
     }
 }
 ```
