@@ -29,6 +29,13 @@
 
 > enables application programs and computers to exchange messages over a network
 
+#### SYN-ACK process
+
+1. client sends SYN (Synchronize) packet to server
+1. server sends SYN-ACK (Synchronize-Acknowledgment)
+1. clients sends ACK packet to server (Acknowledgment)
+1. connection established
+
 ### SSL (Secure Sockets Layer)
 
 - provides secure communication over a computer network
