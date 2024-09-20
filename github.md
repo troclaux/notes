@@ -75,7 +75,8 @@ rm ~/dotfiles/.ssh/id_ed25519 && rm ~/dotfiles/.ssh/id_ed25519.pub
 cp ~/.ssh/id_ed25519 ~/.ssh/id_ed25519.pub ~/dotfiles/.ssh
 ```
 
-**IMPORTANT**: don't forget to encrypt keys before adding to github repo
+> [!IMPORTANT]
+> don't forget to encrypt keys before adding to github repo
 
 ```bash
 ansible-vault encrypt ~/dotfiles/.ssh/id_ed25519

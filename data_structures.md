@@ -85,7 +85,8 @@ vertex removal:
 
 #### tree traversal order
 
-OBS: the name of each traversal order describes when the root is visited
+> [!TIP]
+> the name of each traversal order describes when the root is visited
 
 - preorder: root is visited first
 - inorder: root is visited in the middle-ish

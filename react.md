@@ -65,10 +65,10 @@ export default function MyApp() {
 ```
 
 JavaScript vs JSX
-- IMPORTANT: the code above is a mix of JavaScript and JSX
-  - The function definition `export default function MyApp() {...}` is JavaScript
-  - The part inside the parentheses `return (...)` is JSX
-
+> [!IMPORTANT]
+> the code above is a mix of JavaScript and JSX
+> The function definition `export default function MyApp() {...}` is JavaScript
+> The part inside the parentheses `return (...)` is JSX
 
 ### props
 

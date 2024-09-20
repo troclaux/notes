@@ -6,40 +6,41 @@
 # SQL
 
 order of operations in SQL query:
+
 ```
 FROM => WHERE => GROUP BY => HAVING => SELECT => ORDER BY => LIMIT
 ```
 
-- SELECT: retrieve data from database
+- `SELECT`: retrieve data from database
   - `*`: select all
-- FROM: select the target(s) table(s)
+- `FROM`: select the target(s) table(s)
   - list the tables from where data is fetched
-- WHERE: filter records based on conditions
-  - BETWEEN: selects values within given range (values can be numbers, text or dates)
-  - LIKE: filter records that matches the string
+- `WHERE`: filter records based on conditions
+  - `BETWEEN`: selects values within given range (values can be numbers, text or dates)
+  - `LIKE`: filter records that matches the string
     - wildcards: used for pattern matching, like regex
-      - %: zero or more chars
+      - `%`: zero or more chars
         - `SELECT * FROM products WHERE product_name LIKE 'banana%';`
-      - _: single char
+      - `_`: single char
         - `SELECT * FROM products WHERE product_name LIKE '__oot';`
-      - []: any single char within the brackets
-      - ^: any char NOT in the brackets
+      - `[]`: any single char within the brackets
+      - `^`: any char NOT in the brackets
         - `[^abc]`: matches any char that is not `a` or `b` or `c`
       - `-`: any single char within specified range
         - `[A-Z]` matches any uppercase letter
         - `[0-9]` matches any digit
         - `[a-zA-Z]` to match any letter regardless of case
         - `[a-zA-Z0-9]` to match any alphanumeric character
-- GROUP BY: group records based on one or more columns
+- `GROUP BY`: group records based on one or more columns
   - joins rows with same attribute (the column chosen)
   - `SELECT column1, COUNT(*) FROM table_name GROUP BY column1;`
-- HAVING: similar to the `WHERE` clause, but
+- `HAVING`: similar to the `WHERE` clause, but
   - operates on groups after they've been grouped, rather than rows before they've been grouped
   - IMPORTANT: you can't use `HAVING` before `GROUP BY`
-- ORDER BY: order records based on one or more columns
+- `ORDER BY`: order records based on one or more columns
   - limit: restrict the number of matches
 
-- INSERT: add new rows to a table
+- `INSERT`: add new rows to a table
   - data types: syntax is different depending on the DB (mysql, postgresql, etc)
     - numeric
       - data types that exist on mysql and postgresql
@@ -59,26 +60,26 @@ FROM => WHERE => GROUP BY => HAVING => SELECT => ORDER BY => LIMIT
     - binary: binary
     - boolean: BOOLEAN
     - data and time: data, datetime
-- UPDATE: modify existing data in a table
-- DELETE: remove data from a table
+- `UPDATE`: modify existing data in a table
+- `DELETE`: remove data from a table
 
 
-- CREATE TABLE: create new table in the database
-  - FOREIGN KEY: creates a column with the values of the column of another table
-    - CASCADE: defines what happens to foreign keys when the reference is changed
-      - ON DELETE: when a record in the primary table is deleted, any records in the foreign key table that reference the deleted primary key will also be deleted
+- `CREATE TABLE`: create new table in the database
+  - `FOREIGN KEY`: creates a column with the values of the column of another table
+    - `CASCADE`: defines what happens to foreign keys when the reference is changed
+      - `ON DELETE`: when a record in the primary table is deleted, any records in the foreign key table that reference the deleted primary key will also be deleted
       - ON UPDATE: changes on primary table also apply to child tables
-- ALTER table: modify existing table in the database
-- DROP table: delete a table and its data from the database
-- TRUNCATE table: delete all rows from a table without deleting the table itself
+- `ALTER table`: modify existing table in the database
+- `DROP table`: delete a table and its data from the database
+- `TRUNCATE table`: delete all rows from a table without deleting the table itself
 
-- CREATE database: create new database
-- DROP database: delete a database and all its contents
+- `CREATE database`: create new database
+- `DROP database`: delete a database and all its contents
 
 set operations:
-- UNION
-- INTERSECT
-- MINUS or EXCEPT
+- `UNION`
+- `INTERSECT`
+- `MINUS` or `EXCEPT`
 
 TODO
 restrictions:
@@ -113,27 +114,24 @@ restrictions:
   - `SELECT DISTINCT City FROM Customers;`
 
 aggregate functions: return only 1 result
-- SUM(): return the sum of all values in the column
-- AVG(): return the average value of the column
-- MIN(): return minimum value
-- MAX(): return maximum value
-- COUNT(column_or_table): count number of rows in result set with non-NULL values in specified column or table
-- IMPORTANT:
-  - aggregate functions CAN be used at:
-    - SELECT, HAVING, ORDER BY
-  - aggregate functions CANNOT be used at:
-    - FROM, WHERE
+- `SUM()`: return the sum of all values in the column
+- `AVG()`: return the average value of the column
+- `MIN()`: return minimum value
+- `MAX()`: return maximum value
+- `COUNT(column_or_table)`: count number of rows in result set with non-NULL values in specified column or table
 
+> [!IMPORTANT]
+> aggregate functions CAN be used inside: `SELECT`, `HAVING`, `ORDER BY`
+> aggregate functions CANNOT be used inside: `FROM`, `WHERE`
 
 ## Subqueries
 
 subqueries queries:
-- IN: filter results from another sql query
-- EXISTS
-- ALL
-- SOME
-- ANY
-
+- `IN`: filter results from another sql query
+- `EXIS`
+- `ALL`
+- `SOME`
+- `ANY`
 
 Use `IN` when the subquery may return one or more values. This operator checks if a value matches any value in a list and is suitable for one-to-many comparisons
 
@@ -518,11 +516,14 @@ FROM contractors;
 
 ### Normal Forms and Data Normalization
 
-- BCNF ⊂ 3NF ⊂ 2NF ⊂ 1NF
+```
+BCNF ⊂ 3NF ⊂ 2NF ⊂ 1NF
+```
 
-- IMPORTANT: primary key in SQL != primary key in data normalization/normal forms
-  - in data normalization, primary key is the collections that uniquely identifies a row
-  - in SQL, primary key is a single column that uniquely identifies a row
+> [!IMPORTANT]
+> primary key in SQL != primary key in data normalization/normal forms
+> in data normalization, primary key is the collections that uniquely identifies a row
+> in SQL, primary key is a single column that uniquely identifies a row
 
 #### First Normal Form (1NF)
 
@@ -530,14 +531,18 @@ FROM contractors;
 - a cell can't have a nested table as its value
   - a cell can't have multiple values
     - may not even be possible
-- OBS: 1NF = 1 value per cell
+
+> [!TIP]
+> 1NF = 1 value per cell
 
 #### Second Normal Form (2NF)
 
 - table must be in 1NF
 - all non-key attributes must be fully dependent on the entire primary key
   - non-key attributes: columns that are not part of the primary key
-- IMPORTANT: tables can have composite primary keys (multiple columns that collectively functions as a single primary key
+
+> [!IMPORTANT]
+> tables can have composite primary keys (multiple columns that collectively functions as a single primary key
 
 #### Third Normal Form (3NF)
 
@@ -548,7 +553,6 @@ FROM contractors;
 #### Boyce-Codd Normal Form (BCNF)
 
 - a column that's part of a primary key can't be entirely dependent on a column that's not part of that primary key
-
 
 ### Rules of thumb for database design
 

@@ -10,7 +10,7 @@
 - garbage collection
 - lua is NOT object oriented
 - immutable strings
-- parenthesis in `if` statements are optional
+- parentheses in `if` statements are optional
 - can also be used for functional programming
 
 ## data types

@@ -31,7 +31,9 @@ layers:
 7. application
   - HTTP, FTP
 
-OBS: layer order
+> [!TIP]
+> layer order
+
 1. physical
 2. data link => 2 words
 3. network => n3twork
@@ -42,17 +44,15 @@ OBS: layer order
 
 ### network layer 3
 
-
 - IPv4
   - 32 bits = 4 bytes
 - IPv6
   - 128 bits = 16 bytes
 
-OBS:
-IPv4 32 bits => 432
-ipv4 * 2² = ipv6
-32 bits * 2² = 128 bits
-
+> [!TIP]
+> IPv4 32 bits => 432 => 4 bytes and 32 bits
+> IPv4 bytes * 2² bytes => IPv6
+> 32 bits * 2² = 128 bits
 
 ## TCP/IP model
 

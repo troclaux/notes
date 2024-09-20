@@ -14,7 +14,7 @@
 - can also be used for functional programming
 - huge variety of libraries
 
-- parenthesis in `if` statements are optional
+- parentheses in `if` statements are optional
 - immutable strings
 
 ## data types
