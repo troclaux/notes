@@ -3,26 +3,27 @@
 
 - namespace: declarative region that provides a scope to the identifiers (names of types, functions, variables) inside it
 
-## introduction
+## properties
 
+- all code in java must be written inside a class
+- java uses a lot of memory because of java's virtual machine
 - object oriented
-- multiplatform: can run on windows or linux or mac without changing the code
-- concurrent
-- distributed
-- portable
-- safe
-- extensible
-- vast set of libraries and APIs
-- garbage collector
+
 - statically typed
+- is considered compiled AND interpreted
+- has garbage collection
+- functions are not first-class citizens
+- doesn't have hoisted declarations
+- type casting can be done explicitly or implicitly
+- strings aren't mutable
+- multiplatform: can run on windows or linux or mac without changing the code
 
 - JVM: allows java to run in any OS (Linux, Windows, Mac)
 - JRE: contains JVM and all the extra tools and libraries needed to run a Java program
 
 - `main()` method is required and you can only have one in a program
-  - `public static void main(String[] args)`
+  - `public static void main(String[] args){}`
   - entry point of a Java program
-- **ALL CODE IN JAVA MUST BE WRITTEN INSIDE A CLASS**
 
 ```java
 
@@ -127,18 +128,32 @@ java program development:
 4. bytecode verification
 5. execute program
 
-example of Java Class
+example of Java Class:
 
 ```java
 public class Student {
-    int id;
-    String name;
+    private int id;
+    private String name;
 
-    public static void main(String args[]) {
-        // creating an object of Student
-        Student s1 = new Student();
-        System.out.println(s1.id);
-        System.out.println(s1.name);
+    // Constructor
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    // Method to get the name
+    public String getName() {
+        return name;
+    }
+
+    // Method to set the name
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    // Main method to test the class
+    public static void main(String[] args) {
+        Person person = new Person("John", 25);
     }
 }
 ```
