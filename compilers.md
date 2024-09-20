@@ -14,6 +14,16 @@
   - a machine needs the interpreter to run the source code
   - slower execution time
 
+## compile time vs runtime
+
+> [!IMPORTANT]
+> compile time != runtime
+> compile time: period when the source code is converted into machine code
+> runtime: period when the program is actually running after it has been compiled
+
+- compile time happens at runtime for interpreted languages
+- time happens before runtime for compiled languages
+
 ## compilation process
 
 > process that translates source code written in high level programming languages into machine code
@@ -28,7 +38,11 @@
 > [!NOTE]
 > the file extensions used are for the c programming languages
 
-- other languages will translate to different types of files
+- other languages' compiler/interpreter will translate to different types of files
+  - for example, in python: file.py => bytecode => file.pyc
+    - bytecode: AST (Abstract Syntax Tree) representation of python code
+      - represents python code in a format that can be executed by the interpreter
+      - it's not machine code
 
 1. preprocessing:
 - this is done by the preprocessor
