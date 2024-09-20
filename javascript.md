@@ -1,19 +1,19 @@
 
-## basics
+## properties
 
-- multiplatform
 - dynamically typed
-- weakly typed
-- garbage collection
-- almost everything is an object
+- interpreted language
+- has garbage collection
 - first class functions
+- hoisted declarations: variables and functions can be used before they are declared
+- almost everything is an object
 - supports multiple programming paradigms:
   - object oriented
   - functional
   - imperative
-- interpreted, not compiled
 - immutable strings
-- hoisted declarations: variables and functions can be used before they are declared
+- weakly typed
+- multiplatform
 
 ### data types
 
@@ -93,7 +93,9 @@ console.log(greeting); // outputs "Hello, my name is John and I am 30 years old.
 - `Boolean()`: converts a value to a boolean
   - `const bool = Boolean(0);`
 
-### if else
+## control flow statements
+
+### conditionals
 
 ```javascript
 
@@ -103,6 +105,48 @@ if (time < 10) {
   greeting = "Good day";
 } else {
   greeting = "Good evening";
+}
+
+```
+
+### while
+
+```javascript
+let i = 0;
+
+while (i < 5) {
+  console.log(i);
+  i++;
+}
+```
+
+### loops
+
+```javascript
+
+// for loop
+for (let i = 0; i < 5; i++) {
+  console.log(i);
+}
+
+// while loop
+let i = 0;
+while (i < 5) {
+  console.log(i);
+  i++;
+}
+
+// do while loop
+let i = 0;
+do {
+  console.log(i);
+  i++;
+} while (i < 5);
+
+// for of loop
+let fruits = ['apple', 'banana', 'cherry'];
+for (let fruit of fruits) {
+  console.log(fruit);
 }
 
 ```
@@ -137,38 +181,6 @@ switch (day) {
 }
 ```
 
-
-### loops
-
-```javascript
-
-// for loop
-for (let i = 0; i < 5; i++) {
-  console.log(i);
-}
-
-// while loop
-let i = 0;
-while (i < 5) {
-  console.log(i);
-  i++;
-}
-
-// do while loop
-let i = 0;
-do {
-  console.log(i);
-  i++;
-} while (i < 5);
-
-
-// for of loop
-let fruits = ['apple', 'banana', 'cherry'];
-for (let fruit of fruits) {
-  console.log(fruit);
-}
-
-```
 ### functions
 
 types of function initialization:
@@ -205,15 +217,13 @@ let person = {
     return "Hello, " + this.firstName;
   }
 };
-
 console.log(person.firstName); // Output: John
 console.log(person.greet());   // Output: Hello, John
-
 ```
-
 
 ### array methods
 
+- `length()`: returns the number of elements in an array
 - `push()`: adds an element to the end of an array
 - `pop()`: removes the last element of an array
 - `shift()`: removes the first element of an array and shifts all other elements down by one
@@ -239,13 +249,43 @@ console.log(arr); // Outputs: [1, 'a', 'b', 4, 5]
 
 array methods that don't mutate the original array:
 - `map()`: creates a new array by applying a function to each element of an existing array
+  - `const doubledNumbers = numbers.map((number) => number * 2);`
 - `filter()`: creates a new array with elements that pass a test specified by a function
-- `find()`: returns the first element in an array that passes a test specified by a function
-- `findIndexOf()`: returns the index of the first element in an array that passes a test specified by a function
 - `reduce()`: applies a function to each element of an array to reduce the array to a single value
 - `forEach()`: calls a function for each element in an array
 - `some()`: checks if at least one element in an array passes a test specified by a function
 - `every()`: checks if all elements in an array pass a test specified by a function
+
+- `find()`: returns the first element in an array that passes a test specified by a function
+- `findIndexOf()`: returns the index of the first element in an array that passes a test specified by a function
+
+examples
+
+```javascript
+let numbers = [1, 2, 3, 4, 5];
+let doubledNumbers = numbers.map((number) => number * 2);
+console.log(doubledNumbers); // Outputs: [2, 4, 6, 8, 10]
+
+let evenNumbers = numbers.filter((number) => number % 2 === 0);
+console.log(evenNumbers); // Outputs: [2, 4]
+
+let firstEvenNumber = numbers.find((number) => number % 2 === 0);
+console.log(firstEvenNumber); // Outputs: 2
+
+let index = numbers.findIndex((number) => number % 2 === 0);
+console.log(index); // Outputs: 1
+
+const colors = ['red', 'green', 'blue', 'yellow', 'purple'];
+
+colors.forEach((color) => {
+  console.log(`The color is: ${color}`);
+});
+
+const num = [1, 2, 3, 4, 5];
+const sum = nums.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+
+```
+
 
 ### object oriented programming
 
@@ -367,8 +407,31 @@ try {
 
 ### asynchronous operations
 
-- `async`: used to declare an asynchronous function
-- `await`: pauses the execution of the function until the promise is resolved
+callback < promise < async/await
+
+- async/await
+  - `async`: makes a function asynchronous
+  - `await`: pauses the execution of the function until the promise is resolved
+    - frequently used with `fetch('https://api.example.com/data')` to make HTTP requests
+  - recommended
+  - more readable
+  - prevents callback hell
+- callback: function passed as argument to another function that gets executed once the asynchronous operation is done
+  - not recommended
+  - hard error handling
+  - hard to read because of callback hell
+    - callback hell: nested callbacks makes code hard to read
+- promise: is an object that represents a value that might available now, in the future, or never
+  - not recommended
+  - hard to read
+  - hard error handling
+  - prevents callback hell
+  - object can be in 3 states:
+    - pending: operation in progress
+    - resolved (fulfilled): operation completed successfully
+    - rejected: operation failed
+
+async/await example:
 
 ```javascript
 
@@ -377,6 +440,44 @@ async function fetchData() {
   const data = await response.json();
   console.log(data);
 }
+
+```
+
+callback example (not recommended):
+
+```javascript
+
+function fetchData(callback) {
+  setTimeout(() => {
+    callback("Data received");
+  }, 2000); // Simulates a 2-second delay
+}
+
+fetchData((data) => {
+  console.log(data);  // Logs "Data received" after 2 seconds
+});
+
+```
+
+example of promise:
+
+```javascript
+
+function fetchData() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("Data received");
+    }, 2000);
+  });
+}
+
+fetchData()
+  .then((data) => {
+    console.log(data);  // Logs "Data received" after 2 seconds
+  })
+  .catch((error) => {
+    console.error(error);  // Handles errors
+  });
 
 ```
 
