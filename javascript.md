@@ -83,7 +83,7 @@ console.log(map.get("name")); // "Alice"
 
 #### arrays
 
-- `length()`: returns the number of elements in an array
+- `arr1.length`: property that returns the number of elements in an array
 - `push()`: adds an element to the end of an array
 - `pop()`: removes the last element of an array
 - `shift()`: removes the first element of an array and shifts all other elements down by one
@@ -307,8 +307,8 @@ class Person {
   }
 }
 
-const myCar1 = new Car("Ford", 2014);
-const myCar2 = new Car("Audi", 2019);
+const myPerson1 = new Person("John", 30);
+const myPerson2 = new Person("Alice", 25);
 
 ```
 
@@ -331,7 +331,8 @@ console.log(person.greet());   // Output: Hello, John
 
 - lightweight data interchange format
 - contains name/value pairs
-- values can be strings, numbers, objects, arrays, booleans, or null
+- values can be strings, numbers, objects, arrays, booleans, or null (not undefined)
+  - OBS: JSON doesn't support `underfined` as a value
 - can be parsed and converted to JavaScript objects
 
 ```javascript
