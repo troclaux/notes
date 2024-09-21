@@ -16,7 +16,7 @@
 - weakly typed
 - multiplatform
 
-### data types
+## data types
 
 > [!IMPORTANT]
 > in JavaScript, almost everything is an object
@@ -81,7 +81,7 @@ console.log(map.get("name")); // "Alice"
   - avoid using `var`
   - function-scoped
 
-#### arrays
+### arrays
 
 - `arr1.length`: property that returns the number of elements in an array
 - `push()`: adds an element to the end of an array
@@ -147,7 +147,7 @@ const sum = nums.reduce((accumulator, currentValue) => accumulator + currentValu
 ```
 
 
-#### template literals
+### template literals
 
 > used to embed expressions into strings
 
@@ -165,7 +165,7 @@ console.log(greeting); // outputs "Hello, my name is John and I am 30 years old.
 
 ```
 
-#### type casting
+### type casting
 
 - `Number()`: converts a value to a number
   - if the value cannot be converted, it returns `NaN`
@@ -184,7 +184,6 @@ console.log(greeting); // outputs "Hello, my name is John and I am 30 years old.
 ## if else
 
 ```javascript
-
 if (time < 10) {
   greeting = "Good morning";
 } else if (time < 20) {
@@ -192,7 +191,36 @@ if (time < 10) {
 } else {
   greeting = "Good evening";
 }
+```
 
+### ternary operator
+
+> `condition ? return_this_value_if_true : return_this_value_if_false`
+
+```javascript
+let x = 5;
+let y = (x < 10) ? "x is less than 10" : "x is greater than or equal to 10";
+console.log(y); // Output: "x is less than or equal to 10"
+```
+
+### switch case
+
+```javascript
+let day = 3;
+
+switch (day) {
+  case 1:
+    console.log("Monday");
+    break;
+  case 2:
+    console.log("Tuesday");
+    break;
+  case 3:
+    console.log("Wednesday");
+    break;
+  default:
+    console.log("Invalid day");
+}
 ```
 
 ## loops
@@ -226,36 +254,6 @@ for (let fruit of fruits) {
   console.log(fruit);
 }
 
-```
-
-## ternary operator
-
-> `condition ? return_this_value_if_true : return_this_value_if_false`
-
-```javascript
-let x = 5;
-let y = (x < 10) ? "x is less than 10" : "x is greater than or equal to 10";
-console.log(y); // Output: "x is less than or equal to 10"
-```
-
-## switch case
-
-```javascript
-let day = 3;
-
-switch (day) {
-  case 1:
-    console.log("Monday");
-    break;
-  case 2:
-    console.log("Tuesday");
-    break;
-  case 3:
-    console.log("Wednesday");
-    break;
-  default:
-    console.log("Invalid day");
-}
 ```
 
 ## functions
