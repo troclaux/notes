@@ -1,8 +1,9 @@
+# JavaScript
 
 ## properties
 
 - dynamically typed
-- interpreted language
+- interpreted programming language
 - has garbage collection
 - first class functions
 - hoisted declarations: variables and functions can be used before they are declared
@@ -17,13 +18,21 @@
 
 ### data types
 
+> [!IMPORTANT]
+> in JavaScript, almost everything is an object
+
+- Number: represents both integers and floating-point numbers
 - String
-- Number
-- Boolean
+- Boolean: `true` or `false`
 - Null
 - Undefined: variable that has been declared but not assigned a value
-- Object
-- Array
+- Object: collections of related data and/or functionality
+  - arrays are Object
+- Symbol
+- BigInt
+
+- `typeof`: returns the type of the variable
+- `instanceof`: returns boolean value indicating weather the object is an instance of the specified constructor or class
 
 ```javascript
 let name = "Alice";     // String
@@ -33,6 +42,9 @@ let job = null;         // Null
 let address;            // Undefined
 let person = { name: "Bob", age: 40 }; // Object
 let fruits = ["apple", "banana", "cherry"]; // Array
+
+console.log(typeof fruits);            // Output: Object
+console.log(person instanceof Object); // Output: true
 
 console.log(fruits[0]); // Output: apple
 fruits.push("orange");  // Adds "orange" to the end of the array
@@ -49,6 +61,16 @@ console.log(b); // Expected output: 20
 
 console.log(rest); // Expected output: Array [30, 40, 50]
 
+const letters = new Set(["a","b","c"]);
+letters.add("d");
+letters.add("e");
+letters.add("f");
+
+let map = new Map();
+map.set("name", "Alice");
+map.set("age", 25);
+console.log(map.get("name")); // "Alice"
+
 ```
 
 - `let`: variable that can be reassigned
@@ -59,169 +81,7 @@ console.log(rest); // Expected output: Array [30, 40, 50]
   - avoid using `var`
   - function-scoped
 
-#### template literals
-
-> used to embed expressions into strings
-
-- are created using backticks instead of quotes
-- similar to f-strings in Python
-- interpolation is done using `${}`
-
-```javascript
-
-const name = 'John';
-const age = 30;
-
-const greeting = `Hello, my name is ${name} and I am ${age} years old.`;
-console.log(greeting); // outputs "Hello, my name is John and I am 30 years old."
-
-```
-
-#### type casting
-
-- `Number()`: converts a value to a number
-  - if the value cannot be converted, it returns `NaN`
-  - `const num = Number("123");`
-- `parseInt()`: converts a string to an integer
-  - `const num = parseInt("123.45");`
-- `parseFloat()`: converts a string to a floating-point number
-  - `const num = parseFloat("123.45");`
-- `String()`: converts a value to a string
-  - `const text = String(123);`
-- `toString()`: also converts a number to a string
-  - `const text = (123).toString();`
-- `Boolean()`: converts a value to a boolean
-  - `const bool = Boolean(0);`
-
-## control flow statements
-
-### conditionals
-
-```javascript
-
-if (time < 10) {
-  greeting = "Good morning";
-} else if (time < 20) {
-  greeting = "Good day";
-} else {
-  greeting = "Good evening";
-}
-
-```
-
-### while
-
-```javascript
-let i = 0;
-
-while (i < 5) {
-  console.log(i);
-  i++;
-}
-```
-
-### loops
-
-```javascript
-
-// for loop
-for (let i = 0; i < 5; i++) {
-  console.log(i);
-}
-
-// while loop
-let i = 0;
-while (i < 5) {
-  console.log(i);
-  i++;
-}
-
-// do while loop
-let i = 0;
-do {
-  console.log(i);
-  i++;
-} while (i < 5);
-
-// for of loop
-let fruits = ['apple', 'banana', 'cherry'];
-for (let fruit of fruits) {
-  console.log(fruit);
-}
-
-```
-
-#### ternary operator
-
-> `condition ? return_this_value_if_true : return_this_value_if_false`
-
-```javascript
-let x = 5;
-let y = (x < 10) ? "x is less than 10" : "x is greater than or equal to 10";
-console.log(y); // Output: "x is less than or equal to 10"
-```
-
-#### switch case
-
-```javascript
-let day = 3;
-
-switch (day) {
-  case 1:
-    console.log("Monday");
-    break;
-  case 2:
-    console.log("Tuesday");
-    break;
-  case 3:
-    console.log("Wednesday");
-    break;
-  default:
-    console.log("Invalid day");
-}
-```
-
-### functions
-
-types of function initialization:
-```javascript
-
-// function declaration
-function greet(name) {
-  return "Hello, " + name + "!";
-}
-
-// function expression
-const add = function(a, b) {
-  return a + b;
-};
-
-// arrow function
-const multiply = (a, b) => a * b;
-
-console.log(greet("Alice")); // Output: Hello, Alice!
-console.log(add(2, 3)); // Output: 5
-console.log(multiply(4, 5)); // Output: 20
-
-```
-
-### objects
-
-```javascript
-
-let person = {
-  firstName: "John",
-  lastName: "Doe",
-  age: 25,
-  greet: function() {
-    return "Hello, " + this.firstName;
-  }
-};
-console.log(person.firstName); // Output: John
-console.log(person.greet());   // Output: Hello, John
-```
-
-### array methods
+#### arrays
 
 - `length()`: returns the number of elements in an array
 - `push()`: adds an element to the end of an array
@@ -287,7 +147,142 @@ const sum = nums.reduce((accumulator, currentValue) => accumulator + currentValu
 ```
 
 
-### object oriented programming
+#### template literals
+
+> used to embed expressions into strings
+
+- are created using backticks instead of quotes
+- similar to f-strings in Python
+- interpolation is done using `${}`
+
+```javascript
+
+const name = 'John';
+const age = 30;
+
+const greeting = `Hello, my name is ${name} and I am ${age} years old.`;
+console.log(greeting); // outputs "Hello, my name is John and I am 30 years old."
+
+```
+
+#### type casting
+
+- `Number()`: converts a value to a number
+  - if the value cannot be converted, it returns `NaN`
+  - `const num = Number("123");`
+- `parseInt()`: converts a string to an integer
+  - `const num = parseInt("123.45");`
+- `parseFloat()`: converts a string to a floating-point number
+  - `const num = parseFloat("123.45");`
+- `String()`: converts a value to a string
+  - `const text = String(123);`
+- `toString()`: also converts a number to a string
+  - `const text = (123).toString();`
+- `Boolean()`: converts a value to a boolean
+  - `const bool = Boolean(0);`
+
+## if else
+
+```javascript
+
+if (time < 10) {
+  greeting = "Good morning";
+} else if (time < 20) {
+  greeting = "Good day";
+} else {
+  greeting = "Good evening";
+}
+
+```
+
+## loops
+
+```javascript
+let i = 0;
+
+while (i < 5) {
+  console.log(i);
+  i++;
+}
+```
+
+```javascript
+
+// for loop
+for (let i = 0; i < 5; i++) {
+  console.log(i);
+}
+
+// do while loop
+let i = 0;
+do {
+  console.log(i);
+  i++;
+} while (i < 5);
+
+// for of loop
+let fruits = ['apple', 'banana', 'cherry'];
+for (let fruit of fruits) {
+  console.log(fruit);
+}
+
+```
+
+## ternary operator
+
+> `condition ? return_this_value_if_true : return_this_value_if_false`
+
+```javascript
+let x = 5;
+let y = (x < 10) ? "x is less than 10" : "x is greater than or equal to 10";
+console.log(y); // Output: "x is less than or equal to 10"
+```
+
+## switch case
+
+```javascript
+let day = 3;
+
+switch (day) {
+  case 1:
+    console.log("Monday");
+    break;
+  case 2:
+    console.log("Tuesday");
+    break;
+  case 3:
+    console.log("Wednesday");
+    break;
+  default:
+    console.log("Invalid day");
+}
+```
+
+## functions
+
+types of function initialization:
+```javascript
+
+// function declaration
+function greet(name) {
+  return "Hello, " + name + "!";
+}
+
+// function expression
+const add = function(a, b) {
+  return a + b;
+};
+
+// arrow function
+const multiply = (a, b) => a * b;
+
+console.log(greet("Alice")); // Output: Hello, Alice!
+console.log(add(2, 3)); // Output: 5
+console.log(multiply(4, 5)); // Output: 20
+
+```
+
+## object oriented programming
 
 - `class`: used to define a new class
 - `constructor()`: special method for creating and initializing an object created with a class
@@ -317,6 +312,21 @@ const myCar2 = new Car("Audi", 2019);
 
 ```
 
+initializing an object
+```javascript
+
+let person = {
+  firstName: "John",
+  lastName: "Doe",
+  age: 25,
+  greet: function() {
+    return "Hello, " + this.firstName;
+  }
+};
+console.log(person.firstName); // Output: John
+console.log(person.greet());   // Output: Hello, John
+```
+
 #### JSON (JavaScript Object Notation)
 
 - lightweight data interchange format
@@ -341,7 +351,7 @@ my_object = {
 - `JSON.parse()`: converts a JSON string to a JavaScript object
   - `const obj = JSON.parse(text);`
 
-### modules
+## modules
 
 - to import a function from another file, it must be exported from the file where it’s defined
 - 2 types of exports:
@@ -386,7 +396,7 @@ console.log(subtract(5, 3));  // Output: 2
 
 ```
 
-### error handling
+## error handling
 
 - `try`: defines a block of code to try
 - `catch`: defines a block of code to execute if an error occurs in the try block
@@ -405,7 +415,7 @@ try {
 
 ```
 
-### asynchronous operations
+## asynchronous operations
 
 callback < promise < async/await
 
@@ -480,6 +490,3 @@ fetchData()
   });
 
 ```
-
-## keywords
-
