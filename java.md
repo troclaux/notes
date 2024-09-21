@@ -124,9 +124,7 @@ public class Main {
 }
 ```
 
-## control flow statements
-
-### conditionals
+## if else
 
 ```java
 public class IfElseExample {
@@ -142,7 +140,7 @@ public class IfElseExample {
 }
 ```
 
-### while
+## loops
 
 ```java
 public class WhileLoopExample {
@@ -157,8 +155,6 @@ public class WhileLoopExample {
 }
 ```
 
-### loops
-
 ```java
 public class ForLoopExample {
     public static void main(String[] args) {
@@ -170,17 +166,6 @@ public class ForLoopExample {
 ```
 
 ## class
-
-- compilation: process of translating source code into machine code or intermediary form
-
-| .java | => compilation => | .class (bytecode) |
-
-java program development:
-1. write java program
-2. compilation
-3. load program to primary memory
-4. bytecode verification
-5. execute program
 
 example of Java Class:
 
@@ -436,6 +421,19 @@ to build a package, you must provide:
 - `private`: can only by accessed from same class
   - creates the need for public methods inside the class that provide controlled access to private fields
     - e.g.: getAccountNumber(), getBalance(), deposit(), withdraw()
+
+---
+
+## compilation
+
+| .java | => compilation => | .class (bytecode) |
+
+java program development:
+1. write java program
+2. compilation
+3. load program to primary memory
+4. bytecode verification
+5. execute program
 
 ---
 

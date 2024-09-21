@@ -367,6 +367,7 @@ visibility is controlled by capitalization of the first letter:
 ## string operations
 
 - concatenate strings with `+`
+  - `str1 := str2 + str3`
 
 ```go
 
@@ -382,9 +383,11 @@ func main() {
 
 ```
 
-## control structures
-
 ### if else
+
+> [!NOTE]
+> you can add an initial statement before the condition
+> a variable created in the initial statement is only defined within the scope of the `if` body
 
 ```go
 package main
@@ -392,9 +395,8 @@ package main
 import "fmt"
 
 func main() {
-  x := 10
 
-  if x > 5 {
+  if x := 10; x > 5 {
     fmt.Println("x is greater than 5")
   } else if x == 5 {
     fmt.Println("x is equal to 5")
@@ -404,7 +406,7 @@ func main() {
 }
 ```
 
-### for Loop
+### loops
 
 ```go
 package main
@@ -418,8 +420,7 @@ func main() {
   }
 
   // While-style loop
-  x := 0
-  for x < 5 {
+  for x := 0; x < 5 {
     fmt.Println(x)
     x++
   }
@@ -455,8 +456,8 @@ func main() {
 ## functions
 
 - can return any number of results
-- you can define the return type of a function with **named return values**
-  - in the function initialization, after the paramenters
+- you can define the return type of a function with **return values**
+  - in the function initialization, after the parameters
   - can be surrounded by parentheses
 
 ```go

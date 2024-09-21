@@ -124,9 +124,7 @@ cd "$(find "$HOME" -type d | fzf)"
 read -p "Enter your age" variable_name
 ```
 
-## control flow statements
-
-### conditionals
+## if else
 
 The script belows does the following:
 1. checks if directory ~/.config/nvim exists
@@ -161,7 +159,9 @@ fi
 | Less than | num1 -lt num2 | is num1 less than num2 |
 | Not equal to | num1 -ne num2 | is num1 not equal to num2 |
 
-### while loops
+### loops
+
+[loop through files](https://www.digitalocean.com/community/tutorials/workflow-loop-through-files-in-a-directory)
 
 ```bash
 ##!/bin/sh
@@ -174,10 +174,6 @@ do
   echo "You typed: $INPUT_STRING"
 done
 ```
-
-### loops
-
-[loop through files](https://www.digitalocean.com/community/tutorials/workflow-loop-through-files-in-a-directory)
 
 ```bash
 ##!/bin/bash
@@ -205,7 +201,7 @@ for i in {5..7}; do touch cnu_eixo_5_aula_0$i.md; done
 
 ### renaming files
 
-changing filenames in pwd
+changing filenames in current directory
 
 ```bash
 for file in ./cnu_*; do mv "$file" "${file#./cnu_}"; done

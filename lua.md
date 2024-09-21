@@ -56,9 +56,7 @@ string.sub(s, i, j)
 
 ```
 
-## control flow statements
-
-### conditionals
+## if else
 
 ```lua
 
@@ -74,27 +72,17 @@ end
 
 ```
 
-### while
+### loops
 
 ```lua
 i = 0
-
 while i < 5 do
   print(i)
   i = i + 1
 end
 ```
 
-### loops
-
 ```lua
-
-i = 0
-while i < 5 do
-  print(i)
-  i = i + 1
-end
-
 for i = 1, 5 do
   print(i)
 end

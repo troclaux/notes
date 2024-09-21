@@ -5,7 +5,7 @@
 
 - easy to read and understand
 - dynamically typed
-- is interpreted and compiled programming language
+- interpreted programming language
 - multiplatform
 - blocks are defined by indentation
 - garbage collection
@@ -43,11 +43,9 @@
   - bytes, bytearray, memoryview
 - None
 
-### initialization of data types
-
 ```python
 age = 23
-name = 'Arthur'
+name = 'John'
 tuple1 = ("apple", "banana", "orange", "apple")
 tuple2 = (1, 5, 7, 9, 3)
 tuple3 = (True, False, False)
@@ -131,11 +129,46 @@ float_num = float(4)
 # converts number into string
 str_num = str(5)
 ```
+
 ### dates
 
 ```python
 import datetime
 x = datetime.datetime.now()
+```
+
+## if else
+
+```python
+x = 5
+if x > 10:
+    print("x is greater than 10")
+elif x == 5:
+    print("x is equal to 5")
+else:
+    print("x is less than 5")
+```
+
+## loops
+
+```python
+
+i = 0
+while i < 5:
+    print(i)
+    i += 1
+
+fruits = ['apple', 'banana', 'cherry']
+
+for fruit in fruits:
+    print(fruit)
+
+for i in range(len(fruits)):
+    print(fruits[i])
+
+squares = [x**2 for x in range(5)]
+print(squares) # output: [0, 1, 4, 9, 16]
+
 ```
 
 ## functions
