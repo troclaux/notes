@@ -167,6 +167,30 @@ Types of virtual memory:
 - FIFO (First In First Out)
 - Clock
 
+### stack and heap memory
+
+[stack and heap memory](https://courses.grainger.illinois.edu/cs225/fa2022/resources/stack-heap/)
+
+- when a program is running, it takes up memory
+
+- each program has its own memory layout, separated from other programs
+- allocation and deallocation of memory is done automatically
+
+- stack: stores local variables
+- heap: dynamic memory for programmer to allocate
+- data: stores global variables, separated as initialized and uninitialized
+- text: stores the code being executed
+
+```
+| high address |
+| stack |
+| free memory |
+| heap |
+| uninitialized data |
+| initialized data |
+| text |
+```
+
 ## Input/Output Management
 
 TODO

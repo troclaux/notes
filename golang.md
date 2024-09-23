@@ -8,16 +8,20 @@
 - doesn't use semicolons
 - uses structs instead of classes
 - doesn't have `while`, uses `for` instead
-    - `for sum < 10 { sum += 1 }`
+  - `for sum < 10 { sum += 1 }`
 
 - statically typed
 - compiled language
 - has garbage collection
-- functions are first-class citizens
+- functions are values (i.e. first-class citizens)
 - hoisted declarations: variables and functions can be used before they are declared
 - no implicit type casting
 - mutable strings
 - multiplatform
+- block-scoped: once a variable is declared inside a block, it is accessible anywhere inside that block
+
+- value types: Integers, Floats, Complex numbers, Strings, Bytes, Arrays, Structs
+- reference types: Pointers, Slices, Maps, Channels, Interfaces, Functions
 
 ## cli commands
 
@@ -126,7 +130,16 @@ func main() {
 }
 ```
 
+- `range`: used to iterate over strings, arrays or slices
+  - `for index, value := range collection {}`
+- blank identifier (`_`): special variable that is used to ignore a value or variable
+  - normally used for error handling or discarding index in loops that use `range`
+
 ## data types
+
+> [!IMPORTANT]
+> in Golang, you cannot define a type inside a function (including `func main()`)
+> types are declared at the package level, not at the function level
 
 - basic types:
   - numeric types:
@@ -182,7 +195,76 @@ func main() {
 }
 ```
 
+### enums
+
+- `iota`: increments automatically each new constant in a block
+
+```go
+package main
+import "fmt"
+
+// Define an enumeration for weekdays
+const (
+    Sunday = iota  // iota starts at 0
+    Monday
+    Tuesday
+    Wednesday
+    Thursday
+    Friday
+    Saturday
+)
+
+func main() {
+    fmt.Println(Sunday, Monday, Tuesday)  // Output: 0 1 2
+}
+```
+
+### interface
+
+> type that defines a contract or a set of methods that must be implemented by any type that satisfies the interface
+
+- you cannot define a types that implements an interface inside a function
+
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+    rect := Rectangle{Width: 5, Height: 3}
+    fmt.Printf("Rectangle Area: %.2f\n", rect.Area())
+    fmt.Printf("Rectangle Perimeter: %.2f\n", rect.Perimeter())
+}
+
+type Shape interface {
+    Area() float64
+    Perimeter() float64
+}
+
+// Define a struct for a Rectangle
+type Rectangle struct {
+    Width  float64
+    Height float64
+}
+
+// Implement the Area method for Rectangle
+func (r Rectangle) Area() float64 {
+    return r.Width * r.Height
+}
+
+// Implement the Perimeter method for Rectangle
+func (r Rectangle) Perimeter() float64 {
+    return 2 * (r.Width + r.Height)
+}
+```
+
+
 ## data structures / composite types
+
+> [!NOTE]
+> use `slices.Sort(arr1)` to sort any ordered built-in type
+> requires importing `slices` package
 
 - array: ordered collection of elements with fixed sizing
   - `var arr [5]int`
@@ -212,7 +294,7 @@ p := new(Person)
 > [!NOTE]
 > go doesn't have built-in stacks and queues, but they can be implemented using slices
 
-### stack
+### stack (implemented with slices)
 
 ```go
 stack := []int{}
@@ -225,7 +307,7 @@ stack = stack[:len(stack)-1] // Pop
 fmt.Println(top)            // 3
 ```
 
-### queue
+### queue (implemented with slices)
 
 ```go
 queue := []int{}
@@ -279,19 +361,27 @@ p := NewPerson("Charlie", 25)
 
 ### arrays
 
+> [!IMPORTANT]
+> in golang, arrays are value types, instead of reference types
+> arrays are passed as values to a function, instead of a reference
+
 ```go
 package main
 
 import "fmt"
 
 func main() {
-  var arr [5]int // Array of 5 integers
-  arr[0] = 1
-  fmt.Println(arr)
+  var arr [6]int = [6]int{1, 2, 3, 4, 5}
+  arr[0] = 6
+  fmt.Println(arr) // Output: [6 2 3 4 5 0]
 }
 ```
 
 ### slices
+
+> [!IMPORTANT]
+> slices are reference types
+> slices are passed as references to a function
 
 - `len(arr1)`: returns length
 - `cap(arr1)`: returns capacity
@@ -320,7 +410,11 @@ func main() {
 }
 ```
 
-## maps
+### maps
+
+> [!IMPORTANT]
+> maps are reference types
+> maps are passed as references to a function
 
 ```go
 package main
@@ -429,6 +523,11 @@ func main() {
   for {
     fmt.Println("Infinite loop")
   }
+
+  numbers := []int{1, 2, 3, 4, 5}
+  for i, value := range numbers {
+      fmt.Println(value)
+  }
 }
 ```
 
@@ -484,6 +583,27 @@ func main() {
 }
 ```
 
+### anonymous functions
+
+> [!NOTE]
+> you can define an anonymous functions function inside a function signature
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+    // Anonymous function
+    add := func(a, b int) int {
+        return a + b
+    }
+
+    // Call the anonymous function
+    result := add(5, 3)
+    fmt.Println(result) // Output: 8
+}
+```
 
 ## concurrency with goroutines and channels
 
@@ -503,35 +623,6 @@ func main() {
   fmt.Print("hello ")
 }
 // output: "hello world"
-```
-
-## Error Handling
-
-go does not have exceptions: instead, errors are handled using the built-in `error` type
-
-```go
-package main
-
-import (
-  "errors"
-  "fmt"
-)
-
-func divide(a, b float64) (float64, error) {
-  if b == 0 {
-    return 0, errors.New("cannot divide by zero")
-  }
-  return a / b, nil
-}
-
-func main() {
-  result, err := divide(4, 0)
-  if err != nil {
-    fmt.Println("Error:", err)
-  } else {
-    fmt.Println("Result:", result)
-  }
-}
 ```
 
 ## concurrent programming
@@ -602,7 +693,7 @@ func main() {
 }
 ```
 
-## standard libraries
+## standard library
 
 - library: collection of packages
 
@@ -642,10 +733,43 @@ format specifiers are used when printing variables with `fmt` package:
 - `%c`: character corresponding the integer's Unicode code point
 - `%%`: print percent sign
 
+## errors
+
+go does not have exceptions: instead, errors are handled using the built-in `error` type
+
+- use `errors` when you encounter a programming error that can be recovered from
+- use `panic()` when you encounter a programming error that cannot be recovered from
+
+```go
+package main
+
+import (
+  "errors"
+  "fmt"
+)
+
+func divide(a, b float64) (float64, error) {
+  if b == 0 {
+    return 0, errors.New("cannot divide by zero")
+  }
+  return a / b, nil
+}
+
+func main() {
+  result, err := divide(4, 0)
+  if err != nil {
+    fmt.Println("Error:", err)
+  } else {
+    fmt.Println("Result:", result)
+  }
+}
+```
+
 ### math
 
 The `math` package provides basic constants and mathematical functions for floating-point operations.
 
+### string
 ### os
 ### testing
 ### time

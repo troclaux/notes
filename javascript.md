@@ -2,21 +2,21 @@
 
 ## properties
 
+- almost everything is an object
+
 - dynamically typed
 - interpreted programming language
 - has garbage collection
-- first class functions
+- functions are values (i.e. first-class citizens)
+- function-scoped: once a variable is declared inside a function, it is accessible anywhere inside that function
 - hoisted declarations: variables and functions can be used before they are declared
-- almost everything is an object
-- supports multiple programming paradigms:
-  - object oriented
-  - functional
-  - imperative
 - immutable strings
-- weakly typed
 - multiplatform
 
 ## data types
+
+- value types: Number, String, Boolean, Null, Undefined
+- reference types: Object, Array and Function
 
 > [!IMPORTANT]
 > in JavaScript, almost everything is an object
@@ -181,6 +181,57 @@ console.log(greeting); // outputs "Hello, my name is John and I am 30 years old.
 - `Boolean()`: converts a value to a boolean
   - `const bool = Boolean(0);`
 
+## data structures
+
+- [arrays](#arrays)
+- `new`: call the constructor function and returns a new object
+
+- data structures that need to be manually implemented:
+  - queues
+  - stacks
+  - linked lists
+  - doubly linked lists
+  - etc
+
+### objects
+
+
+```javascript
+```
+
+### sets
+
+> collection of unique values (no duplicates)
+
+```javascript
+let mySet = new Set([1, 2, 3, 4, 4, 5]);
+mySet.add(6)
+mySet.has(4)    // returns true
+mySet.delete(4)
+mySet.size      // returns the number of unique items
+```
+
+### maps
+
+> collection of key-value pairs where keys can be of any type
+
+```javascript
+let myMap = new Map();
+myMap.set('key', 'value');
+myMap.set(1, 'one');
+myMap.set('key', 'value');
+myMap.get('key');
+myMap.has('key');
+myMap.delete('key');
+
+let capitalCities = new Map([
+    ['France', 'Paris'],
+    ['Spain', 'Madrid'],
+    ['Italy', 'Rome']
+]);
+console.log(capitalCities.get('Spain'));  // 'Madrid'
+```
+
 ## if else
 
 ```javascript
@@ -283,6 +334,7 @@ console.log(multiply(4, 5)); // Output: 20
 ## object oriented programming
 
 - `class`: used to define a new class
+- object: hash map that contains a collection of string-value pairs
 - `constructor()`: special method for creating and initializing an object created with a class
 - `this`: used to call the constructor of a parent class
 - `new`: creates a new instance of a class
@@ -310,7 +362,6 @@ const myPerson2 = new Person("Alice", 25);
 
 ```
 
-initializing an object
 ```javascript
 
 let person = {
@@ -323,6 +374,7 @@ let person = {
 };
 console.log(person.firstName); // Output: John
 console.log(person.greet());   // Output: Hello, John
+delete person.age;             // removes age, person.age changes to undefined
 ```
 
 #### JSON (JavaScript Object Notation)

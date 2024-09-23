@@ -8,6 +8,7 @@
 - easy to read and understand
 - blocks are NOT defined by indentation
 - garbage collection
+- functions are values (i.e. first-class citizens)
 - lua is NOT object oriented
 - immutable strings
 - parentheses in `if` statements are optional

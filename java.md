@@ -12,7 +12,7 @@
 - statically typed
 - is considered compiled AND interpreted
 - has garbage collection
-- functions are not first-class citizens
+- functions are values (i.e. first-class citizens)
 - doesn't have hoisted declarations
 - type casting can be done explicitly or implicitly
 - strings aren't mutable
@@ -20,6 +20,13 @@
 
 - JVM: allows java to run in any OS (Linux, Windows, Mac)
 - JRE: contains JVM and all the extra tools and libraries needed to run a Java program
+
+
+## data types
+
+TODO
+
+## basics
 
 - `main()` method is required and you can only have one in a program
   - `public static void main(String[] args){}`
@@ -42,9 +49,6 @@ public class Main {
 }
 
 ```
-
-## basic operations
-
 
 ```java
 import java.util.ArrayList;
@@ -77,10 +81,6 @@ public class Main {
 }
 
 ```
-
-## data types
-
-TODO
 
 ### type casting
 

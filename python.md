@@ -1,23 +1,32 @@
 
 # python
 
-## basics
+## properties
 
 - easy to read and understand
-- dynamically typed
-- interpreted programming language
-- multiplatform
 - blocks are defined by indentation
-- garbage collection
+- parentheses in `if` statements are optional
+- huge variety of libraries
 - object oriented
   - everything is an object
-- can also be used for functional programming
-- huge variety of libraries
 
-- parentheses in `if` statements are optional
+- dynamically typed
+- interpreted programming language
+- has garbage collection
+- doesn't have hoisted declarations
+- function-scoped: once a variable is declared inside a function, it is accessible anywhere inside that function
 - immutable strings
+- multiplatform
 
 ## data types
+
+all variables are references to objects, so there are 2 categories:
+- immutable types: values that can be modified after they are created
+  - behave like value type
+  - int, float, complex, bool, str, typle, frozenset, bytes
+- mutable types: values that **cannot** be modified after they are created
+  - behave like reference type
+  - list, dict, set, objects, bytearray, memoryview
 
 - text
   - str
