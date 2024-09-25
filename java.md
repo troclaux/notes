@@ -1,7 +1,3 @@
-- pass by value: actual value of the argument is passed
-- pass by reference: address to the actual argument is passed
-
-- namespace: declarative region that provides a scope to the identifiers (names of types, functions, variables) inside it
 
 ## properties
 
