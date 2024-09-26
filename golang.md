@@ -6,7 +6,8 @@
 - has strong standard library
 - syntax is similar to C
 - doesn't use semicolons
-- uses structs instead of classes
+- is not an object-oriented language
+  - uses structs instead of classes
 - doesn't have `while`, uses `for` instead
   - `for sum < 10 { sum += 1 }`
 
@@ -144,17 +145,21 @@ func main() {
 - basic types:
   - numeric types:
     - integers: `int`, `int8`, `int16`, `int32`, `int64`, `uint`, `uint8`, `uint16`, `uint32`, `uint64`, `uintptr`
+      - the number after `int` is the number of bits
     - floating-point numbers: `float32`, `float64`
     - complex numbers: `complex64`, `complex128`
     - others:
       - `byte` (alias for `uint8`)
       - `rune` (alias for `int32`)
+	- single-quoted strings (`''`) are used for runes
   - Booleans: `bool`
   - Strings: `string`
+    - double-quoted strings (`""`) are used for string literals
 - composite types:
   - `array`
   - `slice`
   - `struct`
+    - `type Car struct {}`
   - `map`
   - `chan`
 - reference types:
@@ -162,6 +167,7 @@ func main() {
   - `function`
 - interface types:
   - `interface`
+    - `type Vehicle interface {}`
 
 > [!TIP]
 > Unless you have a good performance reason, use the default types
@@ -195,6 +201,55 @@ func main() {
 }
 ```
 
+### type assertion
+
+- `v`: variable of unknown type
+- `person, ok := v.(Person)`
+  - `person`: receives the value of `v` if `v`'s type is `Person`
+  - `ok`: receives true if `v`'s type is `Person`, false otherwise
+
+
+```go
+package main
+
+import "fmt"
+
+type Person struct {
+    name string
+}
+
+func main() {
+    p := Person{"John"}
+    v := p
+
+    // Type assertion to get the Person struct
+    person, ok := v.(Person)
+    if ok {
+        fmt.Println(person.name) // Output: John
+    }
+
+    // simpler example
+    var x interface{} = "hello"
+    value, isType := x.(string)
+    if isType {
+        fmt.Println(value)       // Output: hello
+    }
+}
+```
+
+use type switch for multiple type assertions:
+
+```go
+switch v := num.(type) {
+case int:
+    fmt.Printf("%T\n", v)
+case string:
+    fmt.Printf("%T\n", v)
+default:
+    fmt.Printf("%T\n", v)
+}
+```
+
 ### enums
 
 - `iota`: increments automatically each new constant in a block
@@ -221,10 +276,32 @@ func main() {
 
 ### interface
 
+[best practices for interfaces in Go](https://blog.boot.dev/golang/golang-interfaces/)
+
 > type that defines a contract or a set of methods that must be implemented by any type that satisfies the interface
 
-- you cannot define a types that implements an interface inside a function
+> collections of method signatures
 
+> [!IMPORTANT]
+> you don't need to name the arguments of an interface
+> but it's recommended to name the arguments, to make it more readable
+
+- method signature: method name, receiver type and the parameter list
+  - e.g. `func (p Person) sayHello()`
+- interfaces don't require variables, only methods
+- you cannot define a type that implements an interface inside a function
+- a type can implement any number of interfaces in golang
+- structs implements interfaces implicitly
+  - you may add methods to a type and in the process be unknowingly implementing various interfaces, and that's okay
+  - if a struct implements a method that is inside an interface, then it must implement all methods in the interface
+
+- good practices for interfaces:
+  - keep interfaces small
+  - name the arguments of the interface
+  - interfaces should focus only on the actions or behavious it defines, not on the specific types that implement it
+    - don't add type-specific methods (like IsFiretruck()) to a general interface
+    - types can be aware of the interfaces they satisfy
+    - interfaces can't be aware of the types they satisfy
 
 ```go
 package main
@@ -259,6 +336,12 @@ func (r Rectangle) Perimeter() float64 {
 }
 ```
 
+#### empty interface
+
+- every type implements the empty interface (`interface{}`)
+- the empty interface can hold values of any type
+  - `var i interface{} = "hello"`
+    - holds the value's type (`string`) and the value itself (`hello`)
 
 ## data structures / composite types
 
@@ -273,6 +356,7 @@ func (r Rectangle) Perimeter() float64 {
   - `s2 := make([]int, 5, 10)`
     - length of s2 = 5
     - capacity of s2 = 10
+  - slice's zero value is `nil`
 - map: key-value pairs hash table
   - `m1 := map[string]int{ "apple":  1, "banana": 2, }`
   - `m2 := make(map[string]int, 10)`
@@ -287,9 +371,20 @@ type Person struct {
 p := new(Person)
 ```
 
-- `make(type, size)`: function that can be used to create slices, maps and channels
+- `make(type, length, capacity)`: function creates slices, maps and channels
   - type of data structure to create
-  - size of data structure to create (can be length or capacity)
+  - length: initial length of slice
+  - capacity: number of items that the slice can hold without needing to be resized
+    - capacity's default value is the length
+
+> [!WARNING]
+> `slice = append(slice, 1, 2, 3, 4)`: add items to end of slice
+> `append()` changes the underlying array of its parameter AND returns a new slice
+> ALWAYS ASSIGN THE RESULT OF APPEND() BACK TO THE SLICE TO ENSURE THE CHANGES ARE APPLIED CORRECTLY
+> `append()` only works for slices
+> don't do this: `someSlice = append(otherSlice, element)`
+> you can accidentally declare multiple slices that share the same underlying array
+> if this happens, when you change one slice, you can change other slices without knowing
 
 > [!NOTE]
 > go doesn't have built-in stacks and queues, but they can be implemented using slices
@@ -324,39 +419,118 @@ fmt.Println(front)      // 1
 > groups fields together
 
 - replaces classes
+- structs can have methods
+- methods in Golang are just functions that have a receiver
+- receiver: special parameter that syntactically goes before the name of the function
+  - receivers can receive pointers or just structs
+    - what is the difference?
+      - pointer receivers: pass a pointer to the original structure
+	- object-oriented programming
+      - value receivers: pass a copy of the original structure
+	- functional programming
+
 - methods and constructors aren't defined inside the struct initialization
 - `new()`: creates a new instance of a struct
   - `p := new(Person)`
   - `p.Name = John`
 
 ```go
+package main
+
+import "fmt"
 
 type Person struct {
   Name string
   Age  int
 }
 
-// creating object
-p := Person{Name: "Alice", Age: 30}
-fmt.Println(p.Name)  // Output: Alice
-fmt.Println(p.Age)   // Output: 30
+func main() {
+	// creating object
+  p1 := Person{Name: "Alice", Age: 30}
+  fmt.Println(p1.Name) // Output: Alice
+  fmt.Println(p1.Age)  // Output: 30
 
-// creating a method
-func (p *Person) Greet() {
+  // calling method
+  p1.Greet() // Output: Hello, my name is Alice and I am 30 years old.
+
+  // using constructor
+  p2 := NewPerson("Charlie", 20)
+  p2.SetAge(45)
+  p2.Greet()
+}
+
+// creating a method with a value receiver
+func (p Person) Greet() {
   fmt.Printf("Hello, my name is %s and I am %d years old.\n", p.Name, p.Age)
 }
 
-// calling method
-p.Greet()  // Output: Hello, my name is Alice and I am 30 years old.
+// creating a method with a pointer receiver
+func (p *Person) SetAge(age int) {
+  p.Age = age
+}
 
 // constructor
 func NewPerson(name string, age int) *Person {
   return &Person{Name: name, Age: age}
 }
 
-// using constructor
-p := NewPerson("Charlie", 25)
+```
 
+#### embedded struct
+
+- just add the struct inside the parent struct without the type
+- can be used to emulate inheritance
+
+```go
+type car struct {
+  make string
+  model string
+}
+
+type truck struct {
+  // "car" is embedded, so the definition of a
+  // "truck" now also additionally contains all
+  // of the fields of the car struct
+  car
+  bedSize int
+}
+```
+
+#### empty struct
+
+> smallest possible type in golang
+
+- it occupies 0 bytes of memory
+- `struct{}` is the type (empty struct)
+- `struct{}{}` is the value (empty struct literal)
+
+```go
+// anonymous empty struct type
+empty := struct{}{}
+
+// named empty struct type
+type emptyStruct struct{}
+empty := emptyStruct{}
+```
+
+#### anonymous struct
+
+> struct that is defined without a name
+
+- can't be referenced elsewhere in the code
+- anonymous structs can be nested inside anonymous structs
+- when should i use anonymous structures?
+  - generally try not to use it
+  - only use it when you won't reuse the struct
+
+```go
+myCar := struct {
+  make string
+  model string
+} {
+  make: "tesla",
+  model: "model 3",
+}
 ```
 
 ### arrays
@@ -382,6 +556,8 @@ func main() {
 > [!IMPORTANT]
 > slices are reference types
 > slices are passed as references to a function
+> if you change a slice that points to an array, you will change the array
+> to avoid this accident: `copy(sliceScopy, arr[:])`
 
 - `len(arr1)`: returns length
 - `cap(arr1)`: returns capacity
@@ -410,24 +586,69 @@ func main() {
 }
 ```
 
+- array: `arr := [3]int{1, 2, 3}`
+- slice: `arr := []int{1, 2, 3}`
+
+#### matrix (slice of slices)
+
+declaring an empty matrix:
+1. initialize the matrix: `matrix := make([][]int, rows)`
+1. loop to initialize each row of the matrix
+1. initialize each row: `matrix[i] = make([]int, cols)`
+1. loop to define each element's new value: `matrix[rowIdx][colIdx] = rowIdx * colIdx`
+
+```go
+func createMatrix(rows, cols int) [][]int {
+    matrix := make([][]int, rows)
+    for i := 0; i < rows; i++ {
+        matrix[i] = make([]int, cols)
+        for j := 0; j < cols; j++ {
+            matrix[i][j] = i * j
+        }
+    }
+    return matrix
+}
+```
+
 ### maps
+
+> data structure with key -> value mapping
 
 > [!IMPORTANT]
 > maps are reference types
 > maps are passed as references to a function
+> you need to initialize a map before you can add key-value pairs to it
+> `map1 := make(map[string]int)`
+
+- similar to python's dictionaries and javascript's objects
+- O(1) lookup
+- zero value of map is `nil`
+- maps can contain maps, also called nested maps
+- map keys can be of any type that is comparable
+  - structs can be keys
+    - `users := make(map[User]int)`
+
+- delete element from map: `delete(map1, key)`
+- checks if a key exists: `elem, ok := map1[key]`
+  - if `key` is in `map1`, then `ok` is `true` and `elem` is the value as expected
+  - if `key` is not in `map1`, then `ok` is `false` and `elem` is the zero value for the map's element type
+
+> [!NOTE]
+> maps return zero value when you try to access a value with a key that doesn't exist
+> you don't need to initialize a new entry of a map in order to increment it
 
 ```go
-package main
+m := make(map[string]int)
+m["foo"] = 1
+m["bar"] = 2
 
-import "fmt"
-
-func main() {
-  m := make(map[string]int)
-  m["foo"] = 1
-  m["bar"] = 2
-  fmt.Println(m)
+// example of map literal
+ages = map[string]int{
+  "John": 37,
+  "Mary": 21,
 }
 ```
+
 ## packages
 
 > collection of related source files that are compiled together to form a single unit of code
@@ -458,7 +679,21 @@ visibility is controlled by capitalization of the first letter:
   - enums
   - interfaces
 
-## string operations
+## strings
+
+> strings are structs with a byte pointer and the length of the string
+
+- the size of the pointer depends on architecture of the system
+  - 32 bit => 4 bytes pointer
+  - 64 bit => 8 bytes pointer
+
+```go
+struct {
+    *byte   // pointer to the first byte of the string
+    int     // length of the string
+}
+```
+
 
 - concatenate strings with `+`
   - `str1 := str2 + str3`
@@ -531,6 +766,14 @@ func main() {
 }
 ```
 
+loops can have multiple statements:
+
+```go
+for i, j := 0, 0; i < 5; i, j = i+1, j+2 {
+    fmt.Println(i, j)
+}
+```
+
 ## switch statement
 
 ```go
@@ -555,9 +798,9 @@ func main() {
 ## functions
 
 - can return any number of results
-- you can define the return type of a function with **return values**
-  - in the function initialization, after the parameters
-  - can be surrounded by parentheses
+- return values: define the return type of a function
+  - located in the function signature, after the parameters
+  - can be surrounded by parentheses (optional)
 
 ```go
 package main
@@ -674,6 +917,9 @@ func main() {
 
 ## pointers
 
+> [!NOTE]
+> golang doesn't have pointer arithmetic
+
 - `&`: returns the memory address of its operand
   - address-of operator
 - `*`: returns the value stored at the memory address
@@ -709,8 +955,8 @@ func main() {
 - `Println()`: prints arguments to the standard output, followed by a newline character
 - `Printf()`: prints arguments to the standard output and allows the use of format strings
 
-- `Sprint()`: returns a string representation of its arguments, without printing
-- `Sprintf()`: similar to `Sprint()`, but allows the use of format strings
+- `Sprint()`: returns a string representation of its arguments without printing
+- `Sprintf()`: returns a string representation of its arguments without printing, also formats strings
 
 ```go
 fmt.Printf("%v\n", 42)          // Output: 42
@@ -737,8 +983,25 @@ format specifiers are used when printing variables with `fmt` package:
 
 go does not have exceptions: instead, errors are handled using the built-in `error` type
 
+- error is any type that implements this error interface:
+
+```go
+type error interface {
+    Error() string
+}
+```
+
+- you can create your own structs that implements `error interface` that returns a custom `Error() string`
+- the Go standard library provides an `"errors"` package that makes it easy to deal with errors
+  - easy custom errors
+    - `var err error = errors.New("error description")`
 - use `errors` when you encounter a programming error that can be recovered from
-- use `panic()` when you encounter a programming error that cannot be recovered from
+- avoid using `panic()`
+  - why?
+    - `panic()` removes control of current function, up the call stack until it reaches a function that `defers` a `recover`
+    - if no function calls `recover`, the goroutine (often the entire program) crashes
+  - to cleanly exit the program in an unrecoverable way, use `log.fatal()`
+- it's recommended to return the "zero" values of the type when you return a non-nil error
 
 ```go
 package main
