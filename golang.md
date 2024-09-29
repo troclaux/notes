@@ -3,13 +3,14 @@
 
 ## properties
 
-- has strong standard library
 - syntax is similar to C
-- doesn't use semicolons
+- has strong standard library
+- has strong concurrency support
 - is not an object-oriented language
   - uses structs instead of classes
 - doesn't have `while`, uses `for` instead
   - `for sum < 10 { sum += 1 }`
+- does not require semicolons at the end of every statement
 
 - statically typed
 - compiled language
@@ -67,13 +68,19 @@ my-project/
   - typically located on the root of your project
   - execution of program begins here
 
+- module: collection of go packages
+  - stores packages in a file tree with a go.mod file at its root
 - `package`: directory of related .go files
-  - each package can only have 1 `main()` function
-  - `package main`: contains `main()` function
+  - `package main`: contains exactly 1 `main()` function, which is the entry point of the program
+  - packages by other names are "library packages"
+    - library package: only export functionality that can be used by other packages
+      - have no entry point
+  - multiple packages on the same directory are **NOT** allowed
+  - all .go files in a single directory must belong to the same package
+    - if they don't, the compiler will throw an error
 - `import`: imports packages
   - `import "fmt"`: import package with basic formatting functions (includes Println)
   - when importing multiple packages, don't use comma between each package
-- module: collection of packages
 
 ## basics
 
@@ -176,6 +183,23 @@ func main() {
 
 > [!TIP]
 > use `reflect.TypeOf(my_variable)` to get the type of a variable
+
+### zero values
+
+> variables declared without an explicit initial value are given their zero value
+
+- numerics: `0`
+- strings: `""`
+- booleans: false
+- struct: zero value of each field
+- array: zero value of each element
+- slice: `nil`
+- function: `nil`
+- maps: `nil`
+- pointers: `nil`
+- interfaces: `nil`
+- channels: `nil`
+- generics: zero value of the type parameter used
 
 ### type casting
 
@@ -353,14 +377,14 @@ func (r Rectangle) Perimeter() float64 {
   - `var arr [5]int`
 - slice: ordered collection of elements with dynamic resizing
   - `s1 := []int{1, 2, 3}`
-  - `s2 := make([]int, 5, 10)`
+  - `s2 := make([]int, 5, 10)`: initializes an object of type: `slice`, `map` or `chan`
     - length of s2 = 5
+      - number of elements that are initialized with zero values
     - capacity of s2 = 10
-  - slice's zero value is `nil`
 - map: key-value pairs hash table
   - `m1 := map[string]int{ "apple":  1, "banana": 2, }`
-  - `m2 := make(map[string]int, 10)`
-    - capacity of m2 = 10
+  - `m2 := make(map[string]int)`
+    - for maps, there's no need to define length
 - struct: collection of fields that can be of different type
 
 ```go
@@ -373,7 +397,7 @@ p := new(Person)
 
 - `make(type, length, capacity)`: function creates slices, maps and channels
   - type of data structure to create
-  - length: initial length of slice
+  - length: number of elements that are initialized with zero values
   - capacity: number of items that the slice can hold without needing to be resized
     - capacity's default value is the length
 
@@ -425,9 +449,10 @@ fmt.Println(front)      // 1
   - receivers can receive pointers or just structs
     - what is the difference?
       - pointer receivers: pass a pointer to the original structure
-	- object-oriented programming
+        - object-oriented programming
       - value receivers: pass a copy of the original structure
-	- functional programming
+        - functional programming
+  - pointer receiver are more widely used
 
 - methods and constructors aren't defined inside the struct initialization
 - `new()`: creates a new instance of a struct
@@ -622,19 +647,18 @@ func createMatrix(rows, cols int) [][]int {
 
 - similar to python's dictionaries and javascript's objects
 - O(1) lookup
-- zero value of map is `nil`
 - maps can contain maps, also called nested maps
 - map keys can be of any type that is comparable
   - structs can be keys
     - `users := make(map[User]int)`
 
 - delete element from map: `delete(map1, key)`
-- checks if a key exists: `elem, ok := map1[key]`
+- checks if a map contains a key: `elem, ok := map1[key]`
   - if `key` is in `map1`, then `ok` is `true` and `elem` is the value as expected
   - if `key` is not in `map1`, then `ok` is `false` and `elem` is the zero value for the map's element type
 
 > [!NOTE]
-> maps return zero value when you try to access a value with a key that doesn't exist
+> when trying to access a value in a map using a key that doesn't exist, the map returns the "zero value" for that type
 > you don't need to initialize a new entry of a map in order to increment it
 
 ```go
@@ -651,10 +675,17 @@ ages = map[string]int{
 
 ## packages
 
-> collection of related source files that are compiled together to form a single unit of code
+> collection of go files
 
-- 1 or more .go files that normally are in the same directory (but not necessarily)
-- each package can only have 1 `main()` function
+- multiple packages on the same directory are **NOT** allowed
+- all .go files in a single directory must belong to the same package
+  - if they don't, the compiler will throw an error
+
+2 types of packages:
+- `package main`: contains exactly 1 `main()` function, which is the entry point of the program
+- library package: any package that isn't the main package
+  - can only export functionality to be used by other packages
+  - has no entry point
 
 > [!IMPORTANT]
 > each package has its own namespace
@@ -678,6 +709,33 @@ visibility is controlled by capitalization of the first letter:
   - structs
   - enums
   - interfaces
+
+- best practices for golang packages:
+  - hide internal logic
+  - don't change APIs
+    - avoid breaking changes
+  - don't export functions from the main package
+    - the main package isn't a library, there's no need to export functions from it
+  - packages shouldn't know about dependents
+    - a package should never have specific knowledge about a particular application that uses it
+
+## modules
+
+> collection of go packages stored in a file tree with a go.mod file at its root
+
+- `go.mod`: file that stores:
+  - module path
+  - version of go language the project requires
+  - all external package dependencies
+- variables, constants, functions and types defined in one source file are visible to all other source files in same package
+- repository: contains 1 or more modules
+
+- module path: string used to import a package
+  - e.g. `github.com/google/go-cmp`
+  - packages in the standard library do not have a module path prefix
+  - usually there is only one module per repo
+
+- `GOPATH`: environment variable that is deprecated, avoid using it
 
 ## strings
 
@@ -712,7 +770,7 @@ func main() {
 
 ```
 
-### if else
+## if else
 
 > [!NOTE]
 > you can add an initial statement before the condition
@@ -735,7 +793,7 @@ func main() {
 }
 ```
 
-### loops
+## loops
 
 ```go
 package main
@@ -795,6 +853,24 @@ func main() {
 }
 ```
 
+## defer
+
+- `defer`: delay the execution of a function until the surrounding function returns
+  - deferred function call are pushed on a stack
+  - when function ends, the deferred call are executed in LIFO order
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+  defer fmt.Print("world")
+  fmt.Print("hello ")
+}
+// output: "hello world"
+```
+
 ## functions
 
 - can return any number of results
@@ -848,13 +924,20 @@ func main() {
 }
 ```
 
-## concurrency with goroutines and channels
+## pointers
 
-go provides built-in support for concurrency using goroutines and channels
+> [!NOTE]
+> golang doesn't have pointer arithmetic
 
-- `defer`: delay the execution of a function until the surrounding function returns
-  - deferred function call are pushed on a stack
-  - when function ends, the deferred call are executed in LIFO order
+- `&`: returns the memory address of its operand
+  - address-of operator
+- `*`: returns the value stored at the memory address
+  - dereference operator
+
+> [!IMPORTANT]
+> you can't use `*` to read a field of a pointer to a struct
+> wrong: `value := *myStruct.myField`
+> correct: `value := myStruct.myField`
 
 ```go
 package main
@@ -862,16 +945,59 @@ package main
 import "fmt"
 
 func main() {
-  defer fmt.Print("world")
-  fmt.Print("hello ")
+    var x int = 5
+    var p *int = &x
+    fmt.Println(*p) // Output: 5
+    *p = 10
+    fmt.Println(x) // Output: 10
 }
-// output: "hello world"
 ```
 
-## concurrent programming
+## generics
 
-- goroutine: a lightweight thread managed by the go runtime
-- `go`: TODO
+> use variables to refer to specific types
+
+- requires prefix `[T any]` before any function that uses generics
+- declaring: `var myZero T`
+
+```go
+// T1 and T2 are generics
+func genericFunction[T1 any, T2 any](param1 T1, param2 T2) (T1, T2) {
+    // Function logic
+}
+```
+
+### constraints
+
+> interface that restricts which types generics can be
+
+- union operator (`|`): restricts generic to multiple types
+
+```go
+type numeric interface {
+    int | float64
+}
+```
+
+## concurrency
+
+go provides built-in support for concurrency using goroutines and channels
+
+> concurrency is as simple as using the `go` keyword before a function/method
+
+```go
+go doSomething()
+```
+
+- goroutine: lightweight thread of execution
+- `go`: runs following function concurrently
+  - spawns a new goroutine
+  - can also be used with anonymous functions
+    - you can suffix the anonymous function with `()` to run it immediately after definition
+  - does not block the main goroutine
+    - i.e. main goroutine will continue to run and does not wait for the other goroutines to finish
+
+goroutine's order of complete execution is unpredictable, because it depends partially on the OS' scheduler. Even in a program where you run multiple identical goroutines that only have the same print statement, the order of the print statements will change each time you run the program.
 
 ```go
 package main
@@ -894,9 +1020,21 @@ func main() {
 }
 ```
 
-## channels
+### channels
 
-Channels are used to communicate between goroutines
+- typed, thread-safe queue
+- `middle-man` data structure that passes values between goroutines
+- FIFO
+- allows different goroutines to communicate with each other
+- `range` keyword works for channels
+  - `for item:= range ch {}`
+
+- my informal explanation: you have 2 types of goroutines (not mutually exclusive):
+  - senders: sends values to channels
+    - channels will store values that will be consumed by another goroutine
+    - the sender goroutine blocks (stops execution) until a receiver receives the value
+  - receivers: receive values from channels
+    - when the receiver goroutine tries to receive a value, it blocks until a sender sends a value through the channel
 
 ```go
 package main
@@ -904,38 +1042,117 @@ package main
 import "fmt"
 
 func main() {
-  ch := make(chan int)
+  ch := make(chan int) // Create channel
 
   go func() {
     ch <- 42 // Send a value into the channel
-  }()
+  }()     // These parentheses call the function immediately after defining it
 
   value := <-ch // Receive a value from the channel
   fmt.Println(value)
 }
 ```
 
-## pointers
+- `ch := make(chan int)`: creates an unbuffered channel that stores int value
+  - unbuffered channels can't store specific number of values before blocking
+  - example of channel parameter: `func foo(num int, myChan chan struct{}) {}`
+- `ch <- 42`: sends a value into the channel
+  - sending a value into a channel blocks the program until another goroutine is ready to receive the value
+- `value := <-ch`: receives a value from the channel and removes the value
+  - this instruction blocks the program until there is a value to be read
 
-> [!NOTE]
-> golang doesn't have pointer arithmetic
-
-- `&`: returns the memory address of its operand
-  - address-of operator
-- `*`: returns the value stored at the memory address
-  - dereference operator
+- sending a value to a nil channel blocks the program forever
+- trying to receive a value from a nil channel blocks the program forever
+- sending a value to a closed channel causes a panic
+- trying to receive from a closed channel returns the zero value immediately
 
 ```go
-package main
+var c chan string // c is nil
+c <- "let's get started" // blocks
+```
 
-import "fmt"
+- `select`: switch case for channels
+  - listens to multiple channels at the same time
+  - will run the `case` block from the value that's received first
+  - if multiple values are received at the same time, one of them is chosen randomly
+- `ok` variable refers to whether or not the channel has been closed by the sender yet
+- `i` and `s` will receive values from channels if they have any
+- `default`: executes immediately if there's no values in channel
+  - a `default` case stops the `select` statement from blocking
 
-func main() {
-  var x int = 5
-  var p *int = &x
-  fmt.Println(*p) // Output: 5
-  *p = 10
-  fmt.Println(x) // Output: 10
+```go
+select {
+case i, ok := <-chInts:
+    fmt.Println(i)
+case s, ok := <-chStrings:
+    fmt.Println(s)
+default:
+    fmt.Println("this runs immediately if there's no values in all channels")
+}
+```
+
+example of using a `select` statement within an infinite loop to continuously check multiple channels for incoming data
+
+```go
+for {
+  select {
+  case <-ch1: //
+  fmt.Println("channel 1")
+  case <-ch2:
+  fmt.Println("channel 2")
+  default:
+  fmt.Println("this runs immediately if there's no values in all channels")
+  }
+}
+```
+
+#### buffered channels
+
+> buffered channels store a specific number of values before blocking
+
+- `emailChan := make(chan string, 100)`: creates buffered channel
+  - defines number of values to store before blocking
+- don't create an array for buffered channels in function signatures
+  - e.g. `func addEmailsToQueue(emails []string) chan string {`
+
+#### read-only channels
+
+```go
+var readOnlyChan <-chan int
+```
+
+#### write-only channels
+
+```go
+var writeOnlyChan chan<- int
+```
+
+- reader is a goroutine that reads from a shared resource (normally a variable or data structure)
+- writer is a goroutine that writes/changes/mutates a shared resource
+- to acquire the lock means to gain exclusive access a shared resource
+  - preventing other goroutines from accessing it simultaneously
+
+## mutexes
+
+> locks access to data and controls which goroutines can access certain data at which time
+
+- requires importing `"sync"` package
+- initialize like so: `var mu sync.Mutex`
+- lock current goroutine: `mu.Lock()`
+- unlock current goroutine: `defer mu.Lock()`
+  - always `defer mu.Unlock()` to make sure eventually the goroutine gets unlocked
+
+> [!WARNING]
+> maps are not safe for concurrent use
+> you must always `mu.Lock()` before writing to a map
+
+- group the data with its synchronization mechanism in a `struct`
+  - by bundling the mutex with the data, it's harder to accidentally access the data without using the mutex
+
+```go
+type SafeCounter struct {
+  mu    sync.Mutex
+  value int
 }
 ```
 
@@ -1033,11 +1250,12 @@ func main() {
 The `math` package provides basic constants and mathematical functions for floating-point operations.
 
 ### string
-### os
 ### testing
-### time
 ### bufio
-### sql
+### io
+### os
 ### json
+### time
+### sql
 ### csv
 ### net
