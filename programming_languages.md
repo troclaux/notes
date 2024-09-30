@@ -2,6 +2,14 @@
 - primitives: fundamental data types that are not composed of other data types
   - e.g. integers, floating-point numbers, characters, booleans, strings, null or undefined values
 
+- variable: the name given to a memory location
+- field: data encapsulated within a class or object
+
+- function: set of instructions that perform a task
+- method: set of instructions associated with an object
+
+- function signature: defines input and output of a function
+
 - pass by value: actual value of the argument is passed
 - pass by reference: address to the actual argument is passed
 
