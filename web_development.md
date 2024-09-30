@@ -24,6 +24,8 @@ when a user visits a webpage:
     - each part of the page becomes a node
     - each node can be accessed and manipulated by programming languages like Javascript
 
+[http](/networking.md#http-(hypertext-transfer-protocol))
+
 - HTML represents the **initial** page content
 - DOM represents the **updated** page content
 
