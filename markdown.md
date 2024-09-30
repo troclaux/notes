@@ -33,7 +33,13 @@
 - [text][reference] for reference links
 - [reference]: www.url-for-reference-links.com "title for reference links"
 - reference a header using cross-reference links (also called anchors)
-  - e.g. [basic syntax](#basic-syntax), [git anchor](git.md#git-bisect)
+  - format: `[label](/filepath.md#heading-name)`
+    - replace consecutive non-letters from heading with `-`
+    - only use 1 `#` character between full path and the heading
+      - examples:
+        - `#### JSON (JavaScript Object Notation)` => `[JSON](/javascript.md#json-javascript-object-notation)`
+        - [basic syntax](#basic-syntax)
+        - [git anchor](git.md#git-bisect)
 
 ## best practices
 
