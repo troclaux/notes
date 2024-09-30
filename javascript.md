@@ -379,11 +379,18 @@ delete person.age;             // removes age, person.age changes to undefined
 
 #### JSON (JavaScript Object Notation)
 
+> stringified representation of a JavaScript Object
+
+- structured data
 - lightweight data interchange format
-- contains name/value pairs
-- values can be strings, numbers, objects, arrays, booleans, or null (not undefined)
+- contains keys/value pairs
+- keys are always strings
+- values can be strings, numbers, object literals, arrays, booleans, or null (not undefined)
   - OBS: JSON doesn't support `underfined` as a value
 - can be parsed and converted to JavaScript objects
+
+> [!NOTE]
+> don't add comma at the end of the last element of a JSON object or array
 
 ```javascript
 my_object = {
@@ -401,6 +408,12 @@ my_object = {
   - `const text = JSON.stringify(obj);`
 - `JSON.parse()`: converts a JSON string to a JavaScript object
   - `const obj = JSON.parse(text);`
+
+- common use cases:
+  - HTTP request and response bodies
+  - formats for text files
+    - `.json` files are often used as configuration files
+  - in NoSQL databases like MongoDB, ElasticSearch and Firestore
 
 ## modules
 
