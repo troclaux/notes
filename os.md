@@ -81,6 +81,16 @@ categories of scheduling algorithms:
   - used in systems that run processes only when necessary
     - example: traffic control systems
 
+### process vs thread
+
+- process: program under execution
+  - can contain multiple threads
+  - isolated memory
+- thread: part of the process
+  - takes less time to create and terminate in comparison to processes
+  - threads within the same process can share memory
+    - threads **cannot** share memory with threads from other processes
+
 ## Scheduling Algorithms
 
 - First Come First Serve (FCFS)
