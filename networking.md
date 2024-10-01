@@ -1,6 +1,5 @@
 
 [web development](./web_development.md)
-[protocols](./protocols.md)
 
 ## OSI model
 
@@ -35,42 +34,39 @@ layers:
 > layer order
 
 1. physical
-2. data link => 2 words
-3. network => n3twork
-4. transport => tr4nsport
-5. session => 5e55ion
-6. presentation
-7. application
+1. data link => 2 words
+1. network => n3twork
+1. transport => tr4nsport
+1. session => 5e55ion
+1. presentation
+1. application
 
 ## TCP/IP model
 
-- tcp/ip model != tcp and ip protocols
+> [!IMPORTANT]
+> TCP/IP is the most widely used model
+> tcp/ip model != tcp and ip protocols
 
-1. application layer
+- application layer
   - application layer
   - presentation layer
   - session layer
-2. transport layer
+- transport layer
   - transport layer
-3. network layer
+- network layer
   - network layer
-4. network access layer
-  - data link layer layer
+- network access layer
+  - data link layer
   - physical layer
 
-### network layer 3
+### application layer
 
-- IPv4
-  - 32 bits = 4 bytes
-- IPv6
-  - 128 bits = 16 bytes
+#### DNS (Domain Name System)
 
-> [!TIP]
-> IPv4 32 bits => 432 => 4 bytes and 32 bits
-> IPv4 bytes * 2² bytes => IPv6
-> 32 bits * 2² = 128 bits
+> resolves domain names to IP addresses
 
-### application layer 7
+- URL: https://youtube.com
+  - domain name/hostname: youtube.com
 
 #### HTTP (HyperText Transfer Protocol)
 
@@ -112,12 +108,17 @@ layers:
   - OPTIONS: used to describe the communication options available for the target resource
 
 - HTTP status codes:
-  - 200 OK: The request was successful, and the server is returning the requested data
-  - 301 Moved Permanently: The requested resource has been moved to a new URL
-  - 400 Bad Request: The server could not understand the request due to invalid syntax
-  - 401 Unauthorized: The request requires authentication, and the client has not provided valid credentials
-  - 404 Not Found: The requested resource could not be found on the server
-  - 500 Internal Server Error: server encountered an unexpected condition that prevented it from fulfilling the request
+  - 1xx: informational
+  - 2xx: success
+    - 200 OK: The request was successful, and the server is returning the requested data
+  - 3xx: redirection
+    - 301 Moved Permanently: The requested resource has been moved to a new URL
+  - 4xx: client error
+    - 400 Bad Request: The server could not understand the request due to invalid syntax
+    - 401 Unauthorized: The request requires authentication, and the client has not provided valid credentials
+    - 404 Not Found: The requested resource could not be found on the server
+  - 5xx: server error
+    - 500 Internal Server Error: server encountered an unexpected condition that prevented it from fulfilling the request
 
 example of HTTP request
 
@@ -148,3 +149,81 @@ Content-Length: 1024
 #### HTTPS
 
 > extension of HTTP that uses encryption (via SSL/TLS) to secure the communication between the client and the server
+
+#### SSL (Secure Sockets Layer)
+
+- provides secure communication over a computer network
+- deprecated and insecure
+
+#### TLS (Transport Layer Security)
+
+- successor to SSL
+- addresses flaws in SSL
+- provides privacy and data integrity between two communicating applications
+- TLS handles the encryption of HTTP requests and responses
+  - all data transferred via HTTPS is secured by TLS
+- TLS handshake
+  - when a browser connects to an HTTPS website, it starts with a TLS handshake
+  - defines which:
+    - version of TLS will be used
+    - encryption algorithm will be applied
+    - exchange of digital certificates to verify server's identity
+  - once the handshake is complete, HTTP data is transmitted over the secured TLS connection
+
+HTTPS vs TLS
+- HTTPS is the protocol for secure web communication
+- TLS is the security layer that HTTPS uses to encrypt and secure that communication
+
+### transport layer
+
+#### TCP (Transmission Control Protocol)
+
+> enables application programs and computers to exchange messages over a network
+
+- SYN-ACK process:
+1. client sends SYN (Synchronize) packet to server
+1. server sends SYN-ACK (Synchronize-Acknowledgment)
+1. clients sends ACK packet to server (Acknowledgment)
+1. connection established
+
+### network layer
+
+#### IP (Internet Protocol)
+
+> google.com (domain name) => 142.251.135.142 (ip address)
+
+- IPv4
+  - 32 bits = 4 bytes
+  - `byte.byte.byte.byte` <=> `142.251.135.142`
+- IPv6
+  - 128 bits = 16 bytes
+  - `2bytes:2bytes:2bytes:2bytes:2bytes:2bytes:2bytes:2bytes` <=> `2800:3f0:4004:809::200e`
+  - `16bits:16bits:16bits:16bits:16bits:16bits:16bits:16bits` <=> `2800:3f0:4004:809::200e`
+    - double colon `:` represents 16 zero bits
+
+> [!TIP]
+> IPv4 32 bits => 432 => 4 bytes and 32 bits
+> IPv4 bytes * 2² bytes => IPv6
+> 32 bits * 2² = 128 bits
+
+### network access layer
+
+#### MAC (Media Access Control)
+
+- unique identifier attributed to each network interface of a device connected to the network
+- MAC address uses 6 bytes = 48 bits
+- `byte:byte:byte:byte:byte:byte`
+- example: `47:3E:2A:B2:11:24`
+
+---
+
+## default ports
+
+- FTP 20/21
+- SSH 22
+- TELNET 23
+- SMTP 25
+- DNS 53
+- DHCP 67/68
+- HTTP 80
+- HTTPS 443
