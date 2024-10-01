@@ -16,7 +16,6 @@
 | O(c^n) | exponential |
 | O(n!) | factorial |
 
-jargons:
 - adaptive: faster for partially sorted data sets
 - stable: does not change the relative order of elements with equal keys
 - in-place: algorithm that operates on its input data structure without needing an auxiliary data structure
@@ -26,6 +25,10 @@ jargons:
   - best case => Ω()
   - average case => ϴ()
   - worst case => O()
+
+- dynamic programming algorithm: solves a complex problem by dividing it into simpler subproblems, solving each of those just once, and storing their solutions
+- memoization: optimization technique used to speed up programs by storing the results of expensive function calls and returning the cached result when the same inputs occur again
+- tabulation: approach where you solve a dynamic programming problem by first filling up a table, and then compute the solution to the original problem based on the results in this table
 
 ## sorting algorithms
 
