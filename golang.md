@@ -153,12 +153,12 @@ func main() {
   - numeric types:
     - integers: `int`, `int8`, `int16`, `int32`, `int64`, `uint`, `uint8`, `uint16`, `uint32`, `uint64`, `uintptr`
       - the number after `int` is the number of bits
-    - floating-point numbers: `float32`, `float64`
-    - complex numbers: `complex64`, `complex128`
-    - others:
       - `byte` (alias for `uint8`)
+        - `string()`: converts slice of bytes into a string
       - `rune` (alias for `int32`)
 	- single-quoted strings (`''`) are used for runes
+    - floating-point numbers: `float32`, `float64`
+    - complex numbers: `complex64`, `complex128`
   - Booleans: `bool`
   - Strings: `string`
     - double-quoted strings (`""`) are used for string literals
@@ -274,17 +274,39 @@ default:
 }
 ```
 
-### enums
+### type alias
 
-- `iota`: increments automatically each new constant in a block
+> [!IMPORTANT]
+> Type names and aliases should start with a capital letter (PascalCase)
+> variable names should start with a lowercase letter (camelCase)
 
 ```go
 package main
+
 import "fmt"
+
+func main() {
+    type Numeric int
+    var num Numeric = 2
+    fmt.Printf("%T", num)     // Output: main.Numeric
+}
+```
+
+### enums
+
+- `iota`: increments automatically each new constant in a block
+- `const()`: declares multiple constants in a single statement
+
+```go
+package main
+
+import "fmt"
+
+type Weekday int
 
 // Define an enumeration for weekdays
 const (
-    Sunday = iota  // iota starts at 0
+    Sunday Weekday = iota  // iota starts at 0
     Monday
     Tuesday
     Wednesday
@@ -309,10 +331,11 @@ func main() {
 > [!IMPORTANT]
 > you don't need to name the arguments of an interface
 > but it's recommended to name the arguments, to make it more readable
+> you must specify the input of the method and the output type
+> interfaces don't accept fields, only methods (although it can accept [constraints](#constraints))
 
 - method signature: method name, receiver type and the parameter list
   - e.g. `func (p Person) sayHello()`
-- interfaces don't require variables, only methods
 - you cannot define a type that implements an interface inside a function
 - a type can implement any number of interfaces in golang
 - structs implements interfaces implicitly
@@ -969,13 +992,18 @@ func genericFunction[T1 any, T2 any](param1 T1, param2 T2) (T1, T2) {
 
 ### constraints
 
-> interface that restricts which types generics can be
+> interface that restricts which type a generic can be
 
 - union operator (`|`): restricts generic to multiple types
+- `~`: the ~ before a type allows a type constraint to match any type with that specified type as its underlying type
 
 ```go
 type numeric interface {
-    int | float64
+    ~int | ~float64
+}
+
+func add[T numeric](value T) ([]T) {
+    // use generic that is int or float64
 }
 ```
 
@@ -1175,6 +1203,8 @@ type SafeCounter struct {
 - `Sprint()`: returns a string representation of its arguments without printing
 - `Sprintf()`: returns a string representation of its arguments without printing, also formats strings
 
+- `Errorf("failed to get user: %w", err)`: returns error with a format string description
+
 ```go
 fmt.Printf("%v\n", 42)          // Output: 42
 fmt.Printf("%v\n", true)        // Output: true
@@ -1195,8 +1225,9 @@ format specifiers are used when printing variables with `fmt` package:
 - `%x`: hexadecimal representation with lowercase letters
 - `%c`: character corresponding the integer's Unicode code point
 - `%%`: print percent sign
+- `%w`: error
 
-## errors
+### errors
 
 go does not have exceptions: instead, errors are handled using the built-in `error` type
 
@@ -1249,6 +1280,100 @@ func main() {
 
 The `math` package provides basic constants and mathematical functions for floating-point operations.
 
+### net
+
+#### http
+
+[http](/networking.md#http-(hypertext-transfer-protocol))
+
+```go
+package main
+
+import (
+    "fmt"
+    "io"
+    "net/http"
+)
+
+func getItemData() ([]byte, error) {
+    res, err := http.Get("https://example.com")
+    if err != nil {
+            return nil, fmt.Errorf("error creating request: %w", err)
+    }
+    defer res.Body.Close()
+
+    data, err := io.ReadAll(res.Body)
+    return data, err
+}
+```
+
+- initiate http get request: `res, err := http.Get("https://example.com")`
+  - `res`: HTTP response that comes back from the server
+  - during get request, Go opens a connection and reads the response into the `Body`
+  - `defer res.Body.Close()`: always close `body` to free system resources
+- `data, err := io.ReadAll(res.Body)`: reads the response body into a slice of bytes called `data`
+- does it reads response into a slice of bytes?
+<!--- handler: handles incoming requests-->
+
+#### url
+
+> package that parses URL
+
+```go
+parsedURL, err := url.Parse("https://homestarrunner.com/toons")
+if err != nil {
+    fmt.Println("error parsing url:", err)
+    return
+}
+
+hostname := parsedURL.Hostname()
+fmt.Println(hostname)     // homestarrunner.com
+```
+
+
+### enconding
+
+#### json
+
+[JSON](/javascript.md#json-javascript-object-notation)
+
+[json.NewDecoder.Decode vs json.Unmarshal](https://stackoverflow.com/questions/21197239/decoding-json-using-json-unmarshal-vs-json-newdecoder-decode)
+
+- use `json.NewDecoder.Decode` when there's an `io.Writer` or `io.Reader`
+  - when in doubt, use `json.NewDecoder.Decode`
+- use `json.Unmarshal` when there's a `[]byte` slice
+
+- use `enconding/json` package to map JSON fields to struct fields
+  - struct fields must be exported (capitalized) to decode JSON
+- `json.NewDecoder(res.body)`: creates new JSON decoder that can read and decode JSON from an `io.Reader` source
+  - `io.Reader` source: files, HTTP response, network connection
+- `decoder.Decode(&items)`: reads the JSON-encoded value from `decoder` and stores it in the value pointed to by `&items`
+
+```go
+Price float64 `json:"price"`
+```
+
+- `Price`: field name in Golang
+- `float64`: field type in Golang
+- `json:"price"`: field name in the original JSON
+
+price (JSON) => Item.Price float64 (Golang)
+
+```go
+type Item struct {
+    ID    int    `json:"id"`
+    Name  string `json:"name"`
+    Price float64 `json:"price"`
+}
+
+var items []Item
+decoder := json.NewDecoder(res.Body)      // res is a successful `http.Response`
+if err := decoder.Decode(&items); err != nil {
+    fmt.Println("error decoding response body")
+    return
+}
+```
+
 ### string
 ### testing
 ### bufio
@@ -1258,4 +1383,43 @@ The `math` package provides basic constants and mathematical functions for float
 ### time
 ### sql
 ### csv
-### net
+
+## Golang proverbs by Rob Pike
+
+Don't communicate by sharing memory, share memory by communicating.
+
+Concurrency is not parallelism.
+
+Channels orchestrate; mutexes serialize.
+
+The bigger the interface, the weaker the abstraction.
+
+Make the zero value useful.
+
+interface{} says nothing.
+
+Gofmt's style is no one's favorite, yet gofmt is everyone's favorite.
+
+A little copying is better than a little dependency.
+
+Syscall must always be guarded with build tags.
+
+Cgo must always be guarded with build tags.
+
+Cgo is not Go.
+
+With the unsafe package there are no guarantees.
+
+Clear is better than clever.
+
+Reflection is never clear.
+
+Errors are values.
+
+Don't just check errors, handle them gracefully.
+
+Design the architecture, name the components, document the details.
+
+Documentation is for users.
+
+Don't panic.
