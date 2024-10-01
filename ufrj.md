@@ -4,6 +4,7 @@
 ## 1º Período
 
 ### Computação 1
+
   - Informações relevantes de um problema e sua respectiva representação computacional
   - Resolução de problemas de forma algorítmica
   - Aspectos sintático se semânticos de uma linguagem de programação de alto nível
@@ -11,7 +12,9 @@
   - Modelagem e implementação de código modularizado
   - Noções de organização,reutilização e legibilidade de código
   - Princípios das boas práticas de programação
+
 ### Cálculo Infinitesimal 1
+
   - Funções de uma variável real
   - Limites e derivadas
   - Cálculo de derivadas e aplicações
@@ -19,7 +22,9 @@
   - Integral definida
   - Teorema fundamental do cálculo
   - Cálculo de integrais e aplicações
+
 ### Número Inteiros e Criptografia
+
   - Algoritmo de divisão
   - algoritmo euclidiano
   - fatoração de inteiros
@@ -37,12 +42,16 @@
   - números de Mersenne e Fermat
   - testes de primalidade
   - criptografia RSA e El Gamal
+
 ### Fundamentos da Computação Digital
+
   - Introdução ao processade dados
   - estudo da arquitetura do computador (memória, UCP, periféricos)
   - sistemas de numeração, álgebra de Boole (axiomas, formas canônicas)
   - minimização de funções booleanas (mapa de Karnaugh, método de Quine -McCluskey)
+
 ### Sistemas de Informação
+
   - motivação e conceitos básicos em sistemas de informação
   - classificação de sistemas de informação
   - funções e componentes dos sistemas de informação
@@ -57,6 +66,7 @@
 ## 2º Período
 
 ### Computação 2
+
   - Conceitos fundamentais da programação orientada a objetos utilizando uma linguagem Java: classes, objetos, construtores e métodos, encapsulamento
   - Herança e polimorfismo
   - Notação UML para classes
@@ -75,14 +85,18 @@
   - Desenvolvimento de páginas com JSP: Diretivas, elementos de script, ações e objetos implícitos
   - Componentes JavaBeans
   - Páginas JSP para a camada de interface (MVC)
+
 ### Cálculo Integral e Diferencial 2
+
   - Curvas no plano e no espaço, velocidade e aceleração
   - Funções de duas e mais variáveis, derivadas direcionais
   - Derivadas parciais e derivada como aproximação linear
   - Funções implícitas, multiplicadores de lagrange
   - Hessiana
   - Equações diferenciais ordinárias de primeira ordem e equações diferenciais ordinárias de segunda ordem com coeficientes constantes
+
 ### Matemática Combinatória
+
   - Permutações
   - Arranjos e Combinações simples e com repetições
   - Coeficientes binomiais e Triângulo de Pascal
@@ -93,7 +107,9 @@
   - Árvores
   - Grafos Eulerianos e Hamiltonianos, Grafos Planares e Duais
   - Grafos Direcionados
+
 ### Circuitos Lógicos
+
   - VHDL
   - Caracter sticas das portas lógicas
   - Circuitos combinatórios
@@ -106,7 +122,9 @@
   - Máquinas Moore e Mearly
   - Diagrama de estados
   - Análise e sintese de máquinas de estados
+
 ### Organização da Informação
+
   - informação- conceitos básicos
   - tipos de informação
   - informação através dos tempos
@@ -132,14 +150,18 @@
     - Livro Texto: Estruturas de Dados e Seus Algoritmos. 1994, LTC Editora. SZWARCFITER, Jayme L. e MARKENZON, L.
   - BIBLIOGRAFIA COMPLEMENTAR
     - Introduction to Algorithms (Second Edition). MIT PRESS AND McGRAW-HILL, 2002. CORMEN, T.; LEISERSON, C.; RIVEST, R.; STEIN
+
 ### Cálculo Integral e Diferencial 3
+
   - Integrais múltiplas
   - Integração iterada
   - Mudanças de variáveis e jacobiano
   - Integral de linha e potencial
   - Integrais de superfície
   - Teoremas clássicos de Green, Stokes e Gauss
+
 ### Mecânica, Oscilação e Ondas
+
   - Movimentos uni e bidimensionais
   - Aplicações das Leis de Newton
   - Referenciais não inerciais
@@ -151,7 +173,9 @@
   - Mecânica dos fluidos
   - Ondas mecânicas, interferência e modos normais
   - Som e audição
+
 ### Computadores e Programação
+
   - Estrutura dos computadores
   - Linguagem de máquina
   - Técnicas de endereçamento
@@ -162,7 +186,10 @@
   - Aramazenamento e manipulação de vetores e estruturas heterogêneas
   - Estrutura de processos, tratamento de exceção e interrupções, comunicação entre processos e de processos com o sistema operacional
   - resolução de símbolos, bibliotecas estáticas e dinâmicas e ligação de programas
+  - livro: computer systems a programmer's perspective (Randal E. Bryant, David R. O'Hallaron)
+
 ### Álgebra Linear Algorítmica
+
   - motivação: sistemas lineares, busca na web
   - vetores no espaço vetorial rn
   - produo interno, norma e ortogonalidade
@@ -178,7 +205,9 @@
   - autovalores e autovetores
   - diagonalização de matrizes simétricas
   - identificação cônicas e quadráticas
+
 ### Linguagens Formais
+
   - Linguagens e gramáticas (regulares, livres de contexto, sensíveis ao contexto)
   - Máquinas de estados finitos (modelos não determinísticos, expressões regulares, minimização)
   - Autômato de pilha
@@ -188,6 +217,7 @@
 ## 4º Período
 
 ### Algoritmos e Grafos
+
   - Conceitos Básicos
   - Representação de Grafos
   - Ordenação Topológica
@@ -198,13 +228,17 @@
   - Algoritmos Guloso
   - Programação Dinãmica e Aplicação das Técnicas Usadas
   - Fluxo Máximo
+
 ### Cálculo Integral e Diferencial 4
+
   - Polinômio de Taylor
   - Sequências e séries numéricas 
   - Transformada de Laplace
   - Séries de Fourier e transformada de Fourier
   - Aplicações às equações a derivadas parciais e ao processamento digital de sinais
+
 ### Eletromagnetismo e Ótica
+
   - Lei de Coulomb
   - Campo elétrico
   - Lei de Gauss
@@ -220,7 +254,9 @@
   - Propriedades da luz
   - Interferência e difração da luz
   - Introdução à relatividade
+
 ### Computação Concorrente
+
   - Ambientes de programação concorrente
   - paralela e distribuída
   - Criação de processos e threads
@@ -229,7 +265,9 @@
   - Técnicas de coordenação e sincronização de tarefas
   - Introdução a objetos distribuídos e invocação remota de métodos
   - Teste e depuração de programas concorrentes . Modelagem e implementação de programas concorrentes
+
 ### Cálculo Numérico
+
   - Série de Taylor
   - Representação binária de números reais e inteiros
   - Erros
@@ -243,6 +281,7 @@
 ## 5º Período
 
 ### Arquitetura de Computadores
+
   - introdução
   - breve histórico da computação
   - organização lógica e funcional de uma ucp (modelo von-neumann)
@@ -275,7 +314,9 @@
     - arquiteturas com multiplas unidades funcionais
     - processadores super escalares
     - processadores risc
+
 ### Fundamentos da Engenharia de Software
+
   - Modelos de ciclo de vida
   - Gerência de configuração de SW
   - Garantia de qualidade de SW
@@ -288,13 +329,17 @@
   - Gerencia de projetos de sofware: escopo de projeto (WSB)
   - Análise de risco de projetos de sotware
   - Planejamento de projetos de software: CPM e PERT
+
 ### Banco de Dados 1
+
   - arquitetura de sistemas de gerenciamento de banco de dados
   - modelagem de dados
   - banco de dados relacionais
   - projeto de bancos de dados
   - controles operacionais em sistemas de banco de dados
+
 ### Compiladores 1
+
   - Visao geral
   - Tabelas de simbolos
   - analise lexica
@@ -305,7 +350,9 @@
   - conceitos basicos de otimizacao
   - recuperação de erros
   - Conceitos basicos de alocacao de registradores
+
 ### Lógica
+
   - lógica clássica proposicional
     - linguagem
     - semântica
@@ -317,7 +364,9 @@
     - sistemas dedutivos (dedução natural e método axiomático)
     - relações entre sintaxe e semântica
   - aplicação de lógica em computação
+
 ### Computadores e Sociedade
+
   - análise do uso das tecnologias da informação nos níveis : social, economico, político e cultural
   - crítica à adoção de novas tecnologias de forma indiscriminada
   - impactos no trabalho devido à adoção de novas tecnologias
@@ -328,6 +377,7 @@
 ## 6º Período
 
 ### Inteligência Artificial
+
   - Histórico e Conceitos Básicos
   - Linguagem Prolog
   - Métodos de busca não-informados e informados
@@ -336,7 +386,9 @@
   - representação do Conhecimento
   - Planejamento
   - Aprendizado de Máquina
+
 ### Probabilidade e Estatística
+
   - Noções básicas de Estatística e Probabilidade
   - Análise exploratória
   - Variáveis aleatórias e Distribuições de Probabilidades
@@ -347,7 +399,9 @@
   - Distribuições amostrais
   - Estimação de parâmetros
   - Testes de Hipóteses
+
 ### Programação Linear 1
+
   - Modelagem
   - Resolução Gráfica
   - Teoremas básicos
@@ -360,7 +414,9 @@
   - Método Dual do Simplex
   - Análise de Sensibilidade
   - O Problema do Transporte
+
 ### Computação Gráfica 1
+
   - Introdução
   - Dispositivos Gráficos
   - OpenGL
@@ -375,11 +431,13 @@
   - Mapeamentos
   - Cor
   - Imagem
+
 ### Eletiva 1
 
 ## 7º Período
 
 ### Sistemas Operacionais 1
+
   - revisão de tópicos de arquitetura e organização de computadores relacionados com o projeto de sistemas operacionais
   - funcionalidade e estruturas de um sistema operacional
   - gerenciamento do processador
@@ -407,7 +465,9 @@
   - conceito de virtualização e implementação de máquinas virtuais
   - requisitos de segurança na implementação de sistemas operacionais
   - exemplos de sistemas operacionais contemporâneos (windows, linux, macos x, bsd)
+
 ### Avaliação e Desempenho
+
   - revisão da teoria da probabilidade
   - simulação de eventos discretos: geração de variáveis aleatórias
   - noções de análise dos resultados da simulação
@@ -415,12 +475,15 @@
   - cadeias de markov
   - aplicações a sistemas de computação e comunicação de dados
   - noções de teoria de redes de fila e suas aplicações
+
 ### Eletiva 2
+
 ### Eletiva 3
 
 ## 8º Período
 
 ### Teleprocessamento e Redes
+
   - Introdução
   - Arquitetura de Redes
   - Nível Físico
@@ -434,17 +497,26 @@
   - A Internet e seus protocolos
   - Engenharia de Tráfego
   - Frame Relay e MPLS
+  - livro: Computer networking a Top-Down approach (Kurose Ross)
+
 ### Projeto Final de Curso (TCC)
+
   - Elaboração de monografia de final de curso
+
 ### Eletiva 4
+
 ### Eletiva 5
+
 ### Eletiva 6
 
 ## 9º Período
 
 ### Eletiva 7
+
 ### Eletiva 8
+
 ### Eletiva 9
+
 ### Eletiva 10
 
 - 10 Eletivas
