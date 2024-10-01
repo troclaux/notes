@@ -12,6 +12,7 @@
 - define requirements
   - what is the problem?
   - what are the constraints?
+  - what do I actually need to implement?
   - what are the inputs?
     - how is each class represented?
     - is it a string?
