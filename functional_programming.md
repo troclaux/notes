@@ -81,7 +81,7 @@ print(double_func(5)) # prints 10
 
 properties of closures:
 - can remember and access variables and arguments of its outer function even after that function has finished execution
-- often used to maintain state
+- often used to keep state from function call to function call
 
 - in python, use `nonlocal` keyword to access variables from parent scope
   - don't use `nonlocal` when you are modifying a variable that is immutable (lists, dictionaries or sets)
