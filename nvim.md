@@ -1,32 +1,27 @@
+# Neovim
 
-Stay in search mode in Vim after searching for a pattern, instead of pressing enter:
-- ctrl-g
-- ctrl-t
+- Stay in search mode in Vim after searching for a pattern, instead of pressing enter:
+  - ctrl-g
+  - ctrl-t
 
-indent and unindent line:
-- ctrl-t
-- ctrl-d
+- indent and unindent line:
+  - ctrl-t
+  - ctrl-d
 
+- use `:Ctrl+f` to navigate Vim's command history with familiar motions, such as `j` and `k`, to quickly recall and reuse previous commands
 
 ## registers
 
 - black hole register
   - discards any text you yank or delete into it
-  - to delete without saving
-    - "_d
+  - to delete without saving: `"_d`
 - read-only registers
-  - current file name
-    - %
-  - run last command
-    - :@:
-  - print directory/name of file
-    - :echo @%
-  - print name of file ('tail')
-    - :echo expand('%:t')
-  - print full path
-    - :echo expand('%:p')
-  - print directory containing file ('head')
-    - :echo expand('%:p:h')
+  - current file name: `%`
+  - run last command: `:@:`
+  - print directory/name of file: `:echo @%`
+  - print name of file ('tail'): `:echo expand('%:t')`
+  - print full path: `:echo expand('%:p')`
+  - print directory containing file ('head'): `:echo expand('%:p:h')`
 
 ## range
 
@@ -48,9 +43,9 @@ range can be specified before most commands
   - :%s/old/new/g
 
 
-## substitute command :%s/
+## substitute command
 
-After you run the command :%s/old/new/c in Vim, the prompt "replace with new (y/n/a/q/l/^E/^Y)?" appears, which provides you with several options to respond to each replacement:
+after running the command `:%s/old/new/c`, the prompt "replace with new (y/n/a/q/l/^E/^Y)?" appears, which provides several options:
 - y (yes): replace the current instance of the old word with the new word
 - n (no): do not replace the current instance of the old word, and move on to the next instance
 - a (all): replace all remaining instances of the old word with the new word, without prompting again
@@ -59,15 +54,15 @@ After you run the command :%s/old/new/c in Vim, the prompt "replace with new (y/
 - ^E (scroll down): scroll the screen down one line
 - ^Y (scroll up): scroll the screen up one line
 
-you can use other delimiters for the s command:
-- s#old#new# (using # instead of /)
-- s|old|new| (using | instead of /)
-- s@old@new@ (using @ instead of /)
-- s^old^new^ (using ^ instead of /)
+- you can use other delimiters for the s command:
+  - `s#old#new#` (using # instead of /)
+  - `s|old|new|` (using | instead of /)
+  - `s@old@new@` (using @ instead of /)
+  - `s^old^new^` (using ^ instead of /)
 
 ### format
 
-:range s/old/new/cgil
+- format: `:range s/old/new/cgil`
   - c: confirm each substitution
   - g: replace all occurrences in the line
   - i: ignore case for pattern
@@ -75,17 +70,14 @@ you can use other delimiters for the s command:
 
 ### grouping and backreferences
 
-- \0: whole matched pattern
-- \1: matched pattern in the first pair of \(\)
-- \2: matched pattern in the second pair of \(\)
+- `\0`: whole matched pattern
+- `\1`: matched pattern in the first pair of `\(\)`
+- `\2`: matched pattern in the second pair of `\(\)`
 
 # plugins
 
 ## vim fugitive
 
-- commit amend:
-  - :ca
-- git stash
-  - :czz
-- git unstash
-  - :czA
+- commit amend: `ca`
+- git stash: `czz`
+- git unstash: `czA`
