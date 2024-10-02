@@ -1,8 +1,13 @@
 
 # algorithms
 
+## big O notation
+
 ![Big O complexity chart](./images/big_o_complexity_chart.jpg)
+
 [Big O cheat sheet](https://www.bigocheatsheet.com/)
+
+[Big O notation explained](https://yourbasic.org/algorithms/big-o-notation-explained/)
 
 | notation   | name    |
 |--------------- | --------------- |
@@ -25,6 +30,10 @@
   - best case => Ω()
   - average case => ϴ()
   - worst case => O()
+
+## techniques
+
+[dynamic programming](https://yourbasic.org/algorithms/dynamic-programming-explained/)
 
 - dynamic programming algorithm: solves a complex problem by dividing it into simpler subproblems, solving each of those just once, and storing their solutions
 - memoization: optimization technique used to speed up programs by storing the results of expensive function calls and returning the cached result when the same inputs occur again
@@ -80,7 +89,6 @@ def bubble_sort(nums):
   - O(1)
 
 ```python
-
 def selection_sort(nums):
     if len(nums) <= 1:
         return nums
@@ -91,7 +99,6 @@ def selection_sort(nums):
                 min_idx = j
         nums[i], nums[min_idx] = nums[min_idx], nums[i]
     return nums
-
 ```
 
 ### insertion sort
@@ -131,7 +138,6 @@ def insertion_sort(nums):
     return nums
 ```
 
-
 ## quick sort
 
 - summary
@@ -158,7 +164,6 @@ def insertion_sort(nums):
   - O(log(n))
 
 ```python
-
 def quick_sort(nums):
     if len(nums) <= 1:
         return nums
@@ -171,7 +176,6 @@ def quick_sort(nums):
         else:
             less.append(i)
     return quick_sort(less) + [pivot] + quick_sort(greater)
-
 ```
 
 ### merge sort
@@ -191,7 +195,6 @@ def quick_sort(nums):
   - O(n)
 
 ```python
-
 def merge_sort(arr):
     if len(arr) <= 1:
         return arr
@@ -215,7 +218,6 @@ def merge(arr1, arr2):
     res.extend(arr1[i:])
     res.extend(arr2[j:])
     return res
-
 ```
 
 ### heap sort
@@ -270,8 +272,6 @@ def merge(arr1, arr2):
   - greedy algorithm
   - works with positive weights
 
-
-
 ## shortest path algorithms
 
 ### dijkstra's algorithm
@@ -294,7 +294,6 @@ def merge(arr1, arr2):
 - time complexity
   - O(V²)
     - V: number of vertices
-
 
 ### a* algorithm
 
