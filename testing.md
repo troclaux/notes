@@ -14,8 +14,8 @@
 - unit test: individual units of code (functions, methods)
 - smoke testing: minimal set of tests that check basic functionality
   - normally applied after new build is deployed
-- integration test: how different units of code work together to ensure they integrate correctly
-- regression testing: rerun tests after minor changes to ensure functionality still works correctly
+- integration test: ensures the software components or functions work together correctly
+- regression testing: check if new features break or degrade functionality
 - end-to-end test: checks if code works correctly from start to finish (including all interactions and dependencies)
 
 ### non-functional testing
