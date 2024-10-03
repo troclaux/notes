@@ -191,7 +191,8 @@ func main() {
 - numerics: `0`
 - strings: `""`
 - booleans: false
-- struct: zero value of each field
+- struct: `structName{}`
+  - fills each field with the corresponding type's zero value
 - array: zero value of each element
 - slice: `nil`
 - function: `nil`
@@ -240,21 +241,19 @@ import "fmt"
 
 type Person struct {
     name string
+    age  int
 }
 
 func main() {
-    p := Person{"John"}
-    v := p
+    p := Person{"John", 20}
 
     // Type assertion to get the Person struct
-    person, ok := v.(Person)
-    if ok {
-        fmt.Println(person.name) // Output: John
-    }
+    fmt.Println(p.name) // Output: John
 
     // simpler example
     var x interface{} = "hello"
-    value, isType := x.(string)
+
+    value, isType := x.(string)  // Type assertion
     if isType {
         fmt.Println(value)       // Output: hello
     }
@@ -1313,31 +1312,32 @@ func getItemData() ([]byte, error) {
   - `defer res.Body.Close()`: always close `body` to free system resources
 - `data, err := io.ReadAll(res.Body)`: reads the response body into a slice of bytes called `data`
 - does it reads response into a slice of bytes?
-<!--- handler: handles incoming requests-->
 
-#### url
 
-> package that parses URL
+HTTP request pseudocode:
+
+1. make request with http verb (this example shows GET)
+1. return error if request failed
+1. close resource (use `defer` to ensure it eventually gets closed)
+1. create JSON decoder to decode the body of the HTTP response
+1. create nil slice of `struct` that will store the response's decoded content
+1. return error in case of failed decoding
+1. return data structure with response's decoded content
 
 ```go
-parsedURL, err := url.Parse("https://homestarrunner.com/toons")
-if err != nil {
-    fmt.Println("error parsing url:", err)
-    return
+func getUsers(url string) ([]User, error) {
+    res, err := http.Get(url)
+    if err != nil {
+        return nil, err
+    }
+    decoder := json.NewDecoder(res.Body)
+    var users []User
+    if err := decoder.Decode(&users); err != nil {
+        fmt.Println("error decoding response body")
+    }
+    return users, nil
 }
-
-hostname := parsedURL.Hostname()
-fmt.Println(hostname)     // homestarrunner.com
 ```
-
-
-### enconding
-
-#### json
-
-[JSON](/javascript.md#json-javascript-object-notation)
-
-[json.NewDecoder.Decode vs json.Unmarshal](https://stackoverflow.com/questions/21197239/decoding-json-using-json-unmarshal-vs-json-newdecoder-decode)
 
 - use `json.NewDecoder.Decode` when there's an `io.Writer` or `io.Reader`
   - when in doubt, use `json.NewDecoder.Decode`
@@ -1373,6 +1373,97 @@ if err := decoder.Decode(&items); err != nil {
     return
 }
 ```
+
+> HTTP POST request sends data to a server, typically to create e new resource
+
+- `http.Post` functions it's limited (?)
+- `http.NewRequest` is better (?)
+
+- payload: body of the request sent to the server
+- content-type: format of the body (e.g. application/JSON)
+
+POST request pseudocode:
+
+1. encode comment as JSON
+1. return error if encoding failed
+1. create new request with `req, err := http.NewRequest("HTTP VERB", url, bytes.NewBuffer(jsonEncodedData)`
+1. return error if new request failed to be created
+1. set headers with `req.Header.Set("key", "value")`
+1. create new client and make the request
+1. decode json data from the response
+1. return decoded json data
+
+```go
+func createUser(url, apiKey string, data User) (User, error) {
+
+    // encode the data as json
+    jsonData, err := json.Marshal(data)
+    if err != nil {
+        return User{}, err
+    }
+    req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return User{}, err
+    }
+
+    // set request headers
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("X-API-Key", apiKey)
+
+    // create new client and make the request
+    client := &http.Client{}
+    res, err := client.Do(req)
+
+    if err != nil {
+        return User{}, err
+    }
+    defer res.Body.Close()
+
+    var user User
+    decoder := json.NewDecoder(res.Body)
+    err = decoder.Decode(&user)
+    if err != nil {
+        return User{}, err
+    }
+    return user, nil
+}
+```
+
+- `http.Response` has a `.StatusCode` property that contains the status code of the response
+
+```go
+res, err := http.Get(url)
+if err != nil {
+  return 0
+}
+defer res.Body.Close()
+return res.StatusCode
+```
+
+#### url
+
+> package that parses URL
+
+```go
+parsedURL, err := url.Parse("https://homestarrunner.com/toons")
+if err != nil {
+    fmt.Println("error parsing url:", err)
+    return
+}
+
+hostname := parsedURL.Hostname()
+fmt.Println(hostname)     // homestarrunner.com
+```
+
+
+### enconding
+
+#### json
+
+[JSON](/javascript.md#json-javascript-object-notation)
+
+[json.NewDecoder.Decode vs json.Unmarshal](https://stackoverflow.com/questions/21197239/decoding-json-using-json-unmarshal-vs-json-newdecoder-decode)
+
 
 ### string
 ### testing
