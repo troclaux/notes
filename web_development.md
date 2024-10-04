@@ -64,3 +64,22 @@ when a user visits a webpage:
 
 - examples
   - blogs, documentation sites
+
+## URL (Uniform Resource Locator)
+
+### URL structure
+
+- `https://username:passwd@www.example.com:80/blog/?search=test&sort_by=created_at#header`
+  - protocol (scheme): `http://`, `https://`, `ftp://`, `mailto:`
+    - all URLs have `:`
+    - `//` is only included for schemes that have an [authority component](https://www.rfc-editor.org/rfc/rfc3986#section-3.2)
+  - username: `username`
+  - password: `passwd`
+  - subdomain: `www`
+  - domain name: `example.com`
+  - port: `80`
+    - the port component of a URL is often not visible when browsing the internet, because 99% of the time you're using default ports
+  - path: `/blog`
+  - query parameters: `?search=test&sort_by=created_at`
+  - fragment/anchor: `#header`
+
