@@ -1,6 +1,16 @@
 
 # Learning Techniques
 
+## Learning Steps
+
+1. Define the objective.
+1. Study prerequisite knowledge.
+1. Learn jargon.
+1. Understand the constraints.
+1. Study how each step connects to the next.
+1. Review and test your knowledge with exercises.
+1. Document your learning with your own words.
+
 ## Metaphors
 - Metaphors are useful for learning abstract concepts.
 - Use real-life metaphors to make learning easier.
