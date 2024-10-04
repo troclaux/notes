@@ -195,11 +195,16 @@ func main() {
   - fills each field with the corresponding type's zero value
 - array: zero value of each element
 - slice: `nil`
+  - `fmt.Println(zeroValueSlice)` will print `[]`
 - function: `nil`
 - maps: `nil`
+  - `fmt.Println(zeroValueMap)` will print `map[]`
 - pointers: `nil`
+  - `fmt.Println(zeroValuePointer)` will print `<nil>`
 - interfaces: `nil`
+  - `fmt.Println(zeroValueInterface)` will print `<nil>`
 - channels: `nil`
+  - `fmt.Println(zeroValueChannel)` will print `<nil>`
 - generics: zero value of the type parameter used
 
 ### type casting
@@ -1384,14 +1389,50 @@ if err := decoder.Decode(&items); err != nil {
 
 POST request pseudocode:
 
-1. encode comment as JSON
+1. encode data (normally a struct) as JSON
 1. return error if encoding failed
-1. create new request with `req, err := http.NewRequest("HTTP VERB", url, bytes.NewBuffer(jsonEncodedData)`
+1. create new request
 1. return error if new request failed to be created
-1. set headers with `req.Header.Set("key", "value")`
+1. set headers
 1. create new client and make the request
 1. decode json data from the response
 1. return decoded json data
+
+
+- short networking review:
+  - data is transmitted over the network as raw binary
+  - Computers communicate using bytes
+  - body of HTTP request needs to be in a readable stream of bytes
+    - because HTTP transmits data over a network as byte streams
+  - formats like JSON, text, or images must be converted (encoded) into a byte stream to be transmitted over the internet
+    - JSON serialization: process that converts object/struct into a JSON string
+  - the byte stream will be received and decoded on the receiving end
+  - byte streams are highly efficient, because:
+    - it's impractical to send large amounts of data at once
+    - instead, data is broken into chunks (a stream) that can be sent gradually
+    - this allows the transmission of large amounts of data without memory constraints
+  - HTTP is built on top of TCP/IP, which is a byte-oriented protocol
+  - all data in an HTTP request or response (headers, body, etc.) must ultimately be encoded into bytes
+    - since that's the format in which TCP transmits data
+
+what does it mean to say: HTTP is built on top of TCP/IP?
+how is this data sent over the network with ip address to its destination?
+if the data sent over a network is wrapped in someway, explain and illustrate how
+give me example of http request and response
+
+- before sending a Golang struct, it needs to be serialized into JSON
+- `bytes.NewBuffer(jsonData)`: wraps JSON data into a buffer to be sent with the request body
+  - what does it mean to wrap JSON data into a buffer?
+    - convert JSON string to bytes
+    - `bytes.Buffer` holds those bytes in memory, allowing you to pass the data to the HTTP request body
+    - the buffer allows the request body to be treated as a readable stream of data
+      - now HTTP client can read from buffer and send the content over the network in chunks
+  - `json.Marshal(data)`: converts the Golang struct into a JSON-formatted string
+- `bytes.NewBuffer(jsonData)`:converts JSON string into an instance of `bytes.Buffer`
+  - `bytes.Buffer`: it's a Go type that provides an efficient way to manage data streams
+  - buffer: in-memory queue where the bytes can be written to or read from
+    - convenient way to hold and send the request body data
+
 
 ```go
 func createUser(url, apiKey string, data User) (User, error) {
@@ -1401,6 +1442,8 @@ func createUser(url, apiKey string, data User) (User, error) {
     if err != nil {
         return User{}, err
     }
+
+    // create new request
     req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
     if err != nil {
         return User{}, err
@@ -1432,13 +1475,20 @@ func createUser(url, apiKey string, data User) (User, error) {
 - `http.Response` has a `.StatusCode` property that contains the status code of the response
 
 ```go
-res, err := http.Get(url)
-if err != nil {
-  return 0
+func getUserCode(url string) int {
+    res, err := http.Get(url)
+    if err != nil {
+        return 0
+    }
+    defer res.Body.Close()
+    return res.StatusCode
 }
-defer res.Body.Close()
-return res.StatusCode
 ```
+
+HTTP PUT requests
+
+- unlike `GET` and `POST` there's no `http.Put` function
+- for PUT requests, create raw `http.Resquest` that an http.Client can `myClient.Do(myRequest)`
 
 #### url
 
