@@ -3,7 +3,7 @@
 
 ## OSI model
 
-[osi-model explained in a simple way](https://osi-model.com)
+[OSI-model explained in a simple way](https://osi-model.com)
 
 layers:
 1. physical
@@ -45,7 +45,8 @@ layers:
 
 > [!IMPORTANT]
 > TCP/IP is the most widely used model
-> tcp/ip model != tcp and ip protocols
+> TCP/IP is a simplified version of OSI model
+> TCP/IP model != TCP and IP protocols
 
 - application layer
   - application layer
@@ -107,10 +108,11 @@ layers:
   - HEAD: similar do GET, but only retrieves headers, not the body
   - OPTIONS: used to describe the communication options available for the target resource
 
-- HTTP status codes:
+- HTTP status codes (obtained from the server's response):
   - 1xx: informational
   - 2xx: success
     - 200 OK: The request was successful, and the server is returning the requested data
+    - 201 Created: resource was created successfully
   - 3xx: redirection
     - 301 Moved Permanently: The requested resource has been moved to a new URL
   - 4xx: client error
@@ -217,7 +219,24 @@ HTTPS vs TLS
 
 ---
 
-## default ports
+## ports
+
+> communication endpoint used by computers to identify specific processes or services
+
+- helps the OS to direct incoming requests or data streams to the correct application
+
+- ports are numbered from 0 to 65.535 (2^16)
+  - protocols are associated with specific port numbers
+  - ports from 0 to 1.023 are known as well-known ports
+  - ports from 1.024 to 49.151 are known as registered ports
+  - ports from 49.152 to 65.535 are known as dynamic or private ports
+
+- each port can only be used by 1 program at a time
+- the port component of a URL is often not visible when browsing the internet, because almost always you're using default ports
+  - `http://example.com:80/?search=test` = `http://example.com/?search=test`
+
+- when computer 1 connects to computer 2, it connects to a specific port on computer 2
+  - which is listened to by the by a program on computer 2
 
 - FTP 20/21
 - SSH 22
@@ -227,3 +246,4 @@ HTTPS vs TLS
 - DHCP 67/68
 - HTTP 80
 - HTTPS 443
+- DHCPv6 546/547
