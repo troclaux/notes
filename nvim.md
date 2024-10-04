@@ -10,6 +10,8 @@
 
 - use `:Ctrl+f` to navigate Vim's command history with familiar motions, such as `j` and `k`, to quickly recall and reuse previous commands
 
+- while in insert mode, use `Alt` to execute normal mode commands
+
 ## registers
 
 - black hole register
