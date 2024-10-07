@@ -19,6 +19,15 @@
     - method of transmission
     - error handling, etc
 
+- packet or encapsulated data: unit of data transmitted over a network
+  - includes:
+    - header: caintains control information, which is info about data transmission
+    - payload: actual data being transmitted (e.g. file, email or web page)
+    - trailer (optional): error-checking data or additional control information
+  - each layer adds more info
+  - packet's name changes for each layer, in the [encapsulation process](#network-encapsulation)
+    - e.g. datagram for network layer, frame for link layer
+
 - throughput (bits per second = bps): amount of data per second that can be transferred
 - latency (milliseconds = ms): time required for a data packet to travel from the source to destination and return
 - bandwidth (bps or GBps): maximum volume of data that can be transferred at one time
@@ -99,41 +108,33 @@ properties of the internet:
 
 [OSI-model explained in a simple way](https://osi-model.com)
 
-layers:
-1. physical
-  - transmits raw data bits over physical medium
-  - USB, RJ45
-2. data link/enlace
+**upper layers are closer to software**
+
+7. application layer
+  - HTTP, FTP
+6. presentation layer
+  - ensures data is in a readable format
+  - encryption happens here
+  - ASCII, JPEG
+5. session layer
+  - maintains connections and controls ports/sessions
+  - syn/ack
+4. transport layer
+  - transmits data using transmission protocols
+  - TCP, UDP, port numbers
+3. network layer
+  - decides which physical path the data will take
+  - IP
+2. data link layer
   - ensures error-free data transfer between two connected nodes
   - defines format of data on the network
   - transfers data between network nodes to WAN (Wide Area Network)
   - MAC addresses, ethernet, switches
-3. network
-  - decides which physical path the data will take
-  - IP
-4. transport
-  - transmits data using transmission protocols
-  - TCP, UDP, port numbers
-5. session
-  - maintains connections and controls ports/sessions
-  - syn/ack
-6. presentation
-  - ensures data is in a readable format
-  - encryption happens here
-  - ASCII, JPEG
-7. application
-  - HTTP, FTP
+1. physical layer
+  - transmits raw data bits over physical medium
+  - USB, RJ45
 
-> [!TIP]
-> layer order
-
-1. physical
-1. data link => 2 words
-1. network => n3twork
-1. transport => tr4nsport
-1. session => 5e55ion
-1. presentation
-1. application
+**lower layers are closer to hardware**
 
 ## TCP/IP model
 
@@ -153,6 +154,9 @@ layers:
 - network access layer
   - data link layer
   - physical layer
+
+> [!WARNING]
+> kurose's book splits network access layer into link layer and physical
 
 ### application layer
 
@@ -180,6 +184,14 @@ layers:
     - assigns a lease time for each device
     - when lease time expires, the device must renew its lease or obtain a new IP address
   - renewal and rebinding of IP addresses if the lease time expires
+
+#### FTP
+
+> transfers files over the network
+
+- establishes a connection before sending data, unlike HTTP, which is connectionless
+- capable of sending binary files (e.g., images, executables) and text files (e.g., documents, HTML pages)
+- not secure: transmits plain text, unencrypted data
 
 #### websocket
 
@@ -275,7 +287,7 @@ Content-Length: 1024
 
 - semantics are consistent across versions
   - same request methods, status codes and message fields
-- HTTP1 and HTTP2 use [TCP](#tcp-transmission-control-protocol)as their transport
+- HTTP1 and HTTP2 use [TCP](#tcp-transmission-control-protocol) as their transport
 - HTTP3 uses [UDP](#udp-user-datagram-protocol)
 
 #### HTTPS
@@ -332,17 +344,16 @@ HTTPS vs TLS
 - TCP vs UDP:
   - TCP is more reliable
   - TCP is ordered
+  - TCP data chunks are called segments
   - UDP is less reliable
   - UDP is not ordered
+  - UDP data chunks are called datagrams
 
 ### network layer
 
-> responsible for routing packets between devices across different networks
+> responsible for routing packets/datagrams between devices across different networks
 
-- divides data into packets (called datagrams in this layer)
-  - why is data called datagram in this layer?
-  - what is the difference between packet and datagram?
-- uses IP to hangle addressing and routing
+- uses IP to handle addressing and routing
 - each packet is treated independently, and may take different routes to reach the destination
 
 #### IP (Internet Protocol)
@@ -419,7 +430,7 @@ HTTPS vs TLS
 [encapsulation](https://www.geeksforgeeks.org/how-data-encapsulation-de-encapsulation-works/)
 
 - it's a 2-step process: encapsulation and decapsulation
-- encapsulated data: original data + headers added for each layer
+- packet or encapsulated data: original data + headers added for each layer
   - each layer adds more info
 - PDU (Protocol Data Unit): unit of data that is transmitted over network
   - specific to each layer of the OSI
