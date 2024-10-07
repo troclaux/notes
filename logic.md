@@ -4,81 +4,122 @@
 > proposição lógica: oração declarativa que é verdadeira ou falsa
 
 - oração: sentido completo com presença de verbo
+- sentença aberta: sentença em que não se pode determinar se é verdadeira ou falsa
 - sentença declarativa: NÃO são proposições as sentenças exclamativas, interrogativas, imperativas ou optativas
 - é verdadeira ou falsa: NÃO são proposições as sentenças abertas, paradoxos ou as frases com alta carga de subjetividade
 - quantificadores: "todo", "para todo", "nenhum", "existe", etc
 
 ## proposições simples
 
-> proposição simples: não pode ser dividida em proposições menores
+> [!NOTE]
+> sentenças abertas não são proposições
+> e.g. `x + 9 = 10`
+> de um ponto de vista lógico, não podemos afirmar que esta sentença é verdadeira ou falsa
 
-negação = ~ = ¬
+- proposição simples: não pode ser dividida em proposições menores
 
-~(~p) = p = ¬(¬p)
+> [!NOTE]
+> frases que exprimem opinião não são proposições
+
+- negação: `~`, `¬`
+
+```
+~(~p) = p = ¬( ¬p)
+```
 
 ## proposições compostas
 
 > proposição que resulta da combinação de duas ou mais proposições simples que são unidas por conectivos
 
 | tipo | conectivos | notação |
-| --- | --- | --- | --- |
+| --- | --- | --- |
 | conjunção | e/mas | p^q |
 | disjunção inclusiva | ou | pvq |
 | disjunção exclusiva | ou ..., ou | p⊻q p⊕v |
 | condicional | se ..., então/como/logo/implica/quando/toda vez que/somente se/porque/pois | p -> v |
 | bicondicional | se e somente se/assim como/se e só se | p <-> v |
 
-p -> q
-  - p é condição suficiente para q
-  - q é condição necessária para p
+- condicional: `p -> q`
+  - p é:
+    - condição suficiente
+    - antecedente
+    - precedente
+  - q é:
+    - condição necessária
+    - consequente
+    - subsequente
 
+> [!TIP]
 > se p, então q => s e => s uficiente
 
+```
 p <-> v = ~(p ⊕ v)
-
-- nem = ^~
-  - pedro não estuda nem trabalha = ~p^~q
+```
 
 ## conversão da linguagem natural para a proposicional
 
-
+- nem = `^~`
+  - pedro não estuda nem trabalha = `~p^~q`
 
 ### ordem de precedência de negação
 
 1. aplicar a negação no menor enunciado possível
-2. conjunção(^) ou disjunção(v), na ordem que aparecer
-3. disjunção exclusiva(⊻)
-4. condicional(->)
-5. bicondicional(<->)
+2. conjunção `^` ou disjunção `v`, na ordem que aparecer
+3. disjunção exclusiva `⊻ ou ⊕`
+4. condicional `->`
+5. bicondicional `<->`
 
 ## tabela-verdade
 
-VISTO
+condicional
+
+| p | q | p -> q |
+| --- | --- | --- |
+| V | V | V |
+| V | F | F |
+| F | V | V |
+| F | F | F |
+
+disjunção exclusiva/x-or
+
+| p | q | p ⊕ q |
+| --- | --- | --- |
+| V | V | V |
+| V | F | F |
+| F | V | F |
+| F | F | V |
 
 ## tautologia, contradição e contingência
 
 - tautologia: proposição que é sempre verdadeira
-  - p v ~p
+  - e.g. `p v ~p`
 - contradição: proposição que é sempre falsa
-  - p ^ ~p
+  - e.g. `p ^ ~p`
 - contingência: é verdadeira ou falsa dependendo dos valores (V ou F) atribuídos às proposições que compões ela
 
 ## equivalências lógicas
 
+```
 p -> q = ~q -> ~p
 p -> q = ~p v q
 p v q = ~p -> q
 
 ~(p ^ q) = ~p v ~q = p -> ~q = q -> ~p
 ~(p v q) = ~p ^ ~q
+
 ~(p -> q) = p ^ ~q
 
-(p -> r) ^ (q -> r) = (p v q) -> r = p -> (q ^ r)
+(p -> r) ^ (q -> r) = (p v q) -> r
 
-(p <-> q) = (p -> q) ^ (q -> p)
+(p -> q) ^ (p -> r) = p -> (q ^ r)
 
 p ^ q = q ^ p
 p v q = q v p
+
+(p <-> q) = (p -> q) ^ (q -> p)
+
+p ⊻ q = (~p) ⊻ (~q) = (~p) <-> q = p <-> (~q)
+```
 
 ## proposições quantificadas e diagramas lógicos
 
