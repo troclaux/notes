@@ -443,7 +443,7 @@ HTTPS vs TLS
     - if the transmission uses UDP, it's datagrams
 - network layer: more info will be added (source IP address, destination IP address, etc)
   - encapsulated data is now called packet
-- network access layer: add MAC address, destination MAC address, etc
+- data link layer: add MAC address, destination MAC address, etc
   - encapsulated data is now called frame
 - physical layer
   - encapsulated data is now bits
