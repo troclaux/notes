@@ -1,5 +1,99 @@
 
+# networking
+
 [web development](./web_development.md)
+[aws](./aws.md)
+
+[computer networking: a top-down approach](https://www.amazon.com/Computer-Networking-Top-Down-Approach-7th/dp/0133594149)
+
+## jargon
+
+- what is the internet?
+  - computer network that interconnects billions of computer devices throughout the world
+  - an infrastructure that provides services to applications
+
+- RFC (Request For Comments): documents that describe proposed standard or best practice for a specific aspect of the internet
+- protocol: set of rules and standards that govern the communication between devices on a network
+  - what does it define?
+    - format of data being sent
+    - method of transmission
+    - error handling, etc
+
+- throughput (bits per second = bps): amount of data per second that can be transferred
+- latency (milliseconds = ms): time required for a data packet to travel from the source to destination and return
+- bandwidth (bps or GBps): maximum volume of data that can be transferred at one time
+- delay:
+
+- endpoint: device or node that is participating in a network communication
+  - defined by a combination of [IP address](#ip-internet-protocol) and [port number](#ports)
+- socket: mechanism that enables communication between two endpoints via IP address and port
+
+properties of the internet:
+- interoperability: different devices can communicate with each other seamlessly
+  - this required a set of common protocols and standards
+- scalability: able to grow as more devices and networks were added
+- reliability: able to withstand failures and errors without disrupting service
+- security
+
+- network edge: hosts, access network
+- network core: packet circuit switching, internet structure
+
+- host or end system: device that is connected to a network and has the ability to send and receive data over the network
+  - hosts access the internet through ISPs (Internet Service Providers)
+  - ISP: network of packet switches and communication links
+  - there's 2 types of hosts:
+    - client: device or application that requests a service or resource from a server
+    - server: device or application that provides a service or resource to clients
+      - proxy server:
+      - reverse proxy server:
+
+- router: connects multiple devices to a network
+  - each router has a forwarding table that maps destination addresses to that router's outbound link
+  - key functions:
+    - packet forwarding: forwards packets of data between devices on the network
+    - network segmentation: can segment a network into different subnets
+    - Network Address Translation (NAT): allows multiple devices on a single network to share a public IP address
+      - helps reduce the need for a large number of public IP addresses
+- modem: converts digital data from a computer or network into analog signals for transmission over cables, and vice versa
+  - analog signal: signal that varies continuously over time
+- switch: device that connects multiple devices together within a network, allowing them to communicate with each other
+
+- firewall: security device or software that monitors and controls incoming/outgoing network traffic based on predefined rules
+- gateway: device or system that connects networks together, allowing data to be transmitted between them
+  - types of gateways: router, firewall, proxy server, NAT (Network Address Translator)
+
+- packet switch: takes arriving packet and forwards that packet to the outgoing connection link
+- connection links: physical or logical paths over which data is transmitted between devices or networks
+
+## how is data transmitted over the internet?
+
+- packet switching: method of transmitting data in which data is broken into small pieces and transmitted over a network
+
+- data is segmented into small chunks, called packets
+  - each packet's size ranges from 46 to 1500 bytes in size
+  - each packet is given a unique identifier, called a packet ID
+  - packet header: contains information about the packet, such as:
+    - source and destination IP addresses
+    - packet ID
+    - packet length
+    - sequence number (to ensure packets are delivered in the correct order)
+    - error-checking data (e.g., checksum)
+- packet transmission
+  - what does data transmitted independently over the network mean?
+    - each packet is transmitted separately and independently of other packets
+      - unlike a circuit-switched network
+    - each packet has its own path
+    - each packet is processed independently
+  - routing
+    - the router analyze the destination IP address in a packet
+    - routers use routing tables to decide where to forward the packet next
+    - the packet hops from router to router until it reaches its final destination
+    - routing protocols dynamically adjust the path based on the state of the network
+- packet arrives at destination
+- packet reassembly: done in correct order, using the sequence numbers and packet IDs
+- error detection and correction
+  - destination checks packets for errors, using the error-checking data in the packet header
+  - if errors are detected, the packet is retransmitted
 
 ## OSI model
 
@@ -62,6 +156,8 @@ layers:
 
 ### application layer
 
+> defines how applications communicate over the network
+
 #### DNS (Domain Name System)
 
 > resolves domain names to IP addresses
@@ -69,13 +165,40 @@ layers:
 - URL: https://youtube.com
   - domain name/hostname: youtube.com
 
+#### DHCP (Dynamic Host Configuration Protocol)
+
+> assigns IP addresses and other network settings to devices on a network
+
+- responsible for:
+  - IP address assignment
+  - subnet mask assignment
+    - subnet mask:
+  - default gateway assignment
+    - gateway: device or system that connects networks together, allowing data to be transmitted between them
+  - lease time assignment
+    - lease time: amount of time the device is allowed to use the assigned IP address and other network settings
+    - assigns a lease time for each device
+    - when lease time expires, the device must renew its lease or obtain a new IP address
+  - renewal and rebinding of IP addresses if the lease time expires
+
+#### websocket
+
+> protocol that allows bidirectional, real-time communication between a client and a server over the web
+
 #### HTTP (HyperText Transfer Protocol)
 
 > defines how requests and responses between a client and a server should be formatted and transmitted
 
+[http application in golang](/golang.md#http)
+
 - foundation of data communication on the World Wide Web
 - stateless protocol
   - this means that each request from a client to a server is independent, with no memory of previous interactions
+- HTTP/3 is built on top of UDP
+- HTTP/1 and HTTP/2 are built on top of TCP protocol
+  - HTTP vs TCP:
+    - TCP provides reliable, ordered, and error-checked delivery of data
+    - HTTP defines the format and structure of messages for web communication
 
 - uses client-server architecture
   - client: device or application that initiates an HTTP request
@@ -148,6 +271,13 @@ Content-Length: 1024
 - HTTP URL (Uniform Resource Locator)
   - `http://`: specifies that the http protocol will be used for communication
 
+##### HTTP/1 vs HTTP/2 vs HTTP/3
+
+- semantics are consistent across versions
+  - same request methods, status codes and message fields
+- HTTP1 and HTTP2 use [TCP](#tcp-transmission-control-protocol)as their transport
+- HTTP3 uses [UDP](#udp-user-datagram-protocol)
+
 #### HTTPS
 
 > extension of HTTP that uses encryption (via SSL/TLS) to secure the communication between the client and the server
@@ -178,6 +308,13 @@ HTTPS vs TLS
 
 ### transport layer
 
+> provides data transfer between two devices
+
+- breaks data into segments
+- ensures it is sent and received properly
+- reassembles data at the destination
+- provides end-to-end communication between source and destination devices
+
 #### TCP (Transmission Control Protocol)
 
 > enables application programs and computers to exchange messages over a network
@@ -188,7 +325,25 @@ HTTPS vs TLS
 1. clients sends ACK packet to server (Acknowledgment)
 1. connection established
 
+#### UDP (User Datagram Protocol)
+
+- connectionless protocol: messages are sent without negotiating a connection and UDP doesn't keep track of what's being sent
+
+- TCP vs UDP:
+  - TCP is more reliable
+  - TCP is ordered
+  - UDP is less reliable
+  - UDP is not ordered
+
 ### network layer
+
+> responsible for routing packets between devices across different networks
+
+- divides data into packets (called datagrams in this layer)
+  - why is data called datagram in this layer?
+  - what is the difference between packet and datagram?
+- uses IP to hangle addressing and routing
+- each packet is treated independently, and may take different routes to reach the destination
 
 #### IP (Internet Protocol)
 
@@ -209,6 +364,13 @@ HTTPS vs TLS
 > 32 bits * 2² = 128 bits
 
 ### network access layer
+
+> handles communication between hardware and the network
+
+- hardware example: [network interface card](https://en.wikipedia.org/wiki/Network_interface_controller)
+- protocol examples: Ethernet, Wi-Fi, PPP, MAC
+- organizes data into frames for transmission
+- manages MAC addresses for network devices
 
 #### MAC (Media Access Control)
 
@@ -247,3 +409,51 @@ HTTPS vs TLS
 - HTTP 80
 - HTTPS 443
 - DHCPv6 546/547
+
+---
+
+## network encapsulation
+
+> process of concatenating layer-specific headers with information data for trasmitting information over networks
+
+[encapsulation](https://www.geeksforgeeks.org/how-data-encapsulation-de-encapsulation-works/)
+
+- it's a 2-step process: encapsulation and decapsulation
+- encapsulated data: original data + headers added for each layer
+  - each layer adds more info
+- PDU (Protocol Data Unit): unit of data that is transmitted over network
+  - specific to each layer of the OSI
+
+| layer | PDU |
+| --- | --- |
+| 7 | data |
+| 6 | data |
+| 5 | data |
+| 4 | segment/datagram |
+| 3 | packet |
+| 2 | frame |
+| 1 | bits |
+
+- application/presentation/session layers: no additional information will be added to the data
+- transport layer: data is broken in chunks, each chunk will receive a header with info
+  - what info? source port, destination port, sequence number, etc
+    - usually the info is called L4 (Layer 4) header
+  - the encapsulated data's name depends on the protocol used:
+    - if the transmission uses TCP, it's segments
+    - if the transmission uses UDP, it's datagrams
+- network layer: more info will be added (source IP address, destination IP address, etc)
+  - encapsulated data is now called packet
+- network access layer: add MAC address, destination MAC address, etc
+  - encapsulated data is now called frame
+- physical layer
+  - encapsulated data is now bits
+
+example of encapsulation process:
+
+1. application layer: HTTP request is created
+1. presentation layer: data can be encrypted or compressed (e.g. HTTPS encryption via SSL/TLS)
+1. session layer: data remains unchanged
+1. transport layer: HTTP request (data) is divided into smalled chunks, called segments
+1. network layer: each segment is encapsulated into packets, which contains source and destination IP addresses
+1. data link layer: packet is placed inside a frame, which contains source and destination MAC addresses
+1. physical layer: frame is converted into a stream of bits
