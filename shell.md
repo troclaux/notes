@@ -23,6 +23,11 @@
 - `chown`: change ownership of file or directory
   - e.g. `sudo chown -R $USER ~/.config/nvim/`
 
+> [!IMPORTANT]
+> path behaviour changes depending on whether there is a trailing slash
+> with `/`: refers to the contents of the directory
+> without `/`: refers to the directory itself
+> behaviour present in `cp`, `mv`, `scp`, `rsync`, `ln`, `tar`, `zip`, `find`, `curl`, `du`
 
 ## wildcard matching
 
