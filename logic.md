@@ -39,6 +39,11 @@
 | condicional | se ..., então/como/logo/implica/quando/toda vez que/somente se/porque/pois | p -> v |
 | bicondicional | se e somente se/assim como/se e só se | p <-> v |
 
+- nem = `^~`
+  - pedro não estuda nem trabalha = `~p^~q`
+    - p: pedro estuda
+    - q: pedro trabalha
+
 - condicional: `p -> q`
   - p é:
     - condição suficiente
@@ -56,16 +61,11 @@
 p <-> v = ~(p ⊕ v)
 ```
 
-## conversão da linguagem natural para a proposicional
-
-- nem = `^~`
-  - pedro não estuda nem trabalha = `~p^~q`
-
-### ordem de precedência de negação
+## ordem de precedência de negação
 
 1. aplicar a negação no menor enunciado possível
 2. conjunção `^` ou disjunção `v`, na ordem que aparecer
-3. disjunção exclusiva `⊻ ou ⊕`
+3. disjunção exclusiva `⊻` ou `⊕`
 4. condicional `->`
 5. bicondicional `<->`
 
@@ -78,16 +78,16 @@ condicional
 | V | V | V |
 | V | F | F |
 | F | V | V |
-| F | F | F |
+| F | F | V |
 
 disjunção exclusiva/x-or
 
 | p | q | p ⊕ q |
 | --- | --- | --- |
-| V | V | V |
-| V | F | F |
-| F | V | F |
-| F | F | V |
+| V | V | F |
+| V | F | V |
+| F | V | V |
+| F | F | F |
 
 ## tautologia, contradição e contingência
 
@@ -116,8 +116,8 @@ p v q = ~p -> q
 p ^ q = q ^ p
 p v q = q v p
 
-(p <-> q) = (p -> q) ^ (q -> p)
-
+p <-> q = (p -> q) ^ (q -> p)
+p <-> q = ~(p ⊻ q)
 p ⊻ q = (~p) ⊻ (~q) = (~p) <-> q = p <-> (~q)
 ```
 
@@ -150,6 +150,12 @@ quantificador existencial (∃)
   - exemplo: existe um matemático que **não** é engenheiro
 
 para negar alguma proposição quantificada:
+
+- proposição universal afirmativa <=> proposição particular negativa
+- proposição universal negativa <=> proposição particular afirmativa
+
+passo a passo:
+
 1. encontre o quantificador e o predicado
 2. troque o quantificador
   - universal => particular
@@ -157,13 +163,19 @@ para negar alguma proposição quantificada:
 3. troque o predicado pela sua negação
 4. negação de proposição concluída
 
-exemplo:
+exemplos:
+
 1. Todos os habitantes possuem, pelo menos, uma bicicleta.
   - quantificador universal: todos
   - predicado: possuem, pelo menos, uma bicicleta.
 2. Existe um habitante
 3. que não possui bicileta
 4. Existe um habitante que não possui bicicleta
+
+- p: todo brasileiro gosta de futebol
+- ~p: existe algum brasileiro que não gosta de futebol
+- q: qualquer pessoa consegue passar
+- ~q: alguma pessoa não consegue passar = existe pessoa que não consegue passar
 
 - predicado: é tudo na oração que se declara sobre o sujeito, seja afirmando ou negando
   - exemplo: todo brasileiro gosta de futebol
@@ -179,21 +191,27 @@ exemplo:
 - proposição particular negativa
   - forma O
 
+> [!TIP]
+> as letras das formas seguem a ordem das vogais (AEIO)
+> começamos com proposições universais e terminamos com particulares
+> alternamos entre afirmativa e negativa
+> A de Afirmativa
+> E de nEgativa
+
 - proposições contrárias
 - proposições subcontrárias
 - proposições subalternas
 - proposições contraditórias
 
-
-## lógica de primeira ordem (LGO)
+## Lógica de Primeira Ordem (LPO)
 
 - função-predicado/função proposicional: sentença que depende do valor de uma variável para ser classificada como verdadeira ou falsa
 - universo do discurso: conjunto formado pelos valores que a variável de uma função-predicado pode assumir
 
-exemplo: x é ímpar
-- variável: x
-- predicado: é ímpar
-- função-predicado: x é ímpar
+- exemplo: x é ímpar
+  - variável: x
+  - predicado: é ímpar
+  - função-predicado: x é ímpar
 
 ### LPO e as proposições categóricas
 
@@ -204,12 +222,16 @@ exemplo: x é ímpar
 | nenhum A é B | ~∃x( A(x) ^ B(x) ) |
 | algum A não é B | ∃x( A(x) ^ ~B(x) ) |
 
+> [!WARNING]
+> se o negativo vier antes do quantificador, ele se aplica no quantificador
+> se o negativo vier antes do predicado, ele se aplica no predicado
+
 ### relações e aridade
 
-- relações unárias: 
+- relações unárias:
 
 para resolver questões de conectivos lógicos:
-1. identificar as afirmações que se apresentam em algum dos "formatos fáceis"
+1. identificar as afirmações que estão no "formato fácil"
 2. desconsiderar o contexto da questão, transformando as afirmações da língua portuguesa para a linguagem proposicional
 3. obter os valores lógicos das proposições simples presentes nas afirmações do enunciado (sempre que possível)
 4. verificar a resposta que apresenta uma proposição verdadeira
