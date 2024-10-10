@@ -1,5 +1,5 @@
 
-## introdução às proposições
+## lógica proposicional
 
 > proposição lógica: oração declarativa que é verdadeira ou falsa
 
@@ -9,7 +9,7 @@
 - é verdadeira ou falsa: NÃO são proposições as sentenças abertas, paradoxos ou as frases com alta carga de subjetividade
 - quantificadores: "todo", "para todo", "nenhum", "existe", etc
 
-## proposições simples
+### proposições simples
 
 > [!NOTE]
 > sentenças abertas não são proposições
@@ -27,7 +27,7 @@
 ~(~p) = p = ¬( ¬p)
 ```
 
-## proposições compostas
+### proposições compostas
 
 > proposição que resulta da combinação de duas ou mais proposições simples que são unidas por conectivos
 
@@ -61,7 +61,7 @@
 p <-> v = ~(p ⊕ v)
 ```
 
-## ordem de precedência de negação
+### ordem de precedência de negação
 
 1. aplicar a negação no menor enunciado possível
 2. conjunção `^` ou disjunção `v`, na ordem que aparecer
@@ -69,7 +69,7 @@ p <-> v = ~(p ⊕ v)
 4. condicional `->`
 5. bicondicional `<->`
 
-## tabela-verdade
+### tabelas-verdade
 
 condicional
 
@@ -89,7 +89,7 @@ disjunção exclusiva/x-or
 | F | V | V |
 | F | F | F |
 
-## tautologia, contradição e contingência
+### tautologia, contradição e contingência
 
 - tautologia: proposição que é sempre verdadeira
   - e.g. `p v ~p`
@@ -97,7 +97,7 @@ disjunção exclusiva/x-or
   - e.g. `p ^ ~p`
 - contingência: é verdadeira ou falsa dependendo dos valores (V ou F) atribuídos às proposições que compões ela
 
-## equivalências lógicas
+### equivalências lógicas
 
 ```
 p -> q = ~q -> ~p
@@ -121,7 +121,9 @@ p <-> q = ~(p ⊻ q)
 p ⊻ q = (~p) ⊻ (~q) = (~p) <-> q = p <-> (~q)
 ```
 
-## proposições quantificadas e diagramas lógicos
+## Lógica de Primeira Ordem (LPO)
+
+### proposições quantificadas e diagramas lógicos
 
 - sentenças abertas: são expressões que possuem um termo variável
   - não há como atribuir-lhes valor lógico (V ou F)
@@ -130,15 +132,10 @@ p ⊻ q = (~p) ⊻ (~q) = (~p) <-> q = p <-> (~q)
 - sentenças fechadas: são expressões que não contém variáveis livres
   - é verdadeiro ou falso
 
-### proposições quantificadas e categóricas
+- quantificador universal (∀) = para todo, para qualquer, qualquer que seja
+- quantificador existencial (∃) = existe, algum, pelo menos um
 
-quantificador universal (∀)
- - para todo, para qualquer, qualquer que seja
-quantificador existencial (∃)
- - existe, algum, pelo menos um
-
-
-#### negação de proposições quantificadas
+### negação de proposições quantificadas
 
 - proposição universal afirmativa
   - exemplo: todo marinheiro é pescados
@@ -203,8 +200,6 @@ exemplos:
 - proposições subalternas
 - proposições contraditórias
 
-## Lógica de Primeira Ordem (LPO)
-
 - função-predicado/função proposicional: sentença que depende do valor de uma variável para ser classificada como verdadeira ou falsa
 - universo do discurso: conjunto formado pelos valores que a variável de uma função-predicado pode assumir
 
@@ -213,7 +208,7 @@ exemplos:
   - predicado: é ímpar
   - função-predicado: x é ímpar
 
-### LPO e as proposições categóricas
+### proposições categóricas
 
 | proposição categórica | representação simbólica |
 | --- | --- |
@@ -226,11 +221,10 @@ exemplos:
 > se o negativo vier antes do quantificador, ele se aplica no quantificador
 > se o negativo vier antes do predicado, ele se aplica no predicado
 
-### relações e aridade
+### conectivos lógicos
 
-- relações unárias:
+como resolver questões:
 
-para resolver questões de conectivos lógicos:
 1. identificar as afirmações que estão no "formato fácil"
 2. desconsiderar o contexto da questão, transformando as afirmações da língua portuguesa para a linguagem proposicional
 3. obter os valores lógicos das proposições simples presentes nas afirmações do enunciado (sempre que possível)
@@ -241,3 +235,78 @@ As afirmações do enunciado que apresentam um "formato fácil" são as seguinte
 - Conjunção (e/∧) verdadeira
 - Disjunção inclusiva (ou/∨) falsa
 - Condicional (se...então/→) falsa
+
+## lógica de argumentação
+
+### argumentos dedutivos
+
+- argumento dedutivo: argumento que não produz conhecimento novo
+- silogismo: argumento dedutivo composto por duas premissas e uma conclusão
+
+- existem 2 tipos de argumento:
+  - argumentos categóricos: argumentos que apresentam proposições categóricas
+  - argumentos hipotéticos: argumentos que não apresentam proposições categóricas
+    - fazem uso de conectivos
+
+- validade: característica dos argumentos dedutivos, que pode ser válido ou inválido
+  - conclusão válida: segue logicamente das premissas, mesmo que as premissas sejam falsas
+- veracidade: característica das proposições, que podem ser verdadeiras ou falsas
+
+- argumento dedutivo é valido quando as premissas verdadeiras levam à uma conclusão que é necessariamente verdadeira
+- argumento dedutivo é inválido quando premissas consideradas verdadeiras não necessariamente levam à conclusão verdadeira
+  - argumento dedutivo inválido = sofisma ou falácia formal
+
+- é possível ter um argumento válido nesses cenários:
+  - premissas verdadeiras e conclusão verdadeira
+  - premissas falsas e conclusão verdadeira
+  - premissas falsas e conclusão falsa
+- não é possível ter um argumento válido com premissas verdadeiras e conclusão falsa
+- é possível ter um argumento inválido nesses cenários:
+  - premissas verdadeiras e conclusão verdadeira
+  - premissas verdadeiras e conclusão falsa
+  - premissas falsas e conclusão verdadeira
+  - premissas falsas e conclusão falsa
+- não há uma relação direta entre a validade de um argumento e a veracidade da sua conclusãoválido nesses cenários:
+
+
+### regra da transitividade condicional
+
+argumento no formato abaixo, independentemente do número de premissas, é sempre válido
+
+```
+a -> b
+b -> c
+c -> d
+d -> e
+
+é equivalente a
+
+a -> e
+```
+
+### regras de inferência
+
+dadas as premissas, podemos deduzir as conclusões abaixo:
+
+- modus ponens (afirmação do antecedente)
+  - premissa 1: p -> q
+  - premissa 2: p
+  - conclusão: q
+- modus tollens (negação do consequente)
+  - premissa 1: p -> q
+  - premissa 2: ~q
+  - conclusão: ~p
+- silogismo hipotético
+  - premissa 1: p -> q
+  - premissa 2: q -> r
+  - conclusão: p -> r
+- dilema construtivo ou silogismo disjuntivo
+  - premissa 1: p -> q
+  - premissa 2: r -> s
+  - premissa 3: p v r
+  - conclusão: q v s
+- dilema destrutivo
+  - premissa 1: p -> q
+  - premissa 2: r -> s
+  - premissa 3: ~q ou ~s
+  - conclusão: ~p ou ~r
