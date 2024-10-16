@@ -1,7 +1,7 @@
 
 # markdown
 
-[markdown best practices](https://learn.microsoft.com/en-us/powershell/scripting/community/contributing/general-markdown)
+[markdown best practices](https://learn.microsoft.com/powershell/scripting/community/contributing/general-markdown)
 [markdown syntax](https://www.markdownguide.org/basic-syntax/)
 
 ## basic syntax
