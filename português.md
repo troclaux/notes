@@ -175,9 +175,178 @@
   - separar consoantes iguais
     - exemplos: super-romântico, hiper-resistente, sub-bibliotecário
 
+## X ou CH
+
+> palavras iniciadas por MEX- ou -ENX, com exceção de mecha e enchova, são escritas com X
+
+- exemplos: mexilhão, mexer, mexerica, México, enxada, enxerto, enxerido, mexerico
+
+## uso de letras maiúsculas e minúsculas
+
+- nomes próprios, de qualquer natureza
+  - exemplo: Câmara dos Deputados, Terra, Sol, Oceano Atlântico, Senado Federal
+- nomes comuns, quando personificados ou inifividualizados
+  - exemplo: o Estado, o País, a Nação
+- nomes de logradouros públicos
+  - exemplo: Avenida Brasil, Rua Ceará, Travessa dos Caetés, Parque Ary Barroso, Praça do Carmo
+- pronomes de tratamento e nas suas abreviaturas
+  - Vossa Excelência, Vossa Senhoria, Dom, Sona, V. Exa., V. Sa
+- no início de período ou citação
+  - Depois de reticências, ponto de exclamação, ponto de interrogação
+- datas oficiais, nomes de eventos/épocas históricas, festas religiosas, cerimônias tradicionais, grandes empreendimentos públicos ou institucionais
+  - Ano Novo, Idade Média, Dia das Mães, Sete de Setembro
+- títulos de livros, teses, dissertações ou monografias, artigos, jornais, revistas, filmes, músicas, peçasetc
+  - exemplos: Memórias Póstumas de Brás Cubas, Monalisa, Os Lusíadas
+- pontos cardeais
+  - exemplos: Sul, Nordeste, Lest Europeu, Oriente Médio
+- ramos do conhecimento humano
+  - exemplos: Português, Filosofia, Medicina
+
+## classes de palavras
+
+existem 10 classes gramaticais:
+
+1. substantivo
+1. adjetivo
+1. advérbio
+1. verbo
+1. conjunção
+1. interjeição
+1. preposição
+1. artigo
+1. numeral
+1. pronome
+
+- classes variáveis: flexionam de acordo com o número e gênero
+  - exemplos:
+    - substantivo: beija-flor, comida, Maria
+    - adjetivo: bonito, grosseiro, maluco, feliz
+    - pronome: eu, vossa excelência, me, mim, quantos, ninguém, meu, este
+    - numeral: primeiro, dois, metade, dúzia, triplo
+    - verbo: correr, andar, voar, viver
+- classes invariáveis: **não** flexionam de acordo com o número e gênero
+  - exemplos:
+    - advérbio: rapidamente, felizmente
+    - conjunção: mas, porque, ou, e
+    - preposição: até, desde, para, sobre, após, contra, de
+    - interjeição: uau!, ai!, uhul!, viva!, atenção!, ué!, hã?!, chega!
+
+### substantivos
+
+> classe que dá nome a seres, coisas, sentimentos, qualidades, ações
+
+- exemplos: homem, gato, carro, mesa, beleza, inteligência, estudo
+- classe variável
+
+#### classificação dos substantivos
+
+| classificação | definição | exemplos |
+| --- | --- | --- |
+| primitivo | não se origina de outra palavra da língua e, portanto, não traz afixos | pedra, mulher |
+| derivado | deriva de uma palavra primitiva, traz afixos (sufixos ou prefixos) | pedreiro, mulherão, infelicidade |
+| simples | é constituído por uma única palavra, possui apenas um radical | homem, pombo, arco |
+| composto | é constituído por mais de uma palavra, possui mais de um radical | homem-bomba, pombo- correio, arco-íris |
+| comum | designa uma espécie ou um ser qualquer representativo de uma | mulher, cidade, cigarro |
+| próprio | designa um indivíduo específico da espécie | Maria, Paris, Malboro |
+| completo | designa um ser que existe por si só, de existência autônoma e concreta, seja material, espiritual, real ou imaginário | pedra, menino, carro, Deus, fada |
+| abstrato | designa ação, estado, sentimento, qualidade, conceito | criação, coragem, liberalismo |
+| coletivos | designa uma pluralidade de seres da mesma espécie | tropa (soldados), cardume (peixes), frota (veículos) |
+| biformes | mudam de forma para indicar gêneros diferentes | lobo x loba, capitão x capitã, boi x vaca |
+| uniformes | são os que possuem apenas uma forma para indicar ambos os gêneros | o estudante / a estudante o artista famoso/ a artista famosa |
+
+- substantivos uniformes se dividem em:
+  - epicenos
+  - sobrecomuns
+  - comuns de dois gêneros
+
+> [!WARNING]
+> uma mesma palavra pode ter classificações diferentes dependendo do contexto
+> exemplo: Judas (substantivo próprio) foi um apóstolo.
+> exemplo: O amigo revelou-se judas (substantivo comum).
+
+
+#### flexão dos substantivos
+
+- flexão de substantivos: variações que palavras podem sofrer em relação a gênero, número e grau
+
+- plural de substantivos simples: no geral, basta adicionar S no final
+  - exceções
+    - palavras como ônix ou tórax não vão ao plural
+
+- existem palavras que só são utilizadas no plural
+  - exemplos: núpcias, fezes, reais, arredores, répteis, projéteis
+
+- plural de substantivos compostos
+  - quem varia varia, que não varia não varia
+  - substantivos compostos que são formados por classes variáveis, variam (exceto verbos)
+  - substantivos compostos que são formados por classes invariáveis (e os verbos), não variam em número
+
+| classes variáveis | exemplo no singular | exemplo no plural |
+| --------------- | --------------- | --------------- |
+| substantivo + substantivo | couve-flor | couves-flores |
+| numeral + substantivo | quarta-feira | quartas-feiras |
+| adjetivo + substantivo | baixo-relevo | baixos-relevos |
+
+| classes invariáveis | exemplo no singular | exemplo no plural |
+| --------------- | --------------- | --------------- |
+| substantivo + substantivo | couve-flor | couves-flores |
+| numeral + substantivo | quarta-feira | quartas-feiras |
+| adjetivo + substantivo | baixo-relevo | baixos-relevos |
+
+- substantivo + preposição + substantivo: apenas o primeiro item se flexiona
+  - pé de moleque => pés de moleque
+  - mão de obra => mãos de obra
+  - pôr do sol => pores do sol
+
+### adjetivo
+
+> classe variável que se refere ao substantivo ou termo de valor substantivo (como pronomes) para atribuir qualidade
+
+- exemplos: homens MAUS, objeto PESADO, camisa VERDE, carro DESTRUÍDO
+
+### classificação de adjetivos
+
+| classificação | definição | exemplos |
+| --- | --- | --- |
+| SIMPLES | Possui apenas um radical. | Estilo literário.
+| COMPOSTO | Possui mais de um radical. | Estilo lítero-musical. |
+| PRIMITIVO | Forma original, não derivado de outra palavra. | Homem bom. |
+| DERIVADO | É formado a partir de outra palavra. | Ele é bondoso. |
+| EXPLICATIVO | Indica característica inerente e geral do ser. | Homem mortal. |
+| RESTRITIVO | Indica característica que não é própria do ser. | Homem valente. |
+| GENTÍLICO | Relativos a povos e raças. | israelita |
+| PÁTRIO | Relativos a cidades, estados, países e continentes. | israelense |
+
+- adjetivos uniformes: têm só uma forma para masculino ou feminino
+  - exemplos: ímpar, árabe, hipócrita, simples, cearense, doce
+
+#### flexão dos adjetivos compostos
+
+> primeira parte do composto é reduzida e somente o segundo item da composição vai para o plural
+
+- exemplos: luso-americanoS, afro-brasileiraS, obras político-sociaIS
+
+- exceções:
+  - adjetivo + substantivo: se houver um substantivo, **nenhuma das partes vai variar**
+    - exemplos:
+      - amarelo-ouro => camisa amarelo-ouro ou camisaS amarelo-ouro
+      - verde-oliva => parede verde-oliva ou paredeS verde-oliva
+  - adjetivos compostos invariáveis
+    - exemplos: azul-marinho => camisa azul-marinho ou camisaS azul-marinho
+
 ---
 
 - radical: parte da palavra que tem seu sentido primitivo, original
   - exemplos:
     - pedr: pedrinha, pedregulho, petrificar
-      - pode ser levemente diferente: pedr é o radical de petrificar
+      - derivados podem ser levemente diferente dos radicais: pedr é o radical de petrificar, petrificar começa com petr
+- afixos: elementos que juntam com um radical para formar novas palavras, alterando o seu significado
+  - são sufixos ou prefixos
+  - exemplos: INfeliz, globalIZAÇÃO
+
+- infinitivo
+  - exemplo: fazer
+- gerúndio
+  - exemplo: fazendo
+- particípio
+  - exemplo: feito
