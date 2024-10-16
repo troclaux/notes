@@ -1,6 +1,12 @@
 
 # CLI Tools
 
+> [!IMPORTANT]
+> path behaviour changes depending on whether there is a trailing slash
+> with `/`: refers to the contents of the directory
+> without `/`: refers to the directory itself
+> behaviour present in `cp`, `mv`, `scp`, `rsync`, `ln`, `tar`, `zip`, `find`, `curl`, `du`
+
 ## CLI tools with its own markdown summaries
 
 - [basic shell commands](./shell.md)
