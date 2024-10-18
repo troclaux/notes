@@ -26,7 +26,7 @@
 
 [UML Class Diagram Reference 1](https://www.visual-paradigm.com/guide/uml-unified-modeling-language/uml-class-diagram-tutorial/)
 
-[UML Class Diagram Reference 2](https://learn.microsoft.com/en-us/previous-versions/visualstudio/visual-studio-2015/modeling/uml-class-diagrams-reference?view=vs-2015)
+[UML Class Diagram Reference 2](https://learn.microsoft.com/previous-versions/visualstudio/visual-studio-2015/modeling/uml-class-diagrams-reference)
 
 Main components
 - Entity
