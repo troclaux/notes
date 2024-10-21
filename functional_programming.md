@@ -23,7 +23,7 @@ def add_nums(a, b):
 
 ## first-class functions
 
-> in languages that support first-class functions, functions are treated as first-class citizens
+> functions that are treated as first-class citizens
 
 - first-class citizens are entities that can be:
 1. Created at runtime
@@ -44,10 +44,11 @@ pure functions have the 2 following properties:
 
 ## function transformation
 
-> function that receives function1 as input and returns function2
+> modifying a function's input and/or output to create a new function
+
+- higher-order function: a function that receives one or more functions as arguments or returns a function as a result
 
 ```python
-
 def multiply(x, y):
     return x * y
 
@@ -68,7 +69,6 @@ double_func = self_math(add)
 
 print(square_func(5)) # prints 25
 print(double_func(5)) # prints 10
-
 ```
 
 ## anonymous/lambda functions
@@ -101,6 +101,10 @@ console.log(counter()); // 1
 console.log(counter()); // 2
 
 ```
+
+> [!NOTE]
+> in the code above, the inner function returned by makeCounter is the closure
+> in the code below, the closure is `word_count`
 
 ```python
 
