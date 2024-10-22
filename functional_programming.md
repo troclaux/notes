@@ -14,11 +14,10 @@
 - referential transparency: function can be replaced by its value without changing the program's behavior, without side effects
 
 example of referential transparency:
-```python
 
+```python
 def add_nums(a, b):
     return a + b
-
 ```
 
 ## first-class functions
@@ -30,7 +29,6 @@ def add_nums(a, b):
 2. Assigned to a variable or data structure
 3. Passed as a parameter to a function
 4. Returned as the result of a function
-
 
 ## pure functions
 
@@ -72,6 +70,15 @@ print(double_func(5)) # prints 10
 ```
 
 ## anonymous/lambda functions
+
+> small, one-line functions that do not require formal definition
+
+- in Python, use the lambda keyword to create a lambda function
+
+```python
+square = lambda x: x ** 2
+print(square(5))  # Output: 25
+```
 
 ## recursion instead of loops
 
@@ -149,7 +156,6 @@ print(add_doc("doc5"))
 > convert single function that receives multiple arguments into multiple functions that each receives a single argument
 
 ```python
-
 def add(x, y, z):
     return x + y + z
 
@@ -169,7 +175,6 @@ add_one = curried_add(1)
 add_one_and_two = add_one(2)
 final_result = add_one_and_two(3)
 print(final_result)  # Output: 6
-
 ```
 
 - why would I ever want to do this?
@@ -178,35 +183,32 @@ print(final_result)  # Output: 6
     - Create higher-order functions that take other functions as arguments
     - Easily compose functions together to create more complex operations
 
-
 ## decorators
 
 - syntatic sugar for higher-order functions
-  - higher-order function: function that does at least one of the following:
-  1. Takes one or more functions as arguments
-  2. Returns a function as its result
+- higher-order function: function that does at least one of the following:
+1. Takes one or more functions as arguments
+2. Returns a function as its result
 
 ```python
-
+# prefix is the decorator
 def prefix(func_to_decorate):
     def wrapper():
         return "Hello " + func_to_decorate()
 
     return wrapper
 
-
-# printer = prefix(printer)
+# printer is the same as prefix(printer)
 @prefix
 def printer():
     return "World"
 
-
 print(printer())  # Output: Hello World
-
 ```
-explanation:
-- `def prefix(func):`: function that receives another function `func_to_decorate` as input
-- `@prefix`: equivalent to `printer = prefix(printer)`
+
+- explanation:
+  - `def prefix(func):`: function that receives another function `func_to_decorate` as input
+  - `@prefix`: equivalent to `printer = prefix(printer)`
   - passes the `printer()` function as argument to `prefix()`
   - also renames `prefix(printer)` to `printer()`
 
@@ -223,13 +225,26 @@ explanation:
 - nonlocal var: used in [closures](#closures) to access variables from parent scope
 - map(): applies a function to each item in an iterable
   - `squared_numbers = list(map(lambda x: x**2, [1, 2, 3, 4, 5]))`
-- filter(): 
-- reduce(): 
+- filter(): filter elements from an iterable based on a function that returns `True` or `False`
+  - returns a new iterable containing only the elements for which the function returns `True`
+  - use `list()` to convert the iterator to a list
+- reduce(): applies a cumulative operation to reduce an iterable to a single value
 - arguments that allow a function to accept a variable number of arguments
   - `*args`: collects positional arguments into a tuple
   - `**kwargs`: collects keyword/named arguments into a dictionary
 
 ```python
+numbers = [1, 2, 3, 4, 5, 6]
+# Using a lambda function to filter out even numbers
+even_numbers = list(filter(lambda x: x % 2 == 0, numbers))
+print(even_numbers)  # Output: [2, 4, 6]
+
+from functools import reduce
+
+numbers = [1, 2, 3, 4, 5]
+# Using a lambda function to calculate the product of all numbers
+product = reduce(lambda x, y: x * y, numbers)
+print(product)  # Output: 120
 
 def print_arguments(*args, **kwargs):
     print(f"Positional arguments: {args}")
@@ -238,5 +253,4 @@ def print_arguments(*args, **kwargs):
 print_arguments("hello", "world", a=1, b=2)
 # Positional arguments: ('hello', 'world')
 # Keyword arguments: {'a': 1, 'b': 2}
-
 ```
