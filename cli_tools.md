@@ -7,12 +7,11 @@
 > without `/`: refers to the directory itself
 > behaviour present in `cp`, `mv`, `scp`, `rsync`, `ln`, `tar`, `zip`, `find`, `curl`, `du`
 
-## CLI tools with its own markdown summaries
+## CLI tools with its own markdown notes
 
 - [basic shell commands](./shell.md)
 - [git](./git.md)
 - [docker](./docker.md)
-- [ansible](./github.md)
 - [psql](./postgresql.md)
 
 ## echo
@@ -82,7 +81,7 @@ echo -n "Hello World"
 wc file.txt
 ```
 
-## xopen
+## xdg-open
 
 ## sed
 
@@ -135,6 +134,37 @@ curl -F "file=@/path/to/file.zip" http://example.com/upload
 ```bash
 curl -sL https://gist.githubusercontent.com/2KAbhishek/9c6d607e160b0439a186d4fbd1bd81df/raw/244284c0b3e40b2b67697665d2d61e537e0890fc/Shell_Keybindings.md
 ```
+
+## ffmpeg
+
+converts media formats:
+
+```bash
+ffmpeg -i input.avi output.mp4
+```
+- `-i`: specifies the input file
+
+## yt-dlp
+
+downloading a video:
+
+```bash
+yt-dlp --write-subs --sub-lang en --embed-subs https://www.youtube.com/watch?v=dQw4w9WgXcQ
+```
+
+- `--write-subs`:downloads subtitles if available
+- `--sub-lang en`: specifies the language of the subtitles
+- `--embed-subs`: embed subtitles in the video file
+
+convert video files to audio-only files (requires ffmpeg and ffprobe):
+
+```bash
+yt-dlp -f bestaudio -x --audio-format flac https://www.youtube.com/watch?v=dQw4w9WgXcQ
+```
+
+- `-f bestaudio`: selects best available audio-only format
+- `-x`: extracts the audio from the video file.
+- `--audio-format mp3`: converts the extracted audio to mp3 format.
 
 ## rsync
 
