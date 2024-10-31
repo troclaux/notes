@@ -166,6 +166,59 @@ yt-dlp -f bestaudio -x --audio-format flac https://www.youtube.com/watch?v=dQw4w
 - `-x`: extracts the audio from the video file.
 - `--audio-format mp3`: converts the extracted audio to mp3 format.
 
+## rclone
+
+start rclone setup:
+
+```bash
+rclone config
+```
+
+1. `no remotes found, make a new one?`
+1. insert `n` to create a new remote
+1. `enter name for new remote`
+1. insert name for remote (i usually use `gdrive`)
+1. `type of storage to configure, choose a number from below...`
+1. insert the number for Google Drive
+1. Leading `~` will be expanded in the file name as will environment variables such as `${RCLONE_CONFIG_DIR}`. Enter a value. Press Enter to leave empty.
+1. press `Enter`
+1. `Edit advanced config?`
+1. insert `n`
+1. `Use web browser to automatically authenticate rclone with remote?`
+1. insert `y` and login to your google account in the browser
+1. `Configure this as a Shared Drive (Team Drive)?`
+1. insert `n`
+1. `Keep this "gdrive" remote?`
+1. insert `y`
+1. rclone will list all remotes, insert `q` to quit configuration
+
+test remote by listing the contents of google drive:
+
+```bash
+rclone lsd gdrive:
+```
+
+copy system directory to Google Drive:
+
+```bash
+rclone copy ~/Music/chill_game_ost gdrive:chill_game_ost -P
+```
+
+- `-P`: show transfer progress
+
+sync files and folders:
+
+```bash
+rclone sync ~/Music/chill_game_ost gdrive:chill_game_ost
+```
+
+> [!TIP]
+> you can use cronjobs to regularly sync your folders
+
+```bash
+0 15 * * 2 rclone sync ~/Music/chill_game_ost gdrive:chill_game_ost >> ~/backups/chill_game_ost.log 2>&1
+```
+
 ## rsync
 
 to back up:
