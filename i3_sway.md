@@ -21,21 +21,23 @@ ln -s ~/dotfiles/.config/wofi/config  ~/.config/wofi/config
 fedora linux:
 
 ```bash
-sudo dnf install sway light swaylock waybar wofi fontawesome-fonts wdisplays
+sudo dnf install sway light swaylock waybar wofi fuzzel fontawesome-fonts wdisplays network-manager-applet
 ```
 
 debian-based linux:
 
 ```bash
-sudo dnf install sway light swaylock waybar wofi fonts-font-awesome wdisplays
+sudo dnf install sway light swaylock waybar wofi fuzzel fonts-font-awesome wdisplays
 ```
 
 - `light`: modify display's brightness
 - `swaylock`: lock screen
 - `waybar`: highly customizable navigation bar
-- `wofi`: wayland-native application launcher
+- `fuzzel`: wayland-native application launcher (I prefer this one)
+- `wofi`: wayland-native application launcher (I don't like this one)
 - `fonts-font-awesome`: add icons for when you change volume
 - `wdisplays`: manages display configuration
+- `network-manager-applet`: wi-fi configuration
 
 ## keyboard shortcuts
 
@@ -73,4 +75,32 @@ to find the class of an application (search for `class` or `app_id`):
 
 ```bash
 swaymsg -t get_tree | fzf | wl-copy
+```
+
+```bash
+mkdir -p ~/.config/kanshi
+```
+
+## change default application for a type of file
+
+[arch wiki](https://wiki.archlinux.org/title/XDG_MIME_Applications)
+
+find desktop entry id of default application:
+
+```bash
+ls /usr/share/applications/
+```
+
+edit mimeapps.list file:
+
+```bash
+nvim ~/.config/mimeapps.list
+```
+
+add entry with `type/extension=desktop_entry_id`, just like the example below (loupe is gnome's image viewer):
+
+```
+image/jpeg=org.gnome.Loupe.desktop
+image/png=org.gnome.Loupe.desktop
+image/gif=org.gnome.Loupe.desktop
 ```
