@@ -4,15 +4,34 @@
 ## types of tests
 
 - functional testing: verifies operations and actions of an application
+  - defines:
+    - software capabilities
+    - how the system reacts to specific input
+    - how the system behaves in specific scenarios
+    - what the system cannot do
 - non-functional testing: verifies behaviour of application
   - performance
   - security
   - usability
 
+- white box test: uses knowledge about code to test correctness of software at code level
+- black box test: verifies software behaviour without internal code knowledge, focus on input and output
+
+- system testing: checks if the entire system meets functional and non-functional requirements
+- validation test: checks if software behaves according to user expectation and requirements
+
+| aspect              | alpha testing                         | beta testing                          |
+|---------------------|--------------------------------------|---------------------------------------|
+| conducted by    | internal team (developers/testers)  | external users                        |
+| stage of testing| early stage (pre-release)           | late stage (pre-launch)              |
+| environment     | controlled environment               | real-world environment                |
+| goal            | identify bugs and issues             | validate the product and gather user feedback |
+| user feedback    | immediate feedback for quick fixes   | broader feedback on usability and experience |
+
 ### functional testing
 
-- unit test: individual units of code (functions, methods)
-- smoke testing: minimal set of tests that check basic functionality
+- unit test: smallest units of code (functions, methods)
+- smoke testing: preliminary set of tests that check basic functionality
   - normally applied after new build is deployed
 - integration test: ensures the software components or functions work together correctly
 - regression testing: check if new features break or degrade functionality
