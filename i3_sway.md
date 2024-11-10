@@ -18,16 +18,18 @@ ln -s ~/dotfiles/.config/wofi/config  ~/.config/wofi/config
 
 ## prerequisites
 
-fedora linux:
+fedora distribution:
 
 ```bash
-sudo dnf install sway light swaylock waybar wofi fuzzel fontawesome-fonts wdisplays network-manager-applet wlr-randr
+sudo dnf install -y sway light swaylock waybar wofi fuzzel wdisplays network-manager-applet wlr-randr pavucontrol
+sudo dnf install -y fontawesome-fonts
 ```
 
-debian-based linux:
+debian-based distribution:
 
 ```bash
-sudo dnf install sway light swaylock waybar wofi fuzzel fonts-font-awesome wdisplays wlr-randr
+sudo apt install -y sway light swaylock waybar wofi fuzzel wdisplays network-manager-applet wlr-randr pavucontrol
+sudo apt install -y fonts-font-awesome
 ```
 
 - `light`: modify display's brightness
@@ -39,6 +41,7 @@ sudo dnf install sway light swaylock waybar wofi fuzzel fonts-font-awesome wdisp
 - `wdisplays`: manages display configuration
 - `network-manager-applet`: wi-fi configuration
 - `wlr-randr`: display management
+- `pavucontrol`: input/output audio device management
 
 ## keyboard shortcuts
 
