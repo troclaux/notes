@@ -1,4 +1,6 @@
 
+- abstraction: simplification of complex operations by focusing on essential features while hiding unnecessary details
+
 - primitives: fundamental data types that are not composed of other data types
   - e.g. integers, floating-point numbers, characters, booleans, strings, null or undefined values
 
