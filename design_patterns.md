@@ -143,6 +143,8 @@ Implementation:
 
 ### Observer
 
+> subject has a subscription mechanism to notify observers of events that happened to the subject automatically
+
 ### State
 
 ### Strategy
