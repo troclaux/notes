@@ -33,9 +33,9 @@
 - relationships are bidirected
 - there are symbols on both sides that represent min:max cardinality
 
-- `[ student ] >0--has--|| [ seat ]`
-  - student relates with one and exactly one seat
-  - seat relates to zero or many students
+- `[ student ] >|--has--|| [ school ]`
+  - student relates with one and exactly one school
+  - school relates to one or many students
 
 - `--------0|` = 0:1
 - `--------0<` = 0:n
@@ -80,18 +80,17 @@
 ### Class diagram
 
 - cardinality symbols
-  - read diagram as:
+  - how to read class diagrams:
+    - Entity1 ----------------------> 0..* Entity2
     - Entity1 can have 0..* relations with Entity2
-    - the multiplicity is closer to the entity it applies to
+      - the multiplicity is closer to the entity it applies to
   - multiplicity
-    - 1: one
+    - 1: one to one
     - *: many
     - 0..1: zero or one
     - 0..*: zero or many
     - 1..*: one or many
     - n..m: n to m
-
----
 
 ## theory
 
@@ -99,17 +98,17 @@
 - SBD: Sistema de Banco de Dados
 - SBD = SGBD + BD
 
-três categorias de modelos de dados:
-- conceituais (alto nível)
-  - diagrama Entidade-Relacionamento (ER)
-  - usuários típicos: analistas de negócios, designers
-  - registra quais dados são registrados, mas não como
-- lógicos (representativos)
-  - modelo lógico de dados
-  - usuários típicos: desenvolvedores, DBAs
-- físicos (baixo nível)
-  - modelo físico de dados
-  - usuários típicos: administradores de banco de dados
+- três categorias de modelos de dados:
+  - conceituais (alto nível)
+    - diagrama Entidade-Relacionamento (ER)
+    - usuários típicos: analistas de negócios, designers
+    - registra quais dados são registrados, mas não como
+  - lógicos (representativos)
+    - modelo lógico de dados
+    - usuários típicos: desenvolvedores, DBAs
+  - físicos (baixo nível)
+    - modelo físico de dados
+    - usuários típicos: administradores de banco de dados
 
 Modelo Lógico de Dados para um Sistema de Vendas:
 
