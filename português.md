@@ -34,6 +34,8 @@
 
 - ditongo: (vogal + semivogal) ou (semivogal + vogal) na mesma sílaba
   - dois fonemas vocálicos na mesma sílaba
+  - a vogal é sempre o elemento mais forte
+  - a semivogal é sempre o elemento mais fraco
 
 > [!TIP]
 > ditongo é o oposto de hiato
@@ -48,8 +50,8 @@
   - nasais
   - crescentes
   - decrescentes
-  - abertos: (vogal aberta + semivogal
-    - vogal aberta:
+  - abertos: (vogal aberta + semivogal)
+    - vogal aberta: vogal pronunciada com a boca mais aberta (é, ó)
     - semivogal: vogal que se apoia em outra vogal de tonicidade maior para formarem uma única sílaba
   - fechados
 
@@ -67,7 +69,7 @@
 
 - dígrafo: combinação de duas letras que, juntas, representam um único fonema
   - exemplo: ch, qu, nh, rr, lh
-  - dígrafos consonantal: podem ser formador por consoante seguida de vogal
+  - dígrafos consonantais: podem ser formados por consoante seguida de vogal
     - exemplo: esQUecer
     - mais exemplos: am, em , en, im, in, om , on, um, un
 
@@ -125,7 +127,7 @@
 
 - vogal: vogal pronunciada com tonicidade
 - semivogal: vogal que é átona, fraca
-  - átona: que não tem acento tónico
+  - átona: que não tem acento tônico
 
 #### exceções
 
@@ -150,9 +152,13 @@
 | tem | 3ª pessoa do singular | Ele tem muitos amigos. |
 | têm | 3ª pessoa do plural | Eles têm muitos amigos. |
 | vem | 3ª pessoa do singular | Ela vem a pé. |
-| vêm | 3ª pessoa do plural | Elas vem a pé. |
+| vêm | 3ª pessoa do plural | Elas vêm a pé. |
 | mantém (e derivados) | 3ª pessoa do singular | Ele mantém um relacionamento saudável com seus empregados. |
+<<<<<<< HEAD
 | mantém (e derivados) | 3ª pessoa do plural | Os patrões mantêm um relacionamento saudável com seus empregados |
+=======
+| mantêm (e derivados) | 3ª pessoa do plural | Os patrões mantêm um relacionamento saudável com seus empregados |
+>>>>>>> Snippet
 
 ## emprego do hífen (-)
 
@@ -185,7 +191,7 @@
 
 - nomes próprios, de qualquer natureza
   - exemplo: Câmara dos Deputados, Terra, Sol, Oceano Atlântico, Senado Federal
-- nomes comuns, quando personificados ou inifividualizados
+- nomes comuns, quando personificados ou individualizados
   - exemplo: o Estado, o País, a Nação
 - nomes de logradouros públicos
   - exemplo: Avenida Brasil, Rua Ceará, Travessa dos Caetés, Parque Ary Barroso, Praça do Carmo
@@ -195,10 +201,10 @@
   - Depois de reticências, ponto de exclamação, ponto de interrogação
 - datas oficiais, nomes de eventos/épocas históricas, festas religiosas, cerimônias tradicionais, grandes empreendimentos públicos ou institucionais
   - Ano Novo, Idade Média, Dia das Mães, Sete de Setembro
-- títulos de livros, teses, dissertações ou monografias, artigos, jornais, revistas, filmes, músicas, peçasetc
+- títulos de livros, teses, dissertações ou monografias, artigos, jornais, revistas, filmes, músicas, peças, etc
   - exemplos: Memórias Póstumas de Brás Cubas, Monalisa, Os Lusíadas
 - pontos cardeais
-  - exemplos: Sul, Nordeste, Lest Europeu, Oriente Médio
+  - exemplos: Sul, Nordeste, Leste Europeu, Oriente Médio
 - ramos do conhecimento humano
   - exemplos: Português, Filosofia, Medicina
 
@@ -267,7 +273,7 @@ existem 10 classes gramaticais:
 
 #### flexão dos substantivos
 
-- flexão de substantivos: variações que palavras podem sofrer em relação a gênero, número e grau
+- flexão de substantivos: variações que palavras podem sofrer em relação a gênero, número e grau*
 
 - plural de substantivos simples: no geral, basta adicionar S no final
   - exceções
@@ -304,7 +310,7 @@ existem 10 classes gramaticais:
 
 - exemplos: homens MAUS, objeto PESADO, camisa VERDE, carro DESTRUÍDO
 
-### classificação de adjetivos
+#### classificação de adjetivos
 
 | classificação | definição | exemplos |
 | --- | --- | --- |
@@ -322,19 +328,87 @@ existem 10 classes gramaticais:
 
 #### flexão dos adjetivos compostos
 
+- adjetivo composto: adjetivo com dois ou mais radicais
+  - exemplo: ultravioleta, surdo-mudo, rosa-escuro
+
 > primeira parte do composto é reduzida e somente o segundo item da composição vai para o plural
 
 - exemplos: luso-americanoS, afro-brasileiraS, obras político-sociaIS
 
 - exceções:
-  - adjetivo + substantivo: se houver um substantivo, **nenhuma das partes vai variar**
+  - adjetivo + substantivo: se houver um substantivo, **nenhuma das partes varia**
     - exemplos:
-      - amarelo-ouro => camisa amarelo-ouro ou camisaS amarelo-ouro
-      - verde-oliva => parede verde-oliva ou paredeS verde-oliva
-  - adjetivos compostos invariáveis
-    - exemplos: azul-marinho => camisa azul-marinho ou camisaS azul-marinho
+      - camisa amarelo-ouro => camisaS amarelo-ouro
+      - parede verde-oliva => paredeS verde-oliva
+  - alguns adjetivos compostos são sempre invariáveis
+    - exemplo: camisa azul-marinho => camisaS azul-marinho
+
+#### valor objetivo (fato) x valor subjetivo (opinião)
+
+- adjetivos opinativos: expressam opinião
+  - exemplos: carro bonito, pessoa carismática
+- adjetivos objetivos: expressam fatos
+  - exemplos: carro preto, turista japonês
+  - não pode variar no grau
+  - não pode mudar de posição
+
+### ordem da expressão nominal "substantivo + adjetivo"
+
+- expressão nominal: aquela que não tem verbo e transmite mensagem entre dois interlocutores
+
+- trocar a ordem do substantivo e adjetivo pode mudar o significado da expressão
+  - mesmo significado: cão bom x bom cão
+  - muda o significado sem mudar a classe: candidato pobre x pobre candidato
+  - muda o significado e muda a classe: alemão comunista x comunista alemão
+    - sempre que ocorrer troca de classe, ocorre mudança de significado porque muda o foco
+      - mesmo que o sentido pareça o mesmo
+
+### locuções adjetivas
+
+> preposição + substantivo que podem ser substituídos por um adjetivo
+
+- exemplos
+  - de irmão => fraternal
+  - de aluno => discente
+  - de velho => senil
+
+### grau dos adjetivos
+
+> qualidades que podem ser comparadas
+
+- grau: indica a quantidade, tamanho ou intensidade do objeto a que se refere
+  - grau de substantivos: aumentativo/diminutivo
+  - grau de adjetivos: comparativo/superlativo
+    - comparativo: compara qualidades
+      - exemplo: Maria é mais alta do que João.
+    - superlativo: expressa grau máximo ou elevado
+      - superlativo relativo: compara uma instância a um grupo
+        - exemplo: Sou o melhor do mundo.
+      - superlativo absoluto: expressa qualidade em grau máximo, sem comparar com outros
+        - exemplo: Gabriel é altíssimo.
+
+## advérbio
+
+> palavra que se refere a algum verbo, indicando alguma qualidade
+
+- classe invariável
+  - exceção: todo
+    - exemplo: chegou **todo** sujo e a esposa o recebeu **toda** paciente
+
+- tipos:
+  - lugar: aqui, ali, longe, cá, à direita, ao lado, abaixo, perto, etc
+  - tempo: hoje, ontem, atualmente, depois, de repente, de vez em quando, à tarde, etc
+  - afirmação: sim, decerto, certamente, sem dúvida, realmente, etc
+  - negação: não, nunca, jamais, de modo algum, etc
+  - intensidade: muito, demais, menos, quase, quanto, etc
+  - modo: calmamente, bem, mal, frente a frente, às pressas, à vontade, de mansinho, etc
+  - dúvida: talvez, provavelmente, possivelmente, etc
 
 ---
+
+- alteração morfológica: troca de classes
+- número: classificação da palavra em singular ou plural
+- gênero: classificação da palavra em masculino ou feminino
 
 - radical: parte da palavra que tem seu sentido primitivo, original
   - exemplos:
