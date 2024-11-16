@@ -83,3 +83,13 @@ when a user visits a webpage:
   - query parameters: `?search=test&sort_by=created_at`
   - fragment/anchor: `#header`
 
+## REST (REpresentational State Transfer)
+
+> software architectural style for designing network applications
+
+- stateless
+- client-server architecture
+- representation: a representation of the resource (e.g. JSON, XML, HTML, text, images) is used to interact with the resource
+- cacheable: clients can store responses temporarily to avoid unnecessary requests to the server
+  - responses from the server can be marked as cacheable
+- uses HTTP as underlying protocol for communication
