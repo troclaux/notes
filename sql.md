@@ -82,43 +82,44 @@ set operations:
 - `MINUS` or `EXCEPT`
 
 TODO
+
 restrictions:
 - table restrictions
   - column restrictions
-    - NULL
+    - `NULL`
       - you can't compare `NULL` with equal sign (e.g. `WHERE NOME=NULL`)
       - you should use `IS` keywork (e.g. `WHERE NOME IS NULL`)
-    - NOT NULL
-    - UNIQUE
-    - FOREIGN KEY
-    - CHECK table restrictions
+    - `NOT NULL`
+    - `UNIQUE`
+    - `FOREIGN KEY`
+    - `CHECK` table restrictions
 - assertions
 - domain restrictions
   - check
 
 - constraints: enforce rules on table's data
-  - PRIMARY KEY: value can't be NULL and has to be UNIQUE
-  - FOREIGN KEY: links the value of a column in table1 to the value of another column in table2
-    - CASCADE: explained before
-  - UNIQUE: all values in the column are distinct
-  - CHECK: all values in the column satisfy a condition
+  - `PRIMARY KEY`: value can't be NULL and has to be UNIQUE
+  - `FOREIGN KEY`: links the value of a column in table1 to the value of another column in table2
+    - `CASCADE`: explained before
+  - `UNIQUE`: all values in the column are distinct
+  - `CHECK`: all values in the column satisfy a condition
     - `CONSTRAINT chk_stock CHECK (stock_quantity >= 0)`
-  - DEFAULT: defines the initial value of a column when inserting a new row
+  - `DEFAULT`: defines the initial value of a column when inserting a new row
     - `balance DECIMAL(10, 2) DEFAULT 0.00`
-  - NOT NULL: a column cannot have NULL value
+  - `NOT NULL`: a column cannot have NULL value
     - `email VARCHAR(100) NOT NULL`
 
-- ALIAS: temporary name for column
-  - `SELECT FirstName AS "First Name", LastName AS "Last Name" FROM Employees;`
-- DISTINCT: removes duplicate rows from the results of a query
+- `ALIAS`: temporary name for column
+  - `select firstname as "first name", lastname as "last name" from employees;`
+- `DISTINCT`: removes duplicate rows from the results of a query
   - `SELECT DISTINCT City FROM Customers;`
 
-aggregate functions: return only 1 result
-- `SUM()`: return the sum of all values in the column
-- `AVG()`: return the average value of the column
-- `MIN()`: return minimum value
-- `MAX()`: return maximum value
-- `COUNT(column_or_table)`: count number of rows in result set with non-NULL values in specified column or table
+- aggregate functions: return only 1 result
+  - `SUM()`: return the sum of all values in the column
+  - `AVG()`: return the average value of the column
+  - `MIN()`: return minimum value
+  - `MAX()`: return maximum value
+  - `COUNT(column_or_table)`: count number of rows in result set with non-NULL values in specified column or table
 
 > [!IMPORTANT]
 > aggregate functions CAN be used inside: `SELECT`, `HAVING`, `ORDER BY`
@@ -126,14 +127,15 @@ aggregate functions: return only 1 result
 
 ## Subqueries
 
-subqueries queries:
-- `IN`: filter results from another sql query
-- `EXIS`
-- `ALL`
-- `SOME`
-- `ANY`
+- subqueries queries:
+  - `IN`: filter results from another sql query
+    - This operator checks if a value matches any value in a list and is suitable for one-to-many comparisons
+  - `EXISTS`
+  - `ALL`
+  - `SOME`
+  - `ANY`
 
-Use `IN` when the subquery may return one or more values. This operator checks if a value matches any value in a list and is suitable for one-to-many comparisons
+Use `IN` when the subquery may return one or more values. 
 
 ```sql
 SELECT id, song_name, artist_id
@@ -144,6 +146,7 @@ WHERE artist_id IN (
     WHERE artist_name LIKE 'Rick%'
 );
 ```
+
 Use `=` when the subquery is expected to return a single value. If the subquery returns more than one value, the query will fail with an error. This operator is used for one-to-one comparisons
 
 ```sql
@@ -155,8 +158,6 @@ WHERE user_id = (
     WHERE name = 'David'
 );
 ```
-
-
 ## Joins
 
 | types of join   | join conditions    |
@@ -204,9 +205,11 @@ ON e.department_id = d.id;
 
 ### RIGHT OUTER JOIN (not supported by SQLite)
 
+TODO
 
 ### FULL OUTER JOIN = FULL JOIN (not supported by SQLite)
 
+TODO
 
 ## View
 
@@ -224,13 +227,13 @@ WHERE department = 'IT';
 
 - creates a binary tree
 - faster to look up values in a column
-    - o(log n)
+  - o(log n)
 - primary keys are indexed by default
 - it's fairly common to name an index after the column it's created on with a suffix of `_idx`
 - you shouldn't index too many columns
-    - indexes take up space
-    - create performance overhead when inserting or updating data
-    - each time you insert a record, that record needs to be added to many trees
+  - indexes take up space
+  - create performance overhead when inserting or updating data
+  - each time you insert a record, that record needs to be added to many trees
 
 ```sql
 CREATE INDEX email_idx ON users(email);
@@ -240,14 +243,14 @@ CREATE INDEX email_idx ON users(email);
 
 - speed up look ups that depend on multiple columns
 - only add multi-column indexes if you're doing frequent lookups on a specific combination of columns
-
-A multi-column index is sorted by the first column first, the second column next, and so forth. A lookup on only the first column in a multi-column index gets almost all of the performance improvements that it would get from its own single-column index. However, lookups on only the second or third column will have very degraded performance
+- A multi-column index is sorted by the first column first, the second column next, and so forth
+- first column lookup in multi-column index has same performance as a single-column index
+- 2nd or 3rd columns lookups in multi-column index have bad performance compared to single-column lookups
 
 ```sql
 CREATE INDEX first_name_last_name_age_idx
 ON users (first_name, last_name, age);
 ```
-
 
 ## Examples
 
@@ -401,6 +404,7 @@ CREATE TABLE Employees (
 ```
 
 example combining several constraints:
+
 ```sql
 CREATE TABLE employees (
     employee_id INT PRIMARY KEY,
