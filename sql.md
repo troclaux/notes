@@ -295,6 +295,11 @@ RENAME TO contractors;
 ```
 
 ```sql
+ALTER TABLE employees
+ADD birthdate DATE;
+```
+
+```sql
 ALTER TABLE contractors
 RENAME COLUMN salary TO invoice;
 ```
@@ -416,13 +421,13 @@ CREATE TABLE employees (
     salary DECIMAL(10, 2) CHECK (salary > 0),
     hire_date DATE DEFAULT CURRENT_DATE,
     CONSTRAINT fk_department
-    FOREIGN KEY (department_id) REFERENCES departments (department_id)
-    ON DELETE SET NULL
-    ON UPDATE CASCADE,
+        FOREIGN KEY (department_id) REFERENCES departments (department_id)
+        ON DELETE SET NULL
+        ON UPDATE CASCADE,
     CONSTRAINT fk_manager
-    FOREIGN KEY (manager_id) REFERENCES employees (employee_id)
-    ON DELETE SET NULL
-    ON UPDATE CASCADE
+        FOREIGN KEY (manager_id) REFERENCES employees (employee_id)
+        ON DELETE SET NULL
+        ON UPDATE CASCADE
 );
 ```
 
