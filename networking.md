@@ -237,11 +237,14 @@ properties of the internet:
 - HTTP methods:
   - GET: requests data from the server (e.g. retrieving a webpage)
   - POST: submits data to the server (e.g. submitting a form or uploading a file)
-  - PUT: updates or replaces existing data on the server
+  - PUT: complete replacement of existing data on the server
   - DELETE: deletes data from the server
   - PATCH: partially updates data on the server
   - HEAD: similar do GET, but only retrieves headers, not the body
   - OPTIONS: used to describe the communication options available for the target resource
+  - TRACE: for diagnostic purposes
+    - the client sends a request to the server, which responds with the exact request that it received
+  - CONNECT: establishes a secure connection through a proxy server for encrypted communication
 
 - HTTP status codes (obtained from the server's response):
   - 1xx: informational
