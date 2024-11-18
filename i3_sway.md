@@ -21,14 +21,14 @@ ln -s ~/dotfiles/.config/wofi/config  ~/.config/wofi/config
 fedora distribution:
 
 ```bash
-sudo dnf install -y sway light swaylock waybar wofi fuzzel wdisplays network-manager-applet wlr-randr pavucontrol
+sudo dnf install -y sway light swaylock waybar wofi fuzzel wdisplays network-manager-applet wlr-randr pavucontrol copyq
 sudo dnf install -y fontawesome-fonts
 ```
 
 debian-based distribution:
 
 ```bash
-sudo apt install -y sway light swaylock waybar wofi fuzzel wdisplays network-manager-applet wlr-randr pavucontrol
+sudo apt install -y sway light swaylock waybar wofi fuzzel wdisplays network-manager-applet wlr-randr pavucontrol copyq
 sudo apt install -y fonts-font-awesome
 ```
 
