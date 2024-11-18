@@ -232,9 +232,10 @@ lean methodology for software development changes the formula:
 - cohesion: how much elements of the module are functionally related
 - coupling: degree of interdependence between software modules
 
-- ideal software architecture:
-  - high cohesion
-  - low coupling
+> [!TIP]
+> ideal software architecture:
+> High coHesion
+> Low coupLing
 
 ### MVC (Model-View-Controller) architecture
 
@@ -275,6 +276,23 @@ lean methodology for software development changes the formula:
     - viewmodel uses data binding
     - MVC manually updates data between view and model
 
+## design principles
+
+- service contract: all services should have a contract
+  - contract: document that describes what the service does
+- service loose coupling: minimize coupling
+  - ESB (Enterprise Service Bus) services: software architecture pattern that enables communication across applications
+    - there can be ESB without SOA and SOA without ESB
+- service abstraction: services should focus on important functionality and remove complexity
+- service reusability: maximize service versatility and compatibility with different technologies
+- service autonomy/statelessness: maximize independence between services and execution environment
+- service discoverability: make accessible and comprehensible services
+- service composability: ability to combine services together to create new service or system
+
+- service orchestration: centralized control system that coordinates interactions between multiple services
+- service coreography: decentralized system
+  - each service is autonomous and flexible
+
 ## SOA (Service-Oriented Architecture)
 
 > principles and practices that makes software components interoperable and reusable
@@ -300,6 +318,48 @@ lean methodology for software development changes the formula:
   - availability
   - testability
   - security
+
+### SOAP (Simple Object Access Protocol)
+
+> protocol for exchanging structured information when implementing web services in XML format
+
+- XML-based messaging protocol for exchanging information between computers
+- components:
+  - envelope(obligatory): defines start/end of message
+  - header(optional): contains optional attributes
+  - body(obligatory): contains actual message
+    - fault(optional): carries error messages (contained in body)
+
+- advantages:
+  - platform and language independent
+  - can work with different transport protocols (HTTP, SMTP, etc)
+  - built-in error handling
+  - language/platform/transport independent
+  - works well with firewalls
+
+- disadvantages:
+  - verbose XML format
+  - slower processing
+  - more bandwidth required
+
+### WSDL
+
+> language that describes web services (written in XML)
+
+- WSDL splits the description of a service in two perspectives:
+  - abstract: describes service's interface and what it does
+  - concrete: describes service's implementation
+
+- why split service description in two types (abstract/concrete)?
+  - if implementation (concrete) changes, interface (abstract) can still be available
+
+- operation types: describes the behavior of the system making the request (like a client) and if it expects a response
+  - one-way: operation receives request, but doesn't return an answer
+  - request-response: operation receives request and will wait for an answer
+  - solicit-response: operation sends request and will wait for a response
+  - notification: : operation sends request, but doesn't wait for a response
+
+### UDDI
 
 ---
 
