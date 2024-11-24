@@ -21,27 +21,33 @@ ln -s ~/dotfiles/.config/wofi/config  ~/.config/wofi/config
 fedora distribution:
 
 ```bash
-sudo dnf install -y sway light swaylock waybar wofi fuzzel wdisplays network-manager-applet wlr-randr pavucontrol copyq
-sudo dnf install -y fontawesome-fonts
+sudo dnf install -y sway kanshi light swaylock waybar wofi fuzzel wdisplays wlr-randr pavucontrol grimshot copyq playerctl dunst
+sudo dnf install -y fontawesome-fonts network-manager-applet
 ```
 
 debian-based distribution:
 
 ```bash
-sudo apt install -y sway light swaylock waybar wofi fuzzel wdisplays network-manager-applet wlr-randr pavucontrol copyq
-sudo apt install -y fonts-font-awesome
+sudo apt install -y sway kanshi light swaylock waybar wofi fuzzel wdisplays wlr-randr pavucontrol grimshot copyq playerctl dunst
+sudo apt install -y fonts-font-awesome network-manager-gnome
 ```
 
+- `sway`: tiling window manager
+- `kanshi`: display configuration tool
 - `light`: modify display's brightness
 - `swaylock`: lock screen
 - `waybar`: highly customizable navigation bar
-- `fuzzel`: wayland-native application launcher (I prefer this one)
-- `wofi`: wayland-native application launcher (I don't like this one)
-- `fonts-font-awesome`: add icons for when you change volume
+- `wofi`: wayland-native application launcher (compatible with shell piping, used for scripts)
+- `fuzzel`: wayland-native application launcher (used to open gui applications)
 - `wdisplays`: manages display configuration
-- `network-manager-applet`: wi-fi configuration
 - `wlr-randr`: display management
 - `pavucontrol`: input/output audio device management
+- `playerctl`: playback control tool
+- `grimshot`: screenshot utility tool
+- `copyq`: clipboard manager
+- `fonts-font-awesome/fontawesome-fonts`: add icons for when you change volume
+- `network-manager-applet/network-manager-gnome`: wi-fi configuration
+- `dunst`: notification manager
 
 ## keyboard shortcuts
 
@@ -72,7 +78,7 @@ sudo libinput-listdevices
 to find the name of monitors:
 
 ```bash
-swaymsg -t get_outputs
+swaymsg -t get_outputs | grep 'name' | awk '{print $2}' | tr -d '",'
 ```
 
 to find the class of an application (search for `class` or `app_id`):
