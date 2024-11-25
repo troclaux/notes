@@ -111,27 +111,22 @@ cd "$(find "$HOME" -type d | fzf)"
 ### Strings
 
 - single quotes
-  - Literal Interpretation
-    - Single-quoted strings are taken literally
-    - All characters within the single quotes are preserved exactly as they are
-  - No Expansion
-    - Variables, command substitutions, and special characters are not expanded or interpreted
+  - literal interpretation
+    - single-quoted strings are taken literally
+    - all characters within the single quotes are preserved exactly as they are
+  - no expansion
+    - variables, command substitutions, and special characters are not expanded or interpreted
 - double quotes
-  - Expansion Allowed
-    - Double-quoted strings allow variable expansion, command substitution, and certain escape sequences
-  - Partial Interpretation
-    - While most special characters are preserved, $, `, and \ (when followed by certain characters) are interpreted
-
-
-### Read user input
-
-```bash
-read -p "Enter your age" variable_name
-```
+  - expansion allowed
+    - double-quoted strings allow variable expansion, command substitution, and certain escape sequences
+  - partial interpretation
+    - while most special characters are preserved, $, `, and \ (when followed by certain characters) are interpreted
+- read user input: `read -p "Enter your age" variable_name`
 
 ## if else
 
 The script belows does the following:
+
 1. checks if directory ~/.config/nvim exists
 2. recursively change ownership of directory contents
 
@@ -188,51 +183,34 @@ do
   echo $i
 done
 ```
+
 ```bash
 for FILE in *; do cp $FILE "$FILE.bak"; done;
 ```
 
-reminder: ranges are simpler than loops
+reminder: ranges are simpler than loops:
 
 ```bash
 touch eixo_5/cnu_eixo_5_mq_aula_0{3..9}.md
 ```
-
-you can also use loops simplify operations on multiple files with similar names
-
-```bash
-for i in {5..7}; do touch cnu_eixo_5_aula_0$i.md; done
-```
+- you can also use loops simplify operations on multiple files with similar names:
+  - `for i in {5..7}; do touch cnu_eixo_5_aula_0$i.md; done`
 
 ### renaming files
 
-changing filenames in current directory
-
-```bash
-for file in ./cnu_*; do mv "$file" "${file#./cnu_}"; done
-```
-
-changing filenames in another directory
-
-```bash
-for file in pdfs/cnu_*; do mv "$file" "pdfs/${file#pdfs/cnu_}"; done
-```
-
----
+- changing filenames in current directory:
+  - `for file in ./cnu_*; do mv "$file" "${file#./cnu_}"; done`
+- changing filenames in another directory:
+  - `for file in pdfs/cnu_*; do mv "$file" "pdfs/${file#pdfs/cnu_}"; done`
 
 ## zsh
 
-### creating zsh keybinds
-
-```bash
-
-bindkey -s '^h' "nvim . -c 'Telescope find_files'\n"
-bindkey -s '^b' "!!\n\n"
-bindkey '^Y' autosuggest-accept
-
-```
-
----
+- list all keybindings:
+  - `bindkey`
+- creating zsh keybinds:
+  - `bindkey -s '^h' "nvim . -c 'Telescope find_files'\n"`
+  - `bindkey -s '^b' "!!\n\n"`
+  - `bindkey '^Y' autosuggest-accept`
 
 ## oh-my-zsh
 
