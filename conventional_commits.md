@@ -1,64 +1,65 @@
+# Conventional Commits
 
 ## test
 
-indica qualquer tipo de criação ou alteração de códigos de teste
+indicates any type of creation or modification of test code
 
-Exemplo: Criação de testes unitários
+Example: Creation of unit tests
 
 ## feat
 
-indica o desenvolvimento de uma nova feature ao projeto
+indicates the development of a new feature for the project
 
-Exemplo: Acréscimo de um serviço, funcionalidade, endpoint, etc
+Example: Addition of a service, functionality, endpoint, etc
 
 ## refactor
 
-usado quando houver uma refatoração de código que não tenha qualquer tipo de impacto na lógica/regras de negócio do sistema
+used when there is code refactoring that has no impact on the system's business logic/rules
 
-Exemplo: Mudanças de código após um code review
+Example: Code changes after a code review
 
 ## style
 
-empregado quando há mudanças de formatação e estilo do código que não alteram o sistema de nenhuma forma.
+used when there are formatting and code style changes that do not alter the system in any way
 
-Exemplos: Mudar o style-guide, mudar de convenção lint, arrumar indentações, remover espaços em brancos, remover comentários
+Examples: Changing the style-guide, changing lint convention, fixing indentation, removing whitespace, removing comments
 
 ## fix
 
-utilizado quando há correção de erros que estão gerando bugs no sistema
+used when fixing errors that are generating bugs in the system
 
-Exemplo: Aplicar tratativa para uma função que não está tendo o comportamento esperado e retornando erro
+Example: Applying treatment for a function that is not having the expected behavior and returning error
 
 ## chore
 
-indica mudanças no projeto que não afetem o sistema ou arquivos de testes. São mudanças de desenvolvimento
+indicates project changes that do not affect the system or test files. These are development changes
 
-Exemplo: Mudar regras do eslint, adicionar prettier, adicionar mais extensões de arquivos ao .gitignore
+Example: Change eslint rules, add prettier, add more file extensions to .gitignore
 
 ## docs
 
-usado quando há mudanças na documentação do projeto
+used when there are changes in project documentation
 
-Exemplo: adicionar informações na documentação da API, mudar o README, etc
+Example: adding information to API documentation, changing README, etc
 
 ## build
 
-utilizada para indicar mudanças que afetam o processo de build do projeto ou dependências externas
+used to indicate changes that affect the project's build process or external dependencies
 
-Exemplo: Gulp, adicionar/remover dependências do npm, etc
+Example: Gulp, adding/removing npm dependencies, etc
 
 ## perf
 
-indica uma alteração que melhorou a performance do sistema
+indicates a change that improved system performance
 
-Exemplo: alterar ForEach por while, melhorar a query ao banco, etc
+Example: changing ForEach to while, improving database query, etc
 
 ## ci
 
-utilizada para mudanças nos arquivos de configuração de CI
+used for changes in CI configuration files
 
-Exemplo: Circle, Travis, BrowserStack, etc
+Example: Github Actions, etc
 
 ## revert
 
-indica a reversão de um commit anterior
+indicates the reversal of a previous commit
