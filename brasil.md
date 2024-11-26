@@ -8,6 +8,43 @@
 
 - Brasil tem 26 Estados e o Distrito Federal
 
+> [!WARNING]
+> Distrito Federal não é Estado
+
+- Norte
+  - Acre: Rio Branco
+  - Amazônia: Manaus
+  - Rondônia: Porto Velho
+  - Roraima: Boa Vista
+  - Pará: Belém
+  - Amapá: Macapá
+  - Tocantins: Palmas
+  - Marajó: São Luís
+- Nordeste
+  - Bahia: Salvador
+  - Sergipe: Aracaju
+  - Alagoas: Maceió
+  - Pernambuco: Recife
+  - Paraíba: João Pessoa
+  - Rio Grande do Norte: Natal
+  - Ceará: Fortaleza
+  - Piauí: Teresina
+  - Maranhão: São Luís
+- Centro-Oeste
+  - Distrito Federal: Brasília
+  - Goiás: Goiânia
+  - Mato Grosso: Cuiabá
+  - Mato Grosso do Sul: Campo Grande
+- Sudeste
+  - São Paulo: São Paulo
+  - Rio de Janeiro: Rio de Janeiro
+  - Minas Gerais: Belo Horizonte
+  - Espírito Santo: Vitória
+- Sul
+  - Paraná: Curitiba
+  - Santa Catarina: Florianópolis
+  - Rio Grande do Sul: Porto Alegre
+
 ## PIB
 
 - PIB: metrica que mede o valor dos produtos e serviços dentro de um intervalo de tempo
