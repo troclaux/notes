@@ -142,7 +142,6 @@ service: a software that provides functionality and performs a task or set of ta
     - Use IAM tools to apply appropriate permissions
 
 
-
 ## EC2 (Elastic Compute Cloud)
 
 When you stop and restart an EC2 instance, the public IPv4 address can change, but the private address won’t
