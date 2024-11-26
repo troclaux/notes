@@ -1,6 +1,19 @@
 
 # docker
 
+> platform and toolset for developing, shipping, and running applications inside containers
+
+- containers: lightweight, portable, and isolated environments that package an application and all its dependencies so that it can run consistently across different computing environments
+  - dependencies: libraries, configurations, and runtime
+
+- docker uses namespaces and cgroups to provide a lightweight/secure/efficient containerization platform
+  - namespace: linux feature that isolates resources of a process, to simulate that a container runs in a separate system
+  - cgroups: allocate/limit resources (CPU, memory, I/O, etc) for processes
+
+- docker engine: core component that runs and manages containers
+- docker daemon (dockerd): background process that manages docker containers, images and networks
+- docker CLI: allows users to interact with docker with shell commands
+
 ## images
 
 > lightweight standalone package that contains everything necessary to create containers
@@ -44,7 +57,7 @@ better keywords:
 - `ENTRYPOINT ["node", "app.js"]`: run command at container's startup
 - `CMD ["nginx", "-g", "daemon off;"]`: run command at container's startup if there isn't `ENTRYPOINT`
 - `RUN`: triggers while docker builds the image
-  - for multiple line commands, use `\` and `&&` to garantee order of execution
+  - for multiple line commands, use `\` and `&&` to guarantee order of execution
 
 ```
 RUN <bash_command1> \
@@ -83,6 +96,7 @@ RUN <bash_command1> \
 ```bash
 docker container run -d -p 8080:80 --name webhost nginx
 ```
+
 - `-d`: run container in detached mode
 - `-p`: port mapping
   - `8080:80` == `<host-port>:<container-port>`
@@ -94,21 +108,38 @@ docker container run -d -p 8080:80 --name webhost nginx
   - pulls the image from docker hub if it is not available locally
 
 ```bash
-docker run -it --rm -v ~/dotfiles:/root/dotfiles my-ubuntu-image
+docker run --rm -it -v ~/dotfiles:/root/dotfiles my-ubuntu-image bash
 ```
 
-- `-it`: attach a terminal to the container
 - `--rm`: remove container when it stops
+- `-it`: attach a terminal to the container
 - `-v ~/dotfiles:/root/dotfiles`: mounts local directory from host machine that's running docker to container's filesystem
-  - `~/dotfiles`: reference to source directory
-  - `/root/dotfiles`: directory inside container where host directory will be mounted
+  - `~/dotfiles`: source directory's path for the [bind mount](#bind-mounts)
+  - `/root/dotfiles`: directory inside container where source directory will be mounted
+- `my-ubuntu-image`: name of the image being used to create the container
+- `bash`: command that will run inside the container
 - run command inside running container: `docker exec -it my-container bash`
 - stop running container: `docker stop my-container`
 - start stopped container: `docker start my-container`
 - remove container: `docker rm my-container`
 - print container logs: `docker logs my-container`
 
-#### healthchecks
+> [!IMPORTANT]
+> docker allows you to reorder the options as long as the last arguments are the image name (`my-ubuntu-image`) and the command (`bash`)
+> `-v`, `-it` and `--rm` can change order without changing the resulting behavior as long as they are before the image name
+
+### container lifecycle
+
+- possible states in docker container lifecycle:
+  - created: container has been created from an image but not started
+  - running: container is running with all its processes
+  - paused: container whose processes have been temporarily paused without stopping it completely
+    - resources (CPU and memory) used by container are still in use
+  - stopped: container is shut down
+    - frees resources used by container
+  - deleted: container is removed from the system
+
+### healthchecks
 
 TODO
 
@@ -133,7 +164,7 @@ docker exec -it my-container bash
 - `my-container`: name or ID of the container
 - `bash`: command to execute inside container
 
-## persistant data
+## persistent data
 
 > data that persists even after the container is deleted or recreated
 
@@ -186,5 +217,5 @@ docker run -v /host/path:/container/path myimage
 ## docker-compose
 
 - start services defined in file with name `docker-compose.yml`: `docker-compose up`
-- stopped services defined in file with name `docker-compose.yml`: `docker-compose down`
+- stop services defined in file with name `docker-compose.yml`: `docker-compose down`
 
