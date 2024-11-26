@@ -269,4 +269,4 @@ When you stop and restart an EC2 instance, the public IPv4 address can change, b
 - Read replica: is a copy of a database that can be used to offload read operations from the primary database
 - server provisioning: the process of setting up physical or virtual hardware; installing and configuring software, such as the operating system and applications; and connecting it to middleware, network, and storage components
 - failover: ability of a system or service to automatically switch to a backup or secondary system when the primary system becomes unavailable or experiences a failure. This is important for ensuring high availability and minimizing downtime for critical applications and services.
-- VPC: A Virtual Private Cloud (VPC) is a virtual network infrastructure in AWS that allows users to provision a logically isolated section of the AWS Cloud where they can launch AWS resources in a virtual network that they define
+- VPC (Virtual Private Cloud): virtual network infrastructure that allows users to provision a logically isolated section where they can launch AWS resources in a virtual network
