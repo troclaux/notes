@@ -1,15 +1,17 @@
 # Operating Systems
 
-> a system that intermediates between computer hardware and software
+> software that manages computer hardware and software resources and provides common services for computer programs
 
 - functions:
+  - hardware abstraction
   - process management
   - memory management
   - file system management
   - driver management
     - example: printer drivers
   - security and protection
-  - graphical interface
+  - user interface (CLI and GUI)
+  - networking
 
 ## basic concepts
 
