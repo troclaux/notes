@@ -114,3 +114,9 @@ image/jpeg=org.gnome.Loupe.desktop
 image/png=org.gnome.Loupe.desktop
 image/gif=org.gnome.Loupe.desktop
 ```
+
+to discover the desktop entry id, use this command:
+
+```bash
+(ls /usr/share/applications/ ; flatpak list | awk '{print $2 ".desktop"}') | fzf
+```
