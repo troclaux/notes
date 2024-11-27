@@ -30,7 +30,7 @@
 - ```code block``` for code blocks
   - add the language after the first triple backticks for syntax highlighting
     - you can use `output` tag
-- [text][reference] for reference links
+- `[<description>][<reference>]` for reference links
 - [reference]: www.url-for-reference-links.com "title for reference links"
 - reference a header using cross-reference links (also called anchors)
   - format: `[label](/filepath.md#heading-name)`
