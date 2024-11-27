@@ -72,7 +72,7 @@ ls *[0-9]?.{jpg,png}
 - `;`: run multiple commands at once regardless of whether previous command was successful or not
   - default behaviour between commands in a shell script when there isn't separators between
   - `command1; command2; command3`
-- `|`: forward the output of a cli program as the input for the next program
+- `|`: forward/pipe the output of a cli program as the input for the next program
   - `cat file.txt | wc -l`
 - `||`: executes the second command only if the first command fails
   - `ls this_file_does_not_exist.txt || echo 'file not found'`
@@ -81,7 +81,12 @@ ls *[0-9]?.{jpg,png}
 - `2>`: redirect stderr
   - `command 2> error.log`
 
-## Shell scripting
+> [!TIP]
+> combine multiple outputs and pipe everything into a single `fzf` by surrounding everything with parenthesis and separating each command with `;`
+
+```bash
+(ls /usr/share/applications/ ; flatpak list | awk '{print $2 ".desktop"}') | fzf
+```
 
 - `#`: comment
 - `#!/bin/sh`: shebang
