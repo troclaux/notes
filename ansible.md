@@ -41,75 +41,80 @@
 
 modules examples:
 
-- `apt/dnf`: package management
+- `package/apt/dnf`: package management
 
-  ```yaml
-  - apt: name=nginx state=present
-  ```
-
-- `service`: manage services
-
-  ```yaml
-  - service: name=nginx state=started
-  ```
+```yaml
+- name: Install more neovim requirements for Fedora
+  dnf:
+    name:
+      - gcc
+      - gcc-c++
+      - lua
+  tags: nvim
+  when: ansible_pkg_mgr == 'dnf'
+```
 
 - `copy`: copy files
 
-  ```yaml
-  - copy: src=/local/file dest=/remote/path
-  ```
+```yaml
+- copy: src=/local/file dest=/remote/path
+```
 
 - `file`: manage files/directories
 
-  ```yaml
-  - file: path=/app/dir state=directory
-  ```
-
-- `template`: copy and process Jinja2 templates
-
-  ```yaml
-  - template: src=config.j2 dest=/etc/app/config
-  ```
+```yaml
+- name: Remove .config/nvim folder
+  ansible.builtin.file:
+    path: "{{ lookup('env', 'HOME') }}/.config/nvim"
+    state: absent
+  tags: nvim
+```
 
 - variables: store and reuse values throughout your playbook
 
-  ```yaml
-  vars:
-    app_port: 8080
-    app_path: /var/www/app
+```yaml
+vars:
+  app_port: 8080
+  app_path: /var/www/app
 
-  tasks:
-    - name: Copy app config
-      template:
-        src: config.j2
-        dest: "{{ app_path }}/config.conf"
-  ```
+tasks:
+  - name: Copy app config
+    template:
+      src: config.j2
+      dest: "{{ app_path }}/config.conf"
+```
 
 - tags: label tasks to run or skip specific parts of a playbook
 
-  ```yaml
-  tasks:
-    - name: Install ZSH
-      apt: name=zsh state=present
-      tags: zsh
+```yaml
+tasks:
+  - name: Install stow
+    package:
+      name: stow
+      state: present
+    tags:
+      - stow
+      - gitconfig
+      - zshrc
+      - tmux
 
-    - name: Install Docker
-      apt: name=docker state=present
-      tags: docker
-  ```
+  - name: Install Docker
+    apt: name=docker state=present
+    tags: docker
+```
 
 - conditionals: execute tasks based on specific conditions
 
-  ```yaml
-  tasks:
-    - name: Install Apache on Debian
-      apt: name=apache2 state=present
-      when: ansible_os_family == "Debian"
+```yaml
+tasks:
+  - name: Install Apache on Debian
+    apt: name=apache2 state=present
+    when: ansible_os_family == "Debian"
 
-    - name: Install Apache on RedHat
-      dnf: name=httpd state=present
-      when: ansible_os_family == "RedHat"
-  ```
+  - name: Install Apache on RedHat
+    dnf: name=httpd state=present
+    when: ansible_os_family == "RedHat"
+```
 
 - run ansible-playbook: `ansible-playbook -K --tags "zsh,kitty" --skip-tags "sway" playbook.yml`
   - `-K`: ask for privilege escalation password
