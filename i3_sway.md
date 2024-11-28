@@ -21,14 +21,14 @@ ln -s ~/dotfiles/.config/wofi/config  ~/.config/wofi/config
 fedora distribution:
 
 ```bash
-sudo dnf install -y sway kanshi light swaylock waybar wofi fuzzel wdisplays wlr-randr pavucontrol grimshot copyq playerctl dunst
+sudo dnf install -y sway kanshi light swaylock waybar wofi fuzzel wdisplays wlr-randr pavucontrol grimshot copyq playerctl dunst wshowkeys wtype
 sudo dnf install -y fontawesome-fonts network-manager-applet
 ```
 
 debian-based distribution:
 
 ```bash
-sudo apt install -y sway kanshi light swaylock waybar wofi fuzzel wdisplays wlr-randr pavucontrol grimshot copyq playerctl dunst
+sudo apt install -y sway kanshi light swaylock waybar wofi fuzzel wdisplays wlr-randr pavucontrol grimshot copyq playerctl dunst wtype
 sudo apt install -y fonts-font-awesome network-manager-gnome
 ```
 
@@ -48,6 +48,8 @@ sudo apt install -y fonts-font-awesome network-manager-gnome
 - `fonts-font-awesome/fontawesome-fonts`: add icons for when you change volume
 - `network-manager-applet/network-manager-gnome`: wi-fi configuration
 - `dunst`: notification manager
+- `wshowkeys`: display keypresses on screen
+- `wtype`: simulate keyboard input to type strings
 
 ## keyboard shortcuts
 
@@ -89,6 +91,14 @@ swaymsg -t get_tree | fzf | wl-copy
 
 ```bash
 mkdir -p ~/.config/kanshi
+```
+
+to find the name of a key, run `wshowkeys` or `wev` and press the key
+
+to create a keybind in swaywm:
+
+```bash
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 ```
 
 ## change default application for a type of file
