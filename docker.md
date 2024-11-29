@@ -6,13 +6,32 @@
 - containers: lightweight, portable, and isolated environments that package an application and all its dependencies so that it can run consistently across different computing environments
   - dependencies: libraries, configurations, and runtime
 
+- benefits:
+  - quickly setup developer environment
+  - application isolation
+  - reproducibility
+  - security: isolation between containers and host system reduces the risk for system-wide compromises
+  - IaC (Infrastructure as Code)
+    - easy to reproduce environment
+    - allows version control for environments
+      - if new environment has issues, you can rollback to previous version
+  - CI/CD
+    - faster build setup
+    - faster testing
+    - faster deployment
+
 - docker uses namespaces and cgroups to provide a lightweight/secure/efficient containerization platform
   - namespace: linux feature that isolates resources of a process, to simulate that a container runs in a separate system
   - cgroups: allocate/limit resources (CPU, memory, I/O, etc) for processes
 
 - docker engine: core component that runs and manages containers
-- docker daemon (dockerd): background process that manages docker containers, images and networks
+- docker daemon (dockerd): background process that listen to requests and manages docker containers, images and networks
 - docker CLI: allows users to interact with docker with shell commands
+- dockerhub: official cloud service for storing and sharing docker images
+
+- [containers vs virtual machines](https://www.atlassian.com/microservices/cloud-computing/containers-vs-vms)
+  - virtual machines virtualize an entire machine down to the hardware layers
+  - containers only virtualize software layers above the operating system level
 
 ## images
 
@@ -26,7 +45,7 @@
 
 Dockerfile example:
 
-```
+```dockerfile
 # Use an official Ubuntu image as the base
 FROM ubuntu:latest
 
@@ -54,8 +73,10 @@ better keywords:
 - `ENV MY_VAR="Hello World"`: define container's environment variables
 - `EXPOSE 80`: define which ports docker container will listen to
 - `COPY . /app`: copy files from host machine's path `.` to container's `/app` directory
-- `ENTRYPOINT ["node", "app.js"]`: run command at container's startup
-- `CMD ["nginx", "-g", "daemon off;"]`: run command at container's startup if there isn't `ENTRYPOINT`
+- `ENTRYPOINT ["/bin/bash"]`: default command to run when container is started
+- `CMD ["nginx", "-g", "daemon off;"]`: default command-line arguments to pass to the `ENTRYPOINT` command
+  - can be overridden when running a CLI command
+  - e.g. if you run `docker run -it my-image bash`, it will override the `CMD` above and the container **won't** run nginx
 - `RUN`: triggers while docker builds the image
   - for multiple line commands, use `\` and `&&` to guarantee order of execution
 
@@ -74,17 +95,20 @@ RUN <bash_command1> \
   - put the stuff that changes less on top of the docker file to speed up the build command
   - following the same logic, put the stuff that changes most on the bottom of the dockerfile
 
-### CLI
-
-- build image: `docker build -t my-image .`
-  - `-t my-image`: tag image with a name
+- build image: `docker build --tag my-image .`
+  - `--tag my-image`: tag image with a name
+    - `docker tag <image-name> <new-tag>`
+      - `<image-name>`: existing image that will be tagged
+      - `<new-tag>`: new tag that will reference image
   - `.`: Dockerfile's path
 - list all images stored locally: `docker images`
-- remove docker image from your local machine: `docker rmi my-image`
+- remove 1 or more image: `docker rmi my-image`
   - `-f`: force remove if image is being used by stopped containers
 - remove unused images: `docker image prune`
 - clean up everything: `docker system prune`
   - stopped containers, unused networks, dangling images, etc
+
+- to see containers' ID, name, CPU, Memory usage, NET I/O, BLOCK I/O and PIDS: `docker stats`
 
 ## containers
 
@@ -107,6 +131,11 @@ docker container run -d -p 8080:80 --name webhost nginx
 - `nginx`: image to use
   - pulls the image from docker hub if it is not available locally
 
+> [!NOTE]
+> `--name` vs `--tag`
+> `--name` is used for containers
+> `--tag` is used for images
+
 ```bash
 docker run --rm -it -v ~/dotfiles:/root/dotfiles my-ubuntu-image bash
 ```
@@ -118,10 +147,11 @@ docker run --rm -it -v ~/dotfiles:/root/dotfiles my-ubuntu-image bash
   - `/root/dotfiles`: directory inside container where source directory will be mounted
 - `my-ubuntu-image`: name of the image being used to create the container
 - `bash`: command that will run inside the container
+- list all containers (including stopped ones): `docker ps -a`
 - run command inside running container: `docker exec -it my-container bash`
-- stop running container: `docker stop my-container`
 - start stopped container: `docker start my-container`
-- remove container: `docker rm my-container`
+- stop running container: `docker stop my-container`
+- remove 1 or more container: `docker rm my-container`
 - print container logs: `docker logs my-container`
 
 > [!IMPORTANT]
@@ -138,6 +168,10 @@ docker run --rm -it -v ~/dotfiles:/root/dotfiles my-ubuntu-image bash
   - stopped: container is shut down
     - frees resources used by container
   - deleted: container is removed from the system
+
+> [!IMPORTANT]
+> docker cannot remove paused containers
+> containers have to be stopped can be removed
 
 ### healthchecks
 
