@@ -1,12 +1,23 @@
 # Operating Systems
 
-> software that manages computer hardware and software resources and provides common services for computer programs
+> software that manages computer hardware and software resources and provides essential services for computer programs and users
 
 - functions:
   - hardware abstraction
+    - provides standardized interface between complex hardware and software applications
+    - allows programs to interact with hardware without knowing its specific technical details
+    - enables software to run across different hardware configurations with minimal modifications
   - process management
-  - memory management
+    - scheduling CPU time
+    - handles the creation, scheduling, and termination of computer processes
+    - implements multitasking, allowing multiple programs to run seemingly simultaneously
+  - memory management/allocation
+    - implements virtual memory techniques to extend available memory using disk space
+    - allocates and tracks memory usage for different programs
   - file system management
+    - organizes and tracks files and directories
+    - manages file permissions and access controls
+    - provides methods for creating, reading, writing, and deleting files
   - driver management
     - example: printer drivers
   - security and protection
