@@ -163,8 +163,8 @@ yt-dlp -f bestaudio -x --audio-format flac https://www.youtube.com/watch?v=dQw4w
 ```
 
 - `-f bestaudio`: selects best available audio-only format
-- `-x`: extracts the audio from the video file.
-- `--audio-format mp3`: converts the extracted audio to mp3 format.
+- `-x`: extracts the audio from the video file
+- `--audio-format flac`: converts the extracted audio to FLAC format
 
 ## rclone
 
@@ -275,3 +275,22 @@ example of cron job:
 ```bash
 0 15 * * 2 rsync -av --delete ~/Music/chill_game_ost ~/backups >> ~/backups/chill_game_ost.log 2>&1
 ```
+
+## systemctl
+
+> manages systemd system and service manager
+
+- service: background process that runs continuously on the system to handle tasks
+  - service == daemon
+  - usually start when the system boots
+  - run without user interaction
+  - usually provides services that need to be always available (e.g. web servers, database servers, etc)
+  - names typically end with 'd'
+- systemd: system and service manager
+  - initializes the system
+  - manages services
+
+- start a service: `sudo systemctl start <service-name>`
+- stop a service: `sudo systemctl stop <service-name>`
+- restart a service: `sudo systemctl restart <service-name>`
+- check status of a service: `sudo systemctl status <service-name>`
