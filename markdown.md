@@ -3,6 +3,7 @@
 
 [markdown best practices](https://learn.microsoft.com/powershell/scripting/community/contributing/general-markdown)
 [markdown syntax](https://www.markdownguide.org/basic-syntax/)
+[markdown supported languages](https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md)
 
 ## basic syntax
 
