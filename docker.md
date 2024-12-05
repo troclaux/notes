@@ -68,10 +68,11 @@ EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 ```
 
-better keywords:
-
 - `ENV MY_VAR="Hello World"`: define container's environment variables
 - `EXPOSE 80`: define which ports docker container will listen to
+  - doesn't actually publish or open the ports to the host system
+  - serves only as documentation
+  - the port won't be accessible from the outside unless explicitly published with the `-p` flag when running the shell command
 - `COPY . /app`: copy files from host machine's path `.` to container's `/app` directory
 - `ENTRYPOINT ["/bin/bash"]`: default command to run when container is started
 - `CMD ["nginx", "-g", "daemon off;"]`: default command-line arguments to pass to the `ENTRYPOINT` command
@@ -95,8 +96,8 @@ RUN <bash_command1> \
   - put the stuff that changes less on top of the docker file to speed up the build command
   - following the same logic, put the stuff that changes most on the bottom of the dockerfile
 
-- build image: `docker build --tag my-image .`
-  - `--tag my-image`: tag image with a name
+- build image: `docker build --tag imagename:imagetag .`
+  - `--tag imagename:imagetag`: tags image with the name `imagename` and `imagetag` tag
     - `docker tag <image-name> <new-tag>`
       - `<image-name>`: existing image that will be tagged
       - `<new-tag>`: new tag that will reference image
@@ -137,26 +138,30 @@ docker container run -d -p 8080:80 --name webhost nginx
 > `--tag` is used for images
 
 ```bash
-docker run --rm -it -v ~/dotfiles:/root/dotfiles my-ubuntu-image bash
+docker run --rm -it --network my-network -v ~/dotfiles:/root/dotfiles my-ubuntu-image bash
 ```
 
 - `--rm`: remove container when it stops
 - `-it`: attach a terminal to the container
+- `--network my-network`: connects container to `my-network` network
 - `-v ~/dotfiles:/root/dotfiles`: mounts local directory from host machine that's running docker to container's filesystem
   - `~/dotfiles`: source directory's path for the [bind mount](#bind-mounts)
   - `/root/dotfiles`: directory inside container where source directory will be mounted
 - `my-ubuntu-image`: name of the image being used to create the container
 - `bash`: command that will run inside the container
+
 - list all containers (including stopped ones): `docker ps -a`
 - run command inside running container: `docker exec -it my-container bash`
 - start stopped container: `docker start my-container`
 - stop running container: `docker stop my-container`
-- remove 1 or more container: `docker rm my-container`
+- remove 1 or more stopped container: `docker rm my-container`
+- remove 1 or more running containers: `docker rm -f my-container`
 - print container logs: `docker logs my-container`
 
 > [!IMPORTANT]
 > docker allows you to reorder the options as long as the last arguments are the image name (`my-ubuntu-image`) and the command (`bash`)
 > `-v`, `-it` and `--rm` can change order without changing the resulting behavior as long as they are before the image name
+
 
 ### container lifecycle
 
@@ -221,6 +226,12 @@ docker volume create myvolume
 docker run -v myvolume:/app myimage
 ```
 
+> [!IMPORTANT]
+> `-v myvolume:/app` behavior:
+> if `myvolume` exists: binds existing volume to `/app` in container
+> if `myvolume` doesn't exist: creates new volume named `myvolume` and binds it to `/app`
+> this is different from bind mounts where the host path must exist beforehand
+
 ### Bind Mounts
 
 - Store anywhere on host system
@@ -247,6 +258,46 @@ docker run -v /host/path:/container/path myimage
 - remove docker network: `docker network rm mynetwork`
 - remove unused docker networks: `docker network prune`
 - inspect docker network: `docker network inspect mynetwork`
+
+## docker hub
+
+> docker's official cloud-based registry for storing and sharing docker images
+
+- requires free account at hub.docker.com
+- image naming convention: `username/image-name:tag`
+  - example: `troclaux/my-go-server:1.0`
+  - if no tag is specified, defaults to `latest`
+  - use [semantic versioning](https://semver.org/) and also push to the "latest" tag
+    - `docker build -t username/imagename:0.0.0 -t username/imagename:latest .`
+    - `docker push username/imagename --all-tags`
+      - `--all-tags`: ensures all tags of the image are pushed, not just the default tag (usually latest)
+
+common commands:
+
+```bash
+# Login to Docker Hub
+docker login
+
+# Tag local image for Docker Hub
+docker tag local-image:tag username/repository:tag
+
+# Push image to Docker Hub
+docker push username/repository:tag
+
+# Pull image from Docker Hub
+docker pull username/repository:tag
+```
+
+best practices:
+- always tag your images with specific versions
+- test your image locally before pushing
+- use meaningful repository names
+- add a README.md to your Docker Hub repository
+- scan your images for security vulnerabilities before pushing
+
+> [!NOTE]
+> Public repositories are free
+> Private repositories may require paid subscription
 
 ## docker-compose
 
