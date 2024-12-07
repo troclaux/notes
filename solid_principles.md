@@ -108,10 +108,10 @@ class AreaCalculator:
 
 ## Liskov Substitution Principle
 
-> objects of a superclass should be replaceable with object of a subclasse without affecting the correctness of the program
+> objects of a superclass should be replaceable with objects of a subclass without affecting the correctness of the program
 
 - bad example: `Ostrich` cannot fly, but it inherits from `Bird` which has a fly method
-- this violates Liskov Substitution Principle because replacing a `Bird` with an `Ostrich` changes expected behavior
+  - this violates Liskov Substitution Principle because replacing a `Bird` with an `Ostrich` changes expected behavior
 
 ```python
 class Bird:
@@ -156,10 +156,11 @@ class Ostrich(Bird):
 
 ## Interface Segregation Principle
 
-> a client should never be forced to implement an interface that it doesn’t use
-> clients should not be forced (?) to depend on interfaces they do not use
+> it's better to have multiple, smaller, specific interfaces rather than a single, large, general-purpose interface
 
-- a class should not be forced to implement interfaces it doesn't use
+> a client should never be forced to implement an interface with a method that it doesn’t use
+
+- client: refers to any piece of code (often a class) that uses or depends on another piece of code (such as an interface or a service).
 
 bad example: `SimplePrinter` is forced to implement `scan_document`, which it doesn't support
 
@@ -212,8 +213,24 @@ class MultiFunctionPrinter(PrinterInterface, ScannerInterface):
 
 > high-level modules should not depend on low-level modules. both should depend on abstractions
 
+- high-level modules:
+  - contain the main business logic/rules of the application
+  - define abstract operations that are implemented by low-level modules
+  - example: `Switch` class that controls devices
+- low-level modules:
+  - handle detailed/specific operations
+  - implement the abstract operations defined by high-level modules
+  - example: `LightBulb` or `Fan` classes that perform specific device operations
+- abstractions:
+  - simplification of complex operations by focusing on essential features while hiding unnecessary details
+  - example: `Switchable` interface that defines what any switchable device must do
+
 - abstractions should not depend on details. Details should depend on abstractions
 - high-level modules should not depend on low-level modules. Both should depend on abstractions
+- why is it called dependency inversion?
+  - normally the high-level module directly depends on the low-level module to achieve its functionality
+  - the inversion refers to changing this so that the low-level module doesn't directly impact the high-level module
+    - instead, both high-level and low-level modules depend on abstractions
 
 bad example: `Switch` directly depends on the concrete `LightBulb` class. Changing `LightBulb` or using a different bulb type would require modifying `Switch`
 
