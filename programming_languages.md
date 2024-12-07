@@ -1,5 +1,15 @@
 
 - abstraction: simplification of complex operations by focusing on essential features while hiding unnecessary details
+  - examples:
+    - interfaces that define what an object can do without specifying how
+    - functions that hide complex implementations behind simple names
+    - classes that represent real-world concepts in simplified form
+- encapsulation: bundling data and methods that operate on that data within a single unit, restricting direct access to some of an object's components
+  - hides internal details and provides an interface to interact with the object
+  - examples:
+    - classes that bundle data (fields) and behavior (methods)
+    - modules that group related functions and variables
+    - objects that protect their internal state with getters/setters
 
 - primitives: fundamental data types that are not composed of other data types
   - e.g. integers, floating-point numbers, characters, booleans, strings, null or undefined values
