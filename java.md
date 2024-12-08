@@ -352,6 +352,19 @@ class Smartphone implements Gadget {
     }
 }
 ```
+
+another example:
+
+```java
+interface Observer {
+    void onTemperatureChanged(float temperature);
+    void onHumidityChanged(float humidity);
+    void onWeatherUpdate(float temperature, float humidity);
+    boolean isActive();
+    String getObserverId();
+}
+```
+
 ## inheritance and encapsulation
 
 - inheritance: allows one class to inherit the properties/methods of another class
