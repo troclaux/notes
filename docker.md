@@ -111,6 +111,40 @@ RUN <bash_command1> \
 
 - to see containers' ID, name, CPU, Memory usage, NET I/O, BLOCK I/O and PIDS: `docker stats`
 
+### dockerignore
+
+> specifies which files and directories Docker should ignore when building images
+
+- similar to `.gitignore`
+- prevents unnecessary files from being copied into the image during build
+- helps reduce image size and build time
+- improves security by excluding sensitive files
+
+Example `.dockerignore`:
+
+```dockerignore
+# Version control
+.git
+.gitignore
+
+# Dependencies
+node_modules
+vendor
+
+# Build files
+dist
+build
+
+# Logs and temp files
+*.log
+.tmp
+
+# Development files
+.env
+.env.local
+*.md
+```
+
 ## containers
 
 > self-contained environment that runs an application and its dependencies in isolation from the host machine
