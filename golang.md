@@ -1514,9 +1514,57 @@ fmt.Println(hostname)     // homestarrunner.com
 
 [json.NewDecoder.Decode vs json.Unmarshal](https://stackoverflow.com/questions/21197239/decoding-json-using-json-unmarshal-vs-json-newdecoder-decode)
 
-
 ### string
+
 ### testing
+
+> built-in package that provides essential tools to define and run tests
+
+- test files should end with `_test.go`
+  - e.g. `calculator.go` => `calculator_test.go`
+- each test function should start with `Test` followed by a descriptive name
+  - `func TestAdd(t *testing.T)`
+- running tests: `go test`
+  - this command looks for `_test.go` files
+- Go doesn't come with assertion libraries built-in
+  - checks results with simple conditionals and `t.Errorf()` or `t.Fatalf()`
+
+```go
+func TestAdd(t *testing.T) {
+    result := Add(2, 3)
+    expected := 5
+    if result != expected {
+        t.Errorf("Add(2, 3) = %d; want %d", result, expected)
+    }
+}
+```
+- common pattern in go is to use table-driven tests
+  - this means you define a set of inputs and expected outputs, then loop over them
+  - makes it easy to add new cases or modify old ones
+
+```go
+func TestAdd(t *testing.T) {
+    tests := []struct {
+        name     string
+        a, b     int
+        expected int
+    }{
+        {"both positive", 2, 3, 5},
+        {"one negative", -2, 3, 1},
+        {"both negative", -2, -3, -5},
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            result := Add(tt.a, tt.b)
+            if result != tt.expected {
+                t.Errorf("Add(%d, %d) = %d; want %d", tt.a, tt.b, result, tt.expected)
+            }
+        })
+    }
+}
+```
+
 ### bufio
 ### io
 ### os
