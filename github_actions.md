@@ -65,7 +65,7 @@ jobs:
 - `on`: contains the events that trigger the workflow
   - `<event_name>`: name of the event that triggers the workflow (e.g. `pull_request`, `push`)
     - `branches: [<branch_name>]`: defines branches where the workflow will run on
-- `jobs`: contains jobs that will run
+- `jobs`: contains jobs that will run in parallel
   - `<job_name>`: job's name
     - `name`: job's description (used in GitHub Actions' UI)
     - `runs-on`: defines the job's runner (e.g. `ubuntu-latest`)
@@ -76,4 +76,23 @@ jobs:
           - `<config>`: can be `env`, `go-version`, `working-directory`, etc
         - `run`: runs a shell command
 
+- examples of official actions:
+  - `uses: actions/checkout@v4`: copies your github repo into the runner
+  - `uses: actions/setup-go@v5`: installs golang into the runner
+
 - a step succeeds when exiting with status code of `0` and fails if it exits with a status code that isn't `0`
+
+- Dynamic badge: show the current status of your CI workflow. They automatically update to reflect:
+  - ✅ Green: Passing - all checks succeeded
+  - ❌ Red: Failing - one or more checks failed
+  - 🟡 Yellow: In progress - workflow is currently running
+
+To add a badge to your README.md:
+
+1. Replace `<OWNER>` with your GitHub username
+2. Replace `<REPOSITORY>` with your repository name
+3. Replace `<WORKFLOW_FILE>` with your workflow filename (e.g. ci.yml)
+
+- examples:
+  - `![CI](https://github.com/johndoe/my-repo/actions/workflows/ci.yml/badge.svg)`
+  - `![dynamic badge](https://github.com/<OWNER>/<REPOSITORY>/actions/workflows/<WORKFLOW_FILE>/badge.svg)`
