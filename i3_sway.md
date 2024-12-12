@@ -21,20 +21,21 @@ ln -s ~/dotfiles/.config/wofi/config  ~/.config/wofi/config
 fedora distribution:
 
 ```bash
-sudo dnf install -y sway kanshi light swaylock waybar wofi fuzzel wdisplays wlr-randr pavucontrol grimshot copyq playerctl dunst wshowkeys wtype
+sudo dnf install -y sway kanshi light blueman swaylock waybar wofi fuzzel wdisplays wlr-randr pavucontrol grimshot copyq playerctl dunst wshowkeys wtype
 sudo dnf install -y fontawesome-fonts network-manager-applet
 ```
 
 debian-based distribution:
 
 ```bash
-sudo apt install -y sway kanshi light swaylock waybar wofi fuzzel wdisplays wlr-randr pavucontrol grimshot copyq playerctl dunst wtype
+sudo apt install -y sway kanshi light blueman swaylock waybar wofi fuzzel wdisplays wlr-randr pavucontrol grimshot copyq playerctl dunst wtype
 sudo apt install -y fonts-font-awesome network-manager-gnome
 ```
 
 - `sway`: tiling window manager
 - `kanshi`: display configuration tool
 - `light`: modify display's brightness
+- `blueman`: bluetooth manager
 - `swaylock`: lock screen
 - `waybar`: highly customizable navigation bar
 - `wofi`: wayland-native application launcher (compatible with shell piping, used for scripts)
