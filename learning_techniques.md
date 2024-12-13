@@ -1,136 +1,150 @@
 
-# Learning Techniques
+# learning techniques
 
-## Learning Steps
+## learning steps
 
-1. Define the objective.
-1. Study prerequisite knowledge.
-1. Learn jargon.
-1. Understand the constraints.
-1. Study how each step connects to the next.
-1. Review and test your knowledge with exercises.
-1. Document your learning with your own words.
+1. define the objective
+1. study prerequisite knowledge
+1. learn jargon
+1. understand the constraints
+1. study how each step connects to the next
+1. review and test your knowledge with exercises
+1. document your learning with your own words
 
-## Metaphors
-- Metaphors are useful for learning abstract concepts.
-- Use real-life metaphors to make learning easier.
+## metaphors
 
-## Modes of Thinking
-- **Focused Mode**: Concentrated, intense thinking.
-- **Diffuse Mode**: Relaxed, more free-form thinking.
-- Alternate between focused and diffuse modes for better learning.
+- metaphors are useful for learning abstract concepts
+- use real-life metaphors to make learning easier
 
-## Techniques and Strategies
+## modes of thinking
 
-### Pomodoro Technique
-- Set a timer for 25 minutes.
-- Focus intensely on a task.
-- Reward yourself after the session.
-- The hardest part is starting.
+- focused mode: concentrated, intense thinking
+- diffuse mode: relaxed, more free-form thinking
+- alternate between focused and diffuse modes for better learning
 
-### Practice and Repetition
-- Practice makes permanent.
-- Use spaced repetition for better retention.
-- Active engagement is more effective than passive listening.
-- Exercise improves brain performance.
+## techniques and strategies
 
-### Handling Difficulties
-- If you can't answer a question, move to the next one.
-- Persistence is more important than intelligence.
-- Be okay with making mistakes.
-- Stop making excuses.
-- Avoid self-fulfilling prophecies.
-- Use mnemonics.
-  - [Context: mnemonic learning website "www.memrise.com"]
+### pomodoro technique
 
-## Mindset and Attitude
-- Leadership involves disguising panic.
-- Accept discomfort to achieve change.
-- Persistence is the virtue of the less brilliant.
-- Don't suffer from imposter syndrome.
+- set a timer for 25 minutes
+- focus intensely on a task
+- reward yourself after the session
+- the hardest part is starting
 
-## Study Techniques
+### practice and repetition
 
-### Mind Mapping
-- Turn the page sideways.
-- Write the main topic in the center.
-- Write related ideas around it.
+- practice makes permanent
+- use spaced repetition for better retention
+- active engagement is more effective than passive listening
+- exercise improves brain performance
 
-### Chunking
-- Compact packages of information for easy access.
-- Steps:
-  1. Focus
-  2. Understand
-  3. Gain context
-- Context requires top-down (survey) and bottom-up (learn basics).
+### handling difficulties
 
-### Recall and Review
-- Recall is more effective than rereading.
-- Use diagrams to understand abstract concepts.
-- Make side notes while reading.
-- Avoid looking at answers immediately.
+- if you can't answer a question, move to the next one
+- persistence is more important than intelligence
+- be okay with making mistakes
+- stop making excuses
+- avoid self-fulfilling prophecies
+- use mnemonics
+  - [mnemonic learning website](www.memrise.com)
 
-### Deliberate Practice
-- Focus on the hardest material deliberately.
-- Overlearning can be counterproductive.
-- Interleave learning by mixing different topics.
+## mindset and attitude
 
-### Testing and Assessment
-- Test checklist (did I do the following?):
-  - Effort in understanding
-  - Collaboration with classmates
-  - Outlining solutions
-  - Participation in discussions
-  - Consulting instructors or Teaching Assistant
-  - Ask questions about the homework solutions
-  - Thorough review before tests
-- Start with hard problems, then move to easier ones.
-- Change perspective on tests to reduce anxiety.
-- Focus on breathing to relax.
+- leadership involves disguising panic
+- accept discomfort to achieve change
+- persistence is the virtue of the less brilliant
+- don't suffer from imposter syndrome
 
-## Memory Techniques
+## study techniques
 
-### Mnemonics
-- Use initials or words to remember groups of items.
-- Memory palace technique:
-  - Imagine a familiar place.
-  - Deposit information in this mental space.
+### mind mapping
 
-### Visualization
-- Use pictures to learn abstract concepts.
-- Convert large texts into keywords and mental images.
+- turn the page sideways
+- write the main topic in the center
+- write related ideas around it
 
-## Health and Well-being
-- Eat foods rich in Omega-3 (e.g., DHA).
-- Sleep is crucial for information fixation.
-- Exercise regularly.
+### chunking
 
-## Time Management
-- Use weekly and daily to-do lists.
-- Plan quitting times.
-- Start with the most annoying or boring tasks.
-- Study different subjects every day.
-- Switch subjects when productivity decreases.
+- compact packages of information for easy access
+- steps:
+  1. focus
+  2. understand
+  3. gain context
+- context requires top-down (survey) and bottom-up (learn basics)
 
-## Motivation and Persistence
-- Believe in your ability to succeed.
-- Perseverance is key.
-- Study with friends to identify mistakes.
-- Focus on the process, not just the product.
+### recall and review
 
-## Additional Tips
-- Use MIT courseware for resources.
-- Tell yourself to stop wasting time and get on with tasks.
-- Determine triggers for distractions and adjust plans accordingly.
-- Visual and spatial memory techniques can be helpful.
+- recall is more effective than rereading
+- use diagrams to understand abstract concepts
+- make side notes while reading
+- avoid looking at answers immediately
 
-## Study Checklist Before Tests
-- Review effort and understanding.
-- Work with classmates.
-- Outline solutions.
-- Participate actively in discussions.
-- Consult instructors or Teaching Assistants.
-- Ensure clarity in homework solutions.
-- Review study guides and problem sets thoroughly.
-- Ensure good sleep before tests.
-- Relax and breathe deeply during tests.
+### deliberate practice
+- focus on the hardest material deliberately.
+- overlearning can be counterproductive.
+- interleave learning by mixing different topics.
+
+### testing and assessment
+- test checklist (did i do the following?):
+  - effort in understanding
+  - collaboration with classmates
+  - outlining solutions
+  - participation in discussions
+  - consulting instructors or teaching assistant
+  - ask questions about the homework solutions
+  - thorough review before tests
+- start with hard problems, then move to easier ones
+- change perspective on tests to reduce anxiety
+- focus on breathing to relax
+
+## memory techniques
+
+### mnemonics
+
+- use initials or words to remember groups of items
+- memory palace technique:
+  - imagine a familiar place
+  - deposit information in this mental space
+
+### visualization
+
+- use pictures to learn abstract concepts
+- convert large texts into keywords and mental images
+
+## health and well-being
+
+- eat foods rich in omega-3 (e.g., dha)
+- sleep is crucial for information fixation
+- exercise regularly
+
+## time management
+
+- use weekly and daily to-do lists
+- plan quitting times
+- start with the most annoying or boring tasks
+- study different subjects every day
+- switch subjects when productivity decreases
+
+## motivation and persistence
+
+- believe in your ability to succeed
+- perseverance is key
+- study with friends to identify mistakes
+- focus on the process, not just the product
+
+## additional tips
+- use mit courseware for resources
+- tell yourself to stop wasting time and get on with tasks
+- determine triggers for distractions and adjust plans accordingly
+- visual and spatial memory techniques can be helpful
+
+## study checklist before tests
+- review effort and understanding
+- work with classmates
+- outline solutions
+- participate actively in discussions
+- consult instructors or teaching assistants
+- ensure clarity in homework solutions
+- review study guides and problem sets thoroughly
+- ensure good sleep before tests
+- relax and breathe deeply during tests
