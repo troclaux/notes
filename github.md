@@ -1,9 +1,27 @@
 
 # github
 
+> web-based platform that hosts git repositories online
+
 [git](./git.md)
 
-## use SSH keys to associate with your github account
+## basics
+
+- repository (repo): storage location for a project containing all its files, history, and configuration
+  - can contain code, documentation, images, and other project-related files
+  - tracks all changes made to files in your project
+- branch: allow you to work on different versions of your project at the same time without mixing up new features or bug fixes until they’re ready
+- fork: personal copy of someone else’s project
+- pull request: submit changes from one branch to another
+  - typically used to propose changes to a project
+- issues: github feature that tracks tasks, enhancements, or bugs
+  - can be used to:
+    - track bugs and feature requests
+    - assign work to team members
+    - organize project tasks
+    - collect user feedback
+
+## github account authentication with SSH keys
 
 ```bash
 rm ~/.ssh/id_ed25519 && rm ~/.ssh/id_ed25519.pub
