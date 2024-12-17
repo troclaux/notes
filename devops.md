@@ -38,6 +38,14 @@
   - infrastructure: ansible, terraform
   - monitoring: prometheus, grafana
 
+- good practices for a CI/CD pipeline:
+  - Deterministic builds: The same code should always produce the same build
+  - Fast builds: The faster the better. This makes getting bug fixes and new features out to users faster
+  - Portable: This is why I love when the majority of a CI/CD pipeline is just bash scripts
+    - easier to run locally and on any CI/CD platform
+  - Fully automated: The fewer manual steps, the better
+    - less error-prone
+
 ## CD example step by step
 
 > objective: program workflow that builds docker image and pushes it to GCP's [artifact registry](/gcp.md#artifact-registry)
@@ -153,4 +161,3 @@ jobs:
 ---
 
 - serverless: 
-
