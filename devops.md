@@ -46,9 +46,12 @@
   - Fully automated: The fewer manual steps, the better
     - less error-prone
 
-## CD example step by step
+## CI/CD example step by step
 
 > objective: program workflow that builds docker image and pushes it to GCP's [artifact registry](/gcp.md#artifact-registry)
+
+[example of ci workflow](./code/workflows/ci.yml)
+[example of cd workflow](./code/workflows/cd.yml)
 
 ### short step by step description
 
@@ -58,8 +61,19 @@
 1. add credentials/keys as repository secrets in github repo (`github repo > settings > secrets and variables > actions`)
 1. check if CI/CD is working correctly
 
+- typical CI/CD workflow steps:
+  - setup:
+     - clone repository to runner
+     - install dependencies (e.g., go, node)
+  - build:
+     - build application
+     - build docker image
+  - deploy:
+     - authenticate with cloud provider
+     - setup cloud provider's CLI
+     - deploy to compute instance
+
 ### detailed step by step description
-- what does each permission do? which permissions should I know?
 
 1. create GCP project
   - GCP project: organizational entity that groups cloud resources and services
@@ -99,14 +113,15 @@ gcloud builds submit --tag us-central1-docker.pkg.dev/your-project-123456/notely
 ```
 
 - explaining command above:
-  - `gcloud builds submit`: uses Google Cloud Build to create container image based on the dockerfile
+  - `gcloud builds submit`: uses Google Cloud Build to build container image and push it to an image registry
     - run the build steps defined either automatically (using a dockerfile) or in your configuration file
+    - the command **doesn't** run the container
   - `--tag`: defines where the built image will be stored
-  - `REGION`: The geographic region of your Artifact Registry (e.g., `us-central1`)
-  - `PROJECT_ID`: Your Google Cloud project ID
-  - `REPOSITORY`: The name of the Artifact Registry repository where you’re storing the image
-  - `IMAGE`: The name you’re assigning to the built image
-  - `TAG`: A version label for the image (e.g., `v1` or `latest`)
+    - `REGION`: The geographic region of your Artifact Registry (e.g., `us-central1`)
+    - `PROJECT_ID`: Your Google Cloud project ID
+    - `REPOSITORY`: The name of the Artifact Registry repository where you’re storing the image
+    - `IMAGE`: The name you’re assigning to the built image
+    - `TAG`: A version label for the image (e.g., `v1` or `latest`)
   - `.`: location of the dockerfile
 
 > [!TIP]

@@ -59,6 +59,9 @@ jobs:
         run: (exit 1)
 ```
 
+[example of ci workflow](./code/workflows/ci.yml)
+[example of cd workflow](./code/workflows/cd.yml)
+
 ## keywords
 
 - `name`: name of the workflow
@@ -67,14 +70,18 @@ jobs:
     - `branches: [<branch_name>]`: defines branches where the workflow will run on
 - `jobs`: contains jobs that will run in parallel
   - `<job_name>`: job's name
-    - `name`: job's description (used in GitHub Actions' UI)
+    - `name`: label for a step within a job (used in GitHub Actions' UI)
+    - `id`: unique identifier for a step within a job
     - `runs-on`: defines the job's runner (e.g. `ubuntu-latest`)
+    - `env`: define environment variable for runner
+      - `DATABASE_URL: ${{ secrets.DATABASE_URL }}`: set environment variable with value from github repository's secrets
     - `steps`: contains all steps in a job
       - `- name`: name of single step
         - `uses`: defines action that will be used, along with the version (e.g. `actions/checkout@v4`)
         - `with`: adds configuration options to an action
           - `<config>`: can be `env`, `go-version`, `working-directory`, etc
         - `run`: runs a shell command
+
 
 - examples of official actions:
   - `uses: actions/checkout@v4`: copies your github repo into the runner
