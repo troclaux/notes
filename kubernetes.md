@@ -54,28 +54,61 @@ TODO: organize explanation from this point below
 
 master node/control plane ensures that your applications (pods) are placed on the appropriate worker nodes
 
-- workload resources:
-  - deployment
-  - ReplicaSet (RS)
-  - StatefulSet
-  - DaemonSet
-  - jobs
-  - automatic cleanup for finished jobs
-  - CronJob
-  - Replication Controller (RC)
+### Workload Resources
+
+- Deployment
+  - most common way to manage pods
+  - ensures specified number of pod replicas are running
+  - supports rolling updates and rollbacks
+  - example: deploy a web application with 3 replicas
+- ReplicaSet (RS)
+  - maintains a stable set of replica pods
+  - usually managed by deployments
+  - ensures specified number of pods are running at all times
+- StatefulSet
+  - for applications that need stable, unique network identifiers
+  - persistent storage per pod
+  - example: databases like mongodb, mysql
+- DaemonSet
+  - ensures all nodes run a copy of a specific pod
+  - useful for node monitoring, log collection
+  - example: running a logging agent on every node
+- Jobs
+  - for one-time tasks
+  - ensures pods run to completion
+  - example: batch processing, data migration
+- CronJob
+  - creates jobs on a schedule
+  - like unix crontab
+  - example: regular backup jobs, scheduled reports
+- Replication Controller (RC)
+  - older version of replicaset
+  - being phased out in favor of replicaset
+
+### Core Resources
 
 - Services
-  - Expose pods to the network
-  - Example: A ClusterIP service routes traffic to a set of web server pods inside the cluster
+  - Provides stable networking for pods
+  - Types:
+    - ClusterIP: Internal cluster communication
+    - NodePort: Exposes port on each node
+    - LoadBalancer: External load balancer
+    - ExternalName: DNS alias
 - Deployments
-  - Define how pods should run and how many replicas you want
-  - Example: A Deployment might specify 3 replicas of your web server
+  - Declarative updates for pods
+  - Manages ReplicaSets
+  - Supports rolling updates and rollbacks
+  - Example: `replicas: 3` ensures 3 identical pods
 - ConfigMaps & Secrets
-  - Manage configuration and sensitive data
-  - Example: Store database credentials securely using Secrets
+  - ConfigMaps: Store non-sensitive configuration
+    - Example: Application settings, environment variables
+  - Secrets: Store sensitive data
+    - Example: API keys, passwords, certificates
 - Ingress
-  - Manages external access to your services
-  - Example: Configure a domain name and SSL for your web app
+  - HTTP/HTTPS routing to services
+  - SSL termination
+  - Name-based virtual hosting
+  - Example: Route traffic from example.com to specific service
 
 ## Core Concepts with Examples
 
