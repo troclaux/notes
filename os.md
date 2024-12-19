@@ -24,11 +24,38 @@
   - user interface (CLI and GUI)
   - networking
 
+> [!NOTE]
+> tcomplete linux = kernel + GNU system utilities and libraries + other management scripts + installation scripts
+
 ## basic concepts
 
 - kernel
   - the core of the OS
   - one of the first programs loaded during startup
+  - acts as a bridge between hardware and user-level applications, controlling the allocation of system resources
+  - responsible for:
+    - hardware abstraction
+    - process scheduling and management
+    - memory allocation and management
+    - file system operations (read/write)
+    - device I/O operations
+    - system calls handling
+    - interrupt handling
+    - inter-process communication (IPC)
+- GNU system utilities
+  - cp, mv, rm, mkdir, grep, sed, awk, sort, uniq, chmod, ssh, etc
+- GNU libraries
+  - glibc (GNU Clibrary)
+    - string manipulation
+    - memory management (`malloc`, `free`)
+    - math operations
+    - file I/O
+    - networking
+  - libstdc++ (GNU standard C++ library)
+  - libm (GNU math library)
+  - libutil (GNU utility library)
+  - librt (GNU real-time library)
+  - etc
 
 types of kernels and other classifications:
 - monolithic
