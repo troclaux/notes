@@ -137,3 +137,21 @@ CREATE TABLE Pedidos (
 
 CREATE INDEX idx_email ON Clientes(Email);
 ```
+
+## database schema
+
+[what is a database schema](https://www.ibm.com/topics/database-schema)
+
+> defines how data is organized within a relational database
+
+- types of database schema
+  - conceptual: high-level view using ER diagrams, without technical details
+  - logical: database-neutral tables, columns, relationships with data types and constraints
+  - physical: specific DBMS implementation with indexes, storage, and access paths
+
+## migrations
+
+> process of transforming a database from one state to another
+
+- good migrations are small, incremental and reversible
+- can be automated in continuous deployment environments
