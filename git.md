@@ -1,23 +1,29 @@
 
 # git
 
-## Jargon
+> version control system (VCS) design to track changes in files
 
-- HEAD
-  - The current branch
-- SHA-1 hash
-  - A unique identifier for a commit
-- Upstream branch
-  - The branch that the current branch is tracking
-- Downstream branch
-  - The branch that is tracking the current branch
-- Index
-  - The staging area
-- Work tree/working tree
-  - Set of files that represent your project
+- allows multiple developers to work on the same project without interfering in each others changes
+
+[github](./github.md)
+
+## jargon
+
+- branch: allow you to work on different versions of your project at the same time without mixing up new features or bug fixes until they’re ready
+- commit: snapshots of your project’s history
+  - each commit records changes to one or more files and includes a short message describing what changed
+- push: sends your local commits to github
+- pull: fetches and merges changes from github to your local machine
+- fetch: retrieves changes from github but doesn’t merge them automatically, giving you a chance to review before merging
+
+- HEAD: current branch
+- SHA-1 hash: unique identifier for a commit
+- upstream branch: branch that the current branch is tracking
+- downstream branch: branch that is tracking the current branch
+- index: staging area
+- work tree/working tree: set of files that represent your project
   - Is set up by `git init` or `git clone`
-- Main working tree
-  - when you run `git init`, git creates the main working tree
+- main working tree: when you run `git init`, git creates the main working tree
 
 ## What I learned
 
@@ -204,6 +210,46 @@ git rebase <branch2>
 *WARNING*
 - You should never rebase a public branch (like main) onto anything else. Other developers have it checked out, and if you change its history, you'll cause a lot of problems for them.
 - However, with your own branch, you can rebase onto other branches (including a public branch like main) as much as you want.
+
+## gitignore
+
+> specifies which files and directories git should ignore
+
+- files that should typically be ignored:
+  - build artifacts and compiled code
+  - dependencies and package directories
+  - environment and config files with secrets
+  - system files (.DS_Store, Thumbs.db)
+  - ide files and directories
+  - log files
+  - temporary files
+
+### examples
+
+```bash
+# Ignore single file
+secret.txt
+
+# Ignore directory
+node_modules/
+dist/
+
+# Ignore files by extension
+*.log
+*.tmp
+
+# Ignore files in any directory
+**/*.pyc
+
+# Negate ignore (don't ignore)
+!important.log
+
+# Ignore files in root only
+/config.json
+
+# Ignore files in specific directory
+logs/*.log
+```
 
 ## Questions
 
