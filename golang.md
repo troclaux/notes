@@ -1286,6 +1286,8 @@ The `math` package provides basic constants and mathematical functions for float
 
 ### net
 
+> provides a portable interface for network I/O, including TCP/IP, UDP, domain name resolution, and Unix domain sockets
+
 #### http
 
 [http](/networking.md#http-(hypertext-transfer-protocol))
@@ -1317,7 +1319,8 @@ func getItemData() ([]byte, error) {
   - `defer res.Body.Close()`: always close `body` to free system resources
 - `data, err := io.ReadAll(res.Body)`: reads the response body into a slice of bytes called `data`
 - does it reads response into a slice of bytes?
-
+- use `fmt.Errorf()` to format an error message
+  - `fmt.Errorf("error message: %w", err)`
 
 HTTP request pseudocode:
 
@@ -1433,7 +1436,6 @@ give me example of http request and response
   - buffer: in-memory queue where the bytes can be written to or read from
     - convenient way to hold and send the request body data
 
-
 ```go
 func createUser(url, apiKey string, data User) (User, error) {
 
@@ -1485,10 +1487,19 @@ func getUserCode(url string) int {
 }
 ```
 
-HTTP PUT requests
+#### HTTP PUT requests
+
+[example of HTTP PUT request](./code/golang/http.go)
 
 - unlike `GET` and `POST` there's no `http.Put` function
-- for PUT requests, create raw `http.Resquest` that an http.Client can `myClient.Do(myRequest)`
+- for PUT requests, create raw `http.Request` that an http.Client can `myClient.Do(myRequest)`
+
+1. get required data: endpoint URL, id, data that is being sent
+1. convert data into jason with `json.Marshal(data)`
+1. create new HTTP request with `http.NewRequest("PUT", fullURL, bytes.NewBuffer(jsonData))`
+1. set headers
+1. create new `http.Client` and `client.Do(req)` to execute request
+1. `defer res.Body.Close()` to close connection between client and server
 
 #### url
 
@@ -1526,6 +1537,7 @@ fmt.Println(hostname)     // homestarrunner.com
   - `func TestAdd(t *testing.T)`
 - running tests: `go test`
   - this command looks for `_test.go` files
+  - print code coverage: `go test . -cover`
 - Go doesn't come with assertion libraries built-in
   - checks results with simple conditionals and `t.Errorf()` or `t.Fatalf()`
 
@@ -1572,6 +1584,15 @@ func TestAdd(t *testing.T) {
 ### time
 ### sql
 ### csv
+
+### golang useful tools
+
+- staticcheck: linting checks
+  - install staticcheck: `go install honnef.co/go/tools/cmd/staticcheck@latest`
+  - run staticcheck: `staticcheck ./...`
+- gosec: security chacks
+  - install gosec: `go install github.com/securego/gosec/v2/cmd/gosec@latest`
+  - run gosec: `gosec ./...`
 
 ## Golang proverbs by Rob Pike
 
