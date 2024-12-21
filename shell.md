@@ -1,5 +1,7 @@
 # Shell
 
+> program that interacts with the kernel to access and manage system resources
+
 ## basic commands
 
 - `!!`: run last command
@@ -146,6 +148,11 @@ else
 fi
 ```
 
+- check if a file or directory exists: `if [ -e "path/to/your/file" ]; then`
+- check if a file exists: `if [ -f "path/to/your/file" ]; then`
+- check if a directory exists: `if [ -d "path/to/your/directory" ]; then`
+- check if a file exists and is not empty: `if [ -s "path/to/your/file" ]; then`
+
 ```bash
 if [ -d "~/.config/nvim" ]; then
   sudo chown -R $USER ~/.config/nvim/
@@ -209,6 +216,10 @@ touch eixo_5/cnu_eixo_5_mq_aula_0{3..9}.md
   - `for file in pdfs/cnu_*; do mv "$file" "pdfs/${file#pdfs/cnu_}"; done`
 
 ## zsh
+
+> [!TIP]
+> add private credentials like API keys or personal info in `~/.zshenv` as environment variables
+> `export MY_CREDENTIAL="my_email@mail.com`
 
 - list all keybindings:
   - `bindkey`
