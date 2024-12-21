@@ -297,6 +297,41 @@ Content-Length: 1024
 
 > extension of HTTP that uses encryption (via SSL/TLS) to secure the communication between the client and the server
 
+short description of HTTPS communication:
+
+1. client/browser requests server to establish initial request to establish connection
+1. server responds with public key and its digital certificate
+1. client verifies certificates and extracts public key from response
+1. browser generates symmetric key
+1. client sends encrypted symmetric key to server
+1. server decrypts symmetric key
+1. secure connection established
+1. data exchange
+
+long example of HTTPS communication:
+
+- when you enter a url in your browser, it sends an initial request to the server to establish a connection
+- the server responds with its digital certificate, which includes its public key and identity information (e.g., domain name, organization name)
+- your browser verifies the server's identity by checking the digital certificate against a trusted Certificate Authority (CA)
+  - if the certificate is valid, your browser extracts the server's public key
+- your browser generates a random symmetric key
+  - symmetric key: used for encrypting and decrypting the data exchanged between your browser and the server
+- your browser encrypts the symmetric key using the server's public key
+  - this ensures that only the server, with its corresponding private key, can decrypt the symmetric key
+- the server receives the encrypted symmetric key and decrypts it using its private key
+- both your browser and the server now have the same symmetric key, which is used to encrypt and decrypt all subsequent data exchanged between them
+- your browser and the server can now exchange data securely, using the symmetric key for encryption and decryption
+
+- the client doesn't have its own private key
+- the server has a pair of keys: a private and public key
+  - server's private key is never shared with the client or any other party
+    - it's used exclusively by the server to decrypt the symmetric key and establish a secure connection with the client
+  - public key is shared publicly through the server's digital certificate
+- the digital certificate contains:
+  - server's public key
+  - domain name
+  - other identifying information
+
 #### SSL (Secure Sockets Layer)
 
 - provides secure communication over a computer network
