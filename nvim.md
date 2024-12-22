@@ -11,6 +11,7 @@
 - use `:Ctrl+f` to navigate Vim's command history with familiar motions, such as `j` and `k`, to quickly recall and reuse previous commands
 
 - while in insert mode, use `Alt` to execute normal mode commands
+- repeat the last recorded register count times: `Q`
 
 ## registers
 
@@ -30,20 +31,19 @@
 range can be specified before most commands
 
 - line
-  - :21s/old/new/g
+  - `:21s/old/new/g`
 - last line
-  - :$s/old/new/g
+  - `:$s/old/new/g`
 - multiple lines
-  - :4, 6!wc -w
+  - `:4, 6!wc -w`
     - count all words in the 3 lines specified and replaces current line with the result
 - current line
-  - :.s/old/new/g
-  - :.!wc -w
+  - `:.s/old/new/g`
+  - `:.!wc -w`
 - current line to end
-  - :.,$s/old/new/g
+  - `:.,$s/old/new/g`
 - all lines
-  - :%s/old/new/g
-
+  - `:%s/old/new/g`
 
 ## substitute command
 
