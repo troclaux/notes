@@ -71,8 +71,9 @@ my-project/
 
 - module: collection of go packages
   - stores packages in a file tree with a go.mod file at its root
-- `package`: directory of related .go files
-  - `package main`: contains exactly 1 `main()` function, which is the entry point of the program
+  - packages in a module should have distinct names
+- package: directory of related .go files
+  - `package main`: contains exactly 1 `main.go` file, which is the entry point of the program
   - packages by other names are "library packages"
     - library package: only export functionality that can be used by other packages
       - have no entry point
@@ -933,7 +934,7 @@ func main() {
 ### anonymous functions
 
 > [!NOTE]
-> you can define an anonymous functions function inside a function signature
+> you can define an anonymous functions function inside a function signature with the `func` keyword
 
 ```go
 package main
@@ -1492,21 +1493,36 @@ func getUserCode(url string) int {
 - `http.StatusCreated` is a constant that represents the status code 201
 - `http.StatusNotFound` is a constant that represents the status code 404
 
-#### HTTP PUT requests
+#### RESTful API with HTTP requests
 
-[example of HTTP PUT request](./code/golang/example1/http.go)
+[example of API implementation](./code/golang/example1/http.go)
 
 - unlike `GET` and `POST` there's no `http.Put` function
 - for PUT requests, create raw `http.Request` that an http.Client can `myClient.Do(myRequest)`
 
+PUT implementation step by step:
+
 1. get required data: endpoint URL, id, data that is being sent
-1. convert data into jason with `json.Marshal(data)`
+1. convert data into json with `json.Marshal(data)`
 1. create new HTTP request with `http.NewRequest("PUT", fullURL, bytes.NewBuffer(jsonData))`
-1. set headers
+1. set headers for request
 1. create new `http.Client` and `client.Do(req)` to execute request
 1. `defer res.Body.Close()` to close connection between client and server
 
+[example of server](./code/golang/example2/main.go)
+
+1. creates http request multiplexer
+1. creates server object
+1. register handler functions for different paths
+1. start server and begin listening on port 8080 for requests
+
 - `http.NewServeMux`: creates new http request multiplexer (or router)
+  - multiplexer: device that combines multiple input signals into a single output signal
+    - in the context of HTTP, a multiplexer is a router that directs incoming HTTP requests to the appropriate handler
+    - server checks the `ServeMux` (`mux` in the example) to see if there's a handler for the path in the request
+-`r *http.Request`: `r` is a pointer to an `http.Request` struct
+  - `http.Request` struct contains all the information about the incoming HTTP request
+- `mux.HandleFunc("/path", func())`: registers an anonymous handler function for the given path and responds to the request
 
 #### url
 
