@@ -42,3 +42,10 @@
   - requires a multi-core system where multiple tasks can be executed simultaneously
 - asynchronous: starting a task that runs on the background without blocking the main program flow
   - means that the program performs non-blocking tasks, usually involving I/O operations
+
+- prototype-based approach to object-oriented programming:
+  - style where objects are created by cloning existing objects (prototypes) rather than instantiating classes
+    - objects can directly inherit from other objects
+    - there are no classes; instead, objects serve as prototypes for other objects
+    - new objects can be created by copying an existing object and then modifying it
+    - this allows for more flexibility and dynamic behavior compared to classical class-based oop
