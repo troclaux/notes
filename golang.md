@@ -27,10 +27,11 @@
 
 ## cli commands
 
-- `go mod init`: creates a new module
+- `go mod init github.com/troclaux/<repo-name>`: creates a new module
   - module: collection of packages
   - `package`: directory of related .go files
   - writes a new go.mod file in the current directory
+  - use the repo's URL to create a module when the project is hosted in a github repository
 - `go mod tidy`: clean up go.mod file
   - removes unused dependencies
   - add missing dependencies
@@ -1487,9 +1488,13 @@ func getUserCode(url string) int {
 }
 ```
 
+- `http.StatusOk` is a constant that represents the status code 200
+- `http.StatusCreated` is a constant that represents the status code 201
+- `http.StatusNotFound` is a constant that represents the status code 404
+
 #### HTTP PUT requests
 
-[example of HTTP PUT request](./code/golang/http.go)
+[example of HTTP PUT request](./code/golang/example1/http.go)
 
 - unlike `GET` and `POST` there's no `http.Put` function
 - for PUT requests, create raw `http.Request` that an http.Client can `myClient.Do(myRequest)`
@@ -1500,6 +1505,8 @@ func getUserCode(url string) int {
 1. set headers
 1. create new `http.Client` and `client.Do(req)` to execute request
 1. `defer res.Body.Close()` to close connection between client and server
+
+- `http.NewServeMux`: creates new http request multiplexer (or router)
 
 #### url
 
@@ -1515,7 +1522,6 @@ if err != nil {
 hostname := parsedURL.Hostname()
 fmt.Println(hostname)     // homestarrunner.com
 ```
-
 
 ### enconding
 
