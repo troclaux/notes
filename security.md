@@ -1,4 +1,13 @@
 
+- DDOS attack (Distributed Denial of Service attack)
+  - a cyberattack where multiple systems flood a target with traffic to make it unavailable
+  - overwhelms network/server resources so legitimate users can't access services
+  - uses botnets to generate massive traffic
+    - botnets: infected computers
+  - defenses:
+    - rate limiting
+    - blackholing
+
 - slowloris attack: DoS attack where malicious clients hold connections open by slowly sending HTTP headers or data
   - sends partial HTTP requests that never complete
   - ties up server's connection pool so legitimate traffic can't be handled
