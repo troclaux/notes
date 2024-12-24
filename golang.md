@@ -1509,10 +1509,11 @@ PUT implementation step by step:
 1. create new `http.Client` and `client.Do(req)` to execute request
 1. `defer res.Body.Close()` to close connection between client and server
 
-[example of server](./code/golang/example2/main.go)
+[example of server that doesn't serve files](./code/golang/example2/main.go)
+[example of static file server](./code/golang/example3/main.go)
 
-1. creates http request multiplexer
-1. creates server object
+1. create http request multiplexer
+1. create server object
 1. register handler functions for different paths
 1. start server and begin listening on port 8080 for requests
 
@@ -1523,6 +1524,25 @@ PUT implementation step by step:
 -`r *http.Request`: `r` is a pointer to an `http.Request` struct
   - `http.Request` struct contains all the information about the incoming HTTP request
 - `mux.HandleFunc("/path", func())`: registers an anonymous handler function for the given path and responds to the request
+- `mux.Handle("/", http.FileServer(http.Dir(".")))`: serves files from the current directory for root url `"/"`
+
+[example of server that serves files](./code/golang/example4/main.go)
+
+```go
+type Handler interface {
+    ServeHTTP(ResponseWriter, *Request)
+}
+```
+
+- `http.Handler` is just an interface
+- you need to strip the prefix from the file path before serving the file
+  - `mux.Handle("/app/assets/", http.StripPrefix("/app", http.FileServer(http.Dir("."))))`
+    - removes the prefix `/app` from the request URL before passing it to the handler
+      - after stripping the prefix, the request URL becomes `/assets/logo.jpeg`
+    - serves files from `./assets` directory
+- `http.FileServer(http.Dir("."))` serves files from the current directory
+- it looks for files relative to `"."` (current directory)
+- the remaining path `/assets/logo.jpeg` is used to find the file
 
 #### url
 
