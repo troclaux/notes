@@ -78,6 +78,14 @@ after running the command `:%s/old/new/c`, the prompt "replace with new (y/n/a/q
 
 # plugins
 
+## list of enabled lazyvim extras
+
+- ai.copilot    blink-cmp-copilot  copilot-cmp  copilot.lua  blink.cmp  lualine.nvim  nvim-cmp
+- ai.copilot-chat  CopilotChat.nvim  edgy.nvim
+- coding.blink  blink.cmp  friendly-snippets  blink.compat  catppuccin
+- editor.telescope  dressing.nvim  nvim-lspconfig  telescope-fzf-native.nvim  telescope.nvim
+- util.dot    mason.nvim  nvim-lspconfig  nvim-treesitter
+
 ## vim fugitive
 
 - commit amend: `ca`
