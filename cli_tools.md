@@ -85,23 +85,28 @@ wc file.txt
 
 ## sed
 
-## jq
-
 ## curl
 
-> used to transfer data using various protocols
+> transfer data from or to a server using URLs and various protocols
 
-- downloads files
-- interacts with APIs
-- tests network performance
-- can use many protocols:
-  - HTTP
-  - HTTPS
-  - FTP
-  - SCP
-  - SMTP
-  - POP3
-  - etc
+- use cases
+  - testing APIs with HTTP requests
+  - automation
+  - debugging
+  - file download
+- can use many protocols: HTTP, HTTPS, FTP, FTPS, etc
+
+example of curl command:
+
+```bash
+curl -X POST http://example.com/resource -H "Content-Type: application/json" -d '{"key1":"value1","key2":"value2"}'
+```
+
+- `-X`: specify the request method (GET, POST, PUT, DELETE)
+- `-H`: specify the request headers
+- `-d`: specify the request data
+  - URL-encoded data: `"param1=value1&param2=value2"`
+  - JSON: `'{"key1":"value1","key2":"value2"}'`
 
 ### use cases
 
@@ -133,6 +138,36 @@ curl -F "file=@/path/to/file.zip" http://example.com/upload
 
 ```bash
 curl -sL https://gist.githubusercontent.com/2KAbhishek/9c6d607e160b0439a186d4fbd1bd81df/raw/244284c0b3e40b2b67697665d2d61e537e0890fc/Shell_Keybindings.md
+```
+
+## jq
+
+> process JSON data
+
+- use cases:
+  - parse json
+  - manipulate json
+  - filter json
+
+```bash
+echo '{"name": "John", "age": 30}' | jq '.name'
+# Output: "John"
+
+echo '[{"name": "John", "age": 30}, {"name": "Jane", "age": 25}]' | jq '.[] | select(.age > 28)'
+# Output: {"name": "John", "age": 30}
+```
+
+- frequently used with curl to parse json responses from http requests
+  - e.g. `curl https://api.github.com/users/1 | jq '.name'`
+- to get a specific field in an array, use: `.[]`
+
+```bash
+echo '[{"name": "John", "email": "john@example.com"}, {"name": "Jane", "email": "jane@example.com"}]' | jq '.[].name, .[].email'
+# output:
+# "John"
+# "Jane"
+# "john@example.com"
+# "jane@example.com"
 ```
 
 ## ffmpeg
@@ -294,3 +329,15 @@ example of cron job:
 - stop a service: `sudo systemctl stop <service-name>`
 - restart a service: `sudo systemctl restart <service-name>`
 - check status of a service: `sudo systemctl status <service-name>`
+
+## sshfs
+
+> mount remove directory over SSH, makint it appear as a local directory on your system
+
+```bash
+sshfs [user@]host:[remote_dir] mountpoint
+sshfs user@remote_host:/home/user/shared /mnt/remote_share
+
+# Unmount
+fusermount -u ~/remote
+```
