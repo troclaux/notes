@@ -230,7 +230,7 @@ lean methodology for software development changes the formula:
 ## software architecture patterns
 
 - cohesion: how much elements of the module are functionally related
-- coupling: degree of interdependence between software modules
+- coupling: how dependent parts of a system are on each other
 
 > [!TIP]
 > ideal software architecture:
