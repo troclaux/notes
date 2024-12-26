@@ -271,13 +271,16 @@ rsync -av --progress --delete /mnt/backups/directory ~/backups
 to back up regularly on a specific schedule:
 
 1. edit 'crontab' file:
-  ```bash
-  crontab -e
-  ```
+
+```bash
+crontab -e
+```
+
 2. add a cron job to back up every sunday at 2 am:
-  ```bash
-  0 15 * * 0 rsync -av --delete ~/.config/nvim ~/backups
-  ```
+
+```bash
+0 15 * * 0 rsync -av --delete ~/.config/nvim ~/backups
+```
 
 to restore:
 
