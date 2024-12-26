@@ -13,7 +13,7 @@
 - APIs allow services to communicate with other services without knowing how they're implemented
 - normally they implement CRUD operations
   - Create, Read, Update, Delete
-  - RESTful apis implement http verbs: Get, Post, Put, Delete
+  - can use http verbs: Get, Post, Put, Delete
 
 - types of APIs:
   - RESTful APIs
@@ -47,7 +47,7 @@
   - server does not store any client-specific session data between requests
   - each request is independent and can be understood in isolation
 - implementation of the client and server can be created independently of one another
-- uses HTTP as underlying protocol for communication
+- does not necessarily uses HTTP as underlying protocol for communication
 
 ## 5 commandments
 
@@ -59,7 +59,6 @@
 
 - keep it simple
   - don't use complicated constructs where simple ones will do
-  - don't use a lot where a little will do 
   - one package, one idea
   - just say no
   - math is simple
