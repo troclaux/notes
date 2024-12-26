@@ -6,19 +6,18 @@ import (
 )
 
 func main() {
+	// Create a server multiplexer, which is a request router
+	// Decides which function to call based on the URL path
 	mux := http.NewServeMux()
-
-	server := &http.Server{
-		Addr:    ":8080",
-		Handler: mux,
-	}
 
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, "Hello world")
 	})
 
 	fmt.Println("Server is running on http://localhost:8080")
-	if err := server.ListenAndServe(); err != nil {
+
+	// ListenAndServe starts an HTTP server with a given address and handler
+	if err := http.ListenAndServe(":8080", mux); err != nil {
 		fmt.Println("Error starting server:", err)
 	}
 }
