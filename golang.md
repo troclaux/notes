@@ -1503,7 +1503,7 @@ func getUserCode(url string) int {
 [example of API implementation](./code/golang/example1/http.go)
 
 - unlike `GET` and `POST` there's no `http.Put` function
-- for PUT requests, create raw `http.Request` that an http.Client can `myClient.Do(myRequest)`
+- for `PUT` requests, create raw `http.Request` that an http.Client can `myClient.Do(myRequest)`
 
 PUT implementation step by step:
 
@@ -1562,11 +1562,36 @@ type Handler interface {
 
 [example of server with middleware](./code/golang/example5/main.go)
 
-http request -> middleware -> handler -> response
+request -> middleware -> handler -> response
 
 1. use `atomic.Int32` to create a counter
 1. middleware function does something before the handler
 1. handler function does something with the request
+
+- patterns: string that define which URL paths `ServeMux` should match to route HTTP requests
+  - generally look like this `[METHOD] [HOST]/[PATH]`, where all parts are optional
+    - e.g. `GET http://www.example.com/api/users`
+    - METHOD: HTTP method (e.g. `GET`, `POST`, `PUT`, `DELETE`)
+    - HOST: domain name or IP address (e.g. `http://www.example.com`)
+    - PATH: path to the resource on the server (e.g. `/api/users`)
+  - example
+    - pattern: `/app/`
+    - matches: `/app/`, `/app/img.png`, `/app/css/style.css`
+    - doesn't match: `/app`
+  - longer patterns take precedence over shorter patterns
+    - example
+      - pattern: `/` and `/app/`
+      - request: `/app/img.png`
+      - matched pattern: `/app/`, because it's longer than `/`
+  - patterns can include a hostname
+    - example
+      - pattern: `www.example.com/about`
+      - matches: `http://www.example.com/about`
+      - doesn't match: `http://api.example.com/about`
+  - think of patterns as signs on a highway:
+    - a fixed path (e.g., `/about`) is like a specific exit
+    - a subtree path (e.g., `/images/`) is like an entire district with many roads inside it
+    - the longest match rule ensures you take the most specific road available
 
 #### url
 
