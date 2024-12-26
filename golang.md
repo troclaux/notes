@@ -907,6 +907,11 @@ func main() {
   - located in the function signature, after the parameters
   - can be surrounded by parentheses (optional)
 
+> [!IMPORTANT]
+> Go doesn't allow declaring named functions inside other functions
+> instead, you can define an anonymous function inside a function signature with the `func` keyword
+> also, you can declare functions outside of the `main()` function
+
 ```go
 package main
 
@@ -1493,7 +1498,7 @@ func getUserCode(url string) int {
 - `http.StatusCreated` is a constant that represents the status code 201
 - `http.StatusNotFound` is a constant that represents the status code 404
 
-#### RESTful API with HTTP requests
+#### RESTful API
 
 [example of API implementation](./code/golang/example1/http.go)
 
@@ -1513,9 +1518,8 @@ PUT implementation step by step:
 [example of static file server](./code/golang/example3/main.go)
 
 1. create http request multiplexer
-1. create server object
-1. register handler functions for different paths
-1. start server and begin listening on port 8080 for requests
+1. program handler functions for different paths
+1. start server and listen on port for requests
 
 - `http.NewServeMux`: creates new http request multiplexer (or router)
   - multiplexer: device that combines multiple input signals into a single output signal
@@ -1528,12 +1532,6 @@ PUT implementation step by step:
 
 [example of server that serves files](./code/golang/example4/main.go)
 
-```go
-type Handler interface {
-    ServeHTTP(ResponseWriter, *Request)
-}
-```
-
 - `http.Handler` is just an interface
 - you need to strip the prefix from the file path before serving the file
   - `mux.Handle("/app/assets/", http.StripPrefix("/app", http.FileServer(http.Dir("."))))`
@@ -1543,6 +1541,32 @@ type Handler interface {
 - `http.FileServer(http.Dir("."))` serves files from the current directory
 - it looks for files relative to `"."` (current directory)
 - the remaining path `/assets/logo.jpeg` is used to find the file
+
+```go
+type Handler interface {
+    ServeHTTP(ResponseWriter, *Request)
+}
+```
+
+- `ResponseWriter` interface is used to construct an HTTP response
+  - `myResponseWriter.WriteHeader(http.StatusOK)`: sets the status code of the response
+  - `myResponseWriter.Write([]byte(fmt.Sprintf("Hits: %d", hits)))`: writes the response body
+- `Request` struct contains all the information about the incoming HTTP request
+
+- `http.Handler` vs `http.HandlerFunc`:
+  - `http.Handler` is any defined type that implements the interface above
+  - use `http.Handler` for more complex use cases, that use routers, middleware, or custom logic
+- `http.HandlerFunc` is a type that is a function with the signature `func(ResponseWriter, *Request)`
+  - `http.HandlerFunc` is a type that implements the `http.Handler` interface
+  - use `http.HandlerFunc` for simple use cases, like serving static files
+
+[example of server with middleware](./code/golang/example5/main.go)
+
+http request -> middleware -> handler -> response
+
+1. use `atomic.Int32` to create a counter
+1. middleware function does something before the handler
+1. handler function does something with the request
 
 #### url
 
