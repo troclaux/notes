@@ -13,7 +13,7 @@
     - database query finishing execution
     - timer expiring (setTimeout/setInterval)
 - asynchronous: node.js doesn't wait for operations to finish before moving on to the next operation
-  - operation: reading a file, making a HTTP request or querying a database
+  - operation: reading a file, answering a HTTP request or querying a database
   - asynchronous code is handled using callbacks, promises or async/await
 - non-blocking I/O: node.js can handle multiple operations simultaneously without waiting for each one to complete
   - when an I/O operation starts (like reading a file), node.js continues executing other code
