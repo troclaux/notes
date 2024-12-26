@@ -38,6 +38,17 @@
 
 > serverless container hosting service
 
+- purpose: run instances of docker images
+- scales automatically
+- automatically configures:
+  - load balancing
+  - DNS
+  - HTTPS
+
+- 2 types of applications
+  - service: listens and responds web requests
+  - job: task that runs to completion
+
 ## cloud build API
 
 > fully managed* CI/CD service
