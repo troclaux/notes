@@ -25,7 +25,7 @@
   - networking
 
 > [!NOTE]
-> tcomplete linux = kernel + GNU system utilities and libraries + other management scripts + installation scripts
+> complete linux = kernel + GNU system utilities and libraries + other management scripts + installation scripts
 
 ## basic concepts
 
