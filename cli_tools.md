@@ -89,6 +89,8 @@ wc file.txt
 
 > transfer data from or to a server using URLs and various protocols
 
+[curl tutorial](https://curl.se/docs/tutorial.html)
+
 - use cases
   - testing APIs with HTTP requests
   - automation
@@ -107,6 +109,20 @@ curl -X POST http://example.com/resource -H "Content-Type: application/json" -d 
 - `-d`: specify the request data
   - URL-encoded data: `"param1=value1&param2=value2"`
   - JSON: `'{"key1":"value1","key2":"value2"}'`
+
+```bash
+curl -X POST -H "Content-Type: application/json" -d '{"body": "this is a social network post"}' http://localhost:8080/api/post -w "%{http_code}"
+```
+- `-w`: print the response code
+- `%{http_code}`: print the response code
+  - `%`: format specifier
+  - `{http_code}`: built-in variable in curl that stores the response code
+
+- curl built-in variables:
+  - `http_code`: response code
+  - `http_version`: HTTP version
+  - `protocol`: protocol used
+  - `response_size`: size of the response
 
 ### use cases
 
