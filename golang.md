@@ -748,6 +748,32 @@ visibility is controlled by capitalization of the first letter:
   - packages shouldn't know about dependents
     - a package should never have specific knowledge about a particular application that uses it
 
+### visibility rules
+
+- fields and functions that start with an uppercase letter are accessible from outside the package they are defined
+- fields and functions that start with an lowercase letter are private to the package
+
+- exported fields can be accessed by external code
+  - external code: standard libraries
+- unexported fields cannot be accessed outside the package, including by standard library
+
+```go
+package main
+import "fmt"
+
+type parameters struct {
+  Name  string
+  grade string // Unexported field
+}
+
+func main() {
+  p := parameters{
+    Name:  "Alice",
+    grade: "A",
+  }
+  fmt.Println(p) // Output: {Alice A}
+}
+```
 ## modules
 
 > collection of go packages stored in a file tree with a go.mod file at its root
@@ -1615,6 +1641,8 @@ fmt.Println(hostname)     // homestarrunner.com
 [JSON](/javascript.md#json-javascript-object-notation)
 
 [json.NewDecoder.Decode vs json.Unmarshal](https://stackoverflow.com/questions/21197239/decoding-json-using-json-unmarshal-vs-json-newdecoder-decode)
+
+- 
 
 ### string
 
