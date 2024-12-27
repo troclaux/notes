@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strings"
 	"sync/atomic"
 )
 
@@ -72,13 +73,14 @@ type errorResponse struct {
 	Error string `json:"error"`
 }
 
+type chirp struct {
+	Body string `json:"body"`
+}
+
 func chirpHandler(w http.ResponseWriter, r *http.Request) {
 	// set headers
 	w.Header().Set("Content-Type", "application/json")
 	// create struct to store the post
-	type chirp struct {
-		Body string `json:"body"`
-	}
 	// decode the request body
 	decoder := json.NewDecoder(r.Body)
 	// initialize a post struct
@@ -98,12 +100,24 @@ func chirpHandler(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(errorResponse{Error: "Chirp is too long"})
 		return
 	}
-	type validResponse struct {
-		Valid bool `json:"valid"`
+
+	lowercaseText := strings.ToLower(post.Body)
+	lowercaseWords := strings.Split(lowercaseText, " ")
+	filteredWords := strings.Split(post.Body, " ")
+	for i, lowercaseWord := range lowercaseWords {
+		if lowercaseWord == "kerfuffle" || lowercaseWord == "sharbert" || lowercaseWord == "fornax" {
+			filteredWords[i] = "****"
+			continue
+		}
 	}
-	fmt.Println(post.Body)
+	filteredText := strings.Join(filteredWords, " ")
+
+	type cleaned_response struct {
+		Cleaned_body string `json:"cleaned_body"`
+	}
+	fmt.Println(filteredText)
 	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(validResponse{Valid: true})
+	json.NewEncoder(w).Encode(cleaned_response{Cleaned_body: filteredText})
 	return
 }
 
