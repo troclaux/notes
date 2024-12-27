@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"sync/atomic"
@@ -29,11 +30,20 @@ func (cfg *apiConfig) metricsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	// load the current value of the fileserverHits counter
 	hits := cfg.fileserverHits.Load()
-	w.Header().Add("Content-Type", "text/plain; charset=utf-8")
+	w.Header().Add("Content-Type", "text/html; charset=utf-8")
 	// write status code in the response
 	w.WriteHeader(http.StatusOK)
 	// write the current value of the fileserverHits counter in the response
-	w.Write([]byte(fmt.Sprintf("Hits: %d", hits)))
+	htmlContent := fmt.Sprintf(`
+	<html>
+		<body>
+			<h1>Welcome, Chirpy Admin</h1>
+			<p>Chirpy has been visited %d times!</p>
+		</body>
+	</html>
+	`, hits)
+
+	w.Write([]byte(htmlContent))
 }
 
 // resetHandler resets the fileserverHits counter to 0
@@ -58,6 +68,45 @@ func readinessHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("OK"))
 }
 
+type errorResponse struct {
+	Error string `json:"error"`
+}
+
+func chirpHandler(w http.ResponseWriter, r *http.Request) {
+	// set headers
+	w.Header().Set("Content-Type", "application/json")
+	// create struct to store the post
+	type chirp struct {
+		Body string `json:"body"`
+	}
+	// decode the request body
+	decoder := json.NewDecoder(r.Body)
+	// initialize a post struct
+	post := chirp{}
+	// decode the request body into the post struct
+	// the post struct will store the post in post.Body if no error occurs
+	err := decoder.Decode(&post)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	if len(post.Body) > 140 {
+		// write the status code 400 in the response
+		w.WriteHeader(http.StatusBadRequest)
+		// write the error message in the response
+		// errorResponse struct is used to format the error message in JSON
+		json.NewEncoder(w).Encode(errorResponse{Error: "Chirp is too long"})
+		return
+	}
+	type validResponse struct {
+		Valid bool `json:"valid"`
+	}
+	fmt.Println(post.Body)
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(validResponse{Valid: true})
+	return
+}
+
 func main() {
 
 	mux := http.NewServeMux()
@@ -69,8 +118,9 @@ func main() {
 	// wrap the file server with the middlewareMetricsInc middleware
 	mux.Handle("/app/", apiCfg.middlewareMetricsInc(http.StripPrefix("/app", fileServer)))
 
-	mux.HandleFunc("POST /api/reset", apiCfg.resetHandler)
-	mux.HandleFunc("GET /api/metrics", apiCfg.metricsHandler)
+	mux.HandleFunc("POST /admin/reset", apiCfg.resetHandler)
+	mux.HandleFunc("GET /admin/metrics", apiCfg.metricsHandler)
+	mux.HandleFunc("POST /api/validate_chirp", chirpHandler)
 	mux.HandleFunc("GET /api/healthz", readinessHandler)
 
 	fmt.Println("Server is running on http://localhost:8080")
