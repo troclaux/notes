@@ -5,4 +5,4 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-./code/golang/example5/.env
+code/golang/example5/.env
