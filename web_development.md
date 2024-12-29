@@ -10,15 +10,26 @@
 - infrastructure: where you deploy, store and run your application code
 - scalability: how your application adapts as your team, data and traffic grow
 
-- client: software that requests and receives data/services from a server over a network (usually the internet)
-  - e.g., web browsers, mobile apps
-- server: computer program/device that provides data/services to clients over a network (usually the internet)
-  - e.g., web servers, database servers, file servers
-  - web server: handles mainly http requests
-    - static file server: web server that serves files from the host machine
-      - serves html, css, js, images, etc.
-  - dynamic web server: web server that generates different content for different users
-    - e.g., based on user input, user authentication, etc
+- client-side vs server-side: describes where web application code runs
+  - client: hardware or software that requests and consumes resources/services from a server
+    - resource: digital asset or data that a client can request from a server
+    - initiates communication and requests resources
+    - e.g. web browsers, mobile apps
+    - responsible for:
+      - displaying information for users
+      - capturing user input
+      - making http requests to the server to fetch or send data
+  - server: hardware or software that provides resources/services to clients over a network (usually the internet)
+    - waits for requests and provides responses
+    - e.g. web servers
+    - responsible for:
+      - processing client requests
+      - reading/writing data to a database or external API
+      - sending responses back to the client
+    - static web server: web server that serves files that are stored on disk
+      - e.g. HTML, CSS, JS files
+    - dynamic web server: web server that generates content on the fly
+      - e.g. based on user input, user authentication, etc
 
 - service: functionality or resource that a service provides to an client upon request
 
