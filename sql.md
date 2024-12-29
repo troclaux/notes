@@ -1,9 +1,26 @@
 [databases](./databases.md)
 [postgresql](./postgresql.md)
 
-[ER model cardinality explained with examples](https://www.gleek.io/blog/er-model-cardinality)
+# SQL (Structured Query Language)
 
-# SQL
+> standard language for accessing and manipulating databases
+
+> [!IMPORTANT]
+> although SQL is an ANSI/ISO standard, there are different versions of the SQL language
+> most of the SQL database programs also have their own proprietary extensions in addition to the SQL standard
+> each database uses its own variation of SQL
+
+- basic operations:
+  - execute queries against a database
+  - retrieve data from a database
+  - insert records in a database
+  - update records in a database
+  - delete records from a database
+  - create new databases
+  - create new tables in a database
+  - create stored procedures in a database
+  - create views in a database
+  - set permissions on tables, procedures, and views
 
 order of operations in SQL query:
 
@@ -72,6 +89,17 @@ FROM => WHERE => GROUP BY => HAVING => SELECT => ORDER BY => LIMIT
 - `ALTER table`: modify existing table in the database
 - `DROP table`: delete a table and its data from the database
 - `TRUNCATE table`: delete all rows from a table without deleting the table itself
+
+> [!WARNING]
+> when creating a table, the last attribute should not have a comma after it, just like in the example below
+
+```sql
+CREATE TABLE Customers (
+    CustomerID INT PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    Email VARCHAR(100) UNIQUE
+);
+```
 
 - `CREATE database`: create new database
 - `DROP database`: delete a database and all its contents
@@ -297,6 +325,11 @@ RENAME TO contractors;
 ```sql
 ALTER TABLE employees
 ADD birthdate DATE;
+```
+
+```sql
+INSERT INTO employees (name, age, is_manager, salary)
+VALUES ('John Doe', 30, true, 50000);
 ```
 
 ```sql
