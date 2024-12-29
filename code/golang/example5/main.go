@@ -5,11 +5,13 @@ import (
 	"encoding/json"
 	"example5/internal/database"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"strings"
 	"sync/atomic"
 
+	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
 
@@ -17,6 +19,7 @@ type apiConfig struct {
 	// atomic.Int32 is a type that provides atomic operations for int32 values
 	fileserverHits  atomic.Int32
 	databaseQueries *database.Queries
+	platform        string
 }
 
 // middlewareMetricsInc increments the fileserverHits counter for each request
@@ -30,7 +33,7 @@ func (cfg *apiConfig) middlewareMetricsInc(next http.Handler) http.Handler {
 }
 
 // metricsHandler returns the current value of the fileserverHits counter
-func (cfg *apiConfig) metricsHandler(w http.ResponseWriter, r *http.Request) {
+func (cfg *apiConfig) handleMetrics(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		w.WriteHeader(http.StatusMethodNotAllowed)
 		return
@@ -54,9 +57,13 @@ func (cfg *apiConfig) metricsHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 // resetHandler resets the fileserverHits counter to 0
-func (cfg *apiConfig) resetHandler(w http.ResponseWriter, r *http.Request) {
+func (cfg *apiConfig) handleReset(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		w.WriteHeader(http.StatusMethodNotAllowed)
+		return
+	}
+	if cfg.platform != "dev" {
+		w.WriteHeader(http.StatusForbidden)
 		return
 	}
 	// reset the fileserverHits counter to 0
@@ -65,7 +72,7 @@ func (cfg *apiConfig) resetHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-func readinessHandler(w http.ResponseWriter, r *http.Request) {
+func handleReadiness(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		w.WriteHeader(http.StatusMethodNotAllowed)
 		return
@@ -83,18 +90,15 @@ type chirp struct {
 	Body string `json:"body"`
 }
 
-func chirpHandler(w http.ResponseWriter, r *http.Request) {
+func handleChirp(w http.ResponseWriter, r *http.Request) {
 	// set headers
 	w.Header().Set("Content-Type", "application/json")
-	// create struct to store the post
-	// decode the request body
+	// creates new JSON decoder that will read from the request body
 	decoder := json.NewDecoder(r.Body)
 	// initialize a post struct
 	post := chirp{}
-	// decode the request body into the post struct
-	// the post struct will store the post in post.Body if no error occurs
-	err := decoder.Decode(&post)
-	if err != nil {
+	// attempts to decode json from the request body and stores data into the struct
+	if err := decoder.Decode(&post); err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -129,6 +133,11 @@ func chirpHandler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
 	// establishes a connection pool to the database that manages multiple connections
 	// the connection string is stored in the DB_URL environment variable
 	dbURL := os.Getenv("DB_URL")
@@ -140,19 +149,23 @@ func main() {
 
 	dbQueries := database.New(db)
 
+	// creates new http request multiplexer
 	mux := http.NewServeMux()
 
-	apiCfg := &apiConfig{databaseQueries: dbQueries}
+	// instantiate struct with request counter and connection pool
+	apiCfg := &apiConfig{databaseQueries: dbQueries, platform: os.Getenv("PLATFORM")}
 
+	// serves files to the client from the defined path
 	fileServer := http.FileServer(http.Dir("."))
 
 	// wrap the file server with the middlewareMetricsInc middleware
 	mux.Handle("/app/", apiCfg.middlewareMetricsInc(http.StripPrefix("/app", fileServer)))
 
-	mux.HandleFunc("POST /admin/reset", apiCfg.resetHandler)
-	mux.HandleFunc("GET /admin/metrics", apiCfg.metricsHandler)
-	mux.HandleFunc("POST /api/validate_chirp", chirpHandler)
-	mux.HandleFunc("GET /api/healthz", readinessHandler)
+	mux.HandleFunc("POST /admin/reset", apiCfg.handleReset)
+	mux.HandleFunc("GET /admin/metrics", apiCfg.handleMetrics)
+	mux.HandleFunc("POST /api/validate_chirp", handleChirp)
+	mux.HandleFunc("POST /api/users", apiCfg.handleUser)
+	mux.HandleFunc("GET /api/healthz", handleReadiness)
 
 	fmt.Println("Server is running on http://localhost:8080")
 
