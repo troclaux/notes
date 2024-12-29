@@ -1,10 +1,13 @@
-
-# databases
-
 [sql](./sql.md)
 [postgresql](./postgresql.md)
 
-### ER Diagram
+# databases
+
+> collection of data that is organized so that it can be easily accessed, managed, and updated
+
+## ER Diagram
+
+[ER model cardinality explained with examples](https://www.gleek.io/blog/er-model-cardinality)
 
 - strong entity: rectangle/square
   - can be uniquely identified by its own attributes without relying on other entity
@@ -27,8 +30,7 @@
     - disjoint: entities in superclass can only be instance of one subclass
     - overlapped: entities in superclass can instances of multiples subclasses simultaneously
 
-
-#### crow's notation
+### crow's notation
 
 - relationships are bidirected
 - there are symbols on both sides that represent min:max cardinality
@@ -42,13 +44,13 @@
 - `--------||` = 1:1 (one and exactly one)
 - `--------|<` = 1:n
 
-#### chen notation
+### chen notation
 
 - `[ student ] 1----<has>---1 [ seat ]`
   - one student can have maximum of 1 seat
   - one seat belongs to maximum of 1 student
 
-#### barker notation
+### barker notation
 
 - `#`: primary key
 - `*` or `·`: obligatory attribute
@@ -77,7 +79,7 @@
                                            +------------+
 ```
 
-### Class diagram
+## Class diagram
 
 - cardinality symbols
   - how to read class diagrams:
@@ -94,48 +96,50 @@
 
 ## theory
 
-- SGBD: Sistema Geral de Banco de Dados
-- SBD: Sistema de Banco de Dados
-- SBD = SGBD + BD
+- DBS: Database System
+- DBMS: Database Management System
+  - e.g. MySQL, PostgreSQL, sqlite
+- DB: Database
+- DBS = DBMS + DB
 
-- três categorias de modelos de dados:
-  - conceituais (alto nível)
-    - diagrama Entidade-Relacionamento (ER)
-    - usuários típicos: analistas de negócios, designers
-    - registra quais dados são registrados, mas não como
-  - lógicos (representativos)
-    - modelo lógico de dados
-    - usuários típicos: desenvolvedores, DBAs
-  - físicos (baixo nível)
-    - modelo físico de dados
-    - usuários típicos: administradores de banco de dados
+- categories of data models:
+  - conceptual (high level)
+    - Entity-Relationship (ER) diagram
+    - typical users: business analysts, designers
+    - records what data is stored, but not how
+  - logical (representative)
+    - logical data model
+    - typical users: developers, DBAs
+  - physical (low level)
+    - physical data model
+    - typical users: database administrators
 
-Modelo Lógico de Dados para um Sistema de Vendas:
+example of logical data model:
 
-| Tabela   | Colunas |
-| --- | --- |
-| Clientes | ClienteID (INT, PK), Nome (VARCHAR), Email (VARCHAR)|
-| Pedidos  | PedidoID (INT, PK), ClienteID (INT, FK), Data (DATE)|
-| Produtos | ProdutoID (INT, PK), NomeProduto (VARCHAR), Preço (DECIMAL)|
-| ItensPedido | ItemID (INT, PK), PedidoID (INT, FK), ProdutoID (INT, FK), Quantidade (INT) |
+| Table       | Columns                                            |
+|-------------|--------------------------------------------------|
+| Customers   | CustomerID (INT, PK), Name (VARCHAR), Email (VARCHAR) |
+| Orders      | OrderID (INT, PK), CustomerID (INT, FK), OrderDate (DATE) |
+| Products    | ProductID (INT, PK), ProductName (VARCHAR), Price (DECIMAL) |
+| OrderItems  | ItemID (INT, PK), OrderID (INT, FK), ProductID (INT, FK), Quantity (INT) |
 
-Modelo Físico de Dados para um DBMS Relacional (e.g., MySQL):
+example of Physical Data Model for a Relational DBMS:
 
 ```sql
-CREATE TABLE Clientes (
-    ClienteID INT PRIMARY KEY,
-    Nome VARCHAR(100) NOT NULL,
+CREATE TABLE Customers (
+    CustomerID INT PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
     Email VARCHAR(100) UNIQUE
 );
 
-CREATE TABLE Pedidos (
-    PedidoID INT PRIMARY KEY,
-    ClienteID INT,
-    Data DATE,
-    FOREIGN KEY (ClienteID) REFERENCES Clientes(ClienteID)
+CREATE TABLE Orders (
+    OrderID INT PRIMARY KEY,
+    CustomerID INT,
+    OrderDate DATE,
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
 );
 
-CREATE INDEX idx_email ON Clientes(Email);
+CREATE INDEX idx_email ON Customers(Email);
 ```
 
 ## database schema
@@ -155,3 +159,6 @@ CREATE INDEX idx_email ON Clientes(Email);
 
 - good migrations are small, incremental and reversible
 - can be automated in continuous deployment environments
+
+- up migration: change database to new state
+- down migration: revert database to previous state
