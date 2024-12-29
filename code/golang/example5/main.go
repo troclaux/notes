@@ -1,16 +1,22 @@
 package main
 
 import (
+	"database/sql"
 	"encoding/json"
+	"example5/internal/database"
 	"fmt"
 	"net/http"
+	"os"
 	"strings"
 	"sync/atomic"
+
+	_ "github.com/lib/pq"
 )
 
 type apiConfig struct {
 	// atomic.Int32 is a type that provides atomic operations for int32 values
-	fileserverHits atomic.Int32
+	fileserverHits  atomic.Int32
+	databaseQueries *database.Queries
 }
 
 // middlewareMetricsInc increments the fileserverHits counter for each request
@@ -123,9 +129,20 @@ func chirpHandler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 
+	// establishes a connection pool to the database that manages multiple connections
+	// the connection string is stored in the DB_URL environment variable
+	dbURL := os.Getenv("DB_URL")
+	db, err := sql.Open("postgres", dbURL)
+	if err != nil {
+		println("Error connecting to database")
+	}
+	defer db.Close()
+
+	dbQueries := database.New(db)
+
 	mux := http.NewServeMux()
 
-	apiCfg := &apiConfig{}
+	apiCfg := &apiConfig{databaseQueries: dbQueries}
 
 	fileServer := http.FileServer(http.Dir("."))
 
