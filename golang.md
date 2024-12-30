@@ -247,23 +247,23 @@ package main
 import "fmt"
 
 type Person struct {
-    name string
-    age  int
+  name string
+  age  int
 }
 
 func main() {
-    p := Person{"John", 20}
+  p := Person{"John", 20}
 
-    // Type assertion to get the Person struct
-    fmt.Println(p.name) // Output: John
+  // Type assertion to get the Person struct
+  fmt.Println(p.name) // Output: John
 
-    // simpler example
-    var x interface{} = "hello"
+  // simpler example
+  var x interface{} = "hello"
 
-    value, isType := x.(string)  // Type assertion
-    if isType {
-        fmt.Println(value)       // Output: hello
-    }
+  value, isType := x.(string)  // Type assertion
+  if isType {
+    fmt.Println(value)       // Output: hello
+  }
 }
 ```
 
@@ -272,11 +272,11 @@ use type switch for multiple type assertions:
 ```go
 switch v := num.(type) {
 case int:
-    fmt.Printf("%T\n", v)
+  fmt.Printf("%T\n", v)
 case string:
-    fmt.Printf("%T\n", v)
+  fmt.Printf("%T\n", v)
 default:
-    fmt.Printf("%T\n", v)
+  fmt.Printf("%T\n", v)
 }
 ```
 
@@ -292,9 +292,9 @@ package main
 import "fmt"
 
 func main() {
-    type Numeric int
-    var num Numeric = 2
-    fmt.Printf("%T", num)     // Output: main.Numeric
+  type Numeric int
+  var num Numeric = 2
+  fmt.Printf("%T", num)     // Output: main.Numeric
 }
 ```
 
@@ -312,17 +312,17 @@ type Weekday int
 
 // Define an enumeration for weekdays
 const (
-    Sunday Weekday = iota  // iota starts at 0
-    Monday
-    Tuesday
-    Wednesday
-    Thursday
-    Friday
-    Saturday
+  Sunday Weekday = iota  // iota starts at 0
+  Monday
+  Tuesday
+  Wednesday
+  Thursday
+  Friday
+  Saturday
 )
 
 func main() {
-    fmt.Println(Sunday, Monday, Tuesday)  // Output: 0 1 2
+  fmt.Println(Sunday, Monday, Tuesday)  // Output: 0 1 2
 }
 ```
 
@@ -362,30 +362,30 @@ package main
 import "fmt"
 
 func main() {
-    rect := Rectangle{Width: 5, Height: 3}
-    fmt.Printf("Rectangle Area: %.2f\n", rect.Area())
-    fmt.Printf("Rectangle Perimeter: %.2f\n", rect.Perimeter())
+  rect := Rectangle{Width: 5, Height: 3}
+  fmt.Printf("Rectangle Area: %.2f\n", rect.Area())
+  fmt.Printf("Rectangle Perimeter: %.2f\n", rect.Perimeter())
 }
 
 type Shape interface {
-    Area() float64
-    Perimeter() float64
+  Area() float64
+  Perimeter() float64
 }
 
 // Define a struct for a Rectangle
 type Rectangle struct {
-    Width  float64
-    Height float64
+  Width  float64
+  Height float64
 }
 
 // Implement the Area method for Rectangle
 func (r Rectangle) Area() float64 {
-    return r.Width * r.Height
+  return r.Width * r.Height
 }
 
 // Implement the Perimeter method for Rectangle
 func (r Rectangle) Perimeter() float64 {
-    return 2 * (r.Width + r.Height)
+  return 2 * (r.Width + r.Height)
 }
 ```
 
@@ -653,14 +653,14 @@ declaring an empty matrix:
 
 ```go
 func createMatrix(rows, cols int) [][]int {
-    matrix := make([][]int, rows)
-    for i := 0; i < rows; i++ {
-        matrix[i] = make([]int, cols)
-        for j := 0; j < cols; j++ {
-            matrix[i][j] = i * j
-        }
+  matrix := make([][]int, rows)
+  for i := 0; i < rows; i++ {
+    matrix[i] = make([]int, cols)
+    for j := 0; j < cols; j++ {
+      matrix[i][j] = i * j
     }
-    return matrix
+  }
+  return matrix
 }
 ```
 
@@ -802,27 +802,24 @@ func main() {
 
 ```go
 struct {
-    *byte   // pointer to the first byte of the string
-    int     // length of the string
+  *byte   // pointer to the first byte of the string
+  int     // length of the string
 }
 ```
-
 
 - concatenate strings with `+`
   - `str1 := str2 + str3`
 
 ```go
-
 package main
 
 import "fmt"
 
 func main() {
-	var str1 string = "hello"
-	var str2 string = " world"
-	fmt.Println(str1 + str2)
+  var str1 string = "hello"
+  var str2 string = " world"
+  fmt.Println(str1 + str2)
 }
-
 ```
 
 ## if else
@@ -973,14 +970,14 @@ package main
 import "fmt"
 
 func main() {
-    // Anonymous function
-    add := func(a, b int) int {
-        return a + b
-    }
+  // Anonymous function
+  add := func(a, b int) int {
+    return a + b
+  }
 
-    // Call the anonymous function
-    result := add(5, 3)
-    fmt.Println(result) // Output: 8
+  // Call the anonymous function
+  result := add(5, 3)
+  fmt.Println(result) // Output: 8
 }
 ```
 
@@ -1005,11 +1002,11 @@ package main
 import "fmt"
 
 func main() {
-    var x int = 5
-    var p *int = &x
-    fmt.Println(*p) // Output: 5
-    *p = 10
-    fmt.Println(x) // Output: 10
+  var x int = 5
+  var p *int = &x
+  fmt.Println(*p) // Output: 5
+  *p = 10
+  fmt.Println(x) // Output: 10
 }
 ```
 
@@ -1148,11 +1145,11 @@ c <- "let's get started" // blocks
 ```go
 select {
 case i, ok := <-chInts:
-    fmt.Println(i)
+  fmt.Println(i)
 case s, ok := <-chStrings:
-    fmt.Println(s)
+  fmt.Println(s)
 default:
-    fmt.Println("this runs immediately if there's no values in all channels")
+  fmt.Println("this runs immediately if there's no values in all channels")
 }
 ```
 
@@ -1329,20 +1326,20 @@ The `math` package provides basic constants and mathematical functions for float
 package main
 
 import (
-    "fmt"
-    "io"
-    "net/http"
+  "fmt"
+  "io"
+  "net/http"
 )
 
 func getItemData() ([]byte, error) {
-    res, err := http.Get("https://example.com")
-    if err != nil {
-            return nil, fmt.Errorf("error creating request: %w", err)
-    }
-    defer res.Body.Close()
+  res, err := http.Get("https://example.com")
+  if err != nil {
+     return nil, fmt.Errorf("error creating request: %w", err)
+  }
+  defer res.Body.Close()
 
-    data, err := io.ReadAll(res.Body)
-    return data, err
+  data, err := io.ReadAll(res.Body)
+  return data, err
 }
 ```
 
@@ -1367,21 +1364,23 @@ HTTP request pseudocode:
 
 ```go
 func getUsers(url string) ([]User, error) {
-    res, err := http.Get(url)
-    if err != nil {
-        return nil, err
-    }
-    decoder := json.NewDecoder(res.Body)
-    var users []User
-    if err := decoder.Decode(&users); err != nil {
-        fmt.Println("error decoding response body")
-    }
-    return users, nil
+  res, err := http.Get(url)
+  if err != nil {
+    return nil, err
+  }
+  decoder := json.NewDecoder(res.Body)
+  var users []User
+  if err := decoder.Decode(&users); err != nil {
+    fmt.Println("error decoding response body")
+  }
+  return users, nil
 }
 ```
 
 - use `json.NewDecoder.Decode` when there's an `io.Writer` or `io.Reader`
   - when in doubt, use `json.NewDecoder.Decode`
+  - how does `json.NewDecoder.Decode` knows which fields to store decoded json data?
+    - json decoder reads `{ "body": "Hello world" }`, goes to the go struct, sees `json:"body"` and knows where to store the json data
 - use `json.Unmarshal` when there's a `[]byte` slice
 
 - use `enconding/json` package to map JSON fields to struct fields
@@ -1402,16 +1401,16 @@ price (JSON) => Item.Price float64 (Golang)
 
 ```go
 type Item struct {
-    ID    int    `json:"id"`
-    Name  string `json:"name"`
-    Price float64 `json:"price"`
+  ID    int    `json:"id"`
+  Name  string `json:"name"`
+  Price float64 `json:"price"`
 }
 
 var items []Item
 decoder := json.NewDecoder(res.Body)      // res is a successful `http.Response`
 if err := decoder.Decode(&items); err != nil {
-    fmt.Println("error decoding response body")
-    return
+  fmt.Println("error decoding response body")
+  return
 }
 ```
 
@@ -1472,38 +1471,38 @@ give me example of http request and response
 ```go
 func createUser(url, apiKey string, data User) (User, error) {
 
-    // encode the data as json
-    jsonData, err := json.Marshal(data)
-    if err != nil {
-        return User{}, err
-    }
+  // encode the data as json
+  jsonData, err := json.Marshal(data)
+  if err != nil {
+    return User{}, err
+  }
 
-    // create new request
-    req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
-    if err != nil {
-        return User{}, err
-    }
+  // create new request
+  req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+  if err != nil {
+    return User{}, err
+  }
 
-    // set request headers
-    req.Header.Set("Content-Type", "application/json")
-    req.Header.Set("X-API-Key", apiKey)
+  // set request headers
+  req.Header.Set("Content-Type", "application/json")
+  req.Header.Set("X-API-Key", apiKey)
 
-    // create new client and make the request
-    client := &http.Client{}
-    res, err := client.Do(req)
+  // create new client and make the request
+  client := &http.Client{}
+  res, err := client.Do(req)
 
-    if err != nil {
-        return User{}, err
-    }
-    defer res.Body.Close()
+  if err != nil {
+    return User{}, err
+  }
+  defer res.Body.Close()
 
-    var user User
-    decoder := json.NewDecoder(res.Body)
-    err = decoder.Decode(&user)
-    if err != nil {
-        return User{}, err
-    }
-    return user, nil
+  var user User
+  decoder := json.NewDecoder(res.Body)
+  err = decoder.Decode(&user)
+  if err != nil {
+    return User{}, err
+  }
+  return user, nil
 }
 ```
 
@@ -1624,14 +1623,14 @@ request -> middleware -> handler -> response
 > package that parses URL
 
 ```go
-parsedURL, err := url.Parse("https://homestarrunner.com/toons")
+parsedURL, err := url.Parse("https://cartoonwebsite.com/toons")
 if err != nil {
-    fmt.Println("error parsing url:", err)
-    return
+  fmt.Println("error parsing url:", err)
+  return
 }
 
 hostname := parsedURL.Hostname()
-fmt.Println(hostname)     // homestarrunner.com
+fmt.Println(hostname)     // cartoonwebsite.com
 ```
 
 ### enconding
@@ -1642,7 +1641,9 @@ fmt.Println(hostname)     // homestarrunner.com
 
 [json.NewDecoder.Decode vs json.Unmarshal](https://stackoverflow.com/questions/21197239/decoding-json-using-json-unmarshal-vs-json-newdecoder-decode)
 
-- 
+- `json.NewDecoder(input)`: creates new JSON decoder that will read from the input
+- `json.NewDecoder(r.Body).Decode(&post)`: decodes the json data from the `decoder` into `post` struct
+- `json.NewEncoder(w).Encode(User{key: value})`: encodes `User` struct as json and writes it to the http response `w`
 
 ### string
 
@@ -1662,11 +1663,11 @@ fmt.Println(hostname)     // homestarrunner.com
 
 ```go
 func TestAdd(t *testing.T) {
-    result := Add(2, 3)
-    expected := 5
-    if result != expected {
-        t.Errorf("Add(2, 3) = %d; want %d", result, expected)
-    }
+  result := Add(2, 3)
+  expected := 5
+  if result != expected {
+    t.Errorf("Add(2, 3) = %d; want %d", result, expected)
+  }
 }
 ```
 - common pattern in go is to use table-driven tests
@@ -1675,24 +1676,24 @@ func TestAdd(t *testing.T) {
 
 ```go
 func TestAdd(t *testing.T) {
-    tests := []struct {
-        name     string
-        a, b     int
-        expected int
-    }{
-        {"both positive", 2, 3, 5},
-        {"one negative", -2, 3, 1},
-        {"both negative", -2, -3, -5},
-    }
+  tests := []struct {
+    name     string
+    a, b     int
+    expected int
+  }{
+    {"both positive", 2, 3, 5},
+    {"one negative", -2, 3, 1},
+    {"both negative", -2, -3, -5},
+  }
 
-    for _, tt := range tests {
-        t.Run(tt.name, func(t *testing.T) {
-            result := Add(tt.a, tt.b)
-            if result != tt.expected {
-                t.Errorf("Add(%d, %d) = %d; want %d", tt.a, tt.b, result, tt.expected)
-            }
-        })
-    }
+  for _, tt := range tests {
+    t.Run(tt.name, func(t *testing.T) {
+      result := Add(tt.a, tt.b)
+      if result != tt.expected {
+        t.Errorf("Add(%d, %d) = %d; want %d", tt.a, tt.b, result, tt.expected)
+      }
+    })
+  }
 }
 ```
 
