@@ -1,11 +1,14 @@
 
 # data structures
 
-- when adding or removing elements, update the data structure's size accordingly
-- when adding elements, update the references on the previous element
-- when removing elements
-  - update the references on the next element
-  - check if data structure is empty and raise error if necessary
+> organized way to store, manage and retrieve data efficiently in a computer so that it can be used effectively
+
+- remember when implementing data structures:
+  - when adding or removing elements, update the data structure's size/length accordingly
+  - when adding elements, update the references on the previous element
+  - when removing elements
+    - update the references on the next element
+    - check if data structure is empty and raise error if necessary
 
 ## linked list
 
@@ -27,24 +30,32 @@
 
 - FIFO: First In First Out
 
-basic methods:
-- queue.push(item): adds an item to the tail of the queue (index 0 of list)
-- queue.pop(): removes and returns an item from the head of the queue (last index of list)
-- queue.peek(): returns an item from the head of the queue
-- queue.size(): returns the number of items in the queue
+- basic operations:
+  - `queue.push(item)`: adds an item to the tail of the queue (index 0 of list)
+  - `queue.pop()`: removes and returns an item from the head of the queue (last index of list)
+  - `queue.peek()`: returns an item from the head of the queue
+  - `queue.size()`: returns the number of items in the queue
 
 ### priority queue
 
-- retrieves elements based on their priority
-- elements are ordered based on their priority
-- highest priority element is removed first
+> data structure where each element has a priority value that determines its processing order
+
+- elements with higher priority are processed before elements with lower priority
+- typically implemented using a heap data structure
+
+- basic operations:
+  - `enqueue(element, priority)`: add element with given priority
+  - `dequeue()`: remove and return highest-priority element
+  - `peek()`: view highest-priority element without removing it
+  - `is_empty()`: check if queue is empty
 
 ## stack
 
 - LIFO: Last In First Out
 
-- `push()`/`append()`: add element to top of stack
-- `pop()`: remove element from top of stack
+- basic operations:
+  - `push()`/`append()`: add element to top of stack
+  - `pop()`: remove element from top of stack
 
 ## hash table
 
@@ -62,56 +73,75 @@ basic methods:
 - path: a sequence of edges that leads from one node to another
 - cycle: path where the starting node is the same as the ending node, and no other nodes are repeated
 - order: the total number of vertices in the graph
-
-<!--adjacency matrix-->
+- adjacency matrix: 2D array representation of a graph
+  - size: n x n where n is number of vertices
+  - `matrix[i][j]` = 1 if there is an edge from vertex i to j
+  - `matrix[i][j]` = 0 if there is no edge
+  - for undirected graphs, matrix is symmetric
 
 ## trees
 
-- height: the number of elements from the root to the deepest branch
+> hierarchical data structure composed by nodes, where each node has a value and may have child nodes
+
+- node: stores data and link to children if they exist
+  - root: topmost node of a tree
+    - has no parent
+  - leaf: a node without children
+  - parent: node that has a child node
+  - children: node that has a parent node
+- edge: connection between two nodes (parent to child)
+- subtree: part of a tree, starting at a node and including its descendants
+- height of a tree: the number of edges between the root to the deepest leaf
   - if a tree has only one element, its height is 1
+- depth of a node: number of edges from the root to the node
 - level: the 'floor' of a node
   - the root has level 0
   - direct children of the root have level 1
   - grandchildren of the root have level 2, and so on
-- degree: the number of children each node can have
+- degree: the number of children a node has
   - binary trees have a maximum degree of 2
 
+### vertex removal pseudocode
 
-TODO
-vertex removal:
-- leaf node: remove the node
-- node with one child: remove the node and connect the child to the parent of the removed node
-- node with two children: remove the node and replace it with the smallest node in the right subtree
+- if vertex has no children:
+  - remove vertex
+  - update parent's reference to null
+- if vertex has one child:
+  - connect parent to child
+  - remove vertex
+- if vertex has two children:
+  - find successor (smallest value in right subtree)
+  - copy successor's value to vertex
+  - remove successor
 
-#### tree traversal order
+### tree traversal order
 
 > [!TIP]
 > the name of each traversal order describes when the root is visited
 
-- preorder: root is visited first
-- inorder: root is visited in the middle-ish
-- postorder: root is visited last
+- pre-order: root is visited first
+- in-order: root is visited in the middle-ish
+- post-order: root is visited last
 
-- preorder
+- pre-order
   1. visit parent node
     - root gets visited first
   2. visit node on left subtree then visit the rest of the left subtree
   3. visit node on right subtree then visit the rest of the right subtree
     - rightmost node gets visited last
-- inorder
-  1. visit left subtree in inorder
+- in-order
+  1. visit left subtree in in-order
     - leftmost leaf gets visited first
   2. visit parent node
     - root gets visited in the middle
-  3. visit right subtree in inorder
+  3. visit right subtree in in-order
     - rightmost node gets visited last
-- postorder
-  1. visit left subtree in postorder
+- post-order
+  1. visit left subtree in post-order
     - leftmost leaf gets visited first
-  2. visit right subtree in postorder (on the same level as previous step)
+  2. visit right subtree in post-order (on the same level as previous step)
   3. visit parent node
     - root gets visited last
-
 
 ### binary tree
 
@@ -121,9 +151,9 @@ vertex removal:
 
 #### complete binary tree
 
-binary tree where:
-- all levels are completely filled except possibly for the last level
-- all nodes are as far left as possible
+- binary tree where:
+  - all levels are completely filled except possibly for the last level
+  - all nodes are as far left as possible
 
 #### heap
 
@@ -146,7 +176,6 @@ binary tree where:
 - left child is smaller than parent
 - right child is bigger than parent
 
-
 #### AVL tree
 
 > self-balancing binary search tree
@@ -166,7 +195,6 @@ T1, T2 and T3 are subtrees of the tree, rooted with y (on the left side) or x (o
    x   T3   - - - - - - - >        T1   y
   / \       < - - - - - - -            / \
  T1  T2     Left Rotation            T2  T3
- 
 ```
 
 Keys in both of the above trees follow the following order
@@ -184,7 +212,6 @@ So BST property is not violated anywhere
     - the pivot node is the initial child node
     - after rotating, the pivot node becomes the parent
   - keeps all the nodes and subtrees in the correct order
-
 
 #### AVL vs red-black trees
 
