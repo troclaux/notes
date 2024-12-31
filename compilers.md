@@ -38,7 +38,7 @@
 1. execution
 
 > [!NOTE]
-> the file extensions used are for the c programming languages
+> the file extensions used above are for the C programming language
 
 - other languages' compiler/interpreter will translate to different types of files
   - for example, in python: file.py => bytecode => file.pyc
@@ -46,7 +46,7 @@
       - represents python code in a format that can be executed by the interpreter
       - it's not machine code
 
-1. preprocessing:
+1. preprocessing: focuses on textual replacements and macro expansion
   - this is done by the preprocessor
   - generates expanded code
 2. compilation: source code is compiled into assembly code
@@ -68,4 +68,23 @@
 6. execution: CPU executes the machine code instructions in memory
   - fetches instructions from memory
   - decodes instructions
-  - executes instructions according to the instruction set architecture (ISA)
+  - executes instructions according to the Instruction Set Architecture (ISA)
+
+1. lexical analysis: converts source code into a stream of tokens (e.g. keywords, operators, identifiers)
+  - tokenization: break source code into meaningful chunks called tokens
+  - error detection: catch errors like unrecognized symbols or invalid characters
+  - example:
+    - input: `x = 2 + 3;`
+    - output: tokens: `IDENTIFIER(x), ASSIGN(=), CONSTANT(2), PLUS(+), CONSTANT(3), SEMICOLON(;)`
+2. parsing (syntax analysis): uses grammar rules to analyse token stream and build the AST*
+  - Abstract Syntax Tree (AST): tree representation of the structure of source code written in a programming language
+  - AST construction: combines tokens into tree nodes according to the programming languages grammar
+3. semantic analysis: verify the AST for semantic correctness (e.g. type checking, scope resolution, error handling, etc)
+4. intermediate code generation (IR): translate AST into an IR that is simpler and closer do machine code
+5. optimization: improve the intermediate code for efficiency (reduce runtime or memory usage)
+6. code generation: translate IR into machine code or assembly code for the target architecture
+7. assembly and linking: convert assembly code into machine code using an assembler
+8. loader and execution: prepare executable for execution
+  - load executable into memory
+  - set up the runtime environment
+  - begin execution at the entry point (e.g. `main` function)
