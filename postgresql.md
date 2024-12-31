@@ -34,8 +34,8 @@ postgresql interactive terminal commands:
 - list all commands: `\?`
 - connect to a database: `\c dbname`
 - describe a table: `\d tablename`
-- list tables: `\dt`
-- list users: `\du`
+- describe/list tables: `\dt`
+- describe/list users: `\du`
 - exit postgres prompt: `\q`
 
 - connection string: 
