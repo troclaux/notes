@@ -339,6 +339,17 @@ long example of HTTPS communication:
 
 #### TLS (Transport Layer Security)
 
+> cryptographic protocol that provides secure communication over a computer network
+
+- uses public key criptography to verify the authencity of a website
+- contains the following information:
+  - domain name
+  - additional subdomains
+  - name of issuing CA (Certificate Authority)
+  - date of issue
+  - expiry date
+  - public key used to verify data
+
 - successor to SSL
 - addresses flaws in SSL
 - provides privacy and data integrity between two communicating applications
@@ -352,9 +363,9 @@ long example of HTTPS communication:
     - exchange of digital certificates to verify server's identity
   - once the handshake is complete, HTTP data is transmitted over the secured TLS connection
 
-HTTPS vs TLS
-- HTTPS is the protocol for secure web communication
-- TLS is the security layer that HTTPS uses to encrypt and secure that communication
+- HTTPS vs TLS
+  - HTTPS is the protocol for secure web communication
+  - TLS is the security layer that HTTPS uses to encrypt and secure that communication
 
 ### transport layer
 
