@@ -2,13 +2,11 @@ package main
 
 import (
 	"database/sql"
-	"encoding/json"
 	"example5/internal/database"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
-	"strings"
 	"sync/atomic"
 
 	"github.com/joho/godotenv"
@@ -86,51 +84,6 @@ type errorResponse struct {
 	Error string `json:"error"`
 }
 
-type chirp struct {
-	Body string `json:"body"`
-}
-
-func handleChirp(w http.ResponseWriter, r *http.Request) {
-	// set headers
-	w.Header().Set("Content-Type", "application/json")
-	// creates new JSON decoder that will read from the request body
-	decoder := json.NewDecoder(r.Body)
-	// initialize a post struct
-	post := chirp{}
-	// attempts to decode json from the request body and stores data into the struct
-	if err := decoder.Decode(&post); err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
-	}
-	if len(post.Body) > 140 {
-		// write the status code 400 in the response
-		w.WriteHeader(http.StatusBadRequest)
-		// write the error message in the response
-		// errorResponse struct is used to format the error message in JSON
-		json.NewEncoder(w).Encode(errorResponse{Error: "Chirp is too long"})
-		return
-	}
-
-	lowercaseText := strings.ToLower(post.Body)
-	lowercaseWords := strings.Split(lowercaseText, " ")
-	filteredWords := strings.Split(post.Body, " ")
-	for i, lowercaseWord := range lowercaseWords {
-		if lowercaseWord == "kerfuffle" || lowercaseWord == "sharbert" || lowercaseWord == "fornax" {
-			filteredWords[i] = "****"
-			continue
-		}
-	}
-	filteredText := strings.Join(filteredWords, " ")
-
-	type cleaned_response struct {
-		Cleaned_body string `json:"cleaned_body"`
-	}
-	fmt.Println(filteredText)
-	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(cleaned_response{Cleaned_body: filteredText})
-	return
-}
-
 func main() {
 
 	err := godotenv.Load()
@@ -143,7 +96,7 @@ func main() {
 	dbURL := os.Getenv("DB_URL")
 	db, err := sql.Open("postgres", dbURL)
 	if err != nil {
-		println("Error connecting to database")
+		log.Fatal("Error connecting to database")
 	}
 	defer db.Close()
 
@@ -163,8 +116,9 @@ func main() {
 
 	mux.HandleFunc("POST /admin/reset", apiCfg.handleReset)
 	mux.HandleFunc("GET /admin/metrics", apiCfg.handleMetrics)
-	mux.HandleFunc("POST /api/validate_chirp", handleChirp)
+	// mux.HandleFunc("POST /api/validate_chirp", handleChirpsValidate)
 	mux.HandleFunc("POST /api/users", apiCfg.handleUser)
+	mux.HandleFunc("POST /api/chirps", apiCfg.handleChirps)
 	mux.HandleFunc("GET /api/healthz", handleReadiness)
 
 	fmt.Println("Server is running on http://localhost:8080")
