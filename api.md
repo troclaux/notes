@@ -11,6 +11,7 @@
 
 - defines the structure of requests and responses
 - APIs allow services to communicate with other services without knowing how they're implemented
+  - service: software component that provides specific functionality
 - normally they implement CRUD operations
   - Create, Read, Update, Delete
   - can use http verbs: Get, Post, Put, Delete
@@ -26,13 +27,24 @@
   - public APIs: open to the public
   - Composite APIs: combines multiple APIs to address complex requirements
 
-- API endpoints: URLs that are used to access the resources
+## endpoints
+
+- API endpoint: A specific URL path where a client can interact with a specific function/resource of an API
   - complete URL: `https://api.bookstore.com/books/123`
     - base URL: `https://api.bookstore.com`
-    - endpoint: `/books/123`
+    - endpoint: identifies the specific resource/action (e.g. `/books/123`)
+      - resource: `books`
+      - resource id: `123`
   - must be secured with:
     - authentication tokens
     - API keys
+
+- collection: collection of resources
+  - endpoint to get a collection: `GET /api/users`
+    - returns all users
+- singleton: single instance of a resource
+  - endpoint to get a singleton: `GET /api/users/{user_id}`
+    - returns a user
 
 > [!TIP]
 > use versioning in the API to avoid breaking changes
