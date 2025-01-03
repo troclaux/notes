@@ -2,8 +2,10 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
+	"reflect"
 	"time"
 
 	"github.com/google/uuid"
@@ -14,6 +16,17 @@ type User struct {
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 	Email     string    `json:"email"`
+}
+
+func printStructFields(s interface{}) {
+	val := reflect.ValueOf(s)
+	typ := val.Type()
+
+	for i := 0; i < typ.NumField(); i++ {
+		field := typ.Field(i)
+		tag := field.Tag.Get("json")
+		fmt.Printf("Field: %s, Label: %s\n", field.Name, tag)
+	}
 }
 
 func (cfg *apiConfig) handleUsersCreate(w http.ResponseWriter, r *http.Request) {
@@ -27,23 +40,34 @@ func (cfg *apiConfig) handleUsersCreate(w http.ResponseWriter, r *http.Request) 
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	// post now contains the decoded JSON
-	userEmail := post.Email
 
 	// http.Request.Context() cancels the database query if the http request is cancelled or times out
 	// use sqlc generated code to create a new user in the database and store it in newUser variable
-	newUser, err := cfg.databaseQueries.CreateUser(r.Context(), userEmail)
+	newUser, err := cfg.databaseQueries.CreateUser(r.Context(), post.Email)
 	if err != nil {
 		log.Printf("error creating user: %v", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	// set headers
+
+	printStructFields(newUser)
+	log.Printf("newUser: %+v", newUser)
+	user := User{
+		ID:        newUser.ID,
+		CreatedAt: newUser.CreatedAt,
+		UpdatedAt: newUser.UpdatedAt,
+		Email:     newUser.Email,
+	}
+
+	// Set headers before writing response
 	w.Header().Set("Content-Type", "application/json")
-	// set http status code
 	w.WriteHeader(http.StatusCreated)
 
-	// set/write response
-	json.NewEncoder(w).Encode(newUser)
+	// Check for encoding errors
+	if err := json.NewEncoder(w).Encode(user); err != nil {
+		log.Printf("error encoding response: %v", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
 	return
 }

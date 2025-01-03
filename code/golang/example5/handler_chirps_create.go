@@ -33,8 +33,6 @@ func filterWords(originalString string, badWords map[string]int) string {
 }
 
 func (cfg *apiConfig) handleCreateChirps(w http.ResponseWriter, r *http.Request) {
-	// set headers
-	w.Header().Set("Content-Type", "application/json")
 	// creates new JSON decoder that will read from the request body
 	decoder := json.NewDecoder(r.Body)
 	// initialize a post struct
@@ -60,7 +58,6 @@ func (cfg *apiConfig) handleCreateChirps(w http.ResponseWriter, r *http.Request)
 	}
 
 	filteredText := filterWords(post.Body, badWords)
-	w.WriteHeader(http.StatusCreated)
 	// get user_id from the request and create a new uuid
 	params := database.CreateChirpParams{Body: filteredText, UserID: post.User_ID}
 
@@ -70,8 +67,24 @@ func (cfg *apiConfig) handleCreateChirps(w http.ResponseWriter, r *http.Request)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
+
+	chirp := Chirp{
+		ID:        newChirp.ID,
+		User_ID:   newChirp.UserID,
+		Body:      newChirp.Body,
+		CreatedAt: newChirp.CreatedAt,
+		UpdatedAt: newChirp.UpdatedAt,
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+	// Check for encoding errors
 	// encodes `Chirp` struct as json and writes it to the http response `w`
-	json.NewEncoder(w).Encode(newChirp)
+	if err := json.NewEncoder(w).Encode(chirp); err != nil {
+		log.Printf("error encoding response: %v", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
 	return
 }
 
@@ -79,11 +92,11 @@ func (cfg *apiConfig) handleCreateChirps(w http.ResponseWriter, r *http.Request)
 // write http status code on response
 // create response variable that will be encoded into json
 // encode response into json
-func (cfg *apiConfig) handleChirpsGet(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	chirps := make([]Chirp, 10)
-	// get chirps from postgresql
-	json.NewEncoder(w).Encode(chirps)
-	return
-}
+// func (cfg *apiConfig) handleChirpsGet(w http.ResponseWriter, r *http.Request) {
+// 	w.Header().Set("Content-Type", "application/json")
+// 	w.WriteHeader(http.StatusOK)
+// 	chirps := make([]Chirp, 10)
+// 	// get chirps from postgresql
+// 	json.NewEncoder(w).Encode(chirps)
+// 	return
+// }
