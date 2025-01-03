@@ -30,7 +30,7 @@ func filterWords(originalString string, badWords map[string]int) string {
 	return filteredText
 }
 
-func (cfg *apiConfig) handleChirps(w http.ResponseWriter, r *http.Request) {
+func (cfg *apiConfig) handleCreateChirps(w http.ResponseWriter, r *http.Request) {
 	// set headers
 	w.Header().Set("Content-Type", "application/json")
 	// creates new JSON decoder that will read from the request body
@@ -69,5 +69,18 @@ func (cfg *apiConfig) handleChirps(w http.ResponseWriter, r *http.Request) {
 	}
 	// encodes `Chirp` struct as json and writes it to the http response `w`
 	json.NewEncoder(w).Encode(newChirp)
+	return
+}
+
+// set headers
+// write http status code on response
+// create response variable that will be encoded into json
+// encode response into json
+func (cfg *apiConfig) handleChirpsGet(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	chirps := make([]Chirp, 10)
+	// get chirps from postgresql
+	json.NewEncoder(w).Encode(chirps)
 	return
 }

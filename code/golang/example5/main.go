@@ -86,7 +86,9 @@ type errorResponse struct {
 
 func main() {
 
+	// load env vars from .env file
 	err := godotenv.Load()
+
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
@@ -105,7 +107,7 @@ func main() {
 	// creates new http request multiplexer
 	mux := http.NewServeMux()
 
-	// instantiate struct with request counter and connection pool
+	// initialize struct with request counter and connection pool
 	apiCfg := &apiConfig{databaseQueries: dbQueries, platform: os.Getenv("PLATFORM")}
 
 	// serves files to the client from the defined path
@@ -116,10 +118,10 @@ func main() {
 
 	mux.HandleFunc("POST /admin/reset", apiCfg.handleReset)
 	mux.HandleFunc("GET /admin/metrics", apiCfg.handleMetrics)
-	// mux.HandleFunc("POST /api/validate_chirp", handleChirpsValidate)
-	mux.HandleFunc("POST /api/users", apiCfg.handleUser)
-	mux.HandleFunc("POST /api/chirps", apiCfg.handleChirps)
+	mux.HandleFunc("POST /api/users", apiCfg.handleUsersCreate)
 	mux.HandleFunc("GET /api/healthz", handleReadiness)
+	mux.HandleFunc("POST /api/chirps", apiCfg.handleChirpsCreate)
+	mux.HandleFunc("GET /api/chirps", apiCfg.handleChirpsGet)
 
 	fmt.Println("Server is running on http://localhost:8080")
 
