@@ -88,3 +88,54 @@
   - load executable into memory
   - set up the runtime environment
   - begin execution at the entry point (e.g. `main` function)
+
+## field order optimization
+
+- memory alignment
+  - most processors access memory more efficiently if data is aligned to certain boundaries
+  - e.g.: `int32` is typically aligned to a 4-byte boundary, and an `int64` is aligned to an 8-byte boundary
+  - this **doesn't** apply to classes in Java and Python
+    - because python objects are implemented as dictionaries internally
+    - because JVM reorders fields in optimization
+  - Golang giver you more direct control over memory layout
+- padding
+  - if fields in a struct are not naturally aligned due to their order, the compiler inserts padding bytes between fields to ensure proper alignment
+- struct size
+  - the total size of a struct includes its fields and any padding added for alignment
+
+example of bad field order
+
+```go
+type Example1 struct {
+  a int8   // 1 byte
+  b int64  // 8 bytes
+  c int8   // 1 byte
+}
+```
+
+- memory layout explanation:
+  - `a`: 1 byte
+  - padding: 7 bytes (after `a` to align `b` to an 8 byte boundary)
+  - `b`: 8 bytes
+  - `c`: 1 byte
+  - padding: 7 bytes (after `c` to align the struct size to the largest alignment, which is 8 bytes)
+
+example of optimized field order
+
+```go
+type Example2 struct {
+  b int64  // 8 bytes
+  a int8   // 1 byte
+  c int8   // 1 byte
+}
+```
+
+- `b`: 8 bytes
+- `a`: 1 byte
+- `c`: 1 byte
+- Padding: 6 bytes (added after c to align the struct size to the largest alignment, which is 8 bytes)
+
+> [!IMPORTANT]
+> general rule of thumb to minimize padding
+> group fields of the same size together
+> order fields from largest to smallest in terms of size (e.g. `int64`, then `int32`, then `int16`, and finally `int8`)
