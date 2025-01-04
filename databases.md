@@ -162,3 +162,11 @@ CREATE INDEX idx_email ON Customers(Email);
 
 - up migration: change database to new state
 - down migration: revert database to previous state
+
+---
+
+- database connection pool: mechanism that allows multiple applications/services to share a set of database connections
+  - why do we create connection pools? to avoid the overhead of opening and closing a connection for each request
+  - maintains a pool of open connections, instead of opening and closing a connection for each request
+    - creating a new database connection is expensive
+      - authentication, initialization, etc
