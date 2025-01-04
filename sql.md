@@ -80,7 +80,6 @@ FROM => WHERE => GROUP BY => HAVING => SELECT => ORDER BY => LIMIT
 - `UPDATE`: modify existing data in a table
 - `DELETE`: remove data from a table
 
-
 - `CREATE TABLE`: create new table in the database
   - `FOREIGN KEY`: creates a column with the values of the column of another table
     - `CASCADE`: defines what happens to foreign keys when the reference is changed
@@ -298,6 +297,10 @@ FROM employees
 WHERE salary BETWEEN 30000 and 60000;
 ```
 
+```sql
+DELETE FROM users
+WHERE email = 'example@email.com';
+```
 
 ```sql
 SELECT product_name, quantity
