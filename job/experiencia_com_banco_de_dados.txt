@@ -1,3 +1,0 @@
-Graduei em Ciência da Computação na UFRJ.
-Tenho experiência com MySQL e Python, adquirida durante uma iniciação científica sobre a acurácia de testes de software na qual utilizei essas tecnologias para armazenar dados e fazer análises estatísticas. Também já usei PostgreSQL ao desenvolver um site com React.js, Node.js e Express.js que está no Github (https://github.com/troclaux/todo-project).
-Possuo domínio em muitas linguagens e ferramentas de programação, dentre elas: Python, JavaScript, Typescript, Golang, Java, Lua, Bash, Git, Docker, React.js, Node.js, Ansible, PostgreSQL, MySQL, SQLite, Linux e suas ferramentas CLI (grep, awk, find, fzf, wc, sort, ssh, etc).
