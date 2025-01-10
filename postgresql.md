@@ -38,13 +38,29 @@ postgresql interactive terminal commands:
 - describe/list users: `\du`
 - exit postgres prompt: `\q`
 
-- connection string: 
+## connect to database from terminal
+
+### using `psql` command-line arguments (recommended method)
+
+```bash
+psql -U username -d database_name -h localhost -p 5432
+```
+
+- doesn't expose the password in the command history
+
+### using connection string
+
+> string that contains all the information needed to connect to a database
+
+- format depends on the database
+- postgresql format:
   - `protocol://username:password@localhost:5432/dbname`
     - `protocol`: can be `postgresql` or `postgres`
     - `username:password`: the credentials
     - `localhost`: the host
-    - `5432`: the port
+    - `5432`: the port that postgresql is running on
     - `dbname`: the database name
+- can be used in `.env` as credentials for the application
 
 ## postgresql sql keywords
 
