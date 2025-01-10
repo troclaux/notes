@@ -349,6 +349,24 @@ example of cron job:
 - restart a service: `sudo systemctl restart <service-name>`
 - check status of a service: `sudo systemctl status <service-name>`
 
+## openssl
+
+> used for secure communication and cryptographic operations
+
+- use cases:
+  - ssl/tls protocol management
+  - key generation
+  - encryption/decryption
+
+```bash
+openssl rand -base64 64
+```
+
+- `rand`: generate random data
+- `-base64`: specifies output format of the generated random data, in this case, base64-encoded string
+- `64`: length of the random data to be generated, in this case, 64 bytes
+
+
 ## sshfs
 
 > mount remove directory over SSH, makint it appear as a local directory on your system
