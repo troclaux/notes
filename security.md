@@ -1,4 +1,18 @@
 
+# security
+
+- hashing: process that takes an input of arbitrary size and returns a fixed-size string of characters, known as a hash
+  - hash value output is unique to the input
+  - one-way function: easily generate the hash, but you can't reconstruct the original data from its hash
+  - deterministic: same input, same hash output
+  - fixed output size: the size of the input doesn't affect the length of the output
+  - avalanche effect: even a small change in the output creates a completely different output
+  - has multiple implementation algorithms (e.g. Bcrypt, SHA-3, MD5, etc)
+    - always use Bcrypt
+    - [avoid MD5 and SHA-3](https://blog.boot.dev/cryptography/how-sha-2-works-step-by-step-sha-256/#can-i-use-sha-256-to-hash-passwords)
+
+then how can i reconstruct the original github repo from its .git folder
+
 - DDOS attack (Distributed Denial of Service attack)
   - a cyberattack where multiple systems flood a target with traffic to make it unavailable
   - overwhelms network/server resources so legitimate users can't access services
@@ -19,7 +33,28 @@
     - using reverse proxies (nginx, haproxy)
     - implementing connection limits
 
-## public and private keys
+## types of authentication
+
+- id + password
+  - id can be email, username, etc
+- 3rd party authentication
+  - e.g. sign in with google, sign in with github, etc
+- magic links
+  - e.g. `https://example.com/login?token=...`
+- api keys
+
+## encryption
+
+> encryption: process of converting plain text into unreadable ciphertext that can only be decoded back to plain text using a specific key
+
+- ciphertext: encrypted text that is unreadable and can only be read with an encryption key
+- if unauthorized party gains access to the encrypted text, they won't be able to read it without the decryption key
+
+- types of encryption:
+  - symmetric: user the same key for encryption and decryption
+  - asymmetric: uses different keys for encryption (public key) and decryption (private key)
+
+### asymmetric encryption
 
 plain text -> encryption (with public key) -> cipher text -> decryption (with private key) -> plain text
 
@@ -62,3 +97,11 @@ PKI is widely used in various domains, including:
 - IoT Devices: Managing secure connections between connected devices
 
 In summary, PKI is essential for establishing trust in digital communications, providing mechanisms for encryption, authentication, and data integrity across various applications and services
+
+## firewalls
+
+> network security system that monitors and controls incoming/outgoing network traffic based on predetermined security rules
+
+TODO
+
+- 
