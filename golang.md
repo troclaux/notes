@@ -155,10 +155,11 @@ func main() {
   - numeric types:
     - integers: `int`, `int8`, `int16`, `int32`, `int64`, `uint`, `uint8`, `uint16`, `uint32`, `uint64`, `uintptr`
       - the number after `int` is the number of bits
-      - `byte` (alias for `uint8`)
+      - `int`: alias for `int64` in 64-bit systems and `int32` in 32-bit systems
+      - `byte`: alias for `uint8`
         - `string()`: converts slice of bytes into a string
-      - `rune` (alias for `int32`)
-	- single-quoted strings (`''`) are used for runes
+      - `rune`: alias for `int32`
+	- single-quoted strings `''` are used for runes
     - floating-point numbers: `float32`, `float64`
     - complex numbers: `complex64`, `complex128`
   - Booleans: `bool`
@@ -430,15 +431,6 @@ p := new(Person)
   - capacity: number of items that the slice can hold without needing to be resized
     - capacity's default value is the length
 
-> [!WARNING]
-> `slice = append(slice, 1, 2, 3, 4)`: add items to end of slice
-> `append()` changes the underlying array of its parameter AND returns a new slice
-> ALWAYS ASSIGN THE RESULT OF APPEND() BACK TO THE SLICE TO ENSURE THE CHANGES ARE APPLIED CORRECTLY
-> `append()` only works for slices
-> don't do this: `someSlice = append(otherSlice, element)`
-> you can accidentally declare multiple slices that share the same underlying array
-> if this happens, when you change one slice, you can change other slices without knowing
-
 > [!NOTE]
 > go doesn't have built-in stacks and queues, but they can be implemented using slices
 
@@ -642,6 +634,15 @@ func main() {
 
 - array: `arr := [3]int{1, 2, 3}`
 - slice: `arr := []int{1, 2, 3}`
+
+> [!WARNING]
+> `slice = append(slice, 1, 2, 3, 4)`: add items to end of slice
+> `append()` changes the underlying array of its parameter AND returns a new slice
+> ALWAYS ASSIGN THE RESULT OF APPEND() BACK TO THE SLICE TO ENSURE THE CHANGES ARE APPLIED CORRECTLY
+> `append()` only works for slices
+> don't do this: `someSlice = append(otherSlice, element)`
+> you can accidentally declare multiple slices that share the same underlying array
+> if this happens, when you change one slice, you can change other slices without knowing
 
 #### matrix (slice of slices)
 
@@ -1523,14 +1524,14 @@ func getUserCode(url string) int {
 - `http.StatusCreated` is a constant that represents the status code 201
 - `http.StatusNotFound` is a constant that represents the status code 404
 
-#### RESTful API
+#### API functions
 
-[example of API implementation](./code/golang/example1/http.go)
+[example of API functions](./code/golang/example1/http.go)
 
 - unlike `GET` and `POST` there's no `http.Put` function
 - for `PUT` requests, create raw `http.Request` that an http.Client can `myClient.Do(myRequest)`
 
-PUT implementation step by step:
+##### PUT request implementation
 
 1. get required data: endpoint URL, id, data that is being sent
 1. convert data into json with `json.Marshal(data)`
@@ -1538,6 +1539,10 @@ PUT implementation step by step:
 1. set headers for request
 1. create new `http.Client` and `client.Do(req)` to execute request
 1. `defer res.Body.Close()` to close connection between client and server
+
+TODO POST request implementation
+
+##### server implementation
 
 [example of server that doesn't serve files](./code/golang/example2/main.go)
 [example of static file server](./code/golang/example3/main.go)
@@ -1554,6 +1559,17 @@ PUT implementation step by step:
   - `http.Request` struct contains all the information about the incoming HTTP request
 - `mux.HandleFunc("/path", func())`: registers an anonymous handler function for the given path and responds to the request
 - `mux.Handle("/", http.FileServer(http.Dir(".")))`: serves files from the current directory for root url `"/"`
+
+##### handling endpoints
+
+> endpoints are the URLs that your API exposes
+
+- common operations:
+  - GET resource: retrieve a resource (uses resource ID)
+  - GET resources: retrieve a list of resources
+  - POST resource: create a new resource
+  - PUT resource: update an existing resource (uses resource ID)
+  - DELETE resource: delete an existing resource (uses resource ID)
 
 [example of server that serves files](./code/golang/example4/main.go)
 
@@ -1585,7 +1601,9 @@ type Handler interface {
   - `http.HandlerFunc` is a type that implements the `http.Handler` interface
   - use `http.HandlerFunc` for simple use cases, like serving static files
 
-[example of server with middleware](./code/golang/example5/main.go)
+##### middleware
+
+[example of server with middleware](https://github.com/troclaux/chirpy/main.go)
 
 request -> middleware -> handler -> response
 
@@ -1641,9 +1659,48 @@ fmt.Println(hostname)     // cartoonwebsite.com
 
 [json.NewDecoder.Decode vs json.Unmarshal](https://stackoverflow.com/questions/21197239/decoding-json-using-json-unmarshal-vs-json-newdecoder-decode)
 
+reading json data and storing it in golang struct:
+
+1. declare struct that will store decoded json data
+1. create json decoder
+1. initialize empty struct defined in step 1
+1. attempt to decode and read json data and write the decoded data into a golang struct
+1. congratulations, you now have json data available in a golang variable if no errors occurred
+
+[practical example](https://github.com/troclaux/chirpy/blob/main/handler_users_create.go):
+
+```go
+type User struct {
+  ID        uuid.UUID `json:"id"`
+  CreatedAt time.Time `json:"created_at"`
+  UpdatedAt time.Time `json:"updated_at"`
+  Email     string    `json:"email"`
+  Password  string    `json:"password"`
+}
+
+func (cfg *apiConfig) handleUsersCreate(w http.ResponseWriter, r *http.Request) {
+  // creates new JSON decoder to read the request body
+  decoder := json.NewDecoder(r.Body)
+  // create empty User struct to store the decoded JSON
+  reqUser := User{}
+  // attempts to decode the JSON from the request body and store it in the reqUser struct
+  if err := decoder.Decode(&reqUser); err != nil {
+    log.Printf("error decoding user: %v", err)
+    w.WriteHeader(http.StatusInternalServerError)
+    return
+  }
+}
+```
+
 - `json.NewDecoder(input)`: creates new JSON decoder that will read from the input
 - `json.NewDecoder(r.Body).Decode(&post)`: decodes the json data from the `decoder` into `post` struct
 - `json.NewEncoder(w).Encode(User{key: value})`: encodes `User` struct as json and writes it to the http response `w`
+
+
+- Capitalize first letter of each field, to allow `json` package to access each one
+- add a tag before each field (e.g. `json:` to specify the name of the field when it is serialized to JSON
+  - serialize: process of converting an object or data structure into a format that can be sent over a network
+
 
 ### string
 
@@ -1700,7 +1757,6 @@ func TestAdd(t *testing.T) {
 ### bufio
 ### io
 ### os
-### json
 ### time
 ### sql
 ### csv
