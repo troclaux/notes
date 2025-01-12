@@ -66,7 +66,7 @@ ls *[0-9]?.{jpg,png}
 
 ## Command separators
 
-- `>`: replace contents of file after the > with the output of command before the >
+- `>`: replace contents of file after the `>` with the output of command before the `>`
   - `echo "delete everything and write this sentence" > ~/Documents/new_file.txt`
 - `>>`: Append output of previous command to the file after the separator
   - `echo "append this at the end of file" >> ~/Documents/file.txt`
@@ -76,8 +76,9 @@ ls *[0-9]?.{jpg,png}
   - `command1; command2; command3`
 - `|`: forward/pipe the output of a cli program as the input for the next program
   - `cat file.txt | wc -l`
-- `||`: executes the second command only if the first command fails
+- `||`: pipe stdout to the next command
   - `ls this_file_does_not_exist.txt || echo 'file not found'`
+- `|&`: pipe both stdout and stderr to the next command
 - `&&`: runs the next command only if the previous command was successful
   - `command_1 && command_2 && command_3`
 - `2>`: redirect stderr
