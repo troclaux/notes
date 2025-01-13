@@ -330,6 +330,58 @@ example of cron job:
 0 15 * * 2 rsync -av --delete ~/Music/chill_game_ost ~/backups >> ~/backups/chill_game_ost.log 2>&1
 ```
 
+## chown
+
+> changes the owner and/or group of a file or directory
+
+- each file/directory has:
+  - owner: single user who "owns" the file
+  - group: group associated with the file
+
+`ls -l` shows ownership:
+
+```bash
+-rw-r--r-- 1 alice developers file.txt
+```
+
+- `alice`: owner
+- `developers`: group
+
+- examples:
+  - change owner only: `chown alice file.txt`
+  - change group only: `chown :developers file.txt`
+  - change owner and group: `chown alice:developers file.txt`
+
+## chmod
+
+> manage file permissions
+
+- every file or directory has 3 types of users:
+  - owner: user who owns the file
+  - group: groups of users who can share access
+  - others: all other users
+- every file or directory has 3 types of permissions:
+  - read `r`: view the file's contents
+  - write `w`: modify the file or directory
+  - execute `x`: run the file as a program or access a directory
+
+- permissions are represented like this: `rwxr-xr--`
+  - owner: `rwx`
+  - group: `r-x`
+  - others: `r--`
+- syntax: `chmod [options] mode file`
+  - examples:
+    - `chmod u+x file.txt`
+    - `chmod 754 script.sh`
+      - representation of mode with numbers:
+        - add each permission to obtain the permissions for a type of user
+        - `r = 4`
+        - `w = 2`
+        - `x = 1`
+      - owner: `7` == `rwx`
+      - group: `5` == `r-x`
+      - others: `4` == `r--`
+
 ## systemctl
 
 > manages systemd system and service manager
@@ -359,7 +411,7 @@ example of cron job:
   - encryption/decryption
 
 ```bash
-openssl rand -base64 64
+openssl rand -base64 64 -A
 ```
 
 - `rand`: generate random data
