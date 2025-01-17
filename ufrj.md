@@ -1,5 +1,7 @@
 
-[UFRJ](https://ufrj.br/comunicacao/identidade-visual/)
+# UFRJ
+
+[logo UFRJ](https://ufrj.br/comunicacao/identidade-visual/)
 
 ## 1º Período
 
@@ -42,13 +44,14 @@
   - números de Mersenne e Fermat
   - testes de primalidade
   - criptografia RSA e El Gamal
+  - livro: Números Inteiros e Criptografia RSA (S. C. Coutinho)
 
 ### Fundamentos da Computação Digital
 
   - Introdução ao processade dados
   - estudo da arquitetura do computador (memória, UCP, periféricos)
   - sistemas de numeração, álgebra de Boole (axiomas, formas canônicas)
-  - minimização de funções booleanas (mapa de Karnaugh, método de Quine -McCluskey)
+  - minimização de funções booleanas (mapa de Karnaugh, método de Quine-McCluskey)
 
 ### Sistemas de Informação
 
@@ -228,6 +231,7 @@
   - Algoritmos Guloso
   - Programação Dinãmica e Aplicação das Técnicas Usadas
   - Fluxo Máximo
+  - livro: Introduction to Algorithms (Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein)
 
 ### Cálculo Integral e Diferencial 4
 
@@ -264,7 +268,8 @@
   - Problemas clássicos (produtor/consumidor, leitores/escritores, mestre/escravo)
   - Técnicas de coordenação e sincronização de tarefas
   - Introdução a objetos distribuídos e invocação remota de métodos
-  - Teste e depuração de programas concorrentes . Modelagem e implementação de programas concorrentes
+  - Teste e depuração de programas concorrentes. Modelagem e implementação de programas concorrentes
+  - livro: The Art of Multiprocessor Programming (Maurice Herlihy, Nir Shavit)
 
 ### Cálculo Numérico
 
@@ -386,6 +391,7 @@
   - representação do Conhecimento
   - Planejamento
   - Aprendizado de Máquina
+  - livro: Artificial Intelligence: A Modern Approach (Peter Norvig, Stuart J. Russell)
 
 ### Probabilidade e Estatística
 
@@ -475,6 +481,7 @@
   - cadeias de markov
   - aplicações a sistemas de computação e comunicação de dados
   - noções de teoria de redes de fila e suas aplicações
+  - livro: Introduction to Stochastic Processes with R (Robert P. Dobrow)
 
 ### Eletiva 2
 
@@ -497,7 +504,7 @@
   - A Internet e seus protocolos
   - Engenharia de Tráfego
   - Frame Relay e MPLS
-  - livro: Computer networking a Top-Down approach (Kurose Ross)
+  - livro: Computer networking: A Top-Down approach (Kurose Ross)
 
 ### Projeto Final de Curso (TCC)
 
@@ -518,6 +525,8 @@
 ### Eletiva 9
 
 ### Eletiva 10
+
+---
 
 - 10 Eletivas
   - 9 do curso
