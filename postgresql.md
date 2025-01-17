@@ -5,6 +5,30 @@
 
 > open-source relational database management system
 
+## data types
+
+- numeric types
+  - `numeric`: stores numbers
+- boolean types
+  - `boolean`
+- character types
+  - `CHAR(10)`: fixed-length character string
+  - `VARCHAR(200)`: variable-length character string
+  - `TEXT`: variable unlimited-length string
+- date/time types
+  - `DATE`: date (no time)
+  - `TIME`: time (no date)
+  - `TIMESTAMP`: date and time
+  - `INTERVAL`: time interval
+- binary types
+  - `BYTEA`: binary data
+- other types
+  - `UUID`: universally unique identifier
+  - `JSON`: JSON data
+  - `JSONB`: binary JSON data
+  - `ARRAY`: array of other types
+  - `ENUM`: enumerated list of values
+
 ## setup
 
 [install PostgreSQL](https://docs.fedoraproject.org/en-US/quick-docs/postgresql)
