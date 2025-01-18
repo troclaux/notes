@@ -64,22 +64,22 @@ ls *.pdf *.docx
 ls *[0-9]?.{jpg,png}
 ```
 
-## Command separators
+## command separators
 
 - `>`: replace contents of file after the `>` with the output of command before the `>`
   - `echo "delete everything and write this sentence" > ~/Documents/new_file.txt`
 - `>>`: Append output of previous command to the file after the separator
   - `echo "append this at the end of file" >> ~/Documents/file.txt`
 - `\`: split shell command into multiple lines
-- `;`: run multiple commands at once regardless of whether previous command was successful or not
+- `;`: run commands sequentially regardless of whether previous command was successful or not
   - default behaviour between commands in a shell script when there isn't separators between
   - `command1; command2; command3`
-- `|`: forward/pipe the output of a cli program as the input for the next program
+- `|` (pipe): forward/pipe the output of a cli program as the input for the next program
   - `cat file.txt | wc -l`
-- `||`: pipe stdout to the next command
-  - `ls this_file_does_not_exist.txt || echo 'file not found'`
 - `|&`: pipe both stdout and stderr to the next command
-- `&&`: runs the next command only if the previous command was successful
+- `||` (logical OR): pipe stdout to the next command
+  - `ls this_file_does_not_exist.txt || echo 'file not found'`
+- `&&` (logical AND): runs the next command only if the previous command was successful
   - `command_1 && command_2 && command_3`
 - `2>`: redirect stderr
   - `command 2> error.log`
@@ -95,6 +95,7 @@ ls *[0-9]?.{jpg,png}
 - `#!/bin/sh`: shebang
   - used to specify the interpreter that will run the script
 - `chmod +x script.sh`: make script executable
+  - [chmod](/cli_tools.md#chmod)
 - `./script.sh`: run script
 - `echo $?`: print exit status of last command
 - `exit 0`: exit script with status 0
@@ -102,7 +103,7 @@ ls *[0-9]?.{jpg,png}
 - `exit 1`: exit script with status 1
   - 0: success
 
-### Variables
+### variables
 
 ```bash
 greeting=Hello
@@ -116,7 +117,7 @@ echo "$greeting $name"
 cd "$(find "$HOME" -type d | fzf)"
 ```
 
-### Strings
+### strings
 
 - single quotes
   - literal interpretation
@@ -138,7 +139,14 @@ The script belows does the following:
 1. checks if directory ~/.config/nvim exists
 2. recursively change ownership of directory contents
 
+> [!IMPORTANT]
+> single brackets `[` and double `[[` brackets behave differently
+> `[` is in POSIX, `[[` isn't in POSIX
+> [explanation](https://unix.stackexchange.com/questions/49007/when-should-i-use-vs-in-bash-single-vs-double-brackets)
+
 ```bash
+#!/bin/bash
+
 if [[ condition ]]
 then
   statement
@@ -146,6 +154,19 @@ elif [[ condition ]]; then
   statement
 else
   do this by default
+fi
+
+```
+
+practical example:
+
+```bash
+#!/bin/bash
+
+if [[ $(id -u) -eq 0 ]]; then
+  echo "You are running as root!"
+else
+  echo "You are not running as root."
 fi
 ```
 
