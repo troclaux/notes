@@ -185,7 +185,13 @@ WHERE user_id = (
     WHERE name = 'David'
 );
 ```
-## Joins
+## Join
+
+> combines data from multiple tables into a single result set
+
+- combines related data
+- reduces data redundancy
+- simplify queries
 
 | types of join   | join conditions    |
 |--------------- | --------------- |
@@ -338,6 +344,12 @@ VALUES ('John Doe', 30, true, 50000);
 ```sql
 ALTER TABLE contractors
 RENAME COLUMN salary TO invoice;
+```
+
+```sql
+UPDATE users
+SET name = 'John Doe', salary = 20000
+WHERE id = 5;
 ```
 
 ```sql
@@ -555,7 +567,7 @@ FROM contractors;
   - OBS: ρ => Rho => Rename
 - Cartesian Product (×)
   - example: employees × departments
-- Join (⨝ or ٭)
+- Join (⨝  or ٭)
   - example: employees ⨝ employees.department_id = departments.department_id departments
 
 
