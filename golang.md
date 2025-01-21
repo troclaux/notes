@@ -1311,6 +1311,65 @@ func main() {
 }
 ```
 
+### io
+
+> provides basic interfaces for I/O operations like reading and writing data
+
+- defines interfaces that abstract away the details of how data is read or written
+- key interfaces:
+  - `io.Reader`: reads data into a byte slice
+  - `io.Writer`: writes data from a byte slice
+  - `io.Closer`: closes a data stream
+- commonly used with files, network connections, and other data streams
+- use cases: reading from a file, writing to HTTP response, copying data between sources
+
+- Byte slices are used for I/O operations because:
+  - standard raw data format: at the lowest level, all data (text, images, etc.) is stored and transmitted as bytes
+    - byte slices provide direct access to this raw format
+    - when data is transmitted over a network or stored on disk, it is represented as sequences of bytes
+    - bytes can represent any type of data (e.g. text, images, videos) by using appropriate encoding/decoding mechanisms (e.g. UTF-8 for text or JPEG for images)
+    - network protocols operate on bytes (e.g. TCP/IP protocols, HTTP, encryption algorithms)
+  - memory efficiency
+    - Bytes are the smallest addressable unit of memory
+    - Byte slices allow reading/writing data in chunks rather than loading everything into memory
+    - this is crucial when dealing with large files or network streams
+  - universal compatibility
+    - Bytes can represent any type of data (text, binary, etc.)
+    - makes it easy to work with different encodings and data formats
+    - no need to convert between different data types during I/O operations
+  - performance
+    - direct memory access without type conversion overhead
+    - efficient for system calls and hardware interactions
+    - allows for buffer reuse to minimize memory allocations
+
+examples of encoding and decoding data in bytes:
+
+```go
+data := "Hello, Go!"
+bytes := []byte(data) // Encode string to bytes
+decoded := string(bytes) // Decode bytes to string
+```
+
+- example of [json encoding/decoding](#json)
+  - encode json to bytes with `json.Marshal`
+  - decode bytes to json with `json.Unmarshal`
+
+what is the difference between `json.Marshal`+`json.Unmarshal` instead of `json.Decoder`?
+
+- `json.Marshal` converts go value into JSON (serialization) while `json.Unmarshal` converts a JSON into a go value (deserialization)
+  - simpler functions that work directly with byte slices or strings
+  - use cases:
+    - when you have the complete json data in memory (e.g. a `string` or `[]byte`)
+    - you want to convert between json and go structs or other types
+  - requires the entire json data to be loaded into memory first
+- `json.Decoder`
+  - reads json as data stream
+  - use cases:
+    - when data is being received as a stream (e.g. from http request body or a large file)
+    - processing large json payloads incrementally, without loading entire data into memory
+  - requires `io.Reader`
+    - that's why you use `json.NewDecoder()`, because it is an `io.Reader`
+
 ### math
 
 The `math` package provides basic constants and mathematical functions for floating-point operations.
