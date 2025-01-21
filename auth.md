@@ -16,6 +16,30 @@
     - e.g. `https://example.com/login?token=...`
   - API keys
 
+- token: string of characters that represents a user's identity, permissions or access rights
+- access token: piece of data that represents the authorization granted to a client to access specific resources and identifies the user's permissions and identity
+  - used to secure access to APIs and other resources
+  - isn't stored in the database
+- refresh token: allows a client to obtain a new access token when an existing access token expires
+  - doesn't provide access to resources directly
+  - can be revoked
+  - generally last longer than access token
+  - stored in the database
+  - why not increase access tokens expiration time?
+    - access tokens are exposed while in transit, while refresh tokens are stored securely and only used to request new access tokens
+    - access tokens are bearer tokens, where "possession equals authority"
+    - access tokens can be stolen in cross-site scripting (XSS) attacks
+
+- cookie: small piece of data stored on client's browser by websites to remember stateful information
+  - e.g. user preferences, items in a shopping cart, refresh and access tokens, etc
+  - initially sent by the server
+  - client sends it back in afterwards
+  - used in browsers, not in mobile apps
+
+> [!IMPORTANT]
+> don't store secrets/JWTs/credentials in the browser's local storage
+> because local storage is accessible to any javascript running on the page
+
 ## authorization
 
 > process of determining what actions a user can perform within a system
@@ -26,13 +50,24 @@
 
 [JWT](https://jwt.io/introduction)
 
-step-by-step:
+JWTs lifecycle:
 
 1. user submits login + password
-1. JWT with user ID created and sent to client
+1. handler makes sql query on database and tries to get the user row
+1. compare user's hashed password in the database with password in the request
+1. create JWT with user ID and sent it to client
 1. client sends JWT in all future login requests
 1. on every authenticated request, server validades JWT
 1. eventually JWT expires and the process repeats
+
+- JWTs are:
+  - base64 encoded: the payload (data) is easily readable if decoded with a Base64Url decoder
+  - **NOT** encrypted
+  - tamper-proof because the signature will be invalid if the header or payload is modified after token creation
+    - since the signature is cryptographically bound to the original content using the server's secret key
+  - stateless: the server doesn't need to keep track of which users are logged in via JWT
+  - irrevocable: can't be revoked once generated
+  - expirable: can be set to automatically expire after a specific time period
 
 ### JWT Structure
 
