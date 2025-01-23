@@ -64,7 +64,6 @@ def bubble_sort(nums):
     return nums
 ```
 
-
 ### selection sort
 
 - summary
@@ -248,8 +247,9 @@ def merge(arr1, arr2):
   - uses a stack
   - recursive implementation
 
-
 ### breadth-first search (BFS)
+
+[example](./code/golang/example6/main.go)
 
 - summary
   - explore all neighbor nodes at the present depth prior to moving on to the nodes at the next depth level
@@ -301,4 +301,3 @@ def merge(arr1, arr2):
   - find the shortest path between nodes in a graph
   - uses heuristics to find the best path
   - uses a priority queue
-
