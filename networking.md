@@ -217,22 +217,33 @@ properties of the internet:
     - e.g. web browser, mobile app
   - server: device or application that processes the request and sends back a response
     - e.g. web server
-- requests and responses
-  - request: contains the following elements:
-    - HTTP method (like GET or POST)
-    - URL
+
+- request: contains the following elements:
+  - HTTP method (like GET or POST)
+  - URL
+  - HTTP version
+  - headers: key-value pairs that provide additional information about the request
+    - examples:
+      - `Content-Type`: type of content being sent
+      - `User-Agent`: client application info
+      - `Authorization`: authentication credentials
+  - body (optional): contains data being sent from the client to the server (e.g., form data or file uploads)
+
+- response: server's reply to an HTTP request, containing:
+  - status line: contains
     - HTTP version
-    - headers: key-value pairs that provide additional information about the request (e.g. content type, user agent)
-    - body (optional): contains data being sent from the client to the server (e.g. form data or file uploads)
-  - response
-    - status line: contains:
-      - HTTP version
-      - status code (e.g. 404, 200)
-      - headers
-    - body: contains main content of HTTP response
-      - HTML for web pages
-      - JSON or XML for API responses
-      - binary data for file downloads
+    - status code (e.g., "HTTP/1.1 200 OK")
+  - headers: metadata about the response
+    - examples:
+      - `Content-Type`
+        - `application/json`
+        - `text/html`
+        - `multipart/form-data`
+      - `Content-Length`: size of response body
+  - body (optional): actual content being sent back
+    - HTML for web pages
+    - JSON or XML for API responses
+    - binary data for file downloads
 
 - HTTP methods:
   - GET: requests data from the server (e.g. retrieving a webpage)
