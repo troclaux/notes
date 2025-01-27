@@ -186,6 +186,27 @@ echo '[{"name": "John", "email": "john@example.com"}, {"name": "Jane", "email": 
 # "jane@example.com"
 ```
 
+another example
+
+```json
+{"type": "foo", "values": [1, 2, 3, 4, 5]}
+{"type": "foo", "values": [69, 420, 42, 69420]}
+{"type": "bar", "values": {"a": 42, "b": 69}}
+{"type": "bar", "values": {"a": 1337, "b": 420}}
+{"type": "bar", "values": {"a": 111, "b": 222}}
+```
+
+```bash
+cat json | jq -c 'select(.type == "foo") | .values | add'
+
+# output:
+# 15
+# 69951
+```
+
+- select: filter all json with `type` of `foo` value
+- read the `values` field and add all values
+
 ## ffmpeg
 
 converts media formats:
