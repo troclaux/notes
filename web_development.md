@@ -42,8 +42,8 @@
 
 - endpoint: specific URL where the server provides a resource/service
   - example:
-    - endpoint url: https://api.example.com/books
-    - app.get('/books', ...): This line defines an endpoint that listens for GET requests at the /books URL.
+    - endpoint url: `https://api.example.com/books`
+    - `app.get('/books', ...)`: defines an endpoint that listens for GET requests at the /books URL
 - handler: processes http requests and returns responses
 
 when a user visits a webpage:
@@ -59,6 +59,24 @@ when a user visits a webpage:
 
 - HTML represents the **initial** page content
 - DOM represents the **updated** page content
+
+- cookie: small piece of data stored on client's browser by websites to remember stateful information
+  - e.g. user preferences, items in a shopping cart, refresh and access tokens, etc
+  - initially sent by the server
+  - client sends it back in afterwards
+  - used in browsers, not in mobile apps
+- webhook: event that is sent to the server by an external service when something happens
+  - webhook handlers must be idempotent, because the external service will problably retry requests multiple times
+    - idempotent: operation that has the same result when repeated
+  - 2xx http codes will signal the external service that you processed the request successfully, and they'll stop retrying it
+  - http request sent by external service to notify about events
+  - one-way communication
+- websockets: protocol that enables two-way communication between client and server over a single, long-lived connection
+
+- pull vs push based system
+
+- blob: Binary Large OBject
+  - large binary/non-text data like: images, videos and audio
 
 ## routing
 
@@ -96,6 +114,8 @@ when a user visits a webpage:
 
 ### Single Page Application (SPA)
 
+- dynamically updates the content on a single page without requiring full page reload
+  - only necessary data is fetched from the server, and Javascript updates the view on the client side
 - composed by a single html page
 - client-side rendering
 - asynchronous data fetching
@@ -107,6 +127,7 @@ when a user visits a webpage:
 ### Multi-Page Application
 
 - each interaction/request loads a new HTML page from the server
+  - each time the user navigates to a new page, the browser requests the html, css, and Javascript for that page
 - server-side rendering
   - each page fully reloads when the user navigates
 - examples
@@ -193,7 +214,7 @@ sqlc will use this file's configuration to generate go code
 
 [example](./code/golang/example5/sqlc.yaml)
 
-3. cd into `schema` directory and run the following command to create a new SQL file
+3. `cd` into `./sql/schema` directory and run the following command to create a new SQL file
 
 ```bash
 goose -s create create_user sql
@@ -228,12 +249,14 @@ DROP TABLE users;
 - `-- +goose StatementBegin`: marks the beggining of a statement
 - `-- +goose StatementEnd`: marks the end of a statement
 
-
 5. run the following command with the [conection string](/postgresql.md#connection-string) to create the tables:
 
 ```bash
 goose postgres "connection_string" up
 ```
+
+> [!IMPORTANT]
+> run the command on the same directory as the sql query for the migration
 
 to revert changes:
 
