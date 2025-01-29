@@ -57,11 +57,11 @@
   - librt (GNU real-time library)
   - etc
 
-types of kernels and other classifications:
-- monolithic
-- microkernel: a smaller-sized kernel
-- hybrid: a middle ground between monolithic and microkernel
-- exokernel systems
+- types of kernels and other classifications:
+  - monolithic
+  - microkernel: a smaller-sized kernel
+  - hybrid: a middle ground between monolithic and microkernel
+  - exokernel systems
 
 - layered systems
 - virtual machines
