@@ -49,3 +49,11 @@
     - there are no classes; instead, objects serve as prototypes for other objects
     - new objects can be created by copying an existing object and then modifying it
     - this allows for more flexibility and dynamic behavior compared to classical class-based oop
+
+- no-code: programming approach to create software applications without writing any code at all
+  - instead use visual interfaces, drag-and-drop tools, etc
+  - examples: Bubble, Adalo, Zapier
+- low-code: create software with minimal coding required
+  - examples: microsoft powerapps, salesforce lightning
+
+- idempotent: operation that has the same result when repeated
