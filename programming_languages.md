@@ -57,3 +57,10 @@
   - examples: microsoft powerapps, salesforce lightning
 
 - idempotent: operation that has the same result when repeated
+
+- stateful: maintains information (state) about past events or user interactions
+  - examples:
+    - web sessions that remember user login status
+    - database connections that maintain transaction state
+    - objects that keep track of their internal state
+- stateless: each operation is independent, no memory of previous interactions
