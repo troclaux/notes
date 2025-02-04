@@ -154,7 +154,7 @@ restrictions:
 
 ## constraints
 
-> rules that enforce data integrity and maintain consistency in a database
+> rules that allow data to be entered into a table only if it meets the predefined conditions
 
 - examples
   - `NOT NULL`: ensures a column cannot have NULL value
@@ -166,6 +166,8 @@ restrictions:
   - `CHECK`: ensures all values in a column satisfy certain conditions
 
 - adding a constraint: `ALTER TABLE users ADD CONSTRAINT email_unique UNIQUE (email);`
+  - another example: `ALTER TABLE users ADD CONSTRAINT primary_key PRIMARY KEY (city, name, id);`
+- renaming a constraint: `ALTER TABLE users RENAME CONSTRAINT email_unique TO unique_email_address;`
 - removing a constraint: `ALTER TABLE users DROP CONSTRAINT email_unique;`
 - naming a constraint:
 
