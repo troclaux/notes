@@ -45,9 +45,19 @@ volta install node
 
 ## basic commands
 
-- to run javascript code: `node code.js`
-- to install a package: `node install express`
-- 
+- run javascript code: `node code.js`
+- initialized new node.js project: `npm init -y`
+  - creates `package.json` file that stores metadata about the project (name, version, dependencies, etc)
+  - `-y`: accepts all defaults, skipping interactive prompts
+- install a package: `npm install express`
+  - install a package as development dependency: `npm install jest --save-dev`
+- install all dependencies listed in `package.json`
+- updates packages to their latest versions, according to `package.json`: `npm update`
+- list all installed packages and their dependencies: `npm list`
+- list node version: `node -v`
+- list npm version: `npm -v`
+- executes package directly from npm registry without installing it globally: `npx create-react-app my-app`
+  - useful for trying out tools or running one-off commands
 
 ## file system module
 
