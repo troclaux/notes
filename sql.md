@@ -337,6 +337,12 @@ FROM employees
 WHERE salary BETWEEN 30000 and 60000;
 ```
 
+delete all records in users table:
+
+```sql
+DELETE FROM users;
+```
+
 ```sql
 DELETE FROM users
 WHERE email = 'example@email.com';
