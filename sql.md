@@ -152,6 +152,38 @@ restrictions:
 > aggregate functions CAN be used inside: `SELECT`, `HAVING`, `ORDER BY`
 > aggregate functions CANNOT be used inside: `FROM`, `WHERE`
 
+## constraints
+
+> rules that enforce data integrity and maintain consistency in a database
+
+- examples
+  - `NOT NULL`: ensures a column cannot have NULL value
+  - `UNIQUE`: ensures all values in a column are different
+    - can also be used to ensure a combination of columns is unique, also called "composite unique constraint"
+  - `PRIMARY KEY`: uniquely identifies each row in a table
+  - `FOREIGN KEY`: ensures referential integrity between tables
+  - `DEFAULT`: sets a default value for a column
+  - `CHECK`: ensures all values in a column satisfy certain conditions
+
+- adding a constraint: `ALTER TABLE users ADD CONSTRAINT email_unique UNIQUE (email);`
+- removing a constraint: `ALTER TABLE users DROP CONSTRAINT email_unique;`
+- naming a constraint:
+
+```sql
+CREATE TABLE workout_exercises (
+  id UUID PRIMARY KEY,
+  workout_id UUID NOT NULL REFERENCES workouts(id) ON DELETE CASCADE,
+  exercise_id UUID NOT NULL REFERENCES exercises(id) ON DELETE CASCADE,
+  sets INTEGER,
+  reps INTEGER,
+  order_number INTEGER,
+  CONSTRAINT unique_workout_exercise UNIQUE (workout_id, exercise_id)
+);
+```
+
+> [!IMPORTANT]
+> try to name constraints when creating them
+
 ## Subqueries
 
 - subqueries queries:
