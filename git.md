@@ -1,11 +1,10 @@
+[github](./github.md)
 
 # git
 
 > version control system (VCS) design to track changes in files
 
 - allows multiple developers to work on the same project without interfering in each others changes
-
-[github](./github.md)
 
 ## jargon
 
@@ -25,191 +24,53 @@
   - Is set up by `git init` or `git clone`
 - main working tree: when you run `git init`, git creates the main working tree
 
-## What I learned
+## basic commands
 
-- Upstream vs downstream branches
-  - Upstream branch is the branch that the current branch is tracking
-  - Downstream branch is the branch that is tracking the current branch
-- How to use SHA-1 hash
-  - Can be used to see the contents of a commit
-
-```bash
-git cat-file -p <hash>
-```
-
-- Search commits for a specific string
-
-
-```bash
-- git log -S
-```
-The git log command isn't only useful for your local repo. You can log the commits of a remote repo as well!
-
-```bash
-git log remote/branch
-```
-
-```bash
-git log origin/primeagen
-```
-
-- Set the default upstream branch for the master branch
-
-```bash
-- git branch --set-upstream-to=origin/master master
-```
-
-- Show history of commits in a graph
-
-```bash
-- git log --oneline --graph
-```
+- SHA-1 hash can be used to see the contents of a commit: `git cat-file -p <hash>`
+- search commits for a specific string: `git log -S`
+- log the commits of remote repo: `git log remote/branch`, `git log origin/primeagen`
+- set the default upstream branch for the master branch: `git branch --set-upstream-to=origin/master master`
+- show history of commits in a graph: `git log --oneline --graph`
 
 ### git switch
 
-- Switch to a branch
-
-```bash
-- git switch <branch>
-```
-
-- Create a new branch and switch to it
-
-```bash
-- git switch -c <branch>
-```
-
-- Create a new branch from a specific commit
-
-```bash
-- git switch -c <branch> <commit_hash>
-```
+- switch to a branch: `git switch <branch>`
+- create a new branch and switch to it: `git switch -c <branch>`
+- create a new branch from a specific commit: `git switch -c <branch> <commit_hash>`
 
 ### git remote
 
-- Show the remote repositories
-
-```bash
-- git remote -v
-```
-
-- Add a remote repository
-
-```bash
-- git remote add <name> <url>
-```
-
-- The remote can be local or on the internet
-
-```bash
-- git remote add origin ~/Documents/remote-git
-```
-
-- Undo the last commit while keeping the changes
-
-```bash
-git reset --soft HEAD~1
-```
+- show the remote repositories: `git remote -v`
+- add a remote repository: `git remote add <name> <url>`
+- the remote can be local or on the internet: `git remote add origin ~/Documents/remote-git`
+- undo the last commit while keeping the changes: `git reset --soft HEAD~1`
 
 ### git stash
 
-- Show the list of stashes
-
-```bash
-git stash list
-```
-
-- Create a stash with a message
-
-```bash
-git stash -m 'message'
-```
-
-- Apply the last stash
-
-```bash
-git stash pop --index <stash index>
-```
-
-- Apply a commit to the current branch
-
-```bash
-git cherry-pick <commit>
-```
-
-- Show the history of the HEAD
-
-```bash
-git reflog
-```
-
-- Create an alias for a command
-
-```bash
-git config --global alias.<alias> <command>
-```
-
-- Show the git configuration
-
-```bash
-git config --list
-```
-
-- Show the commits that match the pattern
+- Show the list of stashes: `git stash list`
+- create a stash with a message: `git stash -m 'message'`
+- apply the last stash: `git stash pop --index <stash index>`
+- apply a commit to the current branch: `git cherry-pick <commit>`
+- show the history of the HEAD: `git reflog`
+- create an alias for a command: `git config --global alias.<alias> <command>`
+- show the git configuration: `git config --list`
+- show the commits that match the pattern: `git log --grep <pattern> -p`
   - `-p` shows the diff
-
-```bash
-git log --grep <pattern> -p
-```
 
 ### git bisect
 
-- Start the bisect process
-
-```bash
-git bisect start
-```
-
-- Mark the current commit as bad 
-
-```bash
-git bisect bad
-```
-
-- Mark a commit as good
-
-```bash
-git bisect good <commit>
-```
-
-- Stop the bisect process
-
-```bash
-git bisect reset
-```
-
-- Automatically find the commit that introduced a bug
+- start the bisect process: `git bisect start`
+- mark the current commit as bad: `git bisect bad`
+- mark a commit as good: `git bisect good <commit>`
+- stop the bisect process: `git bisect reset`
+- Automatically find the commit that introduced a bug: `git bisect run <command> --run`
   - `--run` is the command to run
+- create a new worktree: `git worktree add ../<new-dir/branch`
+- Rebase from branch1 onto branch2 (run this command on branch1): `git rebase <branch2>`
 
-```bash
-git bisect run <command> --run
-```
-
-- Create a new worktree
-
-```bash
-git worktree add ../<new-dir/branch
-```
-
-- Rebase from branch1 onto branch2
-
-`from branch1`
-```bash
-git rebase <branch2>
-```
-*WARNING*
-- You should never rebase a public branch (like main) onto anything else. Other developers have it checked out, and if you change its history, you'll cause a lot of problems for them.
-- However, with your own branch, you can rebase onto other branches (including a public branch like main) as much as you want.
+> [!WARNING]
+> You should never rebase a public branch (like main) onto anything else. Other developers have it checked out, and if you change its history, you'll cause a lot of problems for them.
+> However, with your own branch, you can rebase onto other branches (including a public branch like main) as much as you want.
 
 ## gitignore
 
@@ -251,10 +112,8 @@ dist/
 logs/*.log
 ```
 
-## Questions
+## questions
 
 - merging branch with upstream problems
   - i dont understand why it is necessary to create 2 merge commits to fix the different past of the branch when rebasing
 - should i rebase private branch into public branch before pushing?
-
-
