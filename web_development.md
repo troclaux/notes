@@ -91,6 +91,30 @@ when a user visits a webpage:
 - blob: Binary Large OBject
   - large binary/non-text data like: images, videos and audio
 
+## steps
+
+- add simple CI tasks from the beggining (linting, testing)
+- add tests as you progress
+- build back-end first, then go to front-end
+
+1. define features to implement
+1. sketch user interface
+1. choose stack (front-end, back-end)
+1. choose where project will be hosted (recommended is to start with localhost then change to public cloud)
+1. initialize project (e.g. `npm init -y` or `npx create-next-app@latest .`)
+1. install dependencies
+1. define database schema
+1. create database with migration tool (I recommend [goose](https://github.com/pressly/goose))
+1. add `.env` with necessary secrets
+1. set up and test database connection
+1. set up and test api endpoints
+1. implement and test user authentication (optional)
+1. handle requests for each endpoint
+1. set up basic front-end
+1. integrate front-end with back-end
+1. deploy
+1. monitor and maintain
+
 ## routing
 
 ### URL (Uniform Resource Locator)
@@ -227,7 +251,7 @@ sqlc will use this file's configuration to generate go code
 
 [example](./code/golang/example5/sqlc.yaml)
 
-3. `cd` into `./sql/schema` directory and run the following command to create a new SQL file
+3. `cd` into `./sql/schema` directory and create the sql file that will define the current migration
 
 ```bash
 goose -s create create_user sql
@@ -236,7 +260,7 @@ goose -s create create_user sql
 - `-s`: use sequential numbering for new migrations (random numbers if flag is not used)
 - `create`: creates new migration file with the current timestamp
 - `create_user`: name of the sql query
-- this command will create an sql file with a name in the following format `querynumber_name.sql` (e.g. `001_create_users.sql`)
+- this command will create an sql file with a name in the following format `querynumber_name.sql` (e.g. `00001_create_users.sql`)
 
 4. write the desired sql query in the new file:
 
@@ -329,16 +353,146 @@ if err != nil {
   - you dont need to use it directly, sqlc will generate code that uses it
 - how do i tell golang to run the sql query with the data sent by the user?
 
-## authentication
+#### integrate next.js with postgresql
 
-> process of verifying the identity of a user
+1. install `pg`
 
-- methods of authentication
-  - passwords
-    - don't store passwords as plain text
-    - use hashing
-    - don't allow weak passwords
+```bash
+npm install pg
+```
 
-## authorization
+2. set environment variables in the root of your project (`.env.developemnt`)
 
-> process of determining what actions a user can perform within a system
+```
+DB_USER=your_user
+DB_HOST=your_host
+DB_NAME=your_database
+DB_PASSWORD=your_password
+DB_PORT=5432
+```
+
+3. configure database connection in `src/lib/db.ts`
+
+```typescript
+import { Pool } from 'pg';
+
+dotenv.config();
+
+const pool = new Pool({
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  port: Number(process.env.DB_PORT),
+});
+
+console.log(`Server will run on port: ${process.env.DB_PORT}`);
+
+export const query = (text: string, params?: any[]) => pool.query(text, params);
+
+// Function to test the database connection
+export async function testDBConnection() {
+  try {
+    const res = await pool.query('SELECT 1+1 AS result');
+    console.log('✅ Database connected successfully!', res.rows);
+  } catch (error) {
+    console.error('❌ Database connection failed:', error);
+  }
+}
+```
+
+to test if database connection is working, add this code in `src/app/page.tsx`:
+
+```typescript
+import { testDBConnection } from '@/lib/db';
+
+testDBConnection();
+```
+
+4. create api route in `src/app/api/users.ts`
+
+consult the users table on postgresql before programming the sql query
+
+```typescript
+import { NextResponse } from 'next/server';
+import { query } from '@/lib/db';
+
+export async function POST(req: Request) {
+  try {
+    const { name, email } = await req.json();
+
+    if (!name || !email) {
+      return NextResponse.json({ error: 'Name and email are required' }, { status: 400 });
+    }
+
+    const result = await query(
+      'INSERT INTO users (name, email) VALUES ($1, $2) RETURNING *',
+      [name, email]
+    );
+
+    return NextResponse.json({ user: result.rows[0] }, { status: 201 });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  }
+}
+```
+
+5. create database table with goose as a migration tool
+
+6. test the api with curl
+
+#### ORM (Object-Relational Mapping)
+
+> programming technique that allows developers to interact with a database using an object-oriented paradigm
+
+- prisma (recommended)
+  - typescript
+  - supports postgresql, mysql, mongodb, sqlite
+  - simpler
+- TypeORM
+  - typescript
+- sequelize
+  - javascript
+  - supports postgresql, mysql, sqlite, mongodb
+
+## types of web applications
+
+#### Single-Page Applications (SPAs)
+
+- loads a single HTML page and dynamically updates content
+- smooth user experience with no page refreshes
+- examples: Gmail, Facebook
+
+#### Multi-Page Applications (MPAs)
+
+- traditional approach where each page is a separate HTML document
+- full page reload on navigation
+- better for content-heavy sites
+- examples: Wikipedia, news sites
+
+#### Progressive Web Apps (PWAs)
+
+- web apps that work like native mobile apps
+- can work offline
+- installable on devices
+- examples: Twitter, Pinterest
+
+## Client-Side Rendering vs Server-Side Rendering
+
+### Client-Side Rendering (CSR)
+
+- client-side rendering is the most common way to render a web page
+- the browser downloads a minimal HTML page, then downloads and executes JavaScript that renders the page
+- the JavaScript can make requests to the server to fetch data and update the page
+
+### Server-Side Rendering (SSR)
+
+- server generates the HTML for the page and sends it to the browser
+- the browser receives a fully rendered page, which can be faster to load and better for SEO
+- server-side rendering can be more complex to set up and maintain
+
+- server generates complete HTML pages
+- faster initial page load
+- better SEO performance
+- examples: Next.js applications
