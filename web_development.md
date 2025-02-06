@@ -1,14 +1,17 @@
-
-# web development
-
-> process of building/maintaining websites, web and mobile applications using programming languages/frameworks/tools
-
 [restful api](/golang.md#http)
 [database](/databases.md)
 [postgres](/postgresql.md)
 [authentication](/auth.md)
 
+# web development
+
+> process of building/maintaining websites, web and mobile applications using programming languages/frameworks/tools
+
 ## basic concepts of web application
+
+- static site: content doesn't change dynamically
+  - no server-side processing
+- dynamic site: pages changes based on data/user
 
 - user interface
 - routing: how users navigate between different parts of your application
@@ -51,9 +54,19 @@ when a user visits a webpage:
 1. client (browser) makes a request to the server
 1. server returns an HTML file to the browser
 1. the browser reads HTML and then constructs the DOM
-  - DOM (Document Object Model): representation of the HTML elements of a webpage as a tree of nodes and objects
-    - each part of the page becomes a node
-    - each node can be accessed and manipulated by programming languages like Javascript
+
+- DOM (Document Object Model): representation of the HTML elements of a webpage as a tree of nodes and objects
+  - each part of the page becomes a node
+  - each node can be accessed and manipulated by programming languages like Javascript
+- DOM nodes
+  - element node: represents html elements (e.g. `<div>`, `<p>`)
+  - attribute node: represents attributes of elements (e.g. `class`, `id`)
+  - text nodes: represent the text content inside elements
+    - `<p>This is a text node.</p>` is an HTML paragraph element where:
+      - `<p>` and `</p>` are the element nodes (the HTML tags)
+      - `This is a text node.` is the text node (the actual content between the tags)
+  - comment nodes: comments in the document
+    - e.g.: `<!-- This is a comment -->`
 
 [http](/networking.md#http-(hypertext-transfer-protocol))
 
