@@ -9,6 +9,8 @@
   - id + password
     - don't allow weak passwords
     - don't store passwords as plain text, hash them before storing in database
+      - always use bcrypt to hash passwords that will be stored in the database
+      - [avoid MD5 and SHA-3](https://blog.boot.dev/cryptography/how-sha-2-works-step-by-step-sha-256/#can-i-use-sha-256-to-hash-passwords)
     - id can be email, username, etc
   - 3rd party authentication
     - e.g. sign in with google, sign in with github, etc
@@ -82,8 +84,10 @@ example of a JWT (the token is the complete string):
 - format: `<base64url(header)>.<base64url(payload)>.<base64url(signature)>`
 - real example: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c`
 
-- base64: encoding scheme that represents binary data (images, text, audio) into an ASCII string format
+- base64: enables the convertion of data (images, text, audio) into an ASCII string that can be converted back
   - it's a reversible process, so you can obtain the original data from the base64 string (unlike hashing)
+  - use case: when you need to send that over systems that can only handle text
+  - a common variante is "base64 URL safe", which omits characters that might cause problems in URL path segments
 
 > [!IMPORTANT]
 > once the token is created by the server
