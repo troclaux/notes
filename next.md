@@ -1,15 +1,16 @@
-[SSR](/web_development.md#server-side-rendered-application-ssr)
-
 # Next.js
 
 > front-end react framework that enables server-side rendering and static site generation
 
+[SSR](/web_development.md#server-side-rendered-application-ssr)
+
 - main features:
+
   - routing: how users navigate between different parts of your application
     - route: URL path that maps to a page route or to an api route
     - file-based routing
-    - every file inside `pages/` is a route (`pages/index.tsx` => `/`)
-    - dynamic routes: `pages/workout/[id].tsx` => `/workout/:id`
+    - every file inside `app/` is a route (`app/index.tsx` => `/`)
+    - dynamic routes: `app/workout/[id].tsx` => `/workout/:id`
     - route vs endpoint:
       - route: a page in your website (like `/about` or `/products`)
         - what users see and interact with in the browser
@@ -57,13 +58,15 @@ setting scripts in `package.json`:
 1. create and clone github repository
 2. initialize a new Next.js application in the current directory: `npx create-next-app@latest .`
 3. answer the questions
-  - would you like to use TypeScript? Yes
-  - would you like to use eslint? No
-  - would you like to use Tailwind CSS? Yes
-  - would you like to use src/ directory? Yes
-  - would you like to use App Router? Recommended Yes
-  - would you like to use Turbopack for `next dev`? › Yes
-  - would you like to customize the default import alias (@/*)? No
+
+- would you like to use TypeScript? Yes
+- would you like to use eslint? Yes
+- would you like to use Tailwind CSS? Yes
+- would you like to use src/ directory? Yes
+- would you like to use App Router? Recommended Yes
+- would you like to use Turbopack for `next dev`? › Yes
+- would you like to customize the default import alias (@/\*)? No
+
 4. wait for the installation to finish
 5. `npm run dev` to start the development server
 6. start editing `src/pages/index.tsx` to see the changes in the browser
@@ -73,11 +76,16 @@ setting scripts in `package.json`:
 next.js uses a file-system based routing system
 
 - `src/`: optional application source folder
-  - `src/app/` (new and recommended): app router, client-side
+  - `src/app/` (new and recommended): app router, contains `api` (back end) and each page directory
+    - endpoint vs route: you can have different endpoints for the same route
+      - endpoint: where your API receives and sends data
+        - e.g. `GET localhost:8080/employees/42`, `DELETE localhost:8080/employees/42`
+      - route: URL that maps to a page in your website (like `/about` or `/products`)
+        - e.g. `localhost:8080/employees/42`
     - uses nested folders to define routes
     - `src/app/page.tsx`: default page for root route (`/`)
       - equivalent to `index.tsx` in the pages router (`src/pages/`)
-    - `src/app/[route]/page.tsx`: page component, `[route]` defines a route segment?
+    - `src/app/[route]/page.tsx`: page component, `[route]` defines the route and contains the front end
       - e.g. `src/app/products/page.tsx`
     - `src/app/[route]/layout.tsx`: layout component
       - layout: ui that is shared between multiple pages
@@ -85,19 +93,20 @@ next.js uses a file-system based routing system
       - route segment: portions of the url path that corresponds to a directory or file within the `app` directory
       - `<Suspense>` component: wraps the loading component
         - use `fallback={<p>Loading...</p>}` prop to handle cases where a page's content isn't available at build time
-    - `src/app/lib`: contains functions used in the application
+    - `src/app/lib/`: contains functions used in the application
       - e.g. reusable utility functions and data fetching functions
-    - `src/app/ui`: contains all ui components for the application
-  - `src/pages/` (traditional): pages router, server-side
+    - `src/app/api/`: stores all api routes
+      - e.g. `src/app/api/users/route.ts`: contains all user api routes
+    - `src/app/ui/`: contains all ui components for the application
+  - `src/pages/` (old, not recommended): pages router, server-side
     - files directly represent routes
-  - `src/pages/api/`: create backend logic inside a frontend project
 - `public/`: static assets such as images, fonts, etc
   - can be referenced by your code starting from base URL (`/`)
 - top-level files:
   - `next.config.js`: config file for next.js application
     - customize build and runtime behaviour (e.g. enable experimental features, modify webpack configurations, etc)
-  - `package.json`: 
-  - `middleware.ts`: 
+  - `package.json`:
+  - `middleware.ts`:
   - `.env`: file that stores environment variables at the root of the project
   - `.env.local`: local environment variables
   - `.env.production`: production environment variables
@@ -117,11 +126,10 @@ next.js uses a file-system based routing system
   - `default.(js/ts/tsx)`: fallback page for parallel routes
 
 > [!WARNING]
-> routes are not accessible until a `page.(js/ts/tsx)` or `route.(js/ts/tsx)` is added to the route segment*
+> routes are not accessible until a `page.(js/ts/tsx)` or `route.(js/ts/tsx)` is added to the route segment\*
 
 > [!TIP]
 > try to use `app` folder purely for routing purposes
-
 
 - separate `client` and `server` folders vs single next.js application handling bothe frontend and api routes (recommended)
   - separate `client` and `server` folders:
@@ -168,9 +176,13 @@ next.js uses a file-system based routing system
 
 ```typescript
 const links = [
-  { name: 'Home', href: '/dashboard', icon: HomeIcon },
-  { name: 'Invoices', href: '/dashboard/invoices', icon: DocumentDuplicateIcon },
-  { name: 'Customers', href: '/dashboard/customers', icon: UserGroupIcon },
+  { name: "Home", href: "/dashboard", icon: HomeIcon },
+  {
+    name: "Invoices",
+    href: "/dashboard/invoices",
+    icon: DocumentDuplicateIcon,
+  },
+  { name: "Customers", href: "/dashboard/customers", icon: UserGroupIcon },
 ];
 ```
 
@@ -185,9 +197,9 @@ const links = [
         key={link.name}
         href={link.href}
         className={clsx(
-          'flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3',
+          "flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3",
           {
-            'bg-sky-100 text-blue-600': pathname === link.href,
+            "bg-sky-100 text-blue-600": pathname === link.href,
           },
         )}
       >
@@ -200,6 +212,7 @@ const links = [
 ```
 
 - [Tailwind](./tailwind.md) CSS classes explanation (`hidden md:block`):
+
   - `hidden`: element is not visible by default (display: none)
   - `md:block`: on medium screens (768px and up), element becomes visible (display: block)
     - on medium screens and up: text is visible
@@ -213,7 +226,7 @@ more examples:
 
 ```tsx
 // Conditional classes
-clsx('button', isActive && 'active')
+clsx("button", isActive && "active");
 // If isActive is true: "button active"
 // If isActive is false: "button"
 ```
@@ -238,11 +251,11 @@ app/
       route.js   ✅ (handles API requests)
 ```
 
-| page | route | result |
-| --------------- | --------------- | --------------- |
-| `app/page.ts` | `app/route.ts` | ❌ conflict |
-| `app/page.ts` | `app/api/route.ts` | ✅ valid |
-| `app/[user]/page.ts` | `app/api/route.ts` | ✅ valid |
+| page                 | route              | result      |
+| -------------------- | ------------------ | ----------- |
+| `app/page.ts`        | `app/route.ts`     | ❌ conflict |
+| `app/page.ts`        | `app/api/route.ts` | ✅ valid    |
+| `app/[user]/page.ts` | `app/api/route.ts` | ✅ valid    |
 
 - each `route.ts` or `page.ts` file must handle all http verbs for that route
   - i.e. you can't have some http methods handled in one file and others in another file for the same route
@@ -252,26 +265,26 @@ app/
 > a route file allows you to create custom request handlers for a given route
 
 ```ts
-import type { NextRequest } from 'next/server'
+import type { NextRequest } from "next/server";
 
 export async function GET(request: NextRequest) {
-  const url = request.nextUrl
-  return new Response(`URL: ${url}`, { status: 200 })
+  const url = request.nextUrl;
+  return new Response(`URL: ${url}`, { status: 200 });
 }
 
 export async function POST(request: NextRequest) {
-  const body = await request.json()
-  return new Response(`Received: ${JSON.stringify(body)}`, { status: 200 })
+  const body = await request.json();
+  return new Response(`Received: ${JSON.stringify(body)}`, { status: 200 });
 }
 
 export async function PUT(request: NextRequest) {
-  const body = await request.json()
-  return new Response(`Updated: ${JSON.stringify(body)}`, { status: 200 })
+  const body = await request.json();
+  return new Response(`Updated: ${JSON.stringify(body)}`, { status: 200 });
 }
 
 export async function DELETE(request: NextRequest) {
-  const body = await request.json()
-  return new Response(`Deleted: ${JSON.stringify(body)}`, { status: 200 })
+  const body = await request.json();
+  return new Response(`Deleted: ${JSON.stringify(body)}`, { status: 200 });
 }
 ```
 
@@ -279,11 +292,8 @@ export async function DELETE(request: NextRequest) {
   - `request.nextUrl`: URL's request
 - `request.json()`: This method parses the request body as JSON
   - must be used inside an `async` function
-- `Response(body, options)`: Web API object representing an HTTP response, allowing you to create custom responses with:
-  - response body
-  - status code
-  - headers
-  - other response properties
+- `NextResponse`: object that allows you to create custom responses (e.g. status code, headers, etc)
+  - `return NextResponse.json({ error: 'Internal server error' }, { status: 500 });`
 
 Example:
 
@@ -292,6 +302,19 @@ return new Response('Hello', {
   status: 200,
   headers: { 'Content-Type': 'text/plain' }
 })
+```
+
+## client-side hooks
+
+> next.js has come client-side hooks that allow you to interact with the browser
+
+- `useSearchParams`: convert url parameters of the current url to json
+- `usePathName`: get current URL's pathname
+- `useRouter`: hook that enables client-side navigation and access to router information (current route, query parameters, etc)
+
+## pagination
+
+> process of dividing a large dataset into smaller pages and providing navigation controls to allow users to browse them
 
 ---
 
@@ -355,7 +378,7 @@ export async function getStaticProps() {
 export default function Home({ message }) {
   return <h1>{message}</h1>;
 }
-```
+````
 
 ## static vs dynamic rendering
 
@@ -369,6 +392,8 @@ export default function Home({ message }) {
   - use case: all cases that don't fit static rendering
     - user-specific content
     - real-time data
+- partial prerendering: combination of the benefits of static and dynamic rendering in the same route
+  - use case: pages that have some content that can be pre-rendered at build time and some dynamically generated content
 
 ---
 
@@ -382,6 +407,7 @@ export default function Home({ message }) {
 ## questions
 
 - how do i make http requests?
+
   - do i use express.js or does next.js have a built-in solution for this?
 
 - best way to fetch data?
