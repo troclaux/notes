@@ -15,12 +15,35 @@
 
 - user interface
 - routing: how users navigate between different parts of your application
+- DOM (Document Object Model): representation of the HTML elements of a webpage as a tree of nodes and objects
 - data fetching: where your data lives and how to get it
 - rendering: when and where you render static or dynamic content
 - infrastructure: where you deploy, store and run your application code
 - scalability: how your application adapts as your team, data and traffic grow
+- CORS (Cross-Origin Resource Sharing): security feature enforced by web browsers to prevent malicious websites from making unauthorized requests to another domain
+  - a cross-origin request happens when the frontend and backend have different domains, protocols or ports
+  - if your frontend and backend are on different origins, your backend must allow cors explicitly
+  - a domain/origin consists of: `protocol://domain:port`
+    - example of different domains: `http://localhost:3000` and `http://localhost:5000`
+      - so if this is the frontend (next.js) of an application making a request to the backend (api), this is considered a cross-origin request
+    - example of same-origin request: `https://myapp.com` and `https://myapp.com/api`
+      - because the protocol (`https`), domain (`myapp.com`) and port (default 443) are the same
+  - by default, browsers block cross-origin requests unless the server explicitly allows them using cors headers
+  - when does it matter?
+    - when frontend (Next.js, React, etc.) is hosted on a different domain than your backend API
+    - when calling an external API from your frontend
+    - when using a client-side request (e.g., `fetch()` or `Axios`) to access an API on another origin
+  - common cors errors and fixes:
+    - Error: "CORS policy: No 'Access-Control-Allow-Origin' header"
+      - Fix: Ensure your API includes Access-Control-Allow-Origin in its response headers
+    - Error: "CORS policy: Method not allowed"
+      - Fix: Make sure your Access-Control-Allow-Methods includes the request method
+    - Error: "CORS policy: Request header not allowed"
+      - Fix: If sending custom headers (like Authorization), add them to Access-Control-Allow-Headers
 
 - client-side vs server-side: describes where web application code runs
+  - client-side: code that runs in the client's computer
+  - server-side: code that runs in the server
   - client: hardware or software that requests and consumes resources/services from a server
     - resource: digital asset or data that a client can request from a server
     - initiates communication and requests resources
@@ -95,11 +118,11 @@ when a user visits a webpage:
 
 - add simple CI tasks from the beggining (linting, testing)
 - add tests as you progress
-- build back-end first, then go to front-end
+- build back end first, then go to front end
 
 1. define features to implement
 1. sketch user interface
-1. choose stack (front-end, back-end)
+1. choose stack (front end, back end)
 1. choose where project will be hosted (recommended is to start with localhost then change to public cloud)
 1. initialize project (e.g. `npm init -y` or `npx create-next-app@latest .`)
 1. install dependencies
@@ -110,8 +133,8 @@ when a user visits a webpage:
 1. set up and test api endpoints
 1. implement and test user authentication (optional)
 1. handle requests for each endpoint
-1. set up basic front-end
-1. integrate front-end with back-end
+1. set up basic front end
+1. integrate front end with back end
 1. deploy
 1. monitor and maintain
 
@@ -172,6 +195,9 @@ when a user visits a webpage:
 
 ### Progressive Web Application (PWA)
 
+> aims to provide UX similar to a native mobile app in the web browser
+
+- AKA native web app
 - can work offline
 - can be installed on user's device
 - examples
@@ -200,18 +226,18 @@ when a user visits a webpage:
 
 > development of both client-side and server-side software components of a web application
 
-- client-side/front-end:
+- client-side/front end:
   - user interface and user experience
   - technologies: HTML, CSS, JavaScript, frameworks (React, Vue, Angular)
-  - makes HTTP requests to the back-end
+  - makes HTTP requests to the back end
   - handles user interactions and data display
 
-- server-side/back-end:
+- server-side/back end:
   - business logic, database operations
   - authentication, authorization
   - API endpoints and services
   - technologies: Node.js, Python, Go, databases (SQL, NoSQL)
-  - receives HTTP requests from the front-end and sends responses
+  - receives HTTP requests from the front end and sends responses
 
 ### API integration
 
@@ -409,34 +435,11 @@ import { testDBConnection } from '@/lib/db';
 testDBConnection();
 ```
 
-4. create api route in `src/app/api/users.ts`
+4. create api route in `src/app/api/users/route.ts`
 
 consult the users table on postgresql before programming the sql query
 
-```typescript
-import { NextResponse } from 'next/server';
-import { query } from '@/lib/db';
-
-export async function POST(req: Request) {
-  try {
-    const { name, email } = await req.json();
-
-    if (!name || !email) {
-      return NextResponse.json({ error: 'Name and email are required' }, { status: 400 });
-    }
-
-    const result = await query(
-      'INSERT INTO users (name, email) VALUES ($1, $2) RETURNING *',
-      [name, email]
-    );
-
-    return NextResponse.json({ user: result.rows[0] }, { status: 201 });
-  } catch (error) {
-    console.error(error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
-  }
-}
-```
+[example](https://github.com/troclaux/peso/blob/main/src/app/api/users/route.ts)
 
 5. create database table with goose as a migration tool
 
