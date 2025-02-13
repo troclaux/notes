@@ -61,6 +61,12 @@
 - implementation of the client and server can be created independently of one another
 - does not necessarily uses HTTP as underlying protocol for communication
 
+## testing
+
+- recommended tools:
+  - `curl` (not recommended)
+  - jest + supertest
+
 ## 5 commandments
 
 1. tell me what this thing is
