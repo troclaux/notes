@@ -18,6 +18,14 @@
     - e.g. `https://example.com/login?token=...`
   - API keys
 
+- there are many auth providers:
+  - [better auth (recommended)](https://www.better-auth.com/)
+  - [next auth](https://next-auth.js.org/)
+  - [clerk](https://clerk.com/)
+  - [lucia](https://lucia-auth.com/)
+  - [auth0](https://next-auth.js.org/)
+  - [okta](https://www.okta.com/)
+
 - token: string of characters that represents a user's identity, permissions or access rights
 - access token: piece of data that represents the authorization granted to a client to access specific resources and identifies the user's permissions and identity
   - used to secure access to APIs and other resources
@@ -26,7 +34,7 @@
   - doesn't provide access to resources directly
   - can be revoked
   - generally last longer than access token
-  - stored in the database
+  - stored in the database (back end) and in http-only cookies (front end)
   - why not increase access tokens expiration time?
     - access tokens are exposed while in transit, while refresh tokens are stored securely and only used to request new access tokens
     - access tokens are bearer tokens, where "possession equals authority"
@@ -40,7 +48,18 @@
 
 > [!IMPORTANT]
 > don't store secrets/JWTs/credentials in the browser's local storage
-> because local storage is accessible to any javascript running on the page
+> because local storage is accessible to any javascript running on the page (including browser extensions)
+> instead, store access tokens in variables and refresh tokens in http-only cookies (not accessible by javascript)
+> if you store the access token in a variable, it will be lost when the component is refreshed
+
+```jsx
+const [accessToken, setAccessToken] = useState(null);
+```
+
+- benefits of storing access token with `useState`:
+  - persists after re-renders
+  - triggers ui updates
+  - works with `useEffect` to fetch data
 
 ## authorization
 
@@ -55,10 +74,13 @@
 JWTs lifecycle:
 
 1. user submits login + password
-1. handler makes sql query on database and tries to get the user row
+1. server's handler queries the database to find the user
 1. compare user's hashed password in the database with password in the request
-1. create JWT with user ID and sent it to client
-1. client sends JWT in all future login requests
+1. the server generated an access token and a refresh token
+1. the server responds with the access token while storing the refresh token in an http-only cookie
+1. client stores the access token in state or context
+1. when access token expires, client sends refresh token to server to get a new access token (`api/refresh`)
+1. client sends the access token in the Authorization header in all future requests to the server
 1. on every authenticated request, server validades JWT
 1. eventually JWT expires and the process repeats
 
@@ -95,11 +117,73 @@ example of a JWT (the token is the complete string):
 > If anyone modifies the header or payload, the signature verification will fail since it was generated using the server's secret key
 > This ensures data integrity and authenticity of the token
 
+- between multiple login requests with jwt using the same user and password:
+  - the header doesn't change
+  - the payload changes even if it's the same user and password, because there's also `iat` (issued at) and `exp` (expiration time)
+  - the signature changes because it's generated based on the header and payload
+
+login implementation summary:
+
+> [!TIP]
+> login is basically a POST request to the server with the user's credentials that receives a JWT in return
+
+- what should the application's login api route do when a user logs in?
+  - validate credentials
+  - generate an access token (short-lived, e.g., 15 minutes)
+  - generate a refresh token (long-lived, e.g., 7 days)
+  - store the refresh token in the database
+  - send both tokens to the frontend
+
+- when the access token expires:
+  - the front end sends the refresh token to get a new access token
+  - if the refresh token is valid:
+    - issue a new access token
+    - optionally issue a new refresh token (rotate refresh tokens)
+  - if the refresh token is invalid or expired:
+    - force the user to log in again
+
+implementation steps:
+
+- install packages: `npm install jsonwebtoken bcrypt pg`
+- create refresh token table in the database (back end)
+- create `JWT_SECRET` in `.env`
+  - generate a random string to be the value of `JWT_SECRET`  with the command `openssl rand -base64 64 | tr -d '\n'`
+- test access and refresh token generation (back end)
+- implement login api (back end)
+- create table for refresh tokens in database (back end)
+- implement endpoint to refresh refresh tokens (back end)
+- implement login page (front end)
+  - login page generates access and refresh tokens
+  - store access token with `useState`
+  - store refresh token in http-only cookie
+
+example of a refresh token table:
+
+```
+-- +goose Up
+-- +goose StatementBegin
+CREATE TABLE refresh_tokens (
+  token TEXT PRIMARY KEY,
+  user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
+  expires_at TIMESTAMP NOT NULL,
+  revoked_at TIMESTAMP DEFAULT NULL
+);
+-- +goose StatementEnd
+
+-- +goose Down
+-- +goose StatementBegin
+DROP TABLE refresh_tokens;
+-- +goose StatementEnd
+```
+
 #### Header
 
-- Consists of two parts:
-  1. The type of the token, which is JWT
-  2. The signing algorithm being used (e.g. SHA256, RSA, etc)
+Consists of two parts:
+
+1. The type of the token, which is JWT
+2. The signing algorithm being used (e.g. SHA256, RSA, etc)
 
 Example of a header:
 
@@ -116,16 +200,16 @@ Example of a header:
 
 - claims: statements about an entity (typically, the user) and additional data
 - three types of claims:
-  1. registered claims (not mandatory but recommended)
+  - registered claims (not mandatory but recommended)
     - iss (issuer)
     - exp (expiration time)
     - sub (subject)
     - aud (audience)
     - iat (issued at)
-  2. public claims
+  - public claims
     - can be defined at will by those using JWTs
     - to avoid collisions, they should be defined in the IANA JSON Web Token Registry or be defined as a URI that contains a collision-resistant namespace
-  3. private claims
+  - private claims
     - custom claims created to share information between parties that agree on using them
 
 example of a payload:
@@ -158,23 +242,23 @@ example of a payload:
 
 > protocol that allows users to grant third-party application limited access ot their resource on another service provider's website (e.g. Google, Github)
 
-- Widely used authorization framework
-- Enables applications to secure designated access to user accounts on other applications and server
-- Decouples authentication from authorization
+- widely used authorization framework
+- enables applications to secure designated access to user accounts on other applications and server
+- decouples authentication from authorization
 
 [Oauth](https://developer.okta.com/blog/2017/06/21/what-the-heck-is-oauth)
 
 step-by-step:
 
-1. User inserts credentials
-2. Successful login
+1. user inserts credentials
+2. successful login
 3. JWT will be returned
 4. whenever the user wants to access a protected resource, the user-agent should sent the JWT
   - the JWT typically is sent in the Authorization header using the Bearer schema
 
-- Security best practices:
-  - Dont keep tokens longer than necessary
-  - Don't store sensitive session data in browser storage
+- security best practices:
+  - dont keep tokens longer than necessary
+  - Don't store sensitive session data in browser storage (local storage, session storage, etc)
 
 ### Step-by-step
 
