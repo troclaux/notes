@@ -59,6 +59,16 @@ volta install node
 - executes package directly from npm registry without installing it globally: `npx create-react-app my-app`
   - useful for trying out tools or running one-off commands
 
+- `NODE_ENV`: special environment variable that:
+  - is not set in your `.env` file
+  - Is automatically set by Next.js/Node.js
+  - indicates which environment your application is running in
+    - has three common values: 'development', 'production', or 'test'
+    - the value dependes on the command you run
+      - `npm run dev` => sets `NODE_ENV='development'`
+      - `npm run build` or `npm run start` => sets `NODE_ENV='production'`
+      - `npm run test` => sets `NODE_ENV='test'`
+
 ## file system module
 
 ## event-driven architecture
