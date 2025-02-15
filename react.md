@@ -15,7 +15,7 @@
 - hooks: enables features like state and side effects
   - `useState`: add state to functional components
   - `useEffect`: handle side effects (like fetching data, setting timers or updating the dom)
-  - `useContext`: used to access context (shared state) in a functional component
+  - `useContext`: used to access context (shared state) in a functional component without passing props manually at every level
 
 ## JSX (JavaScript XML)
 
@@ -204,6 +204,59 @@ function App() {
       <button onClick={() => setCount(count + 1)}>Increment</button>
     </div>
   );
+}
+```
+
+### useContext
+
+> access context (shared state) in a functional component without passing props manually at every level
+
+intead of passing, for example, user authentication data through props, you can use `useContext` to access it directly
+
+without `useContext`:
+
+```jsx
+<App user={user}>
+  <Navbar user={user} />
+  <Dashboard user={user}>
+    <Profile user={user} />
+    <Settings user={user} />
+  </Dashboard>
+</App>
+```
+
+with `useContext`:
+
+```jsx
+const AuthContext = createContext();
+
+function App() {
+  const user = { name: 'Alice' };
+  return (
+    <AuthContext.Provider value={user}>
+      <Navbar />
+      <Dashboard />
+    </AuthContext.Provider>
+  );
+}
+
+function Navbar() {
+  const user = useContext(AuthContext);
+  return <div>Welcome, {user.name}!</div>;
+}
+
+function Dashboard() {
+  return (
+    <>
+      <Profile />
+      <Settings />
+    </>
+  );
+}
+
+function Profile() {
+  const user = useContext(AuthContext);
+  return <div>Profile of {user.name}</div>;
 }
 ```
 
