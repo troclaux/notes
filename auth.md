@@ -12,19 +12,11 @@
       - always use bcrypt to hash passwords that will be stored in the database
       - [avoid MD5 and SHA-3](https://blog.boot.dev/cryptography/how-sha-2-works-step-by-step-sha-256/#can-i-use-sha-256-to-hash-passwords)
     - id can be email, username, etc
-  - 3rd party authentication
+  - OAuth
     - e.g. sign in with google, sign in with github, etc
   - magic links
     - e.g. `https://example.com/login?token=...`
-  - API keys
-
-- there are many auth providers:
-  - [better auth (recommended)](https://www.better-auth.com/)
-  - [next auth](https://next-auth.js.org/)
-  - [clerk](https://clerk.com/)
-  - [lucia](https://lucia-auth.com/)
-  - [auth0](https://next-auth.js.org/)
-  - [okta](https://www.okta.com/)
+  - passkeys
 
 - token: string of characters that represents a user's identity, permissions or access rights
 - access token: piece of data that represents the authorization granted to a client to access specific resources and identifies the user's permissions and identity
@@ -336,19 +328,45 @@ step-by-step:
 
 ## Auth Providers
 
-What is the best auth provider?
-- choices:
-  - Supabase (most recommended for beginners)
-    - built on top of PostgreSQL
-    - open-source
-    - easy to use
-    - bad documentation
-  - Firebase auth
-    - good documentation
-    - easy to use
-  - Auth0
-    - expensive
-    - good documentation
+- [better auth (recommended)](https://www.better-auth.com/)
+  - keeps data in your database
+  - helps using OAuth connections
+  - good documentation
+- [clerk](https://clerk.com/)
+  - data is kept in clerk's database instead of yours
+  - works on everything
+  - pay only after a certain number of users
+  - good documentation
+  - quick to set up
+- [next auth](https://next-auth.js.org/)
+- [auth0](https://next-auth.js.org/)
+- [okta](https://www.okta.com/)
+
+### clerk
+
+- clerk hooks
+- clerk helpers
+  - client-side
+    - `useUser()`
+    - `useClerk()`
+    - `useAuth()`
+    - `useSignIn()`
+    - `useSignUp()`
+    - `useSession()`
+    - `useSessionList()`
+    - `useOrganization()`
+    - `useOrganizationList()`
+  - server-side
+    - `auth()`: returns `Auth` object that contains:
+      - `sessionId`
+      - `userId`
+      - `orgId`
+      - `sessionClaims`
+      - `getToken()`
+      - `has()`: checks if the user has authorization to access a component
+    - `currentUser`: holds info about a user
+    - route handlers
+    - server actions
 
 ---
 
