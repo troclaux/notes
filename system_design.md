@@ -30,13 +30,20 @@
 - coupling: between data and presentation logic
   - has that same name as [coupling](/software_engineering.md#software-architecture-patterns), but it's a different concept
 
-- monolithic: single, large program that contains all functionality for both front-end and back-end of an application
+- monolithic: single, large program that contains all functionality for both front end and back end of an application
   - advantages
-    - easier to develop
-    - easier to deploy
-- decoupled: front-end and back-end are separated into different codebases
-  - e.g. front-end is hosted by a static file server on one domain and back-end is hosted on a subdomain by a different server
-  - advantages
-    - scale according to demand for each part
-    - better separation of concerns
-    - hosted in separate servers with different technologies
+    - simpler to develop
+    - simpler to deploy
+  - disadvantages
+    - harder to scale
+- Microservices
+  - application split into small independent services
+  - each service handles specific business function
+  - easier to scale and maintain individual components
+  - more complex to develop and deploy initially
+  - decoupled: front end and back end are separated into different codebases
+    - e.g. front end is hosted by a static file server on one domain and back end is hosted on a subdomain by a different server
+    - advantages
+      - scale according to demand for each part
+      - better separation of concerns
+      - hosted in separate servers with different technologies
