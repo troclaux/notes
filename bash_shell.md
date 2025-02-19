@@ -85,7 +85,7 @@ ls *[0-9]?.{jpg,png}
   - `command 2> error.log`
 
 > [!TIP]
-> combine multiple outputs and pipe everything into a single `fzf` by surrounding everything with parenthesis and separating each command with `;`
+> join multiple outputs and pipe everything into a single `fzf` by surrounding everything with parenthesis and separating each command with `;`
 
 ```bash
 (ls /usr/share/applications/ ; flatpak list | awk '{print $2 ".desktop"}') | fzf
