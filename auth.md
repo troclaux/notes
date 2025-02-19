@@ -31,6 +31,10 @@
     - access tokens are exposed while in transit, while refresh tokens are stored securely and only used to request new access tokens
     - access tokens are bearer tokens, where "possession equals authority"
     - access tokens can be stolen in cross-site scripting (XSS) attacks
+  - bearer token: a type of access token that is sent with the request to access protected resources
+    - included in the Authorization header of the request, prefixed by the word "Bearer"
+  - Sender-Constrained Tokens (SCT): tokens that are bound cryptographic to the client through a process that uses certificates or private/public keys
+    - can use JWTs
 
 - cookie: small piece of data stored on client's browser by websites to remember stateful information
   - e.g. user preferences, items in a shopping cart, refresh and access tokens, etc
@@ -230,6 +234,29 @@ example of a payload:
 - if you send JWT through HTTP header try to prevent them from getting too big
   - Some servers don't accept more than 8 KB in headers
 
+### good practices
+
+- use safe algorithms
+  - HS256, RS256
+- keep the secret key safe
+  - don't expose it in the client side
+  - don't store it in the database
+- keep short-lived tokens
+  - access tokens: minutes
+  - refresh tokens: days, weeks, months
+- use HTTPS
+- allow token revocation
+- validate tokens on the server, checking signature and claims
+- don't add too many claims
+  - keep the payload small to minimize token size
+- verify the `iss` claim, to check if the token was issued by a trusted party
+- use default claims
+  - `exp` (expiration time)
+  - `iat` (issued at)
+  - `nbf` (not before)
+  - `sub` (subject)
+  - `aud` (audience)
+
 ## OAuth
 
 > protocol that allows users to grant third-party application limited access ot their resource on another service provider's website (e.g. Google, Github)
@@ -240,24 +267,18 @@ example of a payload:
 
 [Oauth](https://developer.okta.com/blog/2017/06/21/what-the-heck-is-oauth)
 
-step-by-step:
+### step-by-step
 
 1. user inserts credentials
-2. successful login
-3. JWT will be returned
-4. whenever the user wants to access a protected resource, the user-agent should sent the JWT
+1. User authorizes App and delivers proof
+1. app sends proof of authorization to server, that sends a token in response
+1. whenever the user wants to access a protected resource, the user-agent should sent the JWT
   - the JWT typically is sent in the Authorization header using the Bearer schema
 
 - security best practices:
-  - dont keep tokens longer than necessary
-  - Don't store sensitive session data in browser storage (local storage, session storage, etc)
-
-### Step-by-step
-
-1. App requests authorization from User
-2. User authorizes App and delivers proof
-3. App presents proof of authorization to server to get a Token
-4. Token is restricted to only access what the User authorized for the specific App
+  - don't keep tokens longer than necessary (try to minimize the time that the token is valid)
+  - don't store sensitive session data in browser storage (local storage, session storage, etc)
+    - because it's accessible by any javascript running on the page (including browser extensions)
 
 ### OAuth components
 
@@ -329,16 +350,20 @@ step-by-step:
 ## Auth Providers
 
 - [better auth (recommended)](https://www.better-auth.com/)
-  - keeps data in your database
-  - helps using OAuth connections
+  - keep user data in your database
+  - OAuth connections
   - good documentation
+  - quick and easy to set up
+  - free
 - [clerk](https://clerk.com/)
-  - data is kept in clerk's database instead of yours
-  - works on everything
-  - pay only after a certain number of users
+  - user data is kept in clerk's database instead of yours, but you can still access it
+  - OAuth connections
   - good documentation
-  - quick to set up
-- [next auth](https://next-auth.js.org/)
+  - quick and easy to set up
+  - pay only after a certain number of users
+- [auth.js](https://authjs.dev/)
+  - keep user data in your database
+  - harder to set up
 - [auth0](https://next-auth.js.org/)
 - [okta](https://www.okta.com/)
 
@@ -367,6 +392,67 @@ step-by-step:
     - `currentUser`: holds info about a user
     - route handlers
     - server actions
+
+### better auth
+
+#### add Google SSO OAuth to your Next.js app
+
+To obtain the values for `AUTH_GOOGLE_ID` (your Google Client ID) and `AUTH_GOOGLE_SECRET` (your Google Client Secret), you need to create an OAuth 2.0 credential in the Google Developer Console. Here’s how you can generate them:
+
+1. Go to Google Cloud Console:
+
+- Navigate to the [Google Cloud Console](https://console.cloud.google.com/)
+- If you don’t have a project, create one by clicking on the `Select a project` dropdown at the top, then `New Project`
+
+2. Enable the Google API:
+
+- Once your project is created, you need to enable the Google API that you want to use (for example, Google OAuth, Google Sign-In, or another API).
+- Go to `APIs & Services > Library` in the Google Cloud Console.
+- Search for the API you want to enable (e.g., `Google+ API` or `Google Identity Services` for login)
+- Click on the API and enable it by clicking the `Enable` button
+
+3. Create OAuth 2.0 Credentials:
+
+- In the Google Cloud Console, go to `APIs & Services > Credentials`
+- Click on the `Create Credentials` button and select OAuth 2.0 Client IDs
+
+4. configure the OAuth consent screen:
+
+- if you haven’t set up the OAuth consent screen yet, you’ll be prompted to configure it
+- this screen is what users will see when they are asked to grant your app permission to access their data
+- fill in the required fields (app name, email, etc.)
+- leave the other options as default if you're just setting up for development
+
+5. Generate OAuth Client ID:
+
+- under `application type`, select `web application` (if you’re building a web app)
+- In the Authorized JavaScript origins field, add the URLs that will be using this OAuth credential (e.g., `http://localhost:3000` for local development).
+- In the Authorized redirect URIs field, add the URL that users will be redirected to after logging in (e.g., `http://localhost:3000/api/auth/callback/google` for Next.js).
+- Click Create.
+
+6. Get the Client ID and Client Secret:
+
+- Once your OAuth 2.0 credentials are created, you’ll see a popup containing the **Client ID** and **Client Secret**.
+- You can also find them later in `APIs & Services > Credentials`
+
+7. Copy the Values:
+
+- Copy the Client ID and Client Secret and use them in your application. These values are the ones you'll put in your environment variables (e.g., `AUTH_GOOGLE_ID={CLIENT_ID}` and `AUTH_GOOGLE_SECRET={CLIENT_SECRET}`).
+
+Example:
+
+```env
+AUTH_GOOGLE_ID=your-client-id.apps.googleusercontent.com
+AUTH_GOOGLE_SECRET=your-client-secret
+```
+
+Additional Notes:
+
+- Client ID: It uniquely identifies your app to Google's OAuth servers.
+- Client Secret: A secret key used to authenticate your app when requesting tokens or making API requests on behalf of users.
+
+- Now, you can use these credentials in your app to integrate Google authentication
+- If you're using an authentication library like `next-auth` or another OAuth client, you can add these values to your environment variables and pass them to the OAuth configuration.
 
 ---
 
