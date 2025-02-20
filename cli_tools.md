@@ -9,7 +9,7 @@
 
 ## CLI tools with its own markdown notes
 
-- [basic shell commands](./shell.md)
+- [basic shell commands](./bash_shell.md)
 - [git](./git.md)
 - [docker](./docker.md)
 - [psql](./postgresql.md)
@@ -439,6 +439,14 @@ openssl rand -base64 64 -A
 - `-base64`: specifies output format of the generated random data, in this case, base64-encoded string
 - `64`: length of the random data to be generated, in this case, 64 bytes
 
+## nmap
+
+```bash
+nmap -sV -sC -p- -T4 -A
+```
+
+- `-u`: scan udp ports
+- 
 
 ## sshfs
 
