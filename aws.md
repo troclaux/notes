@@ -1,7 +1,7 @@
 
 # AWS
 
-service: a software that provides functionality and performs a task or set of tasks for your system
+- service: a software that provides functionality and performs a task or set of tasks for your system
   - examples:
     - apache
     - nginx
@@ -13,10 +13,10 @@ service: a software that provides functionality and performs a task or set of ta
   - linux, windows, MacOS
 
 - serverless: servers aren't directly managed
-  - S3
-  - DynamoDB
-  - Fargate
-  - Lambda
+  - e.g. AWS Lambda
+- private cloud: cloud infrastructure that is operated solely for a single organization
+- public cloud: cloud infrastructure that is available to the general public
+
 - OLAP
   - used for platforms with intense read operations
   - used for analyzing large quantities of data from multiple perspectives or dimension
@@ -30,14 +30,14 @@ service: a software that provides functionality and performs a task or set of ta
 - Database: Storing data in a structured way
 - Network: Routers, switches, DNS servers
 
-- Advantages
+- advantages of cloud computing
   - On-demand resources can be provisioned without human interaction
-  - Resources are available over the network, and can be accessed by diverse client platforms
-  - Quickly and easily scale based on demand (stop guessing capacity)
-  - Measured payment for resources (pay only what you use)
-  - Benefits from massive economies of scale
-  - Trade CAPEX (Capital Expense) for OPEX (Operational Expense)
-  - Easily access global infrastructure
+  - resources are available over the network, and can be accessed by diverse client platforms
+  - quickly and easily scale based on demand (stop guessing capacity)
+  - measured payment for resources (pay only what you use)
+  - benefits from massive economies of scale
+  - trade CAPEX (CAPital EXpense) for OPEX (OPerational EXpense)
+  - easily access global infrastructure
 
 - problems solved by the cloud
   - flexibility
@@ -58,6 +58,57 @@ service: a software that provides functionality and performs a task or set of ta
   - multiple people can belong to a group
   - a person can belong to multiple groups simultaneously
 
+- load balancing: distributing incoming network traffic across multiple servers
+  - improves responsiveness and availability of applications
+  - prevents a single server from becoming a single point of failure
+
+- on-site: infrastructure is physically located at your site
+- IaaS (Infrastructure as a Service): provides virtualized computing resources over the internet
+  - e.g. AWS EC2, Google Compute Engine
+- PaaS (Platform as a Service): provides a platform allowing customers to develop, run, and manage applications without the complexity of building and maintaining the infrastructure
+  - e.g. AWS Elastic Beanstalk
+- SaaS (Software as a Service): software that is centrally hosted and licensed on a subscription basis
+  - e.g. Google Drive
+
+|                         | On-site      | IaaS           | PaaS           | SaaS           |
+|-------------------------|--------------|----------------|----------------|----------------|
+| **Applications**   | You | You | You | Service provider |
+| **Data**           | You | You | You | Service provider |
+| **Runtime**        | You | You | Service provider | Service provider |
+| **Middleware**     | You | You | Service provider | Service provider |
+| **O/S**            | You | You | Service provider | Service provider |
+| **Virtualization** | You | Service provider | Service provider | Service provider |
+| **Servers**        | You | Service provider | Service provider | Service provider |
+| **Storage**        | You | Service provider | Service provider | Service provider |
+| **Networking**     | You | Service provider | Service provider | Service provider |
+
+- workloads: computing resources required to run an application or service in a cloud computing environment
+
+## WAF (Well-Architected Framework) and CAF (Cloud Adoption Framework)
+
+- WAF: a set of best practices for designing and operating reliable, secure, efficient, and cost-effective systems in the cloud
+- CAF: a set of best practices for adopting cloud technologies and services in a structured and organized way
+
+### 5 pillars of cloud computing architecture
+
+1. operational excellence: automation, monitoring, and management
+2. security: protect data, systems, and assets
+3. reliability: ability to recover from failures and maintain availability
+4. performance efficiency: use resources efficiently
+5. cost optimization: avoid unnecessary costs
+
+## storage services
+
+- file storage: data is stored in a hierarchical file system (directories and files, like your computer)
+  - e.g. AWS EFS
+- block storage: data is stored in fixed-size blocks
+  - e.g. AWS EBS
+  - ideal for databases
+- object storage: data is stored as objects
+  - e.g. AWS S3
+  - object: a collection of data that contains both data and metadata
+  - ideal for non-structured data
+
 ## AWS CLI
 
 > manage aws resources with CLI commands
@@ -65,6 +116,8 @@ service: a software that provides functionality and performs a task or set of ta
 - `aws iam list-users`: Lists all IAM users in your AWS account, showing each user's name, path, ID, ARN, and creation date
 
 ## IAM (Identity and Access Management)
+
+> manage access to AWS services and resources securely
 
 ### Policy structure
 
@@ -167,28 +220,143 @@ service: a software that provides functionality and performs a task or set of ta
 
 ## EC2 - Elastic Compute Cloud
 
-> comp
+> compute service that allows you to launch virtual servers in the cloud
+
+## Lambda
+
+> serverless service that lets you run code without provisioning or managing servers
 
 ## S3 - Simple Storage Service
+
+> scalable object storage service that allows you to store and retrieve data from anywhere on the web
+
+## EBS - Elastic Block Store
+
+> block storage service that allows you to create and attach storage volumes to EC2 instances
+
+## VPC - Virtual Private Cloud
+
+> virtual network that allows you to launch AWS resources in a logically isolated section of the cloud
+
 ## RDS - Relational Database Service
-## Lambda
-## API Gateway
-## CloudFront
-## Route 53
-## CloudWatch
-## AMI - Amazon Machine Image
-## ECR - Elastic Container Registry
-## SNS - Simple Notification Service
-## SQS - Simple Queue Service
+
+> managed database service that allows you to set up, operate, and scale relational databases in the cloud
+
 ## DynamoDB
-## Elastic Beanstalk
-## CloudFormation
-## Kinesis
-## Cognito
-## CodePipeline
-## CodeBuild
-## CodeDeploy
+
+> fully managed NoSQL database service that provides fast and predictable performance with seamless scalability
+
+## ElastiCache
+
+> fully managed in-memory caching service that makes it easy to deploy, operate, and scale popular open-source compatible in-memory data stores
+
+## Redshift
+
+> fully managed data warehouse service that allows you to run complex queries on large datasets
+
+## Route 53
+
+> scalable domain name system (DNS) web service that translates domain names into IP addresses
+
+## CloudFront
+
+> content delivery network (CDN) service that delivers data, videos, applications and APIs to customers globally with low latency and high transfer speeds
+
+## KMS (Key Management Service)
+
+> managed service that allows you to create and control the encryption keys used to encrypt your data
+
+## API Gateway
+
+> fully managed service that makes it easy for developers to create, publish, maintain, monitor, and secure APIs at any scale
+
+## SNS - Simple Notification Service
+
+> fully managed messaging service that allows you to send notifications to a large number of recipients
+
+## SQS - Simple Queue Service
+
+> fully managed message queuing service that allows you to decouple and scale microservices, distributed systems, and serverless applications
+
+## Step Functions
+
+> fully managed service that allows you to coordinate multiple AWS services into serverless workflows
+
 ## CodeCommit
+
+> fully managed source control service that makes it easy for teams to host secure and highly scalable private Git repositories
+
+## CodePipeline
+
+> fully managed continuous integration and continuous delivery (CI/CD) service that automates the build, test, and deploy phases of your release process
+
+## CodeBuild
+
+> fully managed build service that compiles source code, runs tests, and produces software packages that are ready to deploy
+
+## CodeDeploy
+
+> fully managed deployment service that automates software deployments to a variety of compute services such as EC2, Lambda, and on-premises servers
+
+## ECS (Elastic Container Service)
+
+> fully managed container orchestration service that allows you to run, stop, and manage Docker containers on a cluster of EC2 instances
+
+## ECR - Elastic Container Registry
+
+> fully managed Docker container registry that makes it easy to store, manage, and deploy Docker container images
+
+## EKR - Elastic Kubernetes Service
+
+> fully managed Kubernetes service that allows you to run, manage, and scale containerized applications using Kubernetes
+
+## CloudWatch
+
+> monitoring and observability service that provides data and insights
+
+- monitor your applications
+- respond to system-wide performance changes
+- optimize resource utilization
+- get a unified view of operational health
+
+## CloudFormation
+
+> fully managed service that allows you to create and manage AWS resources using templates
+
+## AMI - Amazon Machine Image
+
+> a template that contains a software configuration (e.g. operating system, application server, applications) that is used to launch EC2 instances
+
+## Elastic Beanstalk
+
+> fully managed service that allows you to deploy and manage web applications and services
+
+## Kinesis
+
+> fully managed service that allows you to collect, process, and analyze real-time streaming data
+
+## Cognito
+
+> fully managed identity service that allows you to add user sign-up, sign-in, and access control to your web and mobile apps quickly and easily
+
+## Glacier
+
+> low-cost storage service for data archiving and long-term backup
+
+## Lightsail
+
+> deploy and manage applications/websites with pre-configured cloud resources
+
+## Redshift
+
+> fully managed data warehouse service that allows you to run complex queries on large datasets
+## Athena
+
+> interactive query service that allows you to analyze data in Amazon S3 using standard SQL
+
+## EMR - Elastic MapReduce
+
+> big data processing service that allows you to run Apache Hadoop, Spark, and other big data frameworks on AWS
 
 ---
 
@@ -196,3 +364,10 @@ service: a software that provides functionality and performs a task or set of ta
 - server provisioning: the process of setting up physical or virtual hardware; installing and configuring software, such as the operating system and applications; and connecting it to middleware, network, and storage components
 - failover: ability of a system or service to automatically switch to a backup or secondary system when the primary system becomes unavailable or experiences a failure. This is important for ensuring high availability and minimizing downtime for critical applications and services.
 - VPC (Virtual Private Cloud): virtual network infrastructure that allows users to provision a logically isolated section where they can launch AWS resources in a virtual network
+- topology: the arrangement of nodes or devices in a network
+  - e.g. star, ring, bus, mesh, tree
+- cluster: a group of interconnected computers or servers that work together to perform a specific task or function
+  - commonly used in high-performance computing, data processing, and distributed systems to improve performance, scalability, and fault tolerance
+  - resources are shared and coordinated to achieve a common goal
+- grid: distributed computing system that connects multiple computers or servers to work together on a common task or problem
+  - decentralized
