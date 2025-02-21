@@ -110,7 +110,8 @@
 
 ### CMN vs Copom
 
-- CMN
+
+- CMN (Conselho Monetário Nacional)
   - composição:
     - ministro da economia
     - presidente do BC
@@ -119,7 +120,7 @@
     - definir políticas econômicas
     - atingir meta da inflação
     - controle do crédito
-- Copom
+- COPOM (COmitê de POlítica Monetária)
   - composição:
     - presidente do BC
     - 8 diretores do BC
@@ -387,9 +388,8 @@ distribuição da população pelo território nacional:
 
 - Brasil teve 40 mil homicídios em 2023 (10% do nº de homicídios globais)
   - 20 homicídios por 100 mil habitantes
-
-  - para OMS (Organização Mundial da Saúde), mais do que 10 homicídios por 100 mil habitantes é altíssima
-- nº de homicídios está diminuindo no Brasil (menor nº em 14 anos)
+- para OMS (Organização Mundial da Saúde), mais do que 10 homicídios por 100 mil habitantes é altíssima
+- nº de homicídios está diminuindo no Brasil (menor em 14 anos)
 
 ## educação brasileira
 
@@ -444,6 +444,7 @@ distribuição da população pelo território nacional:
     - 40% é escolhido pelo estudante
   - grade curricular é dividida de forma similar ao ENEM
     - línguagens, matemática, ciências da natureza, ciências humanas/sociais, formação técnica e profissional
+
 ---
 
 - indústria extrativa: aquelas relacionadas à extração de recursos naturais
@@ -454,7 +455,7 @@ distribuição da população pelo território nacional:
 
 - SELIC (Sistema Especial de Liquidação e de Custódia)
 - CMN (Conselho Monetário Nacional)
-- Copom (COmitê de POlítica Monetária)
+- COPOM (COmitê de POlítica Monetária)
 - MVI (Mortes Violentas Intencionais)
 - INEP (Instituto Nacional de Estudos e Pesquisas educacionais)
 - PISA (Programa Internacional de Avaliação de Estudantes)
