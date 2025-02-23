@@ -417,6 +417,18 @@ my_object = {
 
 ## modules
 
+> reusable pieces of code that can be exported from one program and imported into another
+
+examples of `import` statements:
+
+```javascript
+import myDefault from 'module-name';         // default import
+import { foo, bar } from 'module-name';      // named import
+import { foo as myFoo } from 'module-name';  // named import with alias
+import * as myModule from 'module-name';     // namespace import
+import 'module-name';                        // import for side effects only
+```
+
 - to import a function from another file, it must be exported from the file where it’s defined
 - 2 types of exports:
   - named exports: when you use only the `export` keyword
@@ -457,7 +469,6 @@ import { addTwo as add, subtract } from './modules/mathFunctions.js';
 
 console.log(add(5, 3));  // Output: 8
 console.log(subtract(5, 3));  // Output: 2
-
 ```
 
 ## error handling
@@ -554,3 +565,26 @@ fetchData()
   });
 
 ```
+
+## versions
+
+> ECMAScript (ES): standardized version of JavaScript
+
+- new ECMAScript versions are released yearly, adding incremental improvements
+- modern javascript incorporates features from ES6 and later versions
+
+- ES5: ECMAScript 5 (2009)
+- **ES6** (major update): ECMAScript 6 (2015)
+  - also known as ES2015
+  - introduced:
+    - `let` and `const` for variable declarations
+    - arrow functions
+    - multi-line strings
+    - default parameters
+    - template literals
+    - ternary operator
+    - classes
+    - modules
+    - spread and rest operators (`...`)
+    - promises
+- ES7 (2016), ES8 (2017), ES9 (2018), ..., ES15 (2024)
