@@ -13,7 +13,7 @@
   - etc
 - uses `tsconfig.json` for compiler configuration
 
-- basic commands
+- CLI commands
   - run typescript file: `tsc <file_name.ts>`
   - create a `tsconfig.json`: `tsc --init`
 
@@ -68,6 +68,34 @@ class Animal {
 
 let dog = new Animal("Dog");
 dog.speak(); // Output: Dog makes a noise.
+```
+## interface and type
+
+- `interface` and `type` are used to define custom types
+  - `interface` is primarily used to define object types
+    - recommended because it provides better error messages
+  - `type` is used to define object types, union types, tuple types, etc
+
+```typescript
+interface Person {
+  name: string;
+  age: number;
+}
+
+interface Employee extends Person {
+  role: string;
+}
+```
+
+```typescript
+type StringOrNumber = string | number;
+
+type Data = [number, string];
+
+type Person = {
+  name: string;
+  age: number;
+};
 ```
 
 ## generics
