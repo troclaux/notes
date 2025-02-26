@@ -17,10 +17,47 @@
 - JVM: allows java to run in any OS (Linux, Windows, Mac)
 - JRE: contains JVM and all the extra tools and libraries needed to run a Java program
 
-
 ## data types
 
-TODO
+- primitive types
+  - are predefined
+  - start with lowercase
+  - store actual values
+  - have default values (0, 0.0, false, '\u0000')
+  - use stack memory
+- reference types
+  - are created by the programmer
+  - start with uppercase
+  - store addresses
+  - default to null
+  - use heap memory
+
+### primitive
+
+> store simple value directly in memory
+
+- predefined in the Java language and occupy a fixed amount of memory
+
+- there are only 8 primitive data types in java:
+  - `byte`: 8-bit integer (-128 to 127)
+  - `short`: 16-bit integer (-32,768 to 32,767)
+  - `int`: 32-bit integer (-2^31 to 2^31-1)
+  - `long`: 64-bit integer (-2^63 to 2^63-1)
+  - `float`: 32-bit floating point
+  - `double`: 64-bit floating point
+  - `boolean`: true or false
+  - `char`: 16-bit Unicode character
+
+### reference or non-primitive
+
+> don't store the value directly but instead store a reference (memory address) to where the data is stored
+
+- examples include:
+  - `String`: sequence of characters
+  - `Array`: collection of similar data types
+  - `Class`: blueprint for creating objects
+  - `Interface`: contract for classes to implement
+  - `Enum`: special data type for constants
 
 ## basics
 
@@ -74,6 +111,26 @@ public class Main {
   }
 }
 ```
+
+## keywords
+
+- `abstract`: abstract classes cannot be instantiated and are intended to be subclassed
+  - can contain abstract methods (methods without body) that must be implemented by subclasses
+  - can be accessed without creating an object
+- `extends`: indicates a child class inherits properties of a parent class
+- `final`: variable/method/class cannot be changed after it has been initialized
+- `implements`: implements an interface
+  - all the methods of the interface are implicitly public abstract
+- `interface`: blueprint with abstract methods that classes must implement
+- `static`: variable/method/block belongs to the class itself, not to instances
+  - shared among all instances of the class
+  - can be accessed without creating an object
+
+- `public`: class contents (methods, attributes, constructor) can be accessed anywhere
+- `protected`: can be accessed from within the same package and subclasses
+- `private`: can only by accessed from same class
+  - creates the need for public methods inside the class that provide controlled access to private fields
+    - e.g.: getAccountNumber(), getBalance(), deposit(), withdraw()
 
 ### type casting
 
@@ -407,26 +464,6 @@ to build a package, you must provide:
 - two information files (pkginfo and prototype files)
 - optional information files
 - optional installation scripts
-
-## Keywords
-
-- `abstract`: abstract classes cannot be instantiated and are intended to be subclassed
-  - can contain abstract methods (methods without body) that must be implemented by subclasses
-  - can be accessed without creating an object
-- `extends`: indicates a child class inherits properties of a parent class
-- `final`: variable/method/class cannot be changed after it has been initialized
-- `implements`: implements an interface
-  - all the methods of the interface are implicitly public abstract
-- `interface`: blueprint with abstract methods that classes must implement
-- `static`: variable/method/block belongs to the class itself, not to instances
-  - shared among all instances of the class
-  - can be accessed without creating an object
-
-- `public`: class contents (methods, attributes, constructor) can be accessed anywhere
-- `protected`: can be accessed from within the same package and subclasses
-- `private`: can only by accessed from same class
-  - creates the need for public methods inside the class that provide controlled access to private fields
-    - e.g.: getAccountNumber(), getBalance(), deposit(), withdraw()
 
 ---
 
