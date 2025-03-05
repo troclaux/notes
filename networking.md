@@ -350,16 +350,19 @@ long example of HTTPS communication:
 
 #### TLS (Transport Layer Security)
 
-> cryptographic protocol that provides secure communication over a computer network
+> cryptographic protocol that secures communication over networks
 
-- uses public key criptography to verify the authencity of a website
-- contains the following information:
-  - domain name
-  - additional subdomains
-  - name of issuing CA (Certificate Authority)
-  - date of issue
-  - expiry date
-  - public key used to verify data
+- encryption: prevents third parties from reading the data exchanged between the client and the server
+- authentication: uses certificates and Public-Key Infrastructure (PKI) to authenticate the identities of client or server
+  - contains the following information:
+    - domain name
+    - additional subdomains
+    - name of issuing CA (Certificate Authority)
+    - date of issue
+    - expiry date
+    - public key used to verify data
+  - prevents man-in-the-middle attacks
+- integrity: prevents data from being altered during transmission
 
 - successor to SSL
 - addresses flaws in SSL
