@@ -97,11 +97,12 @@ master node/control plane ensures that your applications (pods) are placed on th
 - Deployments
   - Declarative updates for pods
   - Manages ReplicaSets
+    - ReplicaSets: ensures a specified number of pod replicas are running at all times
   - Supports rolling updates and rollbacks
   - Example: `replicas: 3` ensures 3 identical pods
 - ConfigMaps & Secrets
   - ConfigMaps: Store non-sensitive configuration
-    - Example: Application settings, environment variables
+    - Example: Application settings
   - Secrets: Store sensitive data
     - Example: API keys, passwords, certificates
 - Ingress
@@ -142,11 +143,124 @@ spec:
 kubectl scale deployment my-deployment --replicas=5
 ```
 
-## YAML
+## configuration files (yaml)
 
-scale applications up or down by adjusting the replicas in the deployment
 
 ```yaml
+# deployment.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextjs-app
 spec:
-  replicas: 5
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nextjs-app
+  template:
+    metadata:
+      labels:
+        app: nextjs-app
+    spec:
+      containers:
+      - name: nextjs
+        image: ${IMAGE}
+        ports:
+        - containerPort: 3000
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: DATABASE_URL
+      imagePullSecrets:
+      - name: ecr-secret
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-proxy
+  template:
+    metadata:
+      labels:
+        app: nginx-proxy
+    spec:
+      containers:
+      - name: nginx
+        image: ${NGINX_IMAGE}
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+      - name: ecr-secret
 ```
+
+- specifies
+  - container image
+  - number of pods
+  - environment variables
+  - resource limits
+
+```yaml
+# service.yaml
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nextjs-service
+spec:
+  selector:
+    app: nextjs-app
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app: nginx-proxy
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP
+```
+
+```yaml
+# ingress.yaml
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nextjs-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx-service
+            port:
+              number: 80
+```
+
+## k3s
+
+> lightweight kubernetes that's easy to install
+
+- to run any kubernetes command, add `k3s`
+  - e.g.: `sudo k3s kubectl get nodes`
