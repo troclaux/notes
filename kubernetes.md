@@ -1,22 +1,23 @@
 
 # kubernetes
 
+> kubernetes (K8s) is an open-source platform for managing containerized applications at scale
+
+- automates tasks like deployment, scaling and management of containerized applications
+- self-healing: if a container/pod fails, kubernetes automatically replaces it
+- declarative configuration and automation
+- able to work with multiple cloud-providers simultaneously
+
 [kubernetes documentation](https://kubernetes.io/docs/)
 [kubernetes tutorials by katacoda](https://www.katacoda.com/courses/kubernetes)
 [docker](/docker.md)
 
-- kubernetes (K8s) is an open-source platform for managing containerized applications at scale
-- automates tasks like deployment, scaling, and maintaining containerized applications
+## key components
 
-- self-healing: if a pod fails, kubernetes automatically replaces it
-
-## Key Components
-
-- workload: application(s) running on the cluster
 - pods: smallest deployable unit in kubernetes
-  - can contain 1+ containers
+  - group of one or more containers
   - shared storage, network, and configuration for containers
-  - e.g. pod that contains a web server container and a logging container
+  - e.g. a web application might have a frontend pod (running nginx) and a backend pod (running node.js with postgresql)
 - node: single physical/visual machine that runs components required to execute/manage containers within pods
   - each node can host multiple pods
   - node types:
@@ -26,14 +27,20 @@
     - master node
       - more important
       - should have at least 3 replicas
-- cluster: group of nodes
+- cluster: group of nodes, highest-level structure in kubernetes
 - object: cluster's desired state
+- workload: application(s) running on the cluster
+
+- imagine a kubernetes cluster as a city:
+  - cluster = the entire city
+  - node = a building in the city
+  - pod = a single apartment in the building where people (containers) live
 
 ![single kubernetes node](./images/kubernetes_node.png)
 
-- kubernetes cluster consists of:
+- kubernetes cluster architecture:
   - master node (control plane): manages the cluster and schedules workloads
-    - API server: provides the interaction for management tools (e.g. kubectl or kubernetes dashboard)
+    - kube-apiserver: provides the interaction for management tools (e.g. kubectl or kubernetes dashboard)
     - etcd: key-value storate that holds the current state of the kubernetes cluster
       - basically a cluster backup
     - scheduler: allocates unscheduled pods on different nodes based on the workload
@@ -47,21 +54,23 @@
     - container runtime: manages lifecycle of container
       - examples: docker, containerd
     - kube-proxy: manages networking rules so that pods and services communicate effectively
-    - pods: smallest deployable unit in kubernetes
 
-TODO: explain workload resources and Services/Deployments/ConfigMaps/Secrets/Ingress
-TODO: organize explanation from this point below
+## `kinds`
 
-master node/control plane ensures that your applications (pods) are placed on the appropriate worker nodes
+> different types of resources defined in YAML manifests
 
-### Workload Resources
+- used to manage and configure the cluster
 
+### workload resources
+
+- Pod
 - Deployment
   - most common way to manage pods
   - ensures specified number of pod replicas are running
   - supports rolling updates and rollbacks
+  - used for stateless applications
   - example: deploy a web application with 3 replicas
-- ReplicaSet (RS)
+- ReplicaSet
   - maintains a stable set of replica pods
   - usually managed by deployments
   - ensures specified number of pods are running at all times
@@ -73,7 +82,7 @@ master node/control plane ensures that your applications (pods) are placed on th
   - ensures all nodes run a copy of a specific pod
   - useful for node monitoring, log collection
   - example: running a logging agent on every node
-- Jobs
+- Job
   - for one-time tasks
   - ensures pods run to completion
   - example: batch processing, data migration
@@ -81,45 +90,44 @@ master node/control plane ensures that your applications (pods) are placed on th
   - creates jobs on a schedule
   - like unix crontab
   - example: regular backup jobs, scheduled reports
-- Replication Controller (RC)
-  - older version of replicaset
-  - being phased out in favor of replicaset
 
-### Core Resources
+### resources for networking and service discovery
 
-- Services
-  - Provides stable networking for pods
-  - Types:
-    - ClusterIP: Internal cluster communication
+- Service: exposes a group of pods as a network service
+  - types:
+    - ClusterIP (default): internal communication inside the cluster
     - NodePort: Exposes port on each node
     - LoadBalancer: External load balancer
     - ExternalName: DNS alias
-- Deployments
-  - Declarative updates for pods
-  - Manages ReplicaSets
-    - ReplicaSets: ensures a specified number of pod replicas are running at all times
-  - Supports rolling updates and rollbacks
-  - Example: `replicas: 3` ensures 3 identical pods
-- ConfigMaps & Secrets
-  - ConfigMaps: Store non-sensitive configuration
-    - Example: Application settings
-  - Secrets: Store sensitive data
-    - Example: API keys, passwords, certificates
-- Ingress
-  - HTTP/HTTPS routing to services
-  - SSL termination
-  - Name-based virtual hosting
-  - Example: Route traffic from example.com to specific service
+- Ingress: manages external HTTP/HTTPS traffic to services
+  - provides routing rules and supports SSL termination
+- NetworkPolicy: controls traffic between pods based on rules
+  - e.g. route traffic from example.com to specific service
+
+### configuration and secrets management
+
+- ConfigMap: stores non-sensitive configuration data as key-value pairs
+  - example: application settings
+- Secret: stores sensitive data
+  - example: API keys, passwords, certificates
+
+### storage management
+
+- PersistentVolume: physical storage resource in the cluster
+- PersistentVolumeClaim: request for storage by an application
+- StorageClass: defines different storage types (e.g. SSD, HDD)
+
+### cluster management
+
+- Namespace: creates isolated environments within the cluster
+- ResourceQuota: limits CPI, memory and storage per namespace
+- LimitRange: sets minimum and maximum resource limits for pods
+
 
 ## Core Concepts with Examples
 
-- nodes: nodes are the machines in your cluster
-  - each node runs:
-    - Kubelet: Agent that communicates with the master
-    - Container Runtime: Like Docker, to run containers
-    - Kube-proxy: Manages networking
 - YAML Manifest: Kubernetes resources are defined using YAML files
-  - run YAML file with: `kubectl apply -f <filename>.yaml`
+  - apply YAML file: `kubectl apply -f <filename>.yaml`
 
 Pod YAML example:
 
@@ -138,6 +146,14 @@ spec:
 
 - view nodes: `kubectl get nodes`
 - view pods: `kubectl get pods`
+- open shell inside running container: `kubectl exec -it <nextjs-pod-name> -- /bin/sh`
+- create Secret: `sudo kubectl create secret generic peso-secrets --from-env-file=.env`
+- generate Secret yaml file: `kubectl get secret nextjs-env -o yaml`
+- ensure Kubernetes cluster is running: `kubectl cluster-info`
+- check the pod logs: `kubectl logs <pod-name>`
+- check the service status: `kubectl describe service nginx-service`
+- create Kubernetes Secret from .env: `kubectl create secret generic peso-secrets --from-env-file=.env.local`
+- update Kubernetes Secret :`kubectl delete secret peso-secrets && kubectl create secret generic peso-secrets --from-env-file=.env.local`
 
 ```bash
 kubectl scale deployment my-deployment --replicas=5
@@ -264,3 +280,14 @@ spec:
 
 - to run any kubernetes command, add `k3s`
   - e.g.: `sudo k3s kubectl get nodes`
+
+## helm
+
+> package manager for kubernetes
+
+- chart: helm package
+- repository: place where charts can be collected and shared
+- release: instance of chart running in kubernetes cluster
+
+- one chart can be installed multiple times into the same cluster
+  - each time it is installed, a new release is created
