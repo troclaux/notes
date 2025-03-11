@@ -41,10 +41,25 @@ export AWS_SECRET_ACCESS_KEY="<insert key>"
 
 - `terraform init`: initialize working directory, download providers
 - `terraform plan`: preview changes before applying
+  - `terraform plan -var-file="terraform.tfvars" -out=tfplan`
+    - `-var-file="terraform.tfvars"`: loads variable values from a file named `terraform.tfvars`
+    - `-out=tfplan`: seves the plan to a file named `tfplan`, apply it with `terraform apply tfplan`
 - `terraform apply`: apply changes to create/modify resources
 - `terraform destroy`: remove all resources managed by Terraform
 - `terraform fmt`: format code per HCL standards
 - `terraform validate`: validate configuration files
+- `terraform output ec2_public_ip`: print terraform variables
+
+```bash
+terraform apply -var-file="terraform.tfvars"
+```
+
+you can destroy resources with:
+
+```bash
+terraform apply -destroy -target=aws_instance.app_instance -auto-approve
+terraform apply -auto-approve
+```
 
 ## best practices
 
@@ -54,3 +69,12 @@ export AWS_SECRET_ACCESS_KEY="<insert key>"
 - always review plan before applying
 - store state files securely
 - use workspaces for different environments
+
+## types of resources
+
+- `aws_instance`: EC2 instance
+- `aws_vpc`: Virtual Private Cloud
+- `aws_subnet`: subnet within a VPC
+- `aws_security_group`: security group for EC2 instances
+- `aws_s3_bucket`: S3 bucket
+- `aws_iam_role`: Identity and Access Management role
