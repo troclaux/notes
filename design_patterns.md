@@ -4,29 +4,133 @@
 
 > reusable solutions to common problems in software design
 
-- provide proven solutions
-- improve code readability and maintainability
-- facilitate communication
-- encourage best practices
-- speed up development process
+- benefits:
+  - proven solutions
+  - improve code readability and maintainability
+  - facilitate communication
+  - encourage best practices
+  - speed up development process
 
 ## Creational patterns
 
-> Object creation mechanisms
+> focus on how objects are created efficiently, encapsulating logic for instantiation
 
 ### Abstract Factory
 
-> Interface to create related or dependent objects without specifying their concrete classes
+> creates related or dependent objects without specifying their concrete classes
+
+```typescript
+interface Animal {
+  speak(): void;
+}
+
+class Dog implements Animal {
+  speak() {
+    console.log("Woof!");
+  }
+}
+
+class Cat implements Animal {
+  speak() {
+    console.log("Meow!");
+  }
+}
+
+class AnimalFactory {
+  static getAnimal(type: string): Animal {
+    switch (type) {
+      case "dog":
+        return new Dog();
+      case "cat":
+        return new Cat();
+      default:
+        throw new Error("Unknown animal type");
+    }
+  }
+}
+
+const dog = AnimalFactory.getAnimal("dog");
+dog.speak(); // Woof!
+const cat = AnimalFactory.getAnimal('cat');
+cat.speak(); // Meow!
+```
+
+### Factory Method
+
+> provides an interface for creating objects in a superclass, but allows subclasses to alter the type of objects that will be created
+
+```typescript
+// Step 1: Create an abstract class (Interface)
+abstract class Animal {
+  abstract speak(): void;
+}
+
+// Step 2: Implement specific classes
+class Dog extends Animal {
+  speak() {
+    console.log("Woof! Woof!");
+  }
+}
+
+class Cat extends Animal {
+  speak() {
+    console.log("Meow!");
+  }
+}
+
+// Step 3: Define the Factory Method
+class AnimalFactory {
+  static createAnimal(type: string): Animal {
+    if (type === "dog") return new Dog();
+    if (type === "cat") return new Cat();
+    throw new Error("Invalid animal type");
+  }
+}
+
+// Step 4: Usage
+const myPet1 = AnimalFactory.createAnimal("dog");
+myPet1.speak(); // Output: Woof! Woof!
+
+const myPet2 = AnimalFactory.createAnimal("cat");
+myPet2.speak(); // Output: Meow!
+```
+
+#### Abstract Factory vs Factory Method
+
+- abstract factory: best for creating multiple related products that should be used together.
+- factory method: best for creating a single product with multiple variations.
 
 ### Singleton
 
 > garantees that a class has only 1 instance
 
-Implementation:
-
-- Make default constructor private, to prevent new instances from being created
+- make default constructor `private`, to prevent new instances from being created
 - create a static method that returns the same instance of its own class
   - getInstance should be the only way of getting Singleton object
+
+```typescript
+class Singleton {
+  private static instance: Singleton;
+
+  private constructor() {}
+
+  static getInstance(): Singleton {
+    if (!Singleton.instance) {
+      Singleton.instance = new Singleton();
+    }
+    return Singleton.instance;
+  }
+
+  sayHello() {
+    console.log("Hello from Singleton!");
+  }
+}
+
+const singleton1 = Singleton.getInstance();
+const singleton2 = Singleton.getInstance();
+
+console.log(singleton1 === singleton2); // true
+```
 
 ### Builder
 
@@ -47,11 +151,19 @@ Implementation:
 
 ## Structural patterns
 
+> Focus on how objects and classes are structured to form larger systems
+
+- 
+
 ### Adapter
 
 > allows objects with incompatible interfaces to collaborate
 
 ![example](./images/adapter_example.png)
+
+### Decorator/Wrapper
+
+> lets you attach new behaviors to objects by placing these objects inside special wrapper objects that contain the behaviors
 
 ### Bridge
 
@@ -69,11 +181,6 @@ Implementation:
 > Composite is a structural design pattern that lets you compose objects into tree structures and then work with these structures as if they were individual objects
 
 - this design pattern is used when you need to implement a tree-like structure
-
-
-### Decorator/Wrapper
-
-> lets you attach new behaviors to objects by placing these objects inside special wrapper objects that contain the behaviors
 
 ### Facade
 
@@ -106,7 +213,13 @@ Implementation:
 
 ## Behavioral patterns
 
-> Focus on algorithms and assignment of responsibilities between objects
+> Focus on how objects interact and delegate responsibilities
+
+### Observer
+
+> subject has a subscription mechanism to notify observers of events that happened to the subject automatically
+
+### Strategy
 
 ### Chain of Responsibility (CoR)
 
@@ -135,18 +248,12 @@ Implementation:
 
 ### Iterator
 
-> 
-
 ### Mediator
 
 ### Memento
 
-### Observer
-
-> subject has a subscription mechanism to notify observers of events that happened to the subject automatically
-
 ### State
 
-### Strategy
-
 ### Visitor
+
+### Template Method
