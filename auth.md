@@ -5,6 +5,8 @@
 
 > process of verifying the identity of a user
 
+> who are you?
+
 - types of authentication:
   - id + password
     - don't allow weak passwords
@@ -60,6 +62,19 @@ const [accessToken, setAccessToken] = useState(null);
 ## authorization
 
 > process of determining what actions a user can perform within a system
+
+> what can the user do?
+
+- most common auth operations:
+  - login component
+  - signup component
+  - logout
+  - password recovery/reset
+  - get tokens
+  - refresh tokens
+  - get user data
+  - update user data
+  - block page access if unauthenticated
 
 ## JWT (JSON Web Tokens)
 
@@ -267,6 +282,17 @@ example of a payload:
 
 [Oauth](https://developer.okta.com/blog/2017/06/21/what-the-heck-is-oauth)
 
+- OAuth 2.0 vs OpenID Connect vs SSO vs SAML:
+  - OAuth: authorization framework
+  - OpenID Connect (OIDC): adds authentication layer on top of OAuth 2.0
+    - authorization + authentication
+    - allow users to authenticate using a third-party identity provider (e.g. google, facebook)
+  - SSO (Single Sign-On): allows users to authenticate once and access multiple applications
+    - e.g. sign in with google and access multiple apps
+  - SAML (Security Assertion Markup Language): XML-based open standard for exchanging authentication and authorization data between parties
+    - enables SSO implementation
+    - supports OIDC and OAuth 2.0
+
 ### step-by-step
 
 1. user inserts credentials
@@ -279,6 +305,30 @@ example of a payload:
   - don't keep tokens longer than necessary (try to minimize the time that the token is valid)
   - don't store sensitive session data in browser storage (local storage, session storage, etc)
     - because it's accessible by any javascript running on the page (including browser extensions)
+
+### OAuth 2.0 Authentication Flow (Google Sign-In)
+
+1. user clicks "Sign in with Google"
+   - frontend initiates the OAuth login flow
+2. browser redirects to Google's authorization URL
+   - this includes query parameters like `client_id`, `redirect_uri`, `response_type=code`, and `scope`
+   - traffic: AWS VPC (frontend) => Google (all egress traffic is allowed by default)
+3. user sees Google's consent screen and approves access
+   - if the user agrees, Google redirects them back to your app's `redirect_uri` with an authorization code in the URL
+4. backend server exchanges the authorization code for an access token
+   - backend sends a `POST` request to `https://oauth2.googleapis.com/token` with:
+     - `client_id`, `client_secret`, `code`, `redirect_uri`, and `grant_type=authorization_code`
+5. Google responds with an access token
+   - The response includes:
+     - `access_token` (to access Google APIs)
+     - `id_token` (contains user profile in JWT format)
+     - `refresh_token` (if applicable)
+     - `expires_in`
+6. backend retrieves user info from Google
+   - makes `GET` request to `https://www.googleapis.com/oauth2/v2/userinfo` using the `access_token`
+   - Google returns user details (name, email, profile picture, etc)
+
+- configure OAuth 2.0 client IDs [here](https://console.cloud.google.com/auth/clients)
 
 ### OAuth components
 
@@ -366,6 +416,28 @@ example of a payload:
   - harder to set up
 - [auth0](https://next-auth.js.org/)
 - [okta](https://www.okta.com/)
+
+### auth.js
+
+1. install auth.js package
+1. follow auth.js [auth.js](https://authjs.dev/) documentation to setup login and signup components
+1. setup database
+1. setup .env.locale with the required environment variables listed below
+
+> [!WARNING]
+> if you get the error `edge runtime does not support Node.js 'crypto' module`
+> delete the `middleware.ts` folder and restart the server
+
+- use `.env.local` to store your environment variables:
+  - `GOOSE_DBSTRING`
+  - `GOOSE_DRIVER`
+  - `AUTH_GOOGLE_ID`
+  - `AUTH_GOOGLE_SECRET`
+  - `AUTH_SECRET`
+  - `DATABASE_HOST`
+  - `DATABASE_NAME`
+  - `DATABASE_USER`
+  - `DATABASE_PASSWORD`
 
 ### clerk
 
