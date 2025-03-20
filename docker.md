@@ -33,6 +33,38 @@
   - virtual machines virtualize an entire machine down to the hardware layers
   - containers only virtualize software layers above the operating system level
 
+## CLI commands
+
+- pull specific docker image: `docker pull node:18-alpine`
+- list available images: `docker images`
+- remove an image: `docker rmi nginx`
+- remove unused images: `docker image prune`
+- run container: `docker run -d -p 8080:80 nginx`
+  - `-d`: run container with detached shell
+  - `-p`: expose port 80 in the container on port 8080 on your machine
+- stop container: `docker stop <container_id>`
+- restart container: `docker restart <container_id>`
+- run container with interactive shell: `docker run -it ubuntu bash`
+- list running containers: `docker ps`
+- list all containers: `docker ps -a`
+- get logs of a running container: `docker logs <container_id>`
+  - `-f`: shows live logs (useful for debugging)
+- remove container: `docker rm <container_id>`
+- remove all stopped containers: `docker container prune`
+- create volume: `docker volume create myvolume`
+- list volumes: `docker volume ls`
+- remove volume: `docker volume rm myvolume`
+- remove all unused volumes: `docker volume prune`
+- list docker networks: `docker network ls`
+- create new docker network: `docker network create mynetwork`
+- remove docker network: `docker network rm mynetwork`
+
+- start services from `docker-compose.yml`: `docker-compose up -d`
+- stop services: `docker-compose down`
+- restart services: `docker-compose restart`
+- show real-time logs: `docker-compose logs -f`
+- check logs of a specific service: `docker-compose logs nginx`
+
 ## images
 
 > lightweight standalone package that contains everything necessary to create containers
@@ -336,5 +368,34 @@ best practices:
 ## docker-compose
 
 - start services defined in file with name `docker-compose.yml`: `docker-compose up`
+  - `--build`: forces docker to rebuild images before starting containers
+  - `-d`: runs the containers in detached mode (in the background)
 - stop services defined in file with name `docker-compose.yml`: `docker-compose down`
+- runs `certbot` container once and then removes it after execution: `docker-compose run --rm certbot`
+  - `--rm`: removes container after execution
+  - requests SSL certificate from Let's Encrypt
+- restart container: `docker-compose restart nginx`
+- renew SSL certificate: `docker-compose run --rm certbot renew`
+  - certificates from Let's Encrypt expire every 90 days
 
+
+```yaml
+services:
+  nextjs-service:
+    image: 072216710152.dkr.ecr.sa-east-1.amazonaws.com/peso-repo:nextjs-latest
+    container_name: nextjs_app
+    restart: always
+    env_file:
+      - .env.local
+    environment:
+      - NODE_ENV=production
+    expose:
+      - "3000"
+    networks:
+      - peso_network
+```
+
+- `nextjs-service`: service name
+  - use this name within `docker-compose.yml` file to reference this service (like in `depends_on` or networks)
+- `nextjs_app`: container name
+  - this is the name that appears when you run docker CLI commands (e.g. `docker ps`, `docker logs`)
