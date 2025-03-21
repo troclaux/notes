@@ -169,7 +169,6 @@ when a user visits a webpage:
       - `sort_by=created_at`
   - fragment/anchor: `#header`
 
-
 ## types of web applications
 
 ### Single Page Application (SPA)
@@ -499,3 +498,186 @@ consult the users table on postgresql before programming the sql query
 - faster initial page load
 - better SEO performance
 - examples: Next.js applications
+
+## deploy
+
+> process of making web application available and accessible to user over the internet
+
+- requires transfering the application's code, assets and configurations from development environment to a production server
+
+- steps in deployment
+  - development
+  - building
+  - testing
+  - provisioning: setting up servers/databases/infrastructure
+  - deployment
+  - configuration
+  - monitoring and maintenance
+
+### step-by-step
+
+summary:
+
+1. Register domain that points to the server's public IP
+1. Implement dockerfile for each app service (e.g. next.js, nginx)
+1. Implement docker-compose or kubernetes yaml config file to setup the app
+1. Authenticate to be able to pull from container image registry (docker hub or ECR)
+1. Start Nginx in HTTP mode (without SSL)
+1. Run Certbot to generate SSL certificates
+1. Verify certificates exist (ls ~/peso/certbot/conf/live/pesodevops.com/)
+1. Modify nginx.conf to enable HTTPS
+1. Restart Nginx (docker compose down && docker compose up -d)
+1. Verify HTTPS works (curl -I https://pesodevops.com)
+1. Automate renewal using a cron job
+
+1. Register domain that points to the server's public IP
+
+- make sure the hosted zone's records are correct
+  - `A` type record points to the server's public IP
+  - `NS` type record points to the registered domain's name servers
+    - defines which records (e.g. `ns-1234.awsdns.net`) are authoritative for a registered domain (e.g. `www.example.com`)
+      - authoritative: it means the server holds the official, up-to-date records for that domain and is responsible for answering DNS queries about it
+
+1. Implement dockerfile for each app service (e.g. next.js, nginx)
+
+[example](./code/dockerfiles/nginx.Dockerfile)
+
+1. Implement docker-compose or kubernetes yaml config file to setup the app
+
+1. Authenticate to be able to pull from container image registry (docker hub or ECR)
+
+`aws ecr get-login-password --region sa-east-1 | docker login --username AWS --password-stdin [AWS_ACCOUNT_ID].dkr.ecr.sa-east-1.amazonaws.com`
+
+1. set up domain name with a domain registar (e.g. route 53, cloudfare)
+
+- go to domain provider (e.g. router 53, cloudfare, namecheap)
+- create an `A` record
+  - host: `@`
+  - value: the server public IP
+- wait for dns to propagate
+
+
+1. set up app with containers
+
+recommended directory structure in server:
+
+```
+- app_name
+  - certbot
+    - www
+    - conf
+```
+
+1. start nginx in http-only mode (without ssl certificates and https)
+
+- nginx must be running on port 80 without ssl
+  - this allows Let's Encrypt to perform domain validation
+  - use this [template](./code/nginx/nginx1.conf)
+
+- why?
+  - Let's Encrypt validates your domain by checking if it can access files served at:
+    - `http://pesodevops.com/.well-known/acme-challenge/`
+    - this means port 80 must be open and functional
+
+1. start docker compose services
+
+- start containers: `docker compose up -d`
+- verify nginx is running and serving http requests: `curl -I http://pesodevops.com`
+
+expected response:
+
+```bash
+HTTP/1.1 200 OK
+Server: nginx
+...
+```
+
+1. generate SSL certificates using certbot
+
+once nginx is running in http mode, manually run certbot to request ssl certificates
+
+```bash
+docker compose run --rm certbot certonly \
+  --webroot -w /var/www/certbot \
+  -d mydomain.com -d www.mydomain.com \
+  --email my_email@hotmail.com \
+  --agree-tos \
+  --no-eff-email
+```
+
+- what happens here?
+  - certbot places a temporary challenge file inside `/var/www/certbot/.well-known/acme-challenge/`
+  - Let's Encrypt tries to access `http://pesodevops.com/.well-known/acme-challenge/{token}`
+  - if the request succeeds, Let's Encrypt issues the SSL certificate
+
+1. confirm certificate generation
+
+```bash
+ls -l ~/peso/certbot/conf/live/mydomain.com/
+```
+
+- expected files: `cert.pem  chain.pem  fullchain.pem  privkey.pem`
+
+1. update nginx.conf to enable SSL
+
+[updated nginx.conf](./code/nginx/nginx2.conf)
+
+1. restart nginx with ssl enabled
+
+```bash
+docker compose down
+docker compose up -d
+```
+
+check that nginx is running properly:
+
+```bash
+docker compose logs nginx
+```
+
+1. verify https is working
+
+```bash
+curl -I https://pesodevops.com
+```
+
+expected response:
+
+```
+HTTP/2 200
+server: nginx
+...
+```
+
+insert URL in browser to see if it's working
+
+1. automate SSL certificate renewal
+
+ssh into server and run:
+
+```bash
+crontab -e
+```
+
+- add this cron job: `0 3 * * * cd ~/peso && docker compose run --rm certbot renew && docker compose restart nginx`
+
+- test automatic renewal: `sudo certbot renew --dry-run`
+  - let’s encrypt certificates expire every 90 days
+
+### questions
+
+- what is the purpuse of `certbot/www` and `certbot/conf` directory?
+  - `certbot/www`: temporary challenge files for domain verification
+    - what are challenge files?
+      - temporary verification files that certbot creates to prove that you own a domain before issuing an SSL certificate
+    - when certbot needs to prove domain ownership, it places challenge files inside this directory
+  - `certbot/conf`: stores certbot’s configuration
+    - stores SSL certificates and renewal settings
+    - after a certificate is issued, the private key, full chain and other related files are stored here
+    - when the certificate needs renewal, certbot updates this directory
+- do i need to add a cron job to renew certificate? yes
+- how frequently should i renew certificate?
+  - Let's Encrypt certificates are valid for 90 days
+  - it's recommended to renew them each 60 days
+- whats the limit for certificate renewal?
+  - `certbot renew` only renews if the certificate expires in ≤ 30 days, so don't worry
