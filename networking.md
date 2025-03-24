@@ -166,8 +166,7 @@ properties of the internet:
 
 > resolves domain names to IP addresses
 
-- URL: https://youtube.com
-  - domain name/hostname: youtube.com
+- domain name: human-readable name (e.g. `example.com`) used to identify resources on the internet
 
 #### DHCP (Dynamic Host Configuration Protocol)
 
@@ -424,18 +423,39 @@ long example of HTTPS communication:
 > google.com (domain name) => 142.251.135.142 (ip address)
 
 - IPv4
-  - 32 bits = 4 bytes
-  - `byte.byte.byte.byte` <=> `142.251.135.142`
+  - e.g. `185.107.80.231` <=> `10111001.01101011.01010000.11100111`
+  - `byte.byte.byte.byte` <=> `(8 bits).(8 bits).(8 bits).(8 bits)`
+  - 4 bytes = 32 bits
+  - `(0 to 255).(0 to 255).(0 to 255).(0 to 255)`
 - IPv6
   - 128 bits = 16 bytes
   - `2bytes:2bytes:2bytes:2bytes:2bytes:2bytes:2bytes:2bytes` <=> `2800:3f0:4004:809::200e`
   - `16bits:16bits:16bits:16bits:16bits:16bits:16bits:16bits` <=> `2800:3f0:4004:809::200e`
-    - double colon `:` represents 16 zero bits
+    - double colon `::` = `0000 0000 0000 0000` represents 16 consecutive zero bits
 
 > [!TIP]
 > IPv4 32 bits => 432 => 4 bytes and 32 bits
 > IPv4 bytes * 2² bytes => IPv6
 > 32 bits * 2² = 128 bits
+
+- CIDR (Classless Inter-Domain Routing) notation: compact way to represent IP ranges (e.g. `192.168.1.0/24`)
+  - `192.168.1.0/24` has two parts
+    - network address or starting IP: `192.168.1.0`
+    - bits reserved for the network: `/24`
+    - `/24` = the first 24 bits (`192.168.1`) are fixed and define the network
+      - the remaining 8 bits (32-24) are available to assign to hosts (devices)
+      - `/24` can be splitted into two subnets
+        - `192.168.1.0/25` => IPs from `.0` to `.127`
+        - `192.168.1.128/25` => IPs from `.128` to `.255`
+
+| Feature          | Public IP | Private IP |
+|-----------------|----------|-----------|
+| Scope      | Global (Internet) | Local (LAN) |
+| Uniqueness | Unique worldwide | Unique within a local network |
+| Assigned by | ISP or cloud provider | Router (via DHCP) or manually |
+| Accessibility | Accessible from the internet | Not accessible from the internet directly |
+| Cost | Often requires payment | Free to use |
+| Example | `8.8.8.8` (Google DNS) | `192.168.1.1` (Wi-Fi router) |
 
 ### network access layer
 
@@ -531,3 +551,51 @@ example of encapsulation process:
 1. network layer: each segment is encapsulated into packets, which contains source and destination IP addresses
 1. data link layer: packet is placed inside a frame, which contains source and destination MAC addresses
 1. physical layer: frame is converted into a stream of bits
+
+## Static and Dynamic IP Addressing
+
+TODO
+
+## network bonding and bridging
+
+TODO
+
+## VLANs
+
+TODO
+
+## DNS Configuration
+
+TODO
+
+## Network Interfaces
+
+TODO
+
+## Basic Network Troubleshooting
+
+TODO
+
+### ping
+
+> test the reachability of a host on an IP network
+
+- `ping [hostname]`: sends ICMP echo request packets to the specified host
+
+### traceroute
+
+TODO
+
+### netstat
+
+TODO
+
+---
+
+- NAT (Network Address Translation): converts private IPs to public IPs
+- firewalls: control network traffic based on rules
+  - security groups (aws): stateful filtering for inbound/outbound traffic
+- CDN (Content Delivery Network)
+  - caches static content (images, css, js) at edge locations globally
+  - reduces latency by serving users from the nearest data center
+  - examples: cloudflare, aws cloudfront, akamai
