@@ -64,3 +64,5 @@
     - database connections that maintain transaction state
     - objects that keep track of their internal state
 - stateless: each operation is independent, no memory of previous interactions
+
+caching: storing data somewhere that is faster to access
