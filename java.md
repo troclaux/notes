@@ -14,8 +14,8 @@
 - strings aren't mutable
 - multiplatform: can run on windows or linux or mac without changing the code
 
-- JVM: allows java to run in any OS (Linux, Windows, Mac)
-- JRE: contains JVM and all the extra tools and libraries needed to run a Java program
+- JVM (Java Virtual Machine): allows java to run in any OS (Linux, Windows, Mac)
+- JRE (Java Runtime Environment): contains JVM and all the extra tools and libraries needed to run a Java program
 
 ## data types
 
@@ -23,7 +23,7 @@
   - are predefined
   - start with lowercase
   - store actual values
-  - have default values (0, 0.0, false, '\u0000')
+  - have default values (`0`, `0.0`, `false`, `'\u0000'`)
   - use stack memory
 - reference types
   - are created by the programmer
@@ -479,6 +479,9 @@ java program development:
 4. bytecode verification for security
 5. JIT compilation for performance
 6. execution on host machine
+
+- javac: java compiler
+- bytecode: intermediate code that is executed by the JVM
 
 ---
 
