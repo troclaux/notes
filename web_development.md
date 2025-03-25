@@ -267,8 +267,9 @@ when a user visits a webpage:
 [goose basic operations](https://github.com/pressly/goose)
 
 1. create the following directories from the project's root
-  - `./sql/schema`: contains SQL files to build schema
-  - `./sql/queries`: contains SQL files to run queries
+
+- `./sql/schema`: contains SQL files to build schema
+- `./sql/queries`: contains SQL files to run queries
 
 2. write `.yaml` configuration file for sqlc
 
@@ -315,6 +316,15 @@ DROP TABLE users;
 
 ```bash
 goose postgres "connection_string" up
+```
+
+- `-env` allows the use of `.env` vars to access database:
+  - `GOOSE_DBSTRING`: e.g. `postgresql://<user>:<password>@<host>:5432/<database_name>?sslmode=disable"`
+  - `GOOSE_DRIVER`: e.g. `postgres`
+- `dir` defines the directory with goose migration .sql files
+
+```bash
+goose -env .env.local -dir ./src/sql/schema/. up
 ```
 
 > [!IMPORTANT]
@@ -514,9 +524,8 @@ consult the users table on postgresql before programming the sql query
   - configuration
   - monitoring and maintenance
 
-### step-by-step
+### summary
 
-summary:
 
 1. Register domain that points to the server's public IP
 1. Implement dockerfile for each app service (e.g. next.js, nginx)
@@ -530,6 +539,8 @@ summary:
 1. Verify HTTPS works (curl -I https://pesodevops.com)
 1. Automate renewal using a cron job
 
+### step-by-step
+
 1. Register domain that points to the server's public IP
 
 - make sure the hosted zone's records are correct
@@ -538,17 +549,17 @@ summary:
     - defines which records (e.g. `ns-1234.awsdns.net`) are authoritative for a registered domain (e.g. `www.example.com`)
       - authoritative: it means the server holds the official, up-to-date records for that domain and is responsible for answering DNS queries about it
 
-1. Implement dockerfile for each app service (e.g. next.js, nginx)
+2. Implement dockerfile for each app service (e.g. next.js, nginx)
 
 [example](./code/dockerfiles/nginx.Dockerfile)
 
-1. Implement docker-compose or kubernetes yaml config file to setup the app
+3. Implement docker-compose or kubernetes yaml config file to setup the app
 
-1. Authenticate to be able to pull from container image registry (docker hub or ECR)
+4. Authenticate to be able to pull from container image registry (docker hub or ECR)
 
 `aws ecr get-login-password --region sa-east-1 | docker login --username AWS --password-stdin [AWS_ACCOUNT_ID].dkr.ecr.sa-east-1.amazonaws.com`
 
-1. set up domain name with a domain registar (e.g. route 53, cloudfare)
+5. set up domain name with a domain registar (e.g. route 53, cloudfare)
 
 - go to domain provider (e.g. router 53, cloudfare, namecheap)
 - create an `A` record
@@ -557,7 +568,7 @@ summary:
 - wait for dns to propagate
 
 
-1. set up app with containers
+6. set up app with containers
 
 recommended directory structure in server:
 
@@ -568,7 +579,7 @@ recommended directory structure in server:
     - conf
 ```
 
-1. start nginx in http-only mode (without ssl certificates and https)
+7. start nginx in http-only mode (without ssl certificates and https)
 
 - nginx must be running on port 80 without ssl
   - this allows Let's Encrypt to perform domain validation
@@ -579,7 +590,7 @@ recommended directory structure in server:
     - `http://pesodevops.com/.well-known/acme-challenge/`
     - this means port 80 must be open and functional
 
-1. start docker compose services
+8. start docker compose services
 
 - start containers: `docker compose up -d`
 - verify nginx is running and serving http requests: `curl -I http://pesodevops.com`
@@ -592,7 +603,7 @@ Server: nginx
 ...
 ```
 
-1. generate SSL certificates using certbot
+9. generate SSL certificates using certbot
 
 once nginx is running in http mode, manually run certbot to request ssl certificates
 
@@ -610,7 +621,7 @@ docker compose run --rm certbot certonly \
   - Let's Encrypt tries to access `http://pesodevops.com/.well-known/acme-challenge/{token}`
   - if the request succeeds, Let's Encrypt issues the SSL certificate
 
-1. confirm certificate generation
+10. confirm certificate generation
 
 ```bash
 ls -l ~/peso/certbot/conf/live/mydomain.com/
@@ -618,11 +629,11 @@ ls -l ~/peso/certbot/conf/live/mydomain.com/
 
 - expected files: `cert.pem  chain.pem  fullchain.pem  privkey.pem`
 
-1. update nginx.conf to enable SSL
+11. update nginx.conf to enable SSL
 
 [updated nginx.conf](./code/nginx/nginx2.conf)
 
-1. restart nginx with ssl enabled
+12. restart nginx with ssl enabled
 
 ```bash
 docker compose down
@@ -635,7 +646,7 @@ check that nginx is running properly:
 docker compose logs nginx
 ```
 
-1. verify https is working
+13. verify https is working
 
 ```bash
 curl -I https://pesodevops.com
@@ -651,7 +662,7 @@ server: nginx
 
 insert URL in browser to see if it's working
 
-1. automate SSL certificate renewal
+14. automate SSL certificate renewal
 
 ssh into server and run:
 
@@ -664,7 +675,7 @@ crontab -e
 - test automatic renewal: `sudo certbot renew --dry-run`
   - let’s encrypt certificates expire every 90 days
 
-### questions
+### questions and answers
 
 - what is the purpuse of `certbot/www` and `certbot/conf` directory?
   - `certbot/www`: temporary challenge files for domain verification
