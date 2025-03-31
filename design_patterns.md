@@ -60,45 +60,97 @@ cat.speak(); // Meow!
 > provides an interface for creating objects in a superclass, but allows subclasses to alter the type of objects that will be created
 
 ```typescript
-// Step 1: Create an abstract class (Interface)
+// Step 1: Define abstract product interfaces
 abstract class Animal {
   abstract speak(): void;
 }
 
-// Step 2: Implement specific classes
+abstract class Food {
+  abstract serve(): void;
+}
+
+// Step 2: Implement concrete products for Dog family
 class Dog extends Animal {
   speak() {
     console.log("Woof! Woof!");
   }
 }
 
+class DogFood extends Food {
+  serve() {
+    console.log("Serving dog food");
+  }
+}
+
+// Step 3: Implement concrete products for Cat family
 class Cat extends Animal {
   speak() {
     console.log("Meow!");
   }
 }
 
-// Step 3: Define the Factory Method
-class AnimalFactory {
-  static createAnimal(type: string): Animal {
-    if (type === "dog") return new Dog();
-    if (type === "cat") return new Cat();
-    throw new Error("Invalid animal type");
+class CatFood extends Food {
+  serve() {
+    console.log("Serving cat food");
   }
 }
 
-// Step 4: Usage
-const myPet1 = AnimalFactory.createAnimal("dog");
-myPet1.speak(); // Output: Woof! Woof!
+// Step 4: Define the Abstract Factory
+abstract class PetFactory {
+  abstract createAnimal(): Animal;
+  abstract createFood(): Food;
+}
 
-const myPet2 = AnimalFactory.createAnimal("cat");
-myPet2.speak(); // Output: Meow!
+// Step 5: Implement concrete factories
+class DogFactory extends PetFactory {
+  createAnimal(): Animal {
+    return new Dog();
+  }
+
+  createFood(): Food {
+    return new DogFood();
+  }
+}
+
+class CatFactory extends PetFactory {
+  createAnimal(): Animal {
+    return new Cat();
+  }
+
+  createFood(): Food {
+    return new CatFood();
+  }
+}
+
+// Step 6: Usage
+function adoptPet(factory: PetFactory) {
+  const animal = factory.createAnimal();
+  const food = factory.createFood();
+  animal.speak();
+  food.serve();
+}
+
+// Test with Dog Factory
+console.log("Adopting a dog:");
+adoptPet(new DogFactory());
+// Output:
+// Woof! Woof!
+// Serving dog food
+
+// Test with Cat Factory
+console.log("Adopting a cat:");
+adoptPet(new CatFactory());
+// Output:
+// Meow!
+// Serving cat food
 ```
 
 #### Abstract Factory vs Factory Method
 
-- abstract factory: best for creating multiple related products that should be used together.
-- factory method: best for creating a single product with multiple variations.
+- abstract factory: best for creating multiple related products that should be used together
+  - multiple methods
+- factory method: best for creating a single product with multiple variations
+  - single method
 
 ### Singleton
 
