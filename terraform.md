@@ -28,14 +28,11 @@ resource "aws_instance" "example" {
 ## setup steps
 
 1. install terraform
-2. Configure provider authentication:
-
-```bash
-export AWS_ACCESS_KEY_ID="<insert key>"
-export AWS_SECRET_ACCESS_KEY="<insert key>"
-```
-
-3. create terraform files (`.tf` extension)
+1. export provider credential variables: e.g. `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
+1. run `terraform init` in project's root directory
+1. create terraform files (`.tf` extension)
+1. run `terraform plan -var-file="terraform.tfvars" -out=tfplan`
+1. run `terraform apply tfplan`
 
 ## main commands
 
