@@ -163,6 +163,18 @@ CREATE INDEX idx_email ON Customers(Email);
 - up migration: change database to new state
 - down migration: revert database to previous state
 
+## ACID
+
+> properties of database transactions
+
+- transactions: a sequence of operations that are treated as a single unit of work
+  - e.g. transferring money from one account to another
+
+- Atomicity: all or nothing
+- Consistency: data is always in a valid state
+- Isolation: transactions are independent of each other
+- Durability: changes are permanent
+
 ---
 
 - database connection pool: mechanism that allows multiple applications/services to share a set of database connections
@@ -170,3 +182,4 @@ CREATE INDEX idx_email ON Customers(Email);
   - maintains a pool of open connections, instead of opening and closing a connection for each request
     - creating a new database connection is expensive
       - authentication, initialization, etc
+- pagination: process of dividing a large dataset into smaller pages and providing navigation controls to allow users to browse data in smaller, manageable sections
