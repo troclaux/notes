@@ -188,18 +188,105 @@ console.log(singleton1 === singleton2); // true
 
 > allows you to produce different types and representations of an object using the same construction code
 
-Implementation:
+- implementation
+  - abstract the object constructions code out of its own class
 
-- Abstract the object constructions code out of its own class
+- problem: a complex object that uses a huge constructor with lot of parameters
+  - using subclasses to reduce complexity isnt an ideal solution
+  - when you have a huge constructor, unused parameters makes the constructor calls pretty ugly
+
+- solution: move object construction code out of its own class and move it to a **builder** object
+  - separate the object construction into a set of steps
+    - e.g. for a `HouseBuilder`: `buildWalls()`, `buildDoor()`, etc
+
+- complex implementation adds other Classes:
+  - Director: object that defines the order of the construction steps
+  - Products: resulting objects
+  - ConcreteBuilder: different implementations of the construction steps
+    - multiple implementations can exist
+
+- when to use simpler version:
+  - smaller apps
+- when to use complex version:
+  - complex systems
+
+```typescript
+// The complex object
+class User {
+  public name?: string;
+  public age?: number;
+  public email?: string;
+  public address?: string;
+
+  constructor(builder: UserBuilder) {
+    this.name = builder.name;
+    this.age = builder.age;
+    this.email = builder.email;
+    this.address = builder.address;
+  }
+
+  public toString(): string {
+    return `User [name=${this.name}, age=${this.age}, email=${this.email}, address=${this.address}]`;
+  }
+}
+
+// The Builder
+class UserBuilder {
+  public name?: string;
+  public age?: number;
+  public email?: string;
+  public address?: string;
+
+  setName(name: string): this {
+    this.name = name;
+    return this;
+  }
+
+  setAge(age: number): this {
+    this.age = age;
+    return this;
+  }
+
+  setEmail(email: string): this {
+    this.email = email;
+    return this;
+  }
+
+  setAddress(address: string): this {
+    this.address = address;
+    return this;
+  }
+
+  build(): User {
+    return new User(this);
+  }
+}
+
+// Usage
+const user = new UserBuilder()
+  .setName("Alice")
+  .setAge(30)
+  .setEmail("alice@example.com")
+  .setAddress("123 Main St")
+  .build();
+
+console.log(user.toString());
+```
 
 ### Prototype
 
 > reuse existing objects without making code dependent on their classes
 
-- an object that supports cloning is called a prototype
+- prototype: an object that supports cloning
 
-Implementation:
-- Add a clone() method that carries over all of the field values of the old object into the new one
+- problem: creating a copy of an object with slightly different properties (when some are private) is inconvenient
+  - some properties are private
+  - adds a new dependency: the copy depends on the original class implementation
+
+- solution: create Prototype interface that contains `clone()` method
+  - use Generics: `Prototype<T>`
+  - implement `clone()` in original class
+    - simply `return new OriginalClass(this.field1, this.field2, this.field3)`
 
 ## Structural patterns
 
