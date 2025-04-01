@@ -32,6 +32,13 @@
 - small footprint
 - high scalability
 
+- can decrypt https requests and forward them to backend
+- to enable https to a website, it's required an ssl certificate
+  - how to configure ssl certificate:
+    - getting a certificate, issued by Let's Encrypt (Certbot) or other trusted authority
+    - installing it on your web server (e.g. nginx, apache)
+    - configuring the web server (with nginx.conf) to use the certificate for secure connections
+
 - doesn't depend on threads to handle requests
   - uses a single-threaded event-driven architecture instead
 
@@ -45,7 +52,26 @@
 
 - configuration file
   - `/etc/nginx/nginx.conf`
+  - [example](./code/nginx.conf)
 
+## basic concepts
+
+- master process:
+  - manages the server
+  - reads the configuration
+  - spawns worker processes
+  - doesn't handle requests itself
+- worker processes:
+  - handle client connections and requests
+  - each worker can manage thousands of connections
+
+- directives: key-value pairs or standalone commands that define how nginx behaves
+- blocks: group of directives
+  - provides scope to directives
+  - e.g. `events { ... }`, `http { ... }`, `server { ... }`, `location { ... }`
+  - can be nested (e.g. `location` inside `server` block)
+- variables
+  - e.g. `$uri` is a variable:`try_files $uri /index.php;`
 
 ## Installation
 
@@ -138,19 +164,81 @@ sudo nginx -s reload
 
 ## Directives
 
-```conf
-events {
+> key-value pairs or standalone commands that define how nginx behaves
 
+example:
+
+```nginx
+events {
+    worker_connections 1024;
 }
 
 http {
     server {
         listen 80;
-        server_name nginx-handbook.test;
-        return 200 "Bonjour, mon ami!\n";
+        server_name example.com;
+        root /var/www/html;
+        index index.html;
     }
 }
 ```
+
+- `listen 80;`: listen to port 80
+- `root /var/www/html;`: serves files from `/var/www/html`
+- `index index.html;`: returns `index.html` for `/`
+
+another example:
+
+```nginx
+worker_processes auto;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    server {
+        listen 80;
+        location / {
+            proxy_pass http://nextjs-service:3000;
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "upgrade";
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+        }
+    }
+}
+```
+
+- `worker_processes auto;`: automatically determine the number of worker processes based on available cpu cores
+- `events`: controls how nginx handles connections
+  - `worker_connections 1024;`: each worker process can handle up to 1024 simultaneous connections
+- `http`: 
+  - `server`: 
+  - `location /`: configuration for all requests
+    - `proxy_pass http://nextjs-service:3000;`: forward all incoming requests to the backend service running in `http://nextjs-service:3000;`
+    - `proxy_http_version 1.1;`: uses http version 1.1
+    - `proxy_set_header Upgrade $http_upgrade;`: 
+    - `proxy_set_header Connection "upgrade";`: 
+    - `proxy_set_header host $host;`: this forwards the original host header from the client to the backend, preserving the intended hostname
+    - `proxy_set_header X-Real-IP $remote_addr;`: forwards the real ip address of the client to the backend
+      - useful for logging and application logic on the backend
+    - `proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;`: 
+    - `proxy_set_header X-Forwarded-Proto $scheme;`: 
+      - `$scheme`: built-in variable that represents the protocol (http or https) of the original request
+
+### directives for begginers
+
+- `listen`: port and protocol (e.g. `listen 80` or `listen 443 ssl`)
+- `server_name`: domains handled by this server
+- `root`: directory for static files (e.g. `/var/www/html`)
+- `location`: rules for specific url paths
+- `try_files`: attempts to serve files or fall back (e.g. `try_files $uri /index.php`)
+- `proxy_pass`: forwards requests to a backend (e.g., `proxy_pass http://127.0.0.1:8000;`)
+- `fastcgi_pass`: sends php requests to php-fpm (e.g., `fastcgi_pass unix:/var/run/php-fpm.sock;`)
 
 ## Configuration file structure
 
