@@ -11,24 +11,31 @@
     - modules that group related functions and variables
     - objects that protect their internal state with getters/setters
 
+- inheritance: a class derives properties and behavior from another class
+- aggregation: one class contains another, but both exist independently
+- composition: one class contains anohter and the contained object cannot exist independently
+
 - primitives: fundamental data types that are not composed of other data types
-  - e.g. integers, floating-point numbers, characters, booleans, strings, null or undefined values
+  - e.g. integers, floating-point numbers, characters, booleans, null or undefined values
 
 - variable: the name given to a memory location
 - field: data encapsulated within a class or object
 
-- function: set of instructions that perform a task
-- method: set of instructions associated with an object
+- function: block of code that performs a task
+- method: function that is associated with an object
 
-- function signature: defines input and output of a function
+- function signature: defines name, parameters (types and order) and output
 
-- pass by value: actual value of the argument is passed
-- pass by reference: address to the actual argument is passed
+- pass by value: copy of the actual value is passed to the function
+- pass by reference: reference or pointer to the original data is passed, so modifications affect the original
 
 - namespace: declarative region that provides a scope to the identifiers (names of types, functions, variables) inside it
 - anonymous function: function that is defined without name
+  - used as arguments to other functions
+  - commonly used in functional programming
+  - also known as lambda functions in many languages (e.g. python, java)
 
-- high-order functions: function that takes another function as an argument
+- higher-order functions: function that takes one or more functions as arguments and/or return a function
 - first-class citizen: objects that can be:
   - created at runtime
   - passed as arguments to other functions
@@ -65,4 +72,4 @@
     - objects that keep track of their internal state
 - stateless: each operation is independent, no memory of previous interactions
 
-caching: storing data somewhere that is faster to access
+- caching: storing data somewhere that is faster to access
