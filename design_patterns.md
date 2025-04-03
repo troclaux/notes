@@ -11,6 +11,11 @@
   - encourage best practices
   - speed up development process
 
+- 3 types:
+  - creational
+  - structural
+  - behavioural
+
 ## Creational patterns
 
 > focus on how objects are created efficiently, encapsulating logic for instantiation
@@ -152,38 +157,6 @@ adoptPet(new CatFactory());
 - factory method: best for creating a single product with multiple variations
   - single method
 
-### Singleton
-
-> garantees that a class has only 1 instance
-
-- make default constructor `private`, to prevent new instances from being created
-- create a static method that returns the same instance of its own class
-  - getInstance should be the only way of getting Singleton object
-
-```typescript
-class Singleton {
-  private static instance: Singleton;
-
-  private constructor() {}
-
-  static getInstance(): Singleton {
-    if (!Singleton.instance) {
-      Singleton.instance = new Singleton();
-    }
-    return Singleton.instance;
-  }
-
-  sayHello() {
-    console.log("Hello from Singleton!");
-  }
-}
-
-const singleton1 = Singleton.getInstance();
-const singleton2 = Singleton.getInstance();
-
-console.log(singleton1 === singleton2); // true
-```
-
 ### Builder
 
 > allows you to produce different types and representations of an object using the same construction code
@@ -288,28 +261,59 @@ console.log(user.toString());
   - implement `clone()` in original class
     - simply `return new OriginalClass(this.field1, this.field2, this.field3)`
 
-## Structural patterns
+### Singleton
+
+> garantees that a class has only 1 instance
+
+- make default constructor `private`, to prevent new instances from being created
+- create a static method that returns the same instance of its own class
+  - getInstance should be the only way of getting Singleton object
+
+```typescript
+class Singleton {
+  private static instance: Singleton;
+
+  private constructor() {}
+
+  static getInstance(): Singleton {
+    if (!Singleton.instance) {
+      Singleton.instance = new Singleton();
+    }
+    return Singleton.instance;
+  }
+
+  sayHello() {
+    console.log("Hello from Singleton!");
+  }
+}
+
+const singleton1 = Singleton.getInstance();
+const singleton2 = Singleton.getInstance();
+
+console.log(singleton1 === singleton2); // true
+```
+
+## Structural Patterns
 
 > Focus on how objects and classes are structured to form larger systems
 
-- 
-
 ### Adapter
 
-> allows objects with incompatible interfaces to collaborate
+> allows the use of incompatible class/interface without changing it
 
 ![example](./images/adapter_example.png)
 
-### Decorator/Wrapper
+- problem: can't use two incompatible interfaces
+  - e.g. using json data with xml library, integrating legacy code with new code
 
-> lets you attach new behaviors to objects by placing these objects inside special wrapper objects that contain the behaviors
+- solution: create Adapter interface that wraps the incompatible interface and "translates" into the desired one
 
 ### Bridge
 
-> allows to split a large class or a set of closely related classes into two separate hierarchies—abstraction and implementation—which can be developed independently of each other
+> allows to split a large class or a set of closely related classes into two separate hierarchies, abstraction and implementation, which can be developed independently of each other
 
-- problem occurs when you when you extend two independent dimensions
-- the bridge pattern solves this problem by creating two separate hierarchies
+- problem: extending classes based on independent dimensions, increasing exponentially the number of subclasses
+- solution: creating two separate hierarchies
   - abstraction
     - e.g. GUI of the app
   - implementation
@@ -317,9 +321,65 @@ console.log(user.toString());
 
 ### Composite
 
-> Composite is a structural design pattern that lets you compose objects into tree structures and then work with these structures as if they were individual objects
+> compose objects into tree structures and then work with these structures as if they were individual objects
 
-- this design pattern is used when you need to implement a tree-like structure
+- simplify getting data from a set of objects
+- similar to directory tree structure
+
+- problem: get the total price of box that contains products and other boxes
+
+- solution: create `Product` and `Box` through a common interface which declares a method that calculates total price
+  - `Product`: contains a method that returns the product's price
+  - `Box`: contains a method that gets the price of each item the box contains and returns the total price
+
+### Decorator/Wrapper
+
+> lets you attach new behaviors to objects by placing these objects inside special wrapper objects that contain the behaviors
+
+- problem: add responsibilities to objects dynamically without the need to change original class
+  - dynamically adding behaviour: changing an object's functionality at runtime, while the program is executing, instead of compile time
+
+- extend functionality of a class by wrapping it in decorator classes
+
+- Component: interface or abstract class for objects that you want to add responsibilities dynamically
+- ConcreteComponent: base object that can be decorated
+- Decorator: wraps a component object and implements the same interface
+  - receives decorator
+  - holds a reference to a component and delegates work to it
+- ConcreteDecorator: adds new behaviour before or after delegating to the wrapped object
+
+```python
+# Component
+class Coffee:
+  def cost(self):
+    return 5
+
+# Decorator
+class CoffeeDecorator:
+  def __init__(self, coffee):
+    self._coffee = coffee
+
+  def cost(self):
+    return self._coffee.cost()
+
+# Concrete Decorators
+class MilkDecorator(CoffeeDecorator):
+  def cost(self):
+    return self._coffee.cost() + 1
+
+class SugarDecorator(CoffeeDecorator):
+  def cost(self):
+    return self._coffee.cost() + 0.5
+
+# Usage
+basic = Coffee()
+milk_coffee = MilkDecorator(basic)
+sugar_milk_coffee = SugarDecorator(milk_coffee)
+
+print(sugar_milk_coffee.cost())  # Output: 6.5
+```
+
+- thanks to decorator, you don't need to modify `Coffe`'s `cost()` for every new ingredient added to the menu
 
 ### Facade
 
@@ -328,12 +388,75 @@ console.log(user.toString());
 - it's a filter for functionalities
 - hides the complexity of the system
 
+- problem: code with [high coupling](/software_engineering.md#software-architecture-patterns)
+
+- solution: create a class that provides a simple interface to a complex subsystem with lots of moving parts
+  - decouples code
+
+with facade:
+
+```python
+class Water:
+    def boil(self):
+        print("Boiling water...")
+
+class TeaLeaves:
+    def add(self):
+        print("Adding tea leaves...")
+
+class Cup:
+    def pour(self):
+        print("Pouring tea into the cup...")
+
+# Client code needs to know and handle all the steps
+water = Water()
+leaves = TeaLeaves()
+cup = Cup()
+
+water.boil()
+leaves.add()
+cup.pour()
+```
+
+without facade:
+
+```python
+class Water:
+  def boil(self):
+    print("Boiling water...")
+
+class TeaLeaves:
+  def add(self):
+    print("Adding tea leaves...")
+
+class Cup:
+  def pour(self):
+    print("Pouring tea into the cup...")
+
+# Facade
+class TeaMaker:
+  def make_tea(self):
+    water = Water()
+    leaves = TeaLeaves()
+    cup = Cup()
+
+    water.boil()
+    leaves.add()
+    cup.pour()
+
+tea_maker = TeaMaker()
+tea_maker.make_tea()
+```
+
 ### Flyweight
 
-> improves RAM usage by sharing data between multiple objects instead of keeping all of the data in each object
+> reduces the cost of creating and manipulating a large number of similar objects
 
-- use this pattern only when your program must support a huge number of objects which barely fit into available RAM
-- each object's attributes define its state, there are 2 types of state:
+- problem: a program must support a huge number of objects which barely fit into available RAM
+- solution: 
+- good for classes with objects that contain almost identical data across all instances
+
+- each object's attributes define its state, define 2 types of state:
   - intrinsic state: data that is shared across multiple objects
     - other objects can read it, but not change it
     - an object that only stores the intrinsic state is called a flyweight
@@ -344,21 +467,23 @@ console.log(user.toString());
 
 ### Proxy
 
-> a proxy intermediates communication to the original object, allowing you to perform something either before or after the request gets through the original object
+> intermediates communication to the original object, allowing you to perform something either before or after the request gets through the original object
+
+- problem: sometimes you need to execute something before or after getting access to an object
+- solution: add a proxy class that can execute something either before or after the primary logic of the class (without changing it)
 
 - use cases:
   - when a heavyweight service object can't be always available because it wastes too many resources
   - when only specific clients should use it, restrict access to the service object
 
+- implementation
+  - `ExampleDatabase`: real object that needs restricted access
+  - `ExampleDatabaseProxy`: proxy that controls access to the `ExampleDatabase`
+  - `Client`: uses the proxy instead of directly access the object with access control
+
 ## Behavioral patterns
 
-> Focus on how objects interact and delegate responsibilities
-
-### Observer
-
-> subject has a subscription mechanism to notify observers of events that happened to the subject automatically
-
-### Strategy
+> focus on how objects interact and delegate responsibilities
 
 ### Chain of Responsibility (CoR)
 
@@ -391,8 +516,15 @@ console.log(user.toString());
 
 ### Memento
 
+### Observer
+
+> subject has a subscription mechanism to notify observers of events that happened to the subject automatically
+
 ### State
+
+### Strategy
+
+### Template Method
 
 ### Visitor
 
-### Template Method
