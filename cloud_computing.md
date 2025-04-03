@@ -13,8 +13,16 @@
 - infrastructure: the physical or virtual resources that support the operation of a system
   - e.g. servers, storage, network, databases, etc
 
-- serverless: servers aren't directly managed
-  - e.g. AWS Lambda
+- serverless
+  - no visibility in the machines
+  - no server management
+    - automatic scaling
+  - pay only for what you use
+  - e.g. AWS Lambda, DynamoDB
+- fully managed service
+  - visibility and control of the machines
+  - pay for machine runtime
+  - e.g. AWS RDS, Google Cloud SQL
 - private cloud: cloud infrastructure that is operated solely for a single organization
 - public cloud: cloud infrastructure that is available to the general public
 
@@ -50,7 +58,7 @@
   - agility: how quickly resources get provisioned to developers
 
 - vertical scalability: increasing/decreasing the size of an instance
-- Horizontal scalability: increasing/decreasing the number of instances/systems for your application
+- horizontal scalability: increasing/decreasing the number of instances/systems for your application
 
 - users
   - multiple people can belong to a group
@@ -80,7 +88,22 @@
 | **Storage**        | You | Service provider | Service provider | Service provider |
 | **Networking**     | You | Service provider | Service provider | Service provider |
 
+- CaaS (Communication as a Service): provides communication services over the internet
+  - e.g. Skype
+- Database as a Service (DBaaS): provides database services over the internet
+  - e.g. AWS RDS, Google Cloud SQL
+
 - workloads: computing resources required to run an application or service in a cloud computing environment
+  - static workload: consistent demand for resources
+  - periodic workload: demand for resources is predictable and occurs at regular intervals
+  - once-in-a-lifetime workload: demand for resources is unpredictable and occurs once
+  - unpredictable workload: demand for resources is unpredictable
+  - continously changing workload: demand for resources changes frequently
+
+- migration strategies: moving applications to the cloud
+  - lift-and-shift: move applications to the cloud without making any changes
+  - improve-and-move: move applications with some optimizations for the cloud
+  - rip-and-replace: replace applications with cloud-native applications that are built from scratch
 
 ## WAF (Well-Architected Framework) and CAF (Cloud Adoption Framework)
 
