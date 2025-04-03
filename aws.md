@@ -1,6 +1,9 @@
 
 # AWS
 
+> cloud computing platform that provides a wide range of services and tools for building and managing applications and infrastructure in the cloud
+
+- cloud computing: the delivery of computing services over the internet
 - service: a software that provides functionality and performs a task or set of tasks for your system
   - examples:
     - apache
@@ -8,45 +11,8 @@
     - postgresql
     - auth0
     - prometheus
-
-- objective: facilitate communication between different systems
-  - linux, windows, MacOS
-
-- serverless: servers aren't directly managed
-  - e.g. AWS Lambda
-- private cloud: cloud infrastructure that is operated solely for a single organization
-- public cloud: cloud infrastructure that is available to the general public
-
-- OLAP
-  - used for platforms with intense read operations
-  - used for analyzing large quantities of data from multiple perspectives or dimension
-- OLTP
-  - used for transactional processing of data in real-time
-  - used for processing business transactions such as order processing, inventory management, etc
-
-- Compute: CPU
-- Memory: RAM
-- Storage: Data
-- Database: Storing data in a structured way
-- Network: Routers, switches, DNS servers
-
-- advantages of cloud computing
-  - On-demand resources can be provisioned without human interaction
-  - resources are available over the network, and can be accessed by diverse client platforms
-  - quickly and easily scale based on demand (stop guessing capacity)
-  - measured payment for resources (pay only what you use)
-  - benefits from massive economies of scale
-  - trade CAPEX (CAPital EXpense) for OPEX (OPerational EXpense)
-  - easily access global infrastructure
-
-- problems solved by the cloud
-  - flexibility
-  - cost-effectiveness
-  - scalability
-  - elasticity
-  - high-availability
-  - fault-tolerance
-  - agility
+- infrastructure: the physical or virtual resources that support the operation of a system
+  - e.g. servers, storage, network, databases, etc
 
 - pricing of AWS
   - pay for compute time
@@ -54,66 +20,12 @@
   - pay only for data transfer out of the cloud
     - data transfer in is free
 
-- users
-  - multiple people can belong to a group
-  - a person can belong to multiple groups simultaneously
-
-- load balancing: distributing incoming network traffic across multiple servers
-  - improves responsiveness and availability of applications
-  - prevents a single server from becoming a single point of failure
-
-- on-site: infrastructure is physically located at your site
-- IaaS (Infrastructure as a Service): provides virtualized computing resources over the internet
-  - e.g. AWS EC2, Google Compute Engine
-- PaaS (Platform as a Service): provides a platform allowing customers to develop, run, and manage applications without the complexity of building and maintaining the infrastructure
-  - e.g. AWS Elastic Beanstalk
-- SaaS (Software as a Service): software that is centrally hosted and licensed on a subscription basis
-  - e.g. Google Drive
-
-|                         | On-site      | IaaS           | PaaS           | SaaS           |
-|-------------------------|--------------|----------------|----------------|----------------|
-| **Applications**   | You | You | You | Service provider |
-| **Data**           | You | You | You | Service provider |
-| **Runtime**        | You | You | Service provider | Service provider |
-| **Middleware**     | You | You | Service provider | Service provider |
-| **O/S**            | You | You | Service provider | Service provider |
-| **Virtualization** | You | Service provider | Service provider | Service provider |
-| **Servers**        | You | Service provider | Service provider | Service provider |
-| **Storage**        | You | Service provider | Service provider | Service provider |
-| **Networking**     | You | Service provider | Service provider | Service provider |
-
-- workloads: computing resources required to run an application or service in a cloud computing environment
-
-## WAF (Well-Architected Framework) and CAF (Cloud Adoption Framework)
-
-- WAF: a set of best practices for designing and operating reliable, secure, efficient, and cost-effective systems in the cloud
-- CAF: a set of best practices for adopting cloud technologies and services in a structured and organized way
-
-### 5 pillars of cloud computing architecture
-
-1. operational excellence: automation, monitoring, and management
-2. security: protect data, systems, and assets
-3. reliability: ability to recover from failures and maintain availability
-4. performance efficiency: use resources efficiently
-5. cost optimization: avoid unnecessary costs
-
-## storage services
-
-- file storage: data is stored in a hierarchical file system (directories and files, like your computer)
-  - e.g. AWS EFS
-- block storage: data is stored in fixed-size blocks
-  - e.g. AWS EBS
-  - ideal for databases
-- object storage: data is stored as objects
-  - e.g. AWS S3
-  - object: a collection of data that contains both data and metadata
-  - ideal for non-structured data
-
 ## AWS CLI
 
 > manage aws resources with CLI commands
 
-- `aws iam list-users`: Lists all IAM users in your AWS account, showing each user's name, path, ID, ARN, and creation date
+- list all IAM users in your AWS account: `aws iam list-users`
+- get secret from aws secrets manager: `aws secretsmanager get-secret-value --secret-id peso-env-secret --region sa-east-1`
 
 ## IAM (Identity and Access Management)
 
@@ -142,15 +54,14 @@
 }
 ```
 
-- Version: the version of the policy language, defined by date
-- ID: Policy ID
-- Statement: composed by:
-  - SID: Statement ID
-  - Effect (Allow, Deny)
-  - Principal: Account/user/role to which this policy refers to
-  - Action: List of actions the policy allows or denies
-  - Resource: List of resources to which the actions apply
-  - Condition: Conditions for when this policy is in effect
+- `Version`: the version of the policy language, defined by date
+- `ID`: optional identifier for the policy
+- `Statement`: contains individual permission rules
+  - `"Sid": "AllowListBuckets"`: unique identifier for this permission block
+  - `Effect`: defines if this permission is allowed or not
+  - `"Action": "s3:GetObject"`: allows the use to list objects in the root of the specified S3 bucket
+  - `Resource`: list of resources to which the actions apply
+  - `Condition`: conditions for when this policy is in effect
 
 - IAM Password Policy: You can decide the requirements for password creation
 
@@ -163,7 +74,9 @@
   - AWS Software Developer Kit (SDK)
     - Used whenever you want to call APIs
 
-- IAM Roles: Allows AWS services to perform tasks by granting credentials
+- IAM Policy: set of permissions for aws resources
+- IAM Roles: identity that grants temporary credentials to aws services or users to perform tasks
+  - set of IAM policies
 
 ### IAM Security Tools
 
@@ -173,36 +86,36 @@
 
 ### IAM Guidelines and Best Practices
 
-- Don’t use the root account (except for AWS account setup)
-- Don’t create multiple AWS accounts, create AWS users within an AWS account
+- don’t use the root account (except for aws account setup)
+- don’t create multiple aws accounts, create aws users within an aws account
 
-- Dedicated Host: Your instance runs on a physical server fully dedicated to your use
-  - An isolated server with configurations you can control
+- dedicated host: your instance runs on a physical server fully dedicated to your use
+  - an isolated server with configurations you can control
 
-## Security Groups
+## security groups
 
-> Facilitates managing network traffic
+> facilitates managing network traffic
 
-- Acts as a "firewall" for EC2 instances
-- Regulate:
-  - Access to ports
-  - Authorized IP ranges (IPv4 and IPv6)
-  - Control of inbound and outbound network traffic
-- Can be attached to multiple instances
-- Locked down to a region/VPC combination
-- Lives "outside" the EC2
-  - If traffic is blocked, the EC2 instance won’t see it
-- It's good to keep 1 separate security group for SSH access
-- If your application is not accessible (time out), then it's a security group issue
-- If you application gives a "connection refused" error, then it's an application error or it's not launched
+- acts as a "firewall" for EC2 instances
+- regulate:
+  - access to ports
+  - authorized IP ranges (IPv4 and IPv6)
+  - control of inbound and outbound network traffic
+- can be attached to multiple instances
+- locked down to a region/VPC combination
+- lives "outside" the EC2
+  - if traffic is blocked, the EC2 instance won’t see it
+- it's good to keep 1 separate security group for SSH access
+- if your application is not accessible (time out), then it's a security group issue
+- if you application gives a "connection refused" error, then it's an application error or it's not launched
 
 > [!IMPORTANT]
-> All inbound traffic is blocked by default
-> All outbound traffic is authorized by default
+> all inbound traffic is blocked by default
+> all outbound traffic is authorized by default
 
 - Ports:
-  - 22 = SSH (Secure Shell): log into a Linux instance
-  - 3389 = RDP (Remote Desktop Protocol): log into a Windows instance
+  - 22 = SSH (Secure Shell): log into a linux instance
+  - 3389 = RDP (Remote Desktop Protocol): log into a windows instance
   - 21 = FTP (File Transfer Protocol)
   - 22 = SFTP (Secure File Transfer Protocol)
   - 80 = HTTP : access unsecured websites
@@ -238,6 +151,35 @@
 
 > virtual network that allows you to launch AWS resources in a logically isolated section of the cloud
 
+- allows management over IP addresses, subnets, routing and security
+- allows the creation of public and private subnets
+  - subnet: smaller network inside larger network
+    - helps organize and manage traffic in a network by dividing it into chunks
+    - subnets allow better allocation of IPs from a larger IP range
+    - use CIDR notation (e.g. `192.168.1.0/24`)
+      - `192.168.1.0/24` means:
+        - network part: `192.168.1`
+        - `0`:
+          - how is it used by the hosts?
+        - `/24`: 
+
+
+- route table: defines how traffic flows inside VPC
+  - contains rules like:
+    - to reach the internet (0.0.0.0/0), go through the Internet Gateway
+    - to reach the private subnet, stay local
+  - each subnet is associated with a route table
+  - only one route table per subnet is allowed
+
+- internet gateway: allows public subnets to access the internet and receive traffic from it
+  - attached to a VPC
+  - required for ec2 instances in public subnets to:
+    - download packages
+    - be accessed via SSH or a browser
+- NAT (Network Address Translation) gateway: allows private subnets to access the internet, but prevents the internet from initiating a connection back
+  - e.g. private ec2 can download updates or access external APIs without being publicly exposed
+  - usually are placed in a public subnet and route private subnet traffic through it
+
 ## RDS - Relational Database Service
 
 > managed database service that allows you to set up, operate, and scale relational databases in the cloud
@@ -257,6 +199,45 @@
 ## Route 53
 
 > scalable domain name system (DNS) web service that translates domain names into IP addresses
+
+- hosted zone: logical container within aws route 53 that holds DNS records for domains
+  - DNS records: maps domain name to a specific resource (e.g. IP address, mail server)
+    - types:
+      - `A` (Address): points a domain/subdomain directly to a public IPv4 address
+      - `CNAME` (Canonical NAME): redirects one domain or subdomain to another domain or subdomain
+      - `MX` (Mail Exchange): specifies mail exchange servers for receiving email
+      - `TXT` (TeXT): holds text information, often used for verification purposes or SPF records (email authentication)
+    - what is a dns record?
+    - explain each type of dns record
+    - logical container: not a docker container, it's a logical group/repository with dns records
+  - NS (NameServer records): indicate authoritative server for the domain
+  - authoritative NS record: specifies which nameservers have definitive information about dns records for the domain
+  - domain registrar: responsible for managing official domain records, registration, renewals and assignments
+
+```
+Visitor enters URL → Domain Registrar → Nameservers → Hosted Zone → DNS Records → IP Address
+```
+
+### registering domain
+
+1. access route 53 in AWS console
+1. select "Register Domains"
+1. insert/search/choose a domain
+1. enter contact information
+1. review details, pricing and accept terms (select to renew domain yearly, if you want to)
+1. finalize registration
+
+- registering a domain automatically cretes a hosted zone
+- if you delete it, you can easily copy the registered domain's name servers and create a new record
+
+example of Name Servers:
+
+```
+ns-123.awsdns-01.com
+ns-1234.awsdns-01.org
+ns-123.awsdns-01.net
+ns-1234.awsdns-01.co.uk
+```
 
 ## CloudFront
 
@@ -350,6 +331,7 @@
 ## Redshift
 
 > fully managed data warehouse service that allows you to run complex queries on large datasets
+
 ## Athena
 
 > interactive query service that allows you to analyze data in Amazon S3 using standard SQL
@@ -357,6 +339,37 @@
 ## EMR - Elastic MapReduce
 
 > big data processing service that allows you to run Apache Hadoop, Spark, and other big data frameworks on AWS
+
+## aws common tasks
+
+### install docker on amazon linux 2
+
+```bash
+#!/bin/bash
+sudo yum update -y
+sudo yum -y install docker
+sudo service docker start
+sudo usermod -a -G docker ec2-user
+sudo chmod 666 /var/run/docker.sock
+```
+
+## pricing
+
+### data transfer
+
+- inbound (data going into aws services): free
+- within the same Availability Zone (AZ): free
+- from aws to the internet (first 100GB/month): Free
+
+## tutorials
+
+- [setup kubernetes in ec2 instance tutorial](https://varunmanik1.medium.com/setting-up-a-kubernetes-cluster-on-aws-ec2-with-ubuntu-22-04-lts-and-kubeadm-5c54930a4659)
+
+## tools
+
+- cert-manager to automate generation of certificates
+- kubeadmn: set up and manage kubernetes clusters easily
+- k3s: easy install kubernetes
 
 ---
 
