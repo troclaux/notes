@@ -428,16 +428,30 @@ example of a payload:
 > if you get the error `edge runtime does not support Node.js 'crypto' module`
 > delete the `middleware.ts` folder and restart the server
 
-- use `.env.local` to store your environment variables:
-  - `GOOSE_DBSTRING`
-  - `GOOSE_DRIVER`
-  - `AUTH_GOOGLE_ID`
-  - `AUTH_GOOGLE_SECRET`
-  - `AUTH_SECRET`
-  - `DATABASE_HOST`
+- real next.js full-stack project environment variables:
+  - database credentials: allow next.js to make requests to the database
+    - migrate with goose after setting `GOOSE_DBSTRING` and `GOOSE_DRIVER`: `goose -env .env.local -dir ./src/sql/schema/. up`
+  - oauth credentials
+    - google OAuth credentials: allows app to use Google OAuth to authenticate
+    - github OAuth
+  - next.js secret
+  - next.js base URL
+
+- `.env.development`: store env vars for development environment
+- `.env.production`: store env vars for production environment
+  - `DATABASE_HOST`: database credential
   - `DATABASE_NAME`
   - `DATABASE_USER`
   - `DATABASE_PASSWORD`
+  - `GOOSE_DBSTRING`: apply migrations with goose
+  - `GOOSE_DRIVER`: apply migrations with goose
+  - `AUTH_GOOGLE_ID`: public id of your app (e.g. peso). access gcp console to setup OAuth with both id and secret
+  - `AUTH_GOOGLE_SECRET`: private key to verify identity of the app
+  - `AUTH_GITHUB_ID`: public id of your app (e.g. peso). access github developer settings to setup OAuth with both id and secret
+  - `AUTH_GITHUB_SECRET`: private key to verify identity of the app
+  - `AUTH_SECRET` is aliased to `NEXTAUTH_SECRET`: encrypts JWTs
+  - `AUTH_URL`is aliased to `NEXTAUTH_URL`: URL of your website (e.g. https://pesodevops.com), used to generate authentication routes
+- `terraform.tfvars`: stores terraform variables
 
 ### clerk
 
