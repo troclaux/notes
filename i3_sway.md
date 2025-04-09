@@ -37,6 +37,7 @@ sudo apt install -y fonts-font-awesome network-manager-gnome
 - `light`: modify display's brightness
 - `blueman`: bluetooth manager
 - `swaylock`: lock screen
+- `swayidle`: handle suspend event
 - `waybar`: highly customizable navigation bar
 - `wofi`: wayland-native application launcher (compatible with shell piping, used for scripts)
 - `fuzzel`: wayland-native application launcher (used to open gui applications)
