@@ -21,6 +21,10 @@
     - organize project tasks
     - collect user feedback
 
+- upstream vs downstream: describe the direction of data flow between repos (normally between forks of a repo)
+  - upstream repository: original source of code, where a copy (fork) came from
+  - downstream repository: code that is receiving updates (fork)
+
 ## github account authentication with SSH keys
 
 ```bash
