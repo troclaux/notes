@@ -46,6 +46,28 @@
   - Fully automated: The fewer manual steps, the better
     - less error-prone
 
+## introducing devops in workplace
+
+### understand and automate
+
+- how developers work?
+- what workflows do they use?
+- what git workflow?
+
+- how to provision and prepare infrastructure
+- how to maintain infrastructure
+
+- which processes can be automated with a CI/CD pipeline?
+  - building, testing, deploying and infrastructure provisioning
+  - automate the process of releasing software to different environments (staging, production)
+- what can be containerized?
+
+- implemenent monitoring and logging
+  - use tools like Prometheus, Grafana, Amazon CloudWatch
+
+> [!TIP]
+> automate the most time-consuming and error-prone processes first
+
 ## CI/CD example step by step
 
 > objective: program workflow that builds docker image and pushes it to GCP's [artifact registry](/gcp.md#artifact-registry)
