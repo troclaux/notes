@@ -32,12 +32,16 @@
   - algorithms
     - dfs
     - bfs
+  - type complexity
+
+- talk out loud through your though process
 
 - define requirements
   - what is the problem?
   - what are the constraints?
   - what do I actually need to implement?
-  - what are the inputs?
+  - if you make any assumptions, say it out loud
+  - ask input format questions
     - how is each class represented?
     - is it a string?
     - is it an object?
