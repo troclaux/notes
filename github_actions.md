@@ -23,9 +23,11 @@ to add CI to a github repository:
   - e.g. pull requests, push
 - job: set of steps that run on the same runner
   - in the example below, the workflow contains a single job called "Tests"
-  - composed by one or more steps
+  - set of steps
+  - each job runs on a separate runner
 - step: single task that can run commands
   - e.g. installing dependencies, running tests
+  - execute sequentially within the same job
   - in the example below, we have 3 steps:
     - set up Golang
     - check out the code
@@ -73,12 +75,12 @@ jobs:
     - `name`: label for a step within a job (used in GitHub Actions' UI)
     - `id`: unique identifier for a step within a job
     - `runs-on`: defines the job's runner (e.g. `ubuntu-latest`)
-    - `env`: define environment variable for runner
+    - `env`: set environment variables for runner (used for shell commands with `run:`)
       - `DATABASE_URL: ${{ secrets.DATABASE_URL }}`: set environment variable with value from github repository's secrets
     - `steps`: contains all steps in a job
       - `- name`: name of single step
         - `uses`: defines action that will be used, along with the version (e.g. `actions/checkout@v4`)
-        - `with`: adds configuration options to an action
+        - `with`: adds configuration options to an action (input to an action)
           - `<config>`: can be `env`, `go-version`, `working-directory`, etc
         - `run`: runs a shell command
 
