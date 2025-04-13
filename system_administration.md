@@ -1,7 +1,54 @@
 
 # system administration
 
-> 
+> process of managing and maintaining computer systems, servers and networks to ensure they run reliably, securely and efficiently
+
+- responsibilities:
+  - installing and configuring operating systems and software
+  - managing user accounts and permissions
+  - monitoring performance and availability
+  - performing backups and recovery
+  - applying security patches and updates
+  - troubleshooting system issues
+  - automating tasks with scripts (like bash)
+
+## environments
+
+> separate setup where an application runs, used for different stages of development
+
+- development: where features are developed and tested locally on dev servers
+  - used by: developers
+  - typical setup: local machines or remote dev servers
+- testing/QA (Quality Assurance): run manual or automated tests on new code before it's promoted further
+  - used by: QA testes, developers
+  - typical setup: closely mirrors staging, often auto-deployed by CI/CD after commits
+- staging : production-like environment for final testing before going live
+  - used by: QA testes, developers, product owners
+- homologation/UAT (User Acceptance Testing): clients/stakeholders test and approve features before production
+  - used by: clients, stakeholders, QA
+  - very close to production
+  - goal: validate that the app behaves correctly in real-world scenarios
+- production: live system accessible to customers
+  - used by: end users
+  - rules: strict deployment processes, rollback plans, alerting
+
+## deployment strategies
+
+> techniques to safely release new versions of an application, minimizing downtime and risk
+
+- recreate: stop old version, start the new one
+  - downtime during switch
+  - simple, but not ideal for real time systems
+- rolling update: replace instances gradually, one by one
+  - no downtime
+  - requires kubernetes or docker swarms or similar
+- blue-green deployment: run two environments, switch traffic when ready
+  - blue: current version
+  - green: new version
+- canary deployment: release to a small percentage of users, monitor, then expand
+  - safer, controlled exposure
+- A/B testing: route users to different app versions to compare
+  - analyze which version performs better (e.g. UX, business metrics)
 
 ## user management
 
