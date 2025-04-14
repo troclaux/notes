@@ -32,6 +32,10 @@
   - used by: end users
   - rules: strict deployment processes, rollback plans, alerting
 
+- cloning environment: cloning an environment means replicating the full stack — application code, docker setup, environment variables, and database — into a new isolated space, usually for debugging, migration testing or demos
+  - normally done with a shell script that copies the project directory, adjusts ports in .env and docker-compose.yml and spins up containers with docker compose up
+  - for the database, you can snapshot or dump the data and restore it into a new db container or rds instance, so the clone doesn’t affect the original
+
 ## deployment strategies
 
 > techniques to safely release new versions of an application, minimizing downtime and risk
@@ -106,3 +110,20 @@ umount /mnt/usb
   - `/media`: removable media
   - `/`: root filesystem
 
+## troubleshooting scenarios
+
+- laravel app isn't accessible to other services, how to restore accessibility?
+  - check if container/aws resource is running
+  - check security groups
+  - check nginx/apache config
+  - check network ACLs (?)
+  - check if bound to correct port/IP
+  - check env vars
+
+- how do you check if a container is reachable?
+  - [curl](/cli_tools.md#curl)
+  - `ping`: checks if a host is reachable
+  - `nc`: checks if a port is open
+    - scan port 80: `nc -zv localhost 80`
+  - `ss`
+  - `netstat`
