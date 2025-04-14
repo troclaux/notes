@@ -35,6 +35,7 @@
 
 ## CLI commands
 
+- list running containers (their names, ports and images): `docker ps`
 - pull specific docker image: `docker pull node:18-alpine`
 - list available images: `docker images`
 - remove an image: `docker rmi nginx`
@@ -59,11 +60,11 @@
 - create new docker network: `docker network create mynetwork`
 - remove docker network: `docker network rm mynetwork`
 
-- start services from `docker-compose.yml`: `docker-compose up -d`
-- stop services: `docker-compose down`
-- restart services: `docker-compose restart`
-- show real-time logs: `docker-compose logs -f`
-- check logs of a specific service: `docker-compose logs nginx`
+- start services from `docker compose.yml`: `docker compose up -d`
+- stop services: `docker compose down`
+- restart services: `docker compose restart`
+- show real-time logs: `docker compose logs -f`
+- check logs of a specific service: `docker compose logs nginx`
 
 ## images
 
@@ -228,6 +229,9 @@ docker run --rm -it --network my-network -v ~/dotfiles:/root/dotfiles my-ubuntu-
 > docker allows you to reorder the options as long as the last arguments are the image name (`my-ubuntu-image`) and the command (`bash`)
 > `-v`, `-it` and `--rm` can change order without changing the resulting behavior as long as they are before the image name
 
+- `docker run` vs `docker exec`
+  - `docker run`: starts new container
+  - `docker exec`: runs command inside running container
 
 ### container lifecycle
 
@@ -365,17 +369,17 @@ best practices:
 > Public repositories are free
 > Private repositories may require paid subscription
 
-## docker-compose
+## docker compose
 
-- start services defined in file with name `docker-compose.yml`: `docker-compose up`
+- start services defined in file with name `docker compose.yml`: `docker compose up`
   - `--build`: forces docker to rebuild images before starting containers
   - `-d`: runs the containers in detached mode (in the background)
-- stop services defined in file with name `docker-compose.yml`: `docker-compose down`
-- runs `certbot` container once and then removes it after execution: `docker-compose run --rm certbot`
+- stop services defined in file with name `docker compose.yml`: `docker compose down`
+- runs `certbot` container once and then removes it after execution: `docker compose run --rm certbot`
   - `--rm`: removes container after execution
   - requests SSL certificate from Let's Encrypt
-- restart container: `docker-compose restart nginx`
-- renew SSL certificate: `docker-compose run --rm certbot renew`
+- restart container: `docker compose restart nginx`
+- renew SSL certificate: `docker compose run --rm certbot renew`
   - certificates from Let's Encrypt expire every 90 days
 
 
@@ -396,6 +400,6 @@ services:
 ```
 
 - `nextjs-service`: service name
-  - use this name within `docker-compose.yml` file to reference this service (like in `depends_on` or networks)
+  - use this name within `docker compose.yml` file to reference this service (like in `depends_on` or networks)
 - `nextjs_app`: container name
   - this is the name that appears when you run docker CLI commands (e.g. `docker ps`, `docker logs`)
