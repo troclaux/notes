@@ -371,6 +371,8 @@ best practices:
 
 ## docker compose
 
+> tool that defines and runs multi-container docker applications
+
 - start services defined in file with name `docker compose.yml`: `docker compose up`
   - `--build`: forces docker to rebuild images before starting containers
   - `-d`: runs the containers in detached mode (in the background)
@@ -382,6 +384,7 @@ best practices:
 - renew SSL certificate: `docker compose run --rm certbot renew`
   - certificates from Let's Encrypt expire every 90 days
 
+[example of docker-compose.yaml explained line by line](./code/docker/docker-compose.yml)
 
 ```yaml
 services:
