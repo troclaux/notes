@@ -52,10 +52,17 @@
   - `-f`: shows live logs (useful for debugging)
 - remove container: `docker rm <container_id>`
 - remove all stopped containers: `docker container prune`
+
+- build docker image: `docker build -t my-app-tag:1.0 .`
+  - `-t`: assigns a tag to the image (defaults to `latest` if no tag is given)
+- push docker image: `docker push 000000000000.dkr.ecr.sa-east-1.amazonaws.com/my-repo:latest`
+- list all images: `docker images`
+
 - create volume: `docker volume create myvolume`
 - list volumes: `docker volume ls`
 - remove volume: `docker volume rm myvolume`
 - remove all unused volumes: `docker volume prune`
+
 - list docker networks: `docker network ls`
 - create new docker network: `docker network create mynetwork`
 - remove docker network: `docker network rm mynetwork`
@@ -75,6 +82,23 @@
 - blueprint for building a container
 
 - `Dockerfile`: text file containing instructions for building a Docker image
+  - basic structure of a Dockerfile:
+    - define base image (e.g. `FROM node:18-alpine`)
+    - define WORKDIR
+    - COPY local files to container
+    - RUN shell commands
+      - install packages
+      - install dependencies
+      - build application
+    - expose to indicate which ports the containerized application is expected to listen on at runtime
+      - doesn't actually publish the port, that's handled by `-p`
+        - publish port: make a port inside the container accessible from outside the container
+        - publish port = mapping container port => host port
+          - e.g. `docker run -p 8080:3000 my-image`
+            - `8080` = host port
+            - `3000` = container port (where the app listens)
+            - goint to `http://localhost:8080` will reach the app running inside the container on port `3000`
+    - CMD to run final command
 
 Dockerfile example:
 
@@ -82,13 +106,13 @@ Dockerfile example:
 # Use an official Ubuntu image as the base
 FROM ubuntu:latest
 
-# Set the working directory to /app
+# Set the working directory to /app (this automatically creates the app directory inside root directory)
 WORKDIR /app
 
 # Copy the web server configuration file
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# Copy the web server files
+# Copies entire project (except what’s excluded via .dockerignore) into the container
 COPY . /app
 
 # Install the necessary dependencies
