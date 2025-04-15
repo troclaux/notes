@@ -1,0 +1,41 @@
+stages:
+  - test
+  - lint
+  - build
+
+test:
+  stage: test
+  image: node:20
+  script:
+    - npm ci
+    - npm test
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+
+lint:
+  stage: lint
+  image: node:20
+  script:
+    - npm ci
+    - npm run lint
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+
+build:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  needs: [test, lint]
+  before_script:
+    - apk add --no-cache python3 py3-pip curl
+    - pip3 install awscli
+    - aws configure set aws_access_key_id "$AWS_ACCESS_KEY_ID"
+    - aws configure set aws_secret_access_key "$AWS_SECRET_ACCESS_KEY"
+    - aws configure set default.region "sa-east-1"
+    - aws ecr get-login-password | docker login --username AWS --password-stdin $REGISTRY
+  script:
+    - docker build -t $REGISTRY/peso-repo:$CI_COMMIT_SHORT_SHA .
+    - docker push $REGISTRY/peso-repo:$CI_COMMIT_SHORT_SHA
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
