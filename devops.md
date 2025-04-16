@@ -5,11 +5,16 @@
 
 - combination of culture, practices and tools that increases an organization's ability to deliver applications and services
 
-## key components
+![devops lifecycle](./images/devops_lifecycle.webp)
+
+## basic concepts
+
+[summary](https://dev.to/aws-builders/system-design-for-devops-engineers-45lh)
 
 - core principles:
   - automation
   - collaboration and communication
+  - continuous improvement
   - CI/CD
     - Continuous Integration (CI): practice of automatically integrating code changes from developers into shared repository
       - verify each integration with automated builds and tests to detect problems early
@@ -62,7 +67,7 @@
   - automate the process of releasing software to different environments (staging, production)
 - what can be containerized?
 
-- implemenent monitoring and logging
+- add monitoring + logging in infrastructure/application
   - use tools like Prometheus, Grafana, Amazon CloudWatch
 
 > [!TIP]
@@ -195,6 +200,32 @@ jobs:
         run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-444620/notely-ar-repo/notely:latest .
 ```
 
+## CALMS
+
+> framework used to assess and implement devops culture in organizations
+
+- Culture: collaboration, shared responsibility and breaking silos between dev, ops, QA and security
+- Automation: emphasizes automation of repetitive tasks like: testing, building, deployment, infrastructure provisioning
+- [Lean](/software_engineering.md#lean-methodology)
+- Measurement: data-driven decision making
+- Sharing: transparencey and knowledge sharing across teams
+
 ---
 
-- serverless: 
+# DevSecOps
+
+> integrate security at every stage of software development lifecycle
+
+- Development Security Operations
+
+- key principles:
+  - shift left: introduce security early in the development lifecycle
+    - e.g. code scanning during development, not after deployment
+  - automation
+  - collaboration
+  - continuous security: security isn't a one-time audit, it's built into every build, deploy and update
+
+---
+
+- infrastructure provisioning: process of settiing up hardware, software, networking and serices needed to run applications or workloads
+
