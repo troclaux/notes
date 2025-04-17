@@ -70,6 +70,9 @@ properties of the internet:
 - firewall: security device or software that monitors and controls incoming/outgoing network traffic based on predefined rules
 - gateway: device or system that connects networks together, allowing data to be transmitted between them
   - types of gateways: router, firewall, proxy server, NAT (Network Address Translator)
+- route table: determines how traffic is directed in a network
+  - set of rules that define where to send traffic based on destination IP
+  - each subnet in aws is associated with one route table
 
 - packet switch: takes arriving packet and forwards that packet to the outgoing connection link
 - connection links: physical or logical paths over which data is transmitted between devices or networks
@@ -196,6 +199,22 @@ properties of the internet:
 
 > protocol that allows bidirectional, real-time communication between a client and a server over the web
 
+#### webhook
+
+> one-way notification system
+
+
+
+- examples:
+  - github sending a webhook when a code is pushed
+  - stripe sending payment notification
+
+- you register a URL (endpoint)
+  - configure a system (e.g. github) to send specific data to your URL when an event happens (e.g. git push)
+- the system sends an HTTP request to that URL when a specific event occurs
+  - usually a payload (data) in json format
+- your server receives it and acts on it
+
 #### HTTP (HyperText Transfer Protocol)
 
 > defines how requests and responses between a client and a server should be formatted and transmitted
@@ -307,6 +326,8 @@ Content-Length: 1024
 
 > extension of HTTP that uses encryption (via SSL/TLS) to secure the communication between the client and the server
 
+![how HTTPS works](./images/https.webp)
+
 short description of HTTPS communication:
 
 1. client/browser requests server to establish initial request to establish connection
@@ -393,11 +414,26 @@ long example of HTTPS communication:
 
 > enables application programs and computers to exchange messages over a network
 
-- SYN-ACK process:
-1. client sends SYN (Synchronize) packet to server
-1. server sends SYN-ACK (Synchronize-Acknowledgment)
-1. clients sends ACK packet to server (Acknowledgment)
+- reliable, ordered, error-checked delivery of data
+- works on top of IP
+
+3-way handshake (connection setup)
+
+1. client sends SYN (Synchronize) packet to server, requesting to start a connection
+1. server responds with a SYN-ACK (Synchronize-Acknowledgment)
+1. clients sends final ACK packet to server (Acknowledgment) to confirm
 1. connection established
+
+- tcp segment structure
+  - header
+    - source port
+    - destination port
+    - sequence number
+    - checksum (for error-checking)
+    - flags (e.g ACK)
+    - etc
+  - payload (optional data)
+    - can be an http request
 
 #### UDP (User Datagram Protocol)
 
@@ -428,7 +464,7 @@ long example of HTTPS communication:
   - 4 bytes = 32 bits
   - `(0 to 255).(0 to 255).(0 to 255).(0 to 255)`
 - IPv6
-  - 128 bits = 16 bytes
+  - 16 bytes = 128 bits
   - `2bytes:2bytes:2bytes:2bytes:2bytes:2bytes:2bytes:2bytes` <=> `2800:3f0:4004:809::200e`
   - `16bits:16bits:16bits:16bits:16bits:16bits:16bits:16bits` <=> `2800:3f0:4004:809::200e`
     - double colon `::` = `0000 0000 0000 0000` represents 16 consecutive zero bits
@@ -440,10 +476,13 @@ long example of HTTPS communication:
 
 - CIDR (Classless Inter-Domain Routing) notation: compact way to represent IP ranges (e.g. `192.168.1.0/24`)
   - `192.168.1.0/24` has two parts
-    - network address or starting IP: `192.168.1.0`
-    - bits reserved for the network: `/24`
+    - network address or starting IP (`192.168.1.0`): identifies the subnet or block of IPs
+    - prefix length (`/24`): defines how many bits are reserved for the network
+      - can go from `/0` to `/32`, but most common subnet size is `/24`
+        - in aws, prefix lengths for subnets must be between `/16` and `/28`
     - `/24` = the first 24 bits (`192.168.1`) are fixed and define the network
       - the remaining 8 bits (32-24) are available to assign to hosts (devices)
+        - 8 bits => 2⁸ = 256 IPs
       - `/24` can be splitted into two subnets
         - `192.168.1.0/25` => IPs from `.0` to `.127`
         - `192.168.1.128/25` => IPs from `.128` to `.255`
