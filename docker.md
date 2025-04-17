@@ -30,8 +30,12 @@
 - dockerhub: official cloud service for storing and sharing docker images
 
 - [containers vs virtual machines](https://www.atlassian.com/microservices/cloud-computing/containers-vs-vms)
-  - virtual machines virtualize an entire machine down to the hardware layers
-  - containers only virtualize software layers above the operating system level
+  - virtual machines: virtualize an entire machine down to the hardware layers
+    - use hypervisors to emulate hardware
+    - heavyweight
+  - containers: only virtualize software layers above the operating system level
+    - do NOT use hypervisors, use the host's OS kernel
+    - lightweight
 
 ## CLI commands
 
@@ -72,6 +76,21 @@
 - restart services: `docker compose restart`
 - show real-time logs: `docker compose logs -f`
 - check logs of a specific service: `docker compose logs nginx`
+
+## docker architecture
+
+- docker client: CLI tool that sends commands to the docker daemon
+- docker daemon (dockerd): builds, runs and manages docker containers and images
+  - runs in the background
+  - listens to api requests from the client
+- docker images: read-only templates used to create containers
+  - built from a Dockerfile
+- docker containers: running instances of docker images
+  - lightweight and isolated using linux kernel features (namespaces, cgroups)
+    - namespaces: isolate processes, filesystems, users, etc
+    - control groups (cgroups): limit and monitor resource usage (cpu, memory, etc)
+- docker registries: stores docker images
+  - public (e.g. docker hub) or private (e.g. aws ecr)
 
 ## images
 
@@ -264,6 +283,7 @@ docker run --rm -it --network my-network -v ~/dotfiles:/root/dotfiles my-ubuntu-
   - running: container is running with all its processes
   - paused: container whose processes have been temporarily paused without stopping it completely
     - resources (CPU and memory) used by container are still in use
+    - can be started and change to running state
   - stopped: container is shut down
     - frees resources used by container
   - deleted: container is removed from the system
@@ -274,7 +294,7 @@ docker run --rm -it --network my-network -v ~/dotfiles:/root/dotfiles my-ubuntu-
 
 ### healthchecks
 
-TODO
+> command that notifies docker/kubernetes if a container is functioning correctly
 
 - 3 possible states after healthcheck:
   - starting
@@ -301,22 +321,22 @@ docker exec -it my-container bash
 
 > data that persists even after the container is deleted or recreated
 
-Two main ways to persist data:
+- two main ways to persist data: volumes and bind mounts
 
-### Volumes
+### volumes
 
-- Managed by Docker
-- Stored in `/var/lib/docker/volumes/` on host
-- Better portability and backup
-- Can be shared between containers
-- Volume drivers allow storing on remote hosts/cloud providers
-- Easier to backup and migrate
+- managed by docker
+- stored in `/var/lib/docker/volumes/` on host by default
+- better portability and backup
+- can be shared between containers
+- volume drivers allow storing on remote hosts/cloud providers
+- easier to backup and migrate
 
 ```bash
-# Create volume
+# create volume
 docker volume create myvolume
 
-# Mount volume
+# mount volume
 docker run -v myvolume:/app myimage
 ```
 
@@ -326,15 +346,15 @@ docker run -v myvolume:/app myimage
 > if `myvolume` doesn't exist: creates new volume named `myvolume` and binds it to `/app`
 > this is different from bind mounts where the host path must exist beforehand
 
-### Bind Mounts
+### bind mounts
 
-- Store anywhere on host system
-- Less functionality than volumes
-- Good for development to mount source code
-- Host machine path must exist
+- store anywhere on host system
+- less functionality than volumes
+- good for development to mount source code
+- host machine path must exist
 
 ```bash
-# Mount host directory
+# mount host directory
 docker run -v /host/path:/container/path myimage
 ```
 - print docker volumes: `docker volume ls`
@@ -344,7 +364,7 @@ docker run -v /host/path:/container/path myimage
 
 ## networks
 
-> allow multiple Docker containers to communicate and share resources with each other
+> allow multiple docker containers to communicate and share resources with each other
 
 - create docker network: `docker network create mynetwork`
 - print docker networks: `docker network ls`
