@@ -18,15 +18,20 @@
   - group of one or more containers
   - shared storage, network, and configuration for containers
   - e.g. a web application might have a frontend pod (running nginx) and a backend pod (running node.js with postgresql)
-- node: single physical/visual machine that runs components required to execute/manage containers within pods
+- node: physical or virtual machine that runs components required to execute and manage containers within pods
+  - managed by the control plane
   - each node can host multiple pods
-  - node types:
+  - each node runs:
+    - kubelet: communicates with the control plane, manages pod lifecycle
+    - kube-proxy: manages networking, forwards traffic to pods
+    - container runtime (e.g., containerd, Docker): runs the actual containers
+  - node roles: all machines in the cluster are nodes, some are control plane nodes, some are worker nodes
     - worker node
-      - higher workload
-      - higher compute
-    - master node
-      - more important
-      - should have at least 3 replicas
+      - runs user applications (pods)
+      - handles most of the compute workload
+    - control plane (master) node
+      - runs core Kubernetes components (API server, scheduler, controller manager, etc.)
+      - usually replicated (at least 3 replicas for HA in production)
 - cluster: group of nodes, highest-level structure in kubernetes
 - object: cluster's desired state
 - workload: application(s) running on the cluster
@@ -38,29 +43,67 @@
 
 ![single kubernetes node](./images/kubernetes_node.png)
 
-- kubernetes cluster architecture:
-  - master node (control plane): manages the cluster and schedules workloads
-    - kube-apiserver: provides the interaction for management tools (e.g. kubectl or kubernetes dashboard)
-    - etcd: key-value storate that holds the current state of the kubernetes cluster
-      - basically a cluster backup
-    - scheduler: allocates unscheduled pods on different nodes based on the workload
-    - controller-manager: set of containers that manages the cluster with actions (e.g. replicating pods)
-      - checks if something needs to be repaired or if a container died and needs to be restarted
-  - worker nodes: run the application workloads
-    - kubelet
-      - communicates with control plane to receive and execute workload instructions
-      - ensures containers are running and healthy
-      - reports node status and pod health back to control plane
-    - container runtime: manages lifecycle of container
-      - examples: docker, containerd
-    - kube-proxy: manages networking rules so that pods and services communicate effectively
+kubernetes cluster architecture:
+
+- master node (control plane): manages the cluster and schedules workloads
+  - kube-apiserver: provides the interaction for management tools (e.g. kubectl or kubernetes dashboard)
+  - etcd: key-value storate that holds the current state of the kubernetes cluster
+    - basically a cluster backup
+  - scheduler: allocates unscheduled pods on different nodes based on the workload
+  - controller-manager: set of containers that manages the cluster with actions (e.g. replicating pods)
+    - checks if something needs to be repaired or if a container died and needs to be restarted
+- worker nodes: run the application workloads
+  - kubelet
+    - communicates with control plane to receive and execute workload instructions
+    - ensures containers are running and healthy
+    - reports node status and pod health back to control plane
+  - container runtime: manages lifecycle of container
+    - examples: docker, containerd
+  - kube-proxy: manages networking rules so that pods and services communicate effectively
+
+## kubectl
+
+> CLI tool that enables cluster management
+
+- view nodes: `kubectl get nodes`
+- apply YAML file: `kubectl apply -f <filename>.yaml`
+- open shell inside running container: `kubectl exec -it <nextjs-pod-name> -- /bin/sh`
+- create Secret: `sudo kubectl create secret generic peso-secrets --from-env-file=.env`
+- generate Secret yaml file: `kubectl get secret nextjs-env -o yaml`
+- ensure Kubernetes cluster is running: `kubectl cluster-info`
+- check the pod logs: `kubectl logs <pod-name>`
+- check the service status: `kubectl describe service nginx-service`
+- create Kubernetes Secret from .env: `kubectl create secret generic peso-secrets --from-env-file=.env.local`
+- update Kubernetes Secret :`kubectl delete secret peso-secrets && kubectl create secret generic peso-secrets --from-env-file=.env.local`
+- delete resources created by YAML files: `kubectl delete -f file1.yaml -f file2.yaml`
 
 ## kinds
 
-> different types of resources defined in YAML manifests
+> type of kubernetes object, used in manifest files
 
-- manifest: declarative configuration file written in yaml
-- used to manage and configure the cluster
+- kubernetes object: persistent entity in kubernetes system that represents the desired state of the cluster
+- manifest: declarative configuration file (YAML or JSON) that describes the desired state of a kubernetes object
+  - used to manage and configure the cluster
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+```
+
+## resources
+
+> building blocks used to define the desired state of the cluster
+
+- each resource is defined by `kind`
+
+> [!TIP]
+> run `kubectl api-resources` to show a list of all api resources
 
 ### workload resources
 
@@ -195,23 +238,6 @@ spec:
 - deployment: ensures 3 replicas of your pod are always running and handles rolling updates
 - service: exposes those pods on port 80, optionally as a cloud load‑balancer if your environment supports it
 
-## kubectl
-
-> CLI tool that enables cluster management
-
-- view nodes: `kubectl get nodes`
-- view pods: `kubectl get pods`
-- apply YAML file: `kubectl apply -f <filename>.yaml`
-- open shell inside running container: `kubectl exec -it <nextjs-pod-name> -- /bin/sh`
-- create Secret: `sudo kubectl create secret generic peso-secrets --from-env-file=.env`
-- generate Secret yaml file: `kubectl get secret nextjs-env -o yaml`
-- ensure Kubernetes cluster is running: `kubectl cluster-info`
-- check the pod logs: `kubectl logs <pod-name>`
-- check the service status: `kubectl describe service nginx-service`
-- create Kubernetes Secret from .env: `kubectl create secret generic peso-secrets --from-env-file=.env.local`
-- update Kubernetes Secret :`kubectl delete secret peso-secrets && kubectl create secret generic peso-secrets --from-env-file=.env.local`
-- delete resources created by YAML files: `kubectl delete -f file1.yaml -f file2.yaml`
-
 ## networking
 
 - pod-to-pod communication: all pods within the cluster can communicate directly with each other
@@ -228,7 +254,18 @@ spec:
   - `LoadBalancer`: assigns a public IP (if running on a cloud provider)
   - `Ingress`: routes traffic to services based on URL paths or domains
 
-## cert-manager
+## helm
+
+> package manager for kubernetes
+
+- chart: helm package
+- repository: place where charts can be collected and shared
+- release: instance of chart running in kubernetes cluster
+
+- one chart can be installed multiple times into the same cluster
+  - each time it is installed, a new release is created
+
+### cert-manager
 
 > kubernetes add-on that automates the management of TSL/SSL certificates
 
@@ -250,26 +287,13 @@ spec:
 - check if certificate was issued: `kubectl get certificate`
 - check if Secret was created: `kubectl get secret pesodevops-tls`
 
-## k3s
+## tools
+
+- kubeadmn: set up and manage kubernetes clusters easily
+
+### k3s
 
 > lightweight kubernetes that's easy to install
 
 - to run any kubernetes command, add `k3s`
   - e.g.: `sudo k3s kubectl get nodes`
-
-## helm
-
-> package manager for kubernetes
-
-- chart: helm package
-- repository: place where charts can be collected and shared
-- release: instance of chart running in kubernetes cluster
-
-- one chart can be installed multiple times into the same cluster
-  - each time it is installed, a new release is created
-
-## tools
-
-- cert-manager: automate generation of SSL/TLS certificates
-- kubeadmn: set up and manage kubernetes clusters easily
-- k3s: easy install kubernetes
