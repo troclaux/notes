@@ -55,10 +55,11 @@
       - examples: docker, containerd
     - kube-proxy: manages networking rules so that pods and services communicate effectively
 
-## `kinds`
+## kinds
 
 > different types of resources defined in YAML manifests
 
+- manifest: declarative configuration file written in yaml
 - used to manage and configure the cluster
 
 ### workload resources
@@ -123,11 +124,19 @@
 - ResourceQuota: limits CPI, memory and storage per namespace
 - LimitRange: sets minimum and maximum resource limits for pods
 
+## manifest
 
-## Core Concepts with Examples
+> declarative configuration file written in yaml
 
-- YAML Manifest: Kubernetes resources are defined using YAML files
-  - apply YAML file: `kubectl apply -f <filename>.yaml`
+every manifest must include at least these top‑level fields:
+
+- `apiVersion`: kubernetes api version
+- `kind`: type of resource you're defining
+- `metadata`: data about the resource
+  - `name` (required)
+  - `namespace` (optional)
+  - `labels` and `annotations` (optional)
+- `spec`: specification of your desired state, the fields here vary depending on `kind`
 
 Pod YAML example:
 
@@ -135,17 +144,64 @@ Pod YAML example:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: my-pod
+  name: nginx-pod
+  labels:
+    app: nginx
 spec:
   containers:
-  - name: nginx-container
-    image: nginx
+    - name: nginx
+      image: nginx:1.25
+      ports:
+        - containerPort: 80
 ```
+
+deployment + service example:
+
+```yaml
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.25
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: nginx
+  ports:
+    - port: 80
+      targetPort: 80
+```
+
+- deployment: ensures 3 replicas of your pod are always running and handles rolling updates
+- service: exposes those pods on port 80, optionally as a cloud load‑balancer if your environment supports it
 
 ## kubectl
 
+> CLI tool that enables cluster management
+
 - view nodes: `kubectl get nodes`
 - view pods: `kubectl get pods`
+- apply YAML file: `kubectl apply -f <filename>.yaml`
 - open shell inside running container: `kubectl exec -it <nextjs-pod-name> -- /bin/sh`
 - create Secret: `sudo kubectl create secret generic peso-secrets --from-env-file=.env`
 - generate Secret yaml file: `kubectl get secret nextjs-env -o yaml`
@@ -154,125 +210,45 @@ spec:
 - check the service status: `kubectl describe service nginx-service`
 - create Kubernetes Secret from .env: `kubectl create secret generic peso-secrets --from-env-file=.env.local`
 - update Kubernetes Secret :`kubectl delete secret peso-secrets && kubectl create secret generic peso-secrets --from-env-file=.env.local`
+- delete resources created by YAML files: `kubectl delete -f file1.yaml -f file2.yaml`
 
-```bash
-kubectl scale deployment my-deployment --replicas=5
-```
+## networking
 
-## configuration files (yaml)
+- pod-to-pod communication: all pods within the cluster can communicate directly with each other
+  - each pod has its own private ip
+  - pods **don't** have their own public ip by default
+- pod-to-service communication:
+  - `DNS`
+  - `ClusterIP`
+  - a service provides a stable ip and a dns name to a group of pods
+    - dns name can't be accessed externally
+- service-to-service communication: use internal DNS
+- external-to-service communication
+  - `NodePort`: exposes a service on a specific port of each worker node
+  - `LoadBalancer`: assigns a public IP (if running on a cloud provider)
+  - `Ingress`: routes traffic to services based on URL paths or domains
 
+## cert-manager
 
-```yaml
-# deployment.yaml
+> kubernetes add-on that automates the management of TSL/SSL certificates
 
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: nextjs-app
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: nextjs-app
-  template:
-    metadata:
-      labels:
-        app: nextjs-app
-    spec:
-      containers:
-      - name: nextjs
-        image: ${IMAGE}
-        ports:
-        - containerPort: 3000
-        env:
-        - name: DATABASE_URL
-          valueFrom:
-            secretKeyRef:
-              name: db-secret
-              key: DATABASE_URL
-      imagePullSecrets:
-      - name: ecr-secret
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: nginx-proxy
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: nginx-proxy
-  template:
-    metadata:
-      labels:
-        app: nginx-proxy
-    spec:
-      containers:
-      - name: nginx
-        image: ${NGINX_IMAGE}
-        ports:
-        - containerPort: 80
-      imagePullSecrets:
-      - name: ecr-secret
-```
+- can request, renew and issue certificates from different Certificate Authorities (CAs), like Let's Encrypt
+- to secure an application with HTTPS, an SSL/TLS certificate is required
+- cert-manager is responsible for:
+  - creation of certificates
+  - uses an Issuer or ClusterIssuer to obtain a certificate
+    - Issuer: another name for Certificate Authorities (CAs)
+  - stores the certificate in a kubernetes Secret
+- how the certificate is used:
+  - the Secret containing the certificate is referenced in an Ingress resource
+  - the Ingress resource is configured to use TLS (HTTPS)
+  - when a user accesses the domain, the browser verifies the certificate
+  - if everything is valid, the website loads over HTTPS
 
-- specifies
-  - container image
-  - number of pods
-  - environment variables
-  - resource limits
-
-```yaml
-# service.yaml
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: nextjs-service
-spec:
-  selector:
-    app: nextjs-app
-  ports:
-    - protocol: TCP
-      port: 3000
-      targetPort: 3000
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: nginx-service
-spec:
-  selector:
-    app: nginx-proxy
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
-  type: ClusterIP
-```
-
-```yaml
-# ingress.yaml
-
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: nextjs-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-    kubernetes.io/ingress.class: "nginx"
-spec:
-  rules:
-  - http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: nginx-service
-            port:
-              number: 80
-```
+- install `cert-manager`: `kubectl apply -f https://github.com/cert-manager/cert-manager/releases/latest/download/cert-manager.yaml`
+- check if it's running: `kubectl get pods -n cert-manager`
+- check if certificate was issued: `kubectl get certificate`
+- check if Secret was created: `kubectl get secret pesodevops-tls`
 
 ## k3s
 
@@ -291,3 +267,9 @@ spec:
 
 - one chart can be installed multiple times into the same cluster
   - each time it is installed, a new release is created
+
+## tools
+
+- cert-manager: automate generation of SSL/TLS certificates
+- kubeadmn: set up and manage kubernetes clusters easily
+- k3s: easy install kubernetes
