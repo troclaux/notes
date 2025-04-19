@@ -96,6 +96,8 @@ wc file.txt
   - automation
   - debugging
   - file download
+  - get my public IPv4: `curl -4 ifconfig.me`
+  - get my public IPv6: `curl ifconfig.me`
 - can use many protocols: HTTP, HTTPS, FTP, FTPS, etc
 
 example of curl command:
@@ -123,6 +125,16 @@ curl -X POST -H "Content-Type: application/json" -d '{"body": "this is a social 
   - `http_version`: HTTP version
   - `protocol`: protocol used
   - `response_size`: size of the response
+
+```bash
+curl -X PUT http://localhost:3000/api/exercises \
+  -H "Content-Type: application/json" \
+  -H "Cookie: authjs.session-token=bd65694e-a1bb-4a3f-b7cd-43642b7146fa" \
+  -d '{ "id": 1,
+    "name": "Push-up new",
+    "description": "A basic exercise for upper body strength new"
+  }'
+```
 
 ### use cases
 
@@ -377,8 +389,12 @@ example of cron job:
 
 > manage file permissions
 
+- permission: control what users can do with files and directories
 - every file or directory has 3 types of users:
-  - owner: user who owns the file
+  - owner: user who owns the file (normally the user that created the file)
+    - controls permissions of the file
+    - only the owner (or root) can change the file's permissions (using `chmod`)
+    - the owner can transfer the ownership to someone else
   - group: groups of users who can share access
   - others: all other users
 - every file or directory has 3 types of permissions:
@@ -407,20 +423,22 @@ example of cron job:
 
 > manages systemd system and service manager
 
-- service: background process that runs continuously on the system to handle tasks
-  - service == daemon
-  - usually start when the system boots
-  - run without user interaction
-  - usually provides services that need to be always available (e.g. web servers, database servers, etc)
-  - names typically end with 'd'
-- systemd: system and service manager
-  - initializes the system
+- service: wrapper or unit managed by init systems
+- daemon: program that runs in the background without user interaction
+  - names typically ends with 'd' (e.g. `sshd`, `dockerd`, `httpd`)
+- systemd: init system and service manager used by most modern linux distributions
+  - initializes the system (boot sequence)
   - manages services
+  - logging (via `jornald`)
 
+- check status of system or service: `sudo systemctl status`, `sudo systemctl status <service-name>`
 - start a service: `sudo systemctl start <service-name>`
 - stop a service: `sudo systemctl stop <service-name>`
 - restart a service: `sudo systemctl restart <service-name>`
-- check status of a service: `sudo systemctl status <service-name>`
+- start on boot: `systemctl enable <service>`
+- don't start on boot: `systemctl disable <service>`
+- view logs for a service: `journalctl -u <service>`
+- list all failed services: `systemctl list-units --failed`
 
 ## openssl
 
@@ -459,3 +477,52 @@ sshfs user@remote_host:/home/user/shared /mnt/remote_share
 # Unmount
 fusermount -u ~/remote
 ```
+
+## troubleshooting commands
+
+- process status: `ps aux`, `top`, `htop`, `systemctl status`
+- logs: `journalctl`, `docker logs`, `tail -f`, `less`, `grep`
+- network: `curl`, `ping`, `ss -tuln`, `netstat`, `lsof -i`
+- disk/memory: `df -h`, `du -sh *`, `free -m`
+- permissions: `ls -l`, `chmod`, `chown`, `whoami`
+- container status: `docker ps`, `docker-compose ps`, `docker inspect`
+
+### process status
+
+- `ps aux`: list all running processes with details like user, pid, cpu/mem usage and command
+  - great with `grep`
+  - resources used by a process: `ps -C flameshot -o %cpu,%mem,cmd`
+- `top`: real-time view of processes using the most system resources
+- `htop`: enhanced `top` with colors and better ui
+- `systemctl status`: shows status of systemd service
+  - e.g. `systemctl status apache`: shows if it's active, failed, etc
+
+### logs
+
+- `journalctl`: view logs from `systemd` journal
+  - `journalctl -u nginx`: shows logs for the nginx service
+- `docker logs`: view logs from docker container
+- `tail -f`: reads the end of a file as it grows
+- `less`
+- `grep`
+
+### network
+
+- `curl`
+- `ping`
+- `ss -tuln`
+- `netstat`
+- `lsof -i`
+
+### disk/memory
+
+- `df -h`
+- `du -sh *`
+- `free -m`
+
+### permissions
+
+- `ls -l`
+- `chmod`
+- `chown`
+- `whoami`
