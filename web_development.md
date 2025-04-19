@@ -1,7 +1,13 @@
-[restful api](/golang.md#http)
-[database](/databases.md)
-[postgres](/postgresql.md)
-[authentication](/auth.md)
+
+[https](/networking.md#https)
+[api](./api.md)
+[golang api](./golang.md#http)
+[databases](./databases.md)
+[authentication](./auth.md)
+[postgres](./postgresql.md)
+[mongodb](./mongodb.md)
+[next.js](./next.md)
+[angular](./angular.md)
 
 # web development
 
@@ -20,6 +26,7 @@
 - rendering: when and where you render static or dynamic content
 - infrastructure: where you deploy, store and run your application code
 - scalability: how your application adapts as your team, data and traffic grow
+- API (Application Programming Interface): enables communication between 2 software applications
 - CORS (Cross-Origin Resource Sharing): security feature enforced by web browsers to prevent malicious websites from making unauthorized requests to another domain
   - a cross-origin request happens when the frontend and backend have different domains, protocols or ports
   - if your frontend and backend are on different origins, your backend must allow cors explicitly
@@ -114,6 +121,12 @@ when a user visits a webpage:
 - blob: Binary Large OBject
   - large binary/non-text data like: images, videos and audio
 
+- framework: set of tools, libraries and conventions that helps developers build software
+  - react
+  - angular
+  - vue
+  - svelte
+
 ## steps
 
 - add simple CI tasks from the beggining (linting, testing)
@@ -174,7 +187,7 @@ when a user visits a webpage:
 ### Single Page Application (SPA)
 
 - dynamically updates the content on a single page without requiring full page reload
-  - only necessary data is fetched from the server, and Javascript updates the view on the client side
+  - only necessary data is fetched from the server and javascript updates the view on the client side
 - composed by a single html page
 - client-side rendering
 - asynchronous data fetching
@@ -551,7 +564,7 @@ consult the users table on postgresql before programming the sql query
 
 2. Implement dockerfile for each app service (e.g. next.js, nginx)
 
-[example](./code/dockerfiles/nginx.Dockerfile)
+[example](./code/docker/nginx.Dockerfile)
 
 3. Implement docker-compose or kubernetes yaml config file to setup the app
 
