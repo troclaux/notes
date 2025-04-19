@@ -282,13 +282,18 @@ example of a payload:
 
 [Oauth](https://developer.okta.com/blog/2017/06/21/what-the-heck-is-oauth)
 
-- OAuth 2.0 vs OpenID Connect vs SSO vs SAML:
-  - OAuth: authorization framework
+- _OAuth 2.0_ vs _OpenID Connect_ vs _SSO_ vs _SAML_:
+  - OAuth 2.0: authorization protocol
+    - the app gets an access token to access the user's resources from a provider (e.g. Google, Github, etc)
+    - authorization only
+    - e.g. allow a 3rd party app to read your gmail
   - OpenID Connect (OIDC): adds authentication layer on top of OAuth 2.0
     - authorization + authentication
-    - allow users to authenticate using a third-party identity provider (e.g. google, facebook)
+    - allow users to authenticate using a third-party identity provider
+    - e.g. "Sign in with Google" button on a website that gives an ID token
   - SSO (Single Sign-On): allows users to authenticate once and access multiple applications
     - e.g. sign in with google and access multiple apps
+    - implemented using protocols like SAML, OAuth, OpenID Connect
   - SAML (Security Assertion Markup Language): XML-based open standard for exchanging authentication and authorization data between parties
     - enables SSO implementation
     - supports OIDC and OAuth 2.0
@@ -349,51 +354,47 @@ example of a payload:
 
 #### scopes and consent
 
-- Scopes are bundles of permissions asked by the client when requesting a token
-- Consent is the permission that the user gives to the application to access data
+- scopes are bundles of permissions asked by the client when requesting a token
+- consent is the permission that the user gives to the application to access data
 
 #### actors
 
-- Resource Owner
-  - Owner of the data that the client wants to access
+- resource owner: owner of the data that the client wants to access
   - Example: Bob's cloud storage service is a resource server. It stores Bob's files securely. When a client requests access to specific files the resource server checks the validity of the access token before providing the requested files
-- Resource Server
-  - API that stores the information that the application wants to access
-- Client
-  - Application that wants to access your data
-  - Public clients (client identification):
-    - Browsers
-    - Mobile apps
+- resource server: API that stores the information that the application wants to access
+- client: application that wants to access your data
+  - public clients (client identification):
+    - browsers
+    - mobile apps
     - IoT devices
   - Confidential clients (client authentication):
-    - Also IoT devices (e.g., smart TVs)
+    - Also IoT devices (e.g. smart TVs)
     - APIs
-- Authorization Server
-  - Is responsible for authenticating the resource owner
-  - Issues access tokens to the client after the resource owner grants authorization
+- authorization server: issues access tokens to the client after the resource owner grants authorization
+  - responsible for authenticating the resource owner
 
 #### tokens
 
-- Usually are JSON Web Tokens (JWT)
-- Access token
-  - Short lived (can last minutes or hours)
-  - Can scale out
-  - Can't be revoked
-- Refresh token
+- usually are JSON Web Tokens (JWT)
+- access token
+  - short lived (can last minutes or hours)
+  - can scale out
+  - can't be revoked
+- refresh token
   - refreshes expired access tokens
-  - Long lived (can last days, months, or years)
-  - Can be revoked
+  - long lived (can last days, months, or years)
+  - can be revoked
 
 #### authorize endpoint
 
-- To get consent and authorization from the user
-- Returns an authorization grant that says the user has consented to it
-- Then authorization is passed to the token endpoint
+- to get consent and authorization from the user
+- returns an authorization grant that says the user has consented to it
+- then authorization is passed to the token endpoint
 
 #### token endpoint
 
-- Processes the grant
-- Gives the refresh token and access token
+- processes the grant
+- gives the refresh token and access token
 
 ---
 
