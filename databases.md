@@ -1,9 +1,52 @@
 [sql](./sql.md)
 [postgresql](./postgresql.md)
+[MySQL](./mysql.md)
+[MongoDB](./mongodb.md)
 
 # databases
 
 > collection of data that is organized so that it can be easily accessed, managed, and updated
+
+- data: raw facts and figures without context
+  - example: 98, 102, 95
+  - no meaning on its own
+- information: data that has been processed and given context to be meaningful
+  - example: the temperatures this week were 98°F, 102°F, and 97°F
+  - information = data + context
+- knowledge: insights and understanding gained from analyzing information
+  - example: those temperatures indicate an extreme heatwave; precautions should be taken
+  - knowledge = information + meaning
+- wisdom: application of knowledge
+  - example: due to the drop in temperature, we should alert farmers to prepare for potential crop damage
+  - wisdom = knowledge + application
+
+- types of databases:
+  - relational databases
+    - uses sql
+    - data is stored in tables (rows and columns)
+    - enforces schema and [ACID](./databases.md#acid) properties
+    - examples: PostgreSQL, MySQL, oracle, microsoft sql server
+  - NoSQL databases:
+    - document-oriented:
+      - store data as documents (often json or bson)
+      - flexible schema
+      - examples: MongoDB, CouchDB
+    - key-value stores:
+      - data is stored as key-value pairs
+      - very fast ookups
+      - examples: redis, dynamodb
+    - column family stores:
+      - stores data in columns instead of rows
+      - optimized for reading/writing large volumes of data
+      - examples: apache cassandra, hbase
+    - graph databases:
+      - store data as nodes and edges (like a graph)
+      - great for representing relationships
+      - examples: neo4j, arangodb
+
+- failover: automatic switching from a primary database to a replica in case of failure
+  - guarantees redundancy
+- fallback: return to original database once it's fixed again
 
 ## ER Diagram
 
