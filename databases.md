@@ -139,23 +139,56 @@
 
 ## theory
 
-- DBS: Database System
-- DBMS: Database Management System
-  - e.g. MySQL, PostgreSQL, sqlite
-- DB: Database
-- DBS = DBMS + DB
+- DBMS (Database Management System): software that allows users and programs to interact with the database
+  - handles data storage, retrieval, updates and security
+  - e.g. MySQL, PostgreSQL, sqlite, MongoDB
+- DB (DataBase): organized collection of data that can be easily accessed, managed and updated
+- DBS (Database System) = DBMS + DB
 
-- categories of data models:
-  - conceptual (high level)
-    - Entity-Relationship (ER) diagram
-    - typical users: business analysts, designers
-    - records what data is stored, but not how
-  - logical (representative)
-    - logical data model
-    - typical users: developers, DBAs
-  - physical (low level)
-    - physical data model
-    - typical users: database administrators
+- degree of a table: nº of columns in table
+- cardinality: nº of rows in table
+
+- SQL sublanguages
+  - DDL (Data Definition Language): object definition
+    - create
+    - alter
+    - drop
+    - truncate
+  - DML (Data Manipulation Language): data manipulation
+    - delete
+    - update
+    - select
+    - DQL (Data Query Language)
+      - select
+  - DTL (Data Transaction Language): transactions control
+    - commit
+    - rollback
+    - savepoint
+  - DCL (Data Control Language): safety and access control
+    - grant
+    - revoke
+
+- abstraction: level of details/complexity with which data is represented
+  - fewer detail == higher abstraction
+  - more detail == lower abstraction
+
+### conceptual model (high-level abstraction)
+
+- captures what the data is, not how it will be implemented
+- made for stakeholders, business analysts and data architects
+
+- describes entities (e.g. Customer, Order), attributes (e.g. name, address) and relationships (e.g. Customer places Order)
+- no concern for data types
+- Entity-Relationship Diagrams (ERDs)
+
+### logical model (middle-level abstraction)
+
+- maps the conceptual model to a logical structure that a database system can understand
+- made for database designers and developers
+
+- includes tables, columns, primary keys, foreign keys, normalization
+- DBMS-agnostic (not specific to MySQL, PostgreSQL, etc)
+- includes constraints, data types (abstract) and relationships
 
 example of logical data model:
 
@@ -165,6 +198,15 @@ example of logical data model:
 | Orders      | OrderID (INT, PK), CustomerID (INT, FK), OrderDate (DATE) |
 | Products    | ProductID (INT, PK), ProductName (VARCHAR), Price (DECIMAL) |
 | OrderItems  | ItemID (INT, PK), OrderID (INT, FK), ProductID (INT, FK), Quantity (INT) |
+
+### physical model (low-level abstraction)
+
+- specifies how data is actually stored and accessed in the DBMS
+- made for database administrators and system architects
+
+- includes storage formats, indexes, partitioning, access paths
+- DBMS-specific (PostgreSQL, Oracle, MySQL, etc.)
+- may include things like tablespaces, file paths and buffer sizes
 
 example of Physical Data Model for a Relational DBMS:
 
@@ -213,10 +255,102 @@ CREATE INDEX idx_email ON Customers(Email);
 - transactions: a sequence of operations that are treated as a single unit of work
   - e.g. transferring money from one account to another
 
-- Atomicity: all or nothing
-- Consistency: data is always in a valid state
+- Atomicity: transactions are all or nothing, if any part of it fails, the entire transaction is rolled back
+- Consistency: database always moves from one valid state to another
 - Isolation: transactions are independent of each other
-- Durability: changes are permanent
+- Durability: once a transaction is committed, it is permanently saved
+
+## metadata
+
+> data about data
+
+- descriptive metadata: used to identify and discover data
+  - what it includes: title, author, date created, keywords, description
+  - "what is this data about?"
+- structural metadata: describes how data is organized or related internally
+  - what it includes: tables of contents, page numbers, chapters, data models, xml schema, file formats
+  - "how is this data structured or arranged?"
+- administrative metadata: helps with management and processing of data
+  - what it includes: file type, creation date, access permissions, file size, owner, storage info
+  - "how can we store, manage and protect this data?"
+
+
+## relational algebra
+
+- Selection (σ)
+  - example: σ(age > 30)(employees)
+  - ```SELECT * FROM employees WHERE age > 30; ```
+  - OBS: σ => Sigma => Select * => sElEct => whErE
+- Projection (π)
+  - example: π(name, age)(employees)
+  - ```SELECT name, age FROM employees;```
+  - OBS: π => PI => PIck => Projection
+- Union (∪)
+  - example: employees ∪ contractors
+  - ```SELECT email FROM employees UNION SELECT email FROM contractors;```
+- Intersection (∩)
+  - example: employees ∩ contractors
+  - ```SELECT email FROM employees INTERSECT SELECT email FROM contractors;```
+- Difference (−)
+  - example: employees − contractors
+  - ```SELECT email FROM employees EXCEPT SELECT email FROM contractors;```
+- Rename (ρ)
+  - example: ρ(name/employee_name)(employees)
+  - ```SELECT name AS employee_name FROM employees;```
+  - OBS: ρ => Rho => Rename
+- Cartesian Product (×)
+  - example: employees × departments
+- Join (⨝  or ٭)
+  - example: employees ⨝  employees.department_id = departments.department_id departments
+
+
+## normal forms and data normalization
+
+```
+BCNF ⊂ 3NF ⊂ 2NF ⊂ 1NF
+```
+
+> [!IMPORTANT]
+> primary key in SQL != primary key in data normalization/normal forms
+> in data normalization, primary key is the collections that uniquely identifies a row
+> in SQL, primary key is a single column that uniquely identifies a row
+
+#### First Normal Form (1NF)
+
+- it must have a unique primary key
+- a cell can't have a nested table as its value
+  - a cell can't have multiple values
+    - may not even be possible
+
+> [!TIP]
+> 1NF = 1 value per cell
+
+#### Second Normal Form (2NF)
+
+- table must be in 1NF
+- all non-key attributes must be fully dependent on the entire primary key
+  - non-key attributes: columns that are not part of the primary key
+
+> [!IMPORTANT]
+> tables can have composite primary keys (multiple columns that collectively functions as a single primary key
+
+#### Third Normal Form (3NF)
+
+- table must be in 2NF
+- all columns that aren't part of the primary key are dependent solely on the primary key
+- columns can't depend on other non-key attributes
+
+#### Boyce-Codd Normal Form (BCNF)
+
+- a column that's part of a primary key can't be entirely dependent on a column that's not part of that primary key
+
+### rules of thumb for database design
+
+1. every table should always have a unique identifier (primary key)
+2. 90% of the time, that unique identifier will be a single column named id
+3. avoid duplicate data
+4. avoid storing data that is completely dependent on other data. instead, compute it on the fly when you need it
+5. keep your schema as simple as you can. optimize for a normalized database first. only denormalize for speed's sake when you start to run into performance problems
 
 ---
 

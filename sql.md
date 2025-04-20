@@ -1,5 +1,7 @@
 [databases](./databases.md)
 [postgresql](./postgresql.md)
+[MySQL](./mysql.md)
+[MongoDB](./mongodb.md)
 
 # SQL (Structured Query Language)
 
@@ -103,26 +105,28 @@ CREATE TABLE Customers (
 - `CREATE database`: create new database
 - `DROP database`: delete a database and all its contents
 
-set operations:
-- `UNION`
-- `INTERSECT`
-- `MINUS` or `EXCEPT`
+- set operations: combine results from two `SELECT` statements (they must have the same number of columns and compatible types)
+  - `UNION`: combines and remove duplicates
+  - `INTERSECT`: returns only rows that appear in both result sets
+  - `EXCEPT`(postgresql) or `MINUS`(oracle): returns rows from the first set that aren't in the second
 
-TODO
+```sql
+SELECT name FROM students
+UNION
+SELECT name FROM teachers;
+```
 
-restrictions:
-- table restrictions
-  - column restrictions
-    - `NULL`
-      - you can't compare `NULL` with equal sign (e.g. `WHERE NOME=NULL`)
-      - you should use `IS` keywork (e.g. `WHERE NOME IS NULL`)
-    - `NOT NULL`
-    - `UNIQUE`
-    - `FOREIGN KEY`
-    - `CHECK` table restrictions
-- assertions
-- domain restrictions
-  - check
+- restrictions: enforce rules on tables/columns to endure data integrity
+  - table restrictions
+    - column restrictions
+      - `NULL`
+        - you can't compare `NULL` with equal sign (e.g. `WHERE NOME=NULL`)
+        - you should use `IS` keywork (e.g. `WHERE NOME IS NULL`)
+      - `NOT NULL`
+      - `UNIQUE`
+      - `FOREIGN KEY`
+      - `CHECK` custom data type with specific constraints
+  - assertions: apply conditions across the whole table
 
 - constraints: enforce rules on table's data
   - `PRIMARY KEY`: value can't be NULL and has to be UNIQUE
@@ -169,7 +173,7 @@ restrictions:
   - another example: `ALTER TABLE users ADD CONSTRAINT primary_key PRIMARY KEY (city, name, id);`
 - renaming a constraint: `ALTER TABLE users RENAME CONSTRAINT email_unique TO unique_email_address;`
 - removing a constraint: `ALTER TABLE users DROP CONSTRAINT email_unique;`
-- naming a constraint:
+- naming a constraint: `ALTER TABLE users ADD CONSTRAINT fk_city FOREIGN KEY (city_id) REFERENCES cities(id);`
 
 ```sql
 CREATE TABLE workout_exercises (
@@ -186,7 +190,7 @@ CREATE TABLE workout_exercises (
 > [!IMPORTANT]
 > try to name constraints when creating them
 
-## Subqueries
+## subqueries
 
 - subqueries queries:
   - `IN`: filter results from another sql query
@@ -196,7 +200,7 @@ CREATE TABLE workout_exercises (
   - `SOME`
   - `ANY`
 
-Use `IN` when the subquery may return one or more values. 
+use `IN` when the subquery may return one or more values
 
 ```sql
 SELECT id, song_name, artist_id
@@ -208,7 +212,9 @@ WHERE artist_id IN (
 );
 ```
 
-Use `=` when the subquery is expected to return a single value. If the subquery returns more than one value, the query will fail with an error. This operator is used for one-to-one comparisons
+- use `=` when the subquery is expected to return a single value
+  - if the subquery returns more than one value, the query will fail with an error
+  - this operator is used for one-to-one comparisons
 
 ```sql
 SELECT *
@@ -256,7 +262,7 @@ FROM students
 INNER JOIN classes on classes.class_id = students.class_id;
 ```
 
-- table_name.column_name
+- `table_name.column_name`
 - The `ON` clause specifies the condition to join the tables
     - If the columns on the `ON` clause have the same name, the column won't appear twice in the result
 - When joining tables, if there are columns with same name, they will appear twice in the result
@@ -272,13 +278,25 @@ ON e.department_id = d.id;
 
 ### RIGHT OUTER JOIN (not supported by SQLite)
 
-TODO
+example: returns all departments, even if no employee is assigned
+
+```sql
+SELECT employees.name, departments.name
+FROM employees
+RIGHT JOIN departments ON employees.dept_id = departments.id;
+```
 
 ### FULL OUTER JOIN = FULL JOIN (not supported by SQLite)
 
-TODO
+example: returns all employees and all departments. If there's no match, it still shows the row with `NULL` values
 
-## View
+```sql
+SELECT employees.name, departments.name
+FROM employees
+FULL OUTER JOIN departments ON employees.dept_id = departments.id;
+```
+
+## view
 
 > alias for a SQL query that can be treated as a table
 
@@ -288,9 +306,21 @@ FROM employees
 WHERE department = 'IT';
 ```
 
-## Performance
+## trigger
 
-### Index
+- events that can trigger: `SELECT`, `UPDATE`, `DELETE`
+  - can happen `BEFORE` or `AFTER` event
+
+```sql
+CREATE TRIGGER log_insert
+AFTER INSERT ON users
+FOR EACH ROW
+EXECUTE FUNCTION log_user_insert();
+```
+
+## performance
+
+### index
 
 - creates a binary tree
 - faster to look up values in a column
@@ -306,7 +336,7 @@ WHERE department = 'IT';
 CREATE INDEX email_idx ON users(email);
 ```
 
-### Multi-column indexes
+### multi-column indexes
 
 - speed up look ups that depend on multiple columns
 - only add multi-column indexes if you're doing frequent lookups on a specific combination of columns
@@ -319,7 +349,7 @@ CREATE INDEX first_name_last_name_age_idx
 ON users (first_name, last_name, age);
 ```
 
-## Examples
+## queries
 
 ```sql
 CREATE TABLE employees(
@@ -554,107 +584,3 @@ MINUS
 SELECT email
 FROM contractors;
 ```
-
----
-
-## theory
-
-- grau de tabela: nº of columns in table
-- cardinality: nº of rows in table
-
-- SQL sublanguages
-  - DDL (Data Definition Language): object definition
-    - create
-    - alter
-    - drop
-    - truncate
-  - DML (Data Manipulation Language): data manipulation
-    - delete
-    - update
-    - select
-    - DQL (Data Query Language)
-      - select
-  - DTL (Data Transaction Language): transactions control
-    - commit
-    - rollback
-    - savepoint
-  - DCL (Data Control Language): safety and access control
-    - grant
-    - revoke
-
-### relational algebra
-
-- Selection (σ)
-  - example: σ(age > 30)(employees)
-  - ```SELECT * FROM employees WHERE age > 30; ```
-  - OBS: σ => Sigma => Select * => sElEct => whErE
-- Projection (π)
-  - example: π(name, age)(employees)
-  - ```SELECT name, age FROM employees;```
-  - OBS: π => PI => PIck => Projection
-- Union (∪)
-  - example: employees ∪ contractors
-  - ```SELECT email FROM employees UNION SELECT email FROM contractors;```
-- Intersection (∩)
-  - example: employees ∩ contractors
-  - ```SELECT email FROM employees INTERSECT SELECT email FROM contractors;```
-- Difference (−)
-  - example: employees − contractors
-  - ```SELECT email FROM employees EXCEPT SELECT email FROM contractors;```
-- Rename (ρ)
-  - example: ρ(name/employee_name)(employees)
-  - ```SELECT name AS employee_name FROM employees;```
-  - OBS: ρ => Rho => Rename
-- Cartesian Product (×)
-  - example: employees × departments
-- Join (⨝  or ٭)
-  - example: employees ⨝ employees.department_id = departments.department_id departments
-
-
-### Normal Forms and Data Normalization
-
-```
-BCNF ⊂ 3NF ⊂ 2NF ⊂ 1NF
-```
-
-> [!IMPORTANT]
-> primary key in SQL != primary key in data normalization/normal forms
-> in data normalization, primary key is the collections that uniquely identifies a row
-> in SQL, primary key is a single column that uniquely identifies a row
-
-#### First Normal Form (1NF)
-
-- it must have a unique primary key
-- a cell can't have a nested table as its value
-  - a cell can't have multiple values
-    - may not even be possible
-
-> [!TIP]
-> 1NF = 1 value per cell
-
-#### Second Normal Form (2NF)
-
-- table must be in 1NF
-- all non-key attributes must be fully dependent on the entire primary key
-  - non-key attributes: columns that are not part of the primary key
-
-> [!IMPORTANT]
-> tables can have composite primary keys (multiple columns that collectively functions as a single primary key
-
-#### Third Normal Form (3NF)
-
-- table must be in 2NF
-- all columns that aren't part of the primary key are dependent solely on the primary key
-- columns can't depend on other non-key attributes
-
-#### Boyce-Codd Normal Form (BCNF)
-
-- a column that's part of a primary key can't be entirely dependent on a column that's not part of that primary key
-
-### Rules of thumb for database design
-
-1. Every table should always have a unique identifier (primary key)
-2. 90% of the time, that unique identifier will be a single column named id
-3. Avoid duplicate data
-4. Avoid storing data that is completely dependent on other data. Instead, compute it on the fly when you need it
-5. Keep your schema as simple as you can. Optimize for a normalized database first. Only denormalize for speed's sake when you start to run into performance problems
