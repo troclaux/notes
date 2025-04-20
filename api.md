@@ -1,7 +1,7 @@
 
 # API (Application Programming Interface)
 
-> rules and protocols that allows two software programs to communicate with each other
+> rules and protocols that allows different software programs to communicate with each other
 
 [what are apis](https://www.redhat.com/en/topics/api/what-are-application-programming-interfaces)
 [API design - principles and best practices](https://yourbasic.org/algorithms/your-basic-api/)
