@@ -7,8 +7,8 @@
   - reference: function has access to original value and can modify it
   - value: function only has access to copy, changes to copy within function don't affect the original
 - higher-order function: function that does at least one of the following:
-  1. Takes one or more functions as arguments
-  2. Returns a function as its result
+  - Takes one or more functions as arguments
+  - Returns a function as its result
 - memoization: caching the result of a computation to avoid computing it again in the future
   - it's a tradeoff between memory and speed
 - referential transparency: function can be replaced by its value without changing the program's behavior, without side effects
@@ -17,7 +17,7 @@ example of referential transparency:
 
 ```python
 def add_nums(a, b):
-    return a + b
+  return a + b
 ```
 
 ## first-class functions
@@ -25,6 +25,7 @@ def add_nums(a, b):
 > functions that are treated as first-class citizens
 
 - first-class citizens are entities that can be:
+
 1. Created at runtime
 2. Assigned to a variable or data structure
 3. Passed as a parameter to a function
@@ -48,19 +49,19 @@ pure functions have the 2 following properties:
 
 ```python
 def multiply(x, y):
-    return x * y
+  return x * y
 
 def add(x, y):
-    return x + y
+  return x + y
 
 # self_math is a higher order function
 # input: a function that takes two arguments and returns a value
 # output: a new function that takes one argument and returns a value
 
 def self_math(math_func):
-    def inner_func(x):
-        return math_func(x, x)
-    return inner_func
+  def inner_func(x):
+    return math_func(x, x)
+  return inner_func
 
 square_func = self_math(multiply)
 double_func = self_math(add)
@@ -97,10 +98,10 @@ properties of closures:
 ```javascript
 
 function makeCounter() {
-    let count = 0;
-    return function() {
-        return ++count;
-    };
+  let count = 0;
+  return function() {
+    return ++count;
+  };
 }
 
 const counter = makeCounter();
@@ -116,29 +117,28 @@ console.log(counter()); // 2
 ```python
 
 def word_count_aggregator():
-    count = 0
+  count = 0
 
-    def word_count(doc):
-        nonlocal count
-        words = doc.split()
-        count += len(words)
-        return count
+  def word_count(doc):
+    nonlocal count
+    words = doc.split()
+    count += len(words)
+    return count
 
   return word_count
-
 ```
 
 example of closure without using `nonlocal` keyword
 ```python
 
 def new_collection(initial_docs):
-    docs = initial_docs.copy()
+  docs = initial_docs.copy()
 
-    def add_doc(new_word):
-        docs.append(new_word)
-        return docs
+  def add_doc(new_word):
+    docs.append(new_word)
+    return docs
 
-    return add_doc
+  return add_doc
 
 # Create a new collection
 add_doc = new_collection(["doc1", "doc2", "doc3"])
@@ -185,23 +185,26 @@ print(final_result)  # Output: 6
 
 ## decorators
 
+> design pattern that allows you to add functionality to a class without changing it
+
+- [structural design pattern](/design_patterns.md#decoratorwrapper)
 - syntatic sugar for higher-order functions
 - higher-order function: function that does at least one of the following:
-1. Takes one or more functions as arguments
-2. Returns a function as its result
+  - takes one or more functions as arguments
+  - returns a function as its result
 
 ```python
 # prefix is the decorator
 def prefix(func_to_decorate):
-    def wrapper():
-        return "Hello " + func_to_decorate()
+  def wrapper():
+    return "Hello " + func_to_decorate()
 
-    return wrapper
+  return wrapper
 
 # printer is the same as prefix(printer)
 @prefix
 def printer():
-    return "World"
+  return "World"
 
 print(printer())  # Output: Hello World
 ```
@@ -247,8 +250,8 @@ product = reduce(lambda x, y: x * y, numbers)
 print(product)  # Output: 120
 
 def print_arguments(*args, **kwargs):
-    print(f"Positional arguments: {args}")
-    print(f"Keyword arguments: {kwargs}")
+  print(f"Positional arguments: {args}")
+  print(f"Keyword arguments: {kwargs}")
 
 print_arguments("hello", "world", a=1, b=2)
 # Positional arguments: ('hello', 'world')
