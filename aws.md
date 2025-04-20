@@ -121,6 +121,16 @@
   - 80 = HTTP : access unsecured websites
   - 443 = HTTPS: access secured websites
 
+#### security groups vs firewalls
+
+| Feature | AWS Security Groups | Traditional Firewalls (e.g., `ufw`, `iptables`) |
+|--------|--------------------------|-----------------------------------------------------|
+| Level | AWS-level (cloud) | OS-level (server) |
+| Type | Virtual firewall for EC2 and services | Software firewall on the OS |
+| Rules | Stateful (return traffic automatically allowed) | Stateful or stateless |
+| Scope | Applied per EC2 instance | Applies to whole server |
+| Use Case | Allow inbound on port 22 from your IP, or 443 to everyone | Block/allow ports directly on EC2 OS |
+
 ### SSH Access
 
 - Create an identity file `.pem` for SSH:
@@ -156,13 +166,18 @@
   - subnet: smaller network inside larger network
     - helps organize and manage traffic in a network by dividing it into chunks
     - subnets allow better allocation of IPs from a larger IP range
+    - each subnet in aws is associated with one route table
     - use CIDR notation (e.g. `192.168.1.0/24`)
-      - `192.168.1.0/24` means:
-        - network part: `192.168.1`
-        - `0`:
-          - how is it used by the hosts?
-        - `/24`: 
 
+- public vs private subnet
+  - public subnets have route to internet gateway
+    - this means:
+      - instances can send traffic to the internet
+      - instances can receive traffic from the internet, if security rules allows it
+  - private subnets do not have route to internet gateway
+    - this means:
+      - instances CANNOT initiate outbound internet traffic (unless via NAT gateway)
+      - instances CANNOT receive ANY inbound traffic directly from the internet
 
 - route table: defines how traffic flows inside VPC
   - contains rules like:
@@ -373,6 +388,8 @@ sudo chmod 666 /var/run/docker.sock
 
 ---
 
+- serverless: server doesn't requires provisioning and scaling
+  - e.g. aws lambda, azure functions, google cloud functions
 - Read replica: is a copy of a database that can be used to offload read operations from the primary database
 - server provisioning: the process of setting up physical or virtual hardware; installing and configuring software, such as the operating system and applications; and connecting it to middleware, network, and storage components
 - failover: ability of a system or service to automatically switch to a backup or secondary system when the primary system becomes unavailable or experiences a failure. This is important for ensuring high availability and minimizing downtime for critical applications and services.
