@@ -185,6 +185,8 @@ console.log(greeting); // outputs "Hello, my name is John and I am 30 years old.
 
 - [arrays](#arrays)
 - `new`: call the constructor function and returns a new object
+  - defining a constructor is optional in javascript
+  - if not defined, a default one is used
 
 - data structures that need to be manually implemented:
   - queues
@@ -334,9 +336,12 @@ console.log(multiply(4, 5)); // Output: 20
 ## object oriented programming
 
 - `class`: used to define a new class
+  - don't forget to capitalize the first letter of the class
+  - defining properties in the class is optional
 - object: hash map that contains a collection of string-value pairs
 - `constructor()`: special method for creating and initializing an object created with a class
 - `this`: used to call the constructor of a parent class
+  - can be used to allow method chaining: [code example in builder implementation](./design_patterns.md#builder)
 - `new`: creates a new instance of a class
 - `extends`: used to create a child class that inherits from a parent class
 - `static`: defines a static method for a class
@@ -565,6 +570,11 @@ fetchData()
   });
 
 ```
+
+## conventions
+
+- `#` indicates that a variable is private and should not be accesses directly from outside the class
+  - e.g. `#age`
 
 ## versions
 
