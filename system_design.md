@@ -46,6 +46,15 @@
   - REST vs GraphQL vs gRPC
   - api gateway to manage traffic
 
+## CAP theorem
+
+- a distributed system can only guaranteee 2 out of following 3 properties at the same time
+  - Consistency: every read receives the most recent write or an error
+  - Availability: every request gets a non-error message, without guarantee that it contains the most recent write
+  - Partition tolerance: the system continues to operate despite arbitraty partitioning due to network failures
+
+- distributed system: group of independent computers or nodes that work together as a single system to provide a unified experience to users
+
 ## pub/sub architecture
 
 > pattern that software systems can use to communicate
