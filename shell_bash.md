@@ -1,3 +1,6 @@
+
+- [CLI tools](./cli_tools.md)
+
 # Shell
 
 > program that interacts with the kernel to access and manage system resources
@@ -155,7 +158,6 @@ elif [[ condition ]]; then
 else
   do this by default
 fi
-
 ```
 
 practical example:
@@ -198,7 +200,19 @@ fi
 [loop through files](https://www.digitalocean.com/community/tutorials/workflow-loop-through-files-in-a-directory)
 
 ```bash
-##!/bin/sh
+#!/bin/bash
+
+directory="$HOME/Documents"
+
+for file in "$directory"/*; do
+  if [ -f "$file" ]; then
+    echo "Found file: $file"
+  fi
+done
+```
+
+```bash
+#!/bin/sh
 
 INPUT_STRING=hello
 while [ "$INPUT_STRING" != "bye" ]
@@ -210,7 +224,7 @@ done
 ```
 
 ```bash
-##!/bin/bash
+#!/bin/bash
 
 for i in {1..5}
 do
