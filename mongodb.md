@@ -1,3 +1,5 @@
+[sql](./sql.md)
+[databases](./databases.md)
 
 # MongoDB
 
@@ -7,6 +9,7 @@
   - e.g. `{ "name": "John", "age": 30 }`
 - schema-less, each document can have a different structure
 - scales horizontally
+- default port is 27017
 
 | MongoDB | relational DB |
 |---------|-----|
@@ -18,7 +21,10 @@
 
 ## CLI commands
 
-- connect o mongodb: `mongosh`
+- connecto mongodb shell: `mongo --host myhost --port myport -u myuser -p
+
+- connect to mongodb: `mongosh`
+- connect to mongodb with connection string: `mongosh "mongodb://username:password@host:port/dbname"`
 - show all database: `show dbs`
 - list running databases and their stats: `db.stats()`
 - use or create a database: `use mydb`

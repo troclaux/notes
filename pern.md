@@ -79,7 +79,7 @@
 
 ![PostgreSQL configuration](./images/postgres_config.png)
 
-## Front-end React
+## Front end
 
 ### React hooks
 
