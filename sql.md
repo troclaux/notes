@@ -34,6 +34,7 @@ FROM => WHERE => GROUP BY => HAVING => SELECT => ORDER BY => LIMIT
   - `*`: select all
 - `FROM`: select the target(s) table(s)
   - list the tables from where data is fetched
+  - able to create an alias for a table: `FROM users u`
 - `WHERE`: filter records based on conditions
   - `BETWEEN`: selects values within given range (values can be numbers, text or dates)
   - `LIKE`: filter records that matches the string
@@ -58,7 +59,10 @@ FROM => WHERE => GROUP BY => HAVING => SELECT => ORDER BY => LIMIT
   - operates on groups after they've been grouped, rather than rows before they've been grouped
   - IMPORTANT: you can't use `HAVING` before `GROUP BY`
 - `ORDER BY`: order records based on one or more columns
-  - limit: restrict the number of matches
+- `LIMIT`: limit the number of rows returned
+  - `LIMIT 3;`: show only the first 3 results
+- `OFFSET`: skip a number of rows before starting to return results
+  - `OFFSET 5;`: skip first 5 results and show the rest
 
 - `INSERT`: add new rows to a table
   - data types: syntax is different depending on the DB (mysql, postgresql, etc)
@@ -91,6 +95,7 @@ FROM => WHERE => GROUP BY => HAVING => SELECT => ORDER BY => LIMIT
 - `ALTER table`: modify existing table in the database
 - `DROP table`: delete a table and its data from the database
 - `TRUNCATE table`: delete all rows from a table without deleting the table itself
+- `RENAME`: `ALTER TABLE users RENAME TO customers;`
 
 > [!WARNING]
 > when creating a table, the last attribute should not have a comma after it, just like in the example below
@@ -147,6 +152,13 @@ SELECT name FROM teachers;
 - `DISTINCT`: removes duplicate rows from the results of a query
   - `SELECT DISTINCT City FROM Customers;`
 
+- `GRANT`: gives permissions to a user or role
+  - `GRANT SELECT, INSERT ON Employees TO alice;`
+- `REVOKE`: remove previously granted permissions
+  - `REVOKE INSERT ON Employees FROM alice;`
+- `DENY`: explicitly block a permission
+  - `DENY SELECT ON Employees TO alice;`
+
 - aggregate functions: return only 1 result
   - `SUM()`: return the sum of all values in the column
   - `AVG()`: return the average value of the column
@@ -157,6 +169,18 @@ SELECT name FROM teachers;
 > [!IMPORTANT]
 > aggregate functions CAN be used inside: `SELECT`, `HAVING`, `ORDER BY`
 > aggregate functions CANNOT be used inside: `FROM`, `WHERE`
+
+- `AS`: rename a table or column temporarily in a query
+  - column aliasing: `SELECT name AS full_name FROM users;`
+  - table aliasing: `SELECT u.name FROM users AS u;`
+- `ON`: tells sql which columns to compare to join rows from two tables
+  - defines how to join rows by matching column values
+
+```sql
+SELECT *
+FROM orders o
+JOIN customers c ON o.customer_id = c.id;
+```
 
 ## constraints
 
@@ -251,11 +275,12 @@ WHERE user_id = (
 
 ### INNER JOIN
 
+> returns only rows where there's a match in both tables
+
 ```sql
 SELECT *
-FROM employees
-INNER JOIN departments
-ON employees.department_id = departments.id;
+FROM orders o
+INNER JOIN customers c ON o.customer_id = c.id;
 ```
 
 ```sql
@@ -265,11 +290,16 @@ INNER JOIN classes on classes.class_id = students.class_id;
 ```
 
 - `table_name.column_name`
-- The `ON` clause specifies the condition to join the tables
-    - If the columns on the `ON` clause have the same name, the column won't appear twice in the result
-- When joining tables, if there are columns with same name, they will appear twice in the result
+- the `ON` clause specifies the condition to join the tables
+  - if the columns on the `ON` clause have the same name, the column won't appear twice in the result
+- when joining tables, if there are columns with same name, they will appear twice in the result
 
 ### LEFT OUTER JOIN = LEFT JOIN
+
+> returns all rows from the left table, plus matching rows from the right table (NULLs if no match)
+
+- has the same number of rows as the left table
+- adds matching data from the right table (or `NULL` if there's no match)
 
 ```sql
 SELECT e.name, d.name
@@ -279,6 +309,13 @@ ON e.department_id = d.id;
 ```
 
 ### RIGHT OUTER JOIN (not supported by SQLite)
+
+> opposite of left join
+
+- has the same number of rows as the right table
+- adds matching data from the left table (or `NULL` if there's no match)
+
+- not supported in SQLite
 
 example: returns all departments, even if no employee is assigned
 
@@ -290,22 +327,20 @@ RIGHT JOIN departments ON employees.dept_id = departments.id;
 
 ### FULL OUTER JOIN = FULL JOIN (not supported by SQLite)
 
+> returns all rows from both tables, with NULLs where there's no match on either side
+
+```
+number of rows in result = rows that matched + rows only in LEFT table with no match in RIGHT + rows only in RIGHT table with no match in LEFT
+```
+
+- not supported in SQLite and MySQL
+
 example: returns all employees and all departments. If there's no match, it still shows the row with `NULL` values
 
 ```sql
 SELECT employees.name, departments.name
 FROM employees
 FULL OUTER JOIN departments ON employees.dept_id = departments.id;
-```
-
-## view
-
-> alias for a SQL query that can be treated as a table
-
-```sql
-CREATE VIEW it_employees AS SELECT id, first_name, last_name, salary
-FROM employees
-WHERE department = 'IT';
 ```
 
 ## trigger
@@ -320,6 +355,16 @@ FOR EACH ROW
 EXECUTE FUNCTION log_user_insert();
 ```
 
+## view
+
+> alias for a SQL query that can be treated as a table
+
+```sql
+CREATE VIEW it_employees AS SELECT id, first_name, last_name, salary
+FROM employees
+WHERE department = 'IT';
+```
+
 ## performance
 
 ### index
@@ -327,6 +372,7 @@ EXECUTE FUNCTION log_user_insert();
 - creates a binary tree
 - faster to look up values in a column
   - O(log n)
+- slower write operations
 - primary keys are indexed by default
 - it's fairly common to name an index after the column it's created on with a suffix of `_idx`
 - you shouldn't index too many columns
@@ -337,6 +383,10 @@ EXECUTE FUNCTION log_user_insert();
 ```sql
 CREATE INDEX email_idx ON users(email);
 ```
+
+- remove index query
+  - postgresql: `DROP INDEX email_idx;`
+  - mysql: `ALTER TABLE your_table DROP INDEX index_name;`
 
 ### multi-column indexes
 
@@ -349,6 +399,59 @@ CREATE INDEX email_idx ON users(email);
 ```sql
 CREATE INDEX first_name_last_name_age_idx
 ON users (first_name, last_name, age);
+```
+
+## transaction control
+
+> manage changes made by a transaction and endure database integrity
+
+- use transaction control (`BEGIN`, `COMMIT`, `ROLLBACK`) when:
+  - you’re doing multiple related updates that must succeed or fail together
+  - you’re updating multiple tables and want consistency
+  - you want to recover from errors during the process (e.g., using SAVEPOINT)
+
+- `BEGIN`: starts a new transaction
+  - use case: when you want multiple SQL statements to be executed as a single atomic unit
+    - atomic unit: either all of the sql statements succeed or none of them do
+
+- `COMMIT`: makes all changes made in the current transaction **permanent**
+  - use case: after a set of successful operations, use `COMMIT` to save them to the database
+
+```sql
+BEGIN;
+
+INSERT INTO accounts (user_id, balance) VALUES (1, 1000);
+UPDATE accounts SET balance = balance - 200 WHERE user_id = 1;
+
+COMMIT;
+```
+
+- `ROLLBACK`: undo changes made in the current transaction
+  - if something goes wrong, cancel all operations since the last `BEGIN`
+
+```sql
+BEGIN;
+
+UPDATE accounts SET balance = balance - 200 WHERE user_id = 1;
+
+-- Something goes wrong
+ROLLBACK;
+```
+
+- `SAVEPOINT`: sets a named point within a transaction that you can roll back to without rolling back the entire transaction
+  - use case: useful in large transactions where you may want to undo only part of it
+
+```sql
+BEGIN;
+
+INSERT INTO accounts (user_id, balance) VALUES (2, 500);
+SAVEPOINT after_insert;
+
+UPDATE accounts SET balance = balance / 0 WHERE user_id = 2; -- This will cause an error
+
+ROLLBACK TO after_insert; -- Undo only the update, keep the insert
+
+COMMIT; -- Save the insert
 ```
 
 ## queries
