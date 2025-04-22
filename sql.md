@@ -51,7 +51,8 @@ FROM => WHERE => GROUP BY => HAVING => SELECT => ORDER BY => LIMIT
         - `[a-zA-Z]` to match any letter regardless of case
         - `[a-zA-Z0-9]` to match any alphanumeric character
 - `GROUP BY`: group records based on one or more columns
-  - joins rows with same attribute (the column chosen)
+  - joins rows of a column that have same value
+  - you must pass HOW to group the other values in the remaining columns
   - `SELECT column1, COUNT(*) FROM table_name GROUP BY column1;`
 - `HAVING`: similar to the `WHERE` clause, but
   - operates on groups after they've been grouped, rather than rows before they've been grouped
@@ -83,7 +84,7 @@ FROM => WHERE => GROUP BY => HAVING => SELECT => ORDER BY => LIMIT
 - `DELETE`: remove data from a table
 
 - `CREATE TABLE`: create new table in the database
-  - `FOREIGN KEY`: creates a column with the values of the column of another table
+  - `FOREIGN KEY`: creates a column with the values of a column in another table
     - `CASCADE`: defines what happens to foreign keys when the reference is changed
       - `ON DELETE`: when a record in the primary table is deleted, any records in the foreign key table that reference the deleted primary key will also be deleted
       - ON UPDATE: changes on primary table also apply to child tables
@@ -130,6 +131,7 @@ SELECT name FROM teachers;
 
 - constraints: enforce rules on table's data
   - `PRIMARY KEY`: value can't be NULL and has to be UNIQUE
+    - the primary key can be one column or a set of columns
   - `FOREIGN KEY`: links the value of a column in table1 to the value of another column in table2
     - `CASCADE`: explained before
   - `UNIQUE`: all values in the column are distinct
@@ -324,7 +326,7 @@ EXECUTE FUNCTION log_user_insert();
 
 - creates a binary tree
 - faster to look up values in a column
-  - o(log n)
+  - O(log n)
 - primary keys are indexed by default
 - it's fairly common to name an index after the column it's created on with a suffix of `_idx`
 - you shouldn't index too many columns
