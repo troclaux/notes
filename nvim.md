@@ -12,6 +12,7 @@
 
 - while in insert mode, use `Alt` to execute normal mode commands
 - repeat the last recorded register count times: `Q`
+- insert the output of a terminal command: `:.!<terminal command>`
 
 ## registers
 
