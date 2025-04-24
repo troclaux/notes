@@ -5,7 +5,7 @@
 
 # databases
 
-> collection of data that is organized so that it can be easily accessed, managed, and updated
+> collection of data that is organized so that it can be easily accessed, managed and updated
 
 - data: raw facts and figures without context
   - example: 98, 102, 95
@@ -44,36 +44,74 @@
       - great for representing relationships
       - examples: neo4j, arangodb
 
+- record = row = tuple
+  - single data entry in a table
+- field = column = attribute
+  - defines specific type of data
+- table: holds data about an entity (e.g. users, products, orders)
+
+- degree of a table: nº of columns in table
+- cardinality: nº of rows in table
+
 - failover: automatic switching from a primary database to a replica in case of failure
   - guarantees redundancy
-- fallback: return to original database once it's fixed again
+- failback: return to original database once it's fixed again
+
+## CRUD
+
+> four basic operations used in persistent storage
+
+- Create: add new data
+- Read: retrieve existing data
+- Update: modify existing data
+- Delete: remove data
+
+## ACID
+
+> set of properties of database transactions intended to guarantee data validity despite errors
+
+- transactions: a sequence of operations that are treated as a single unit of work
+  - e.g. transferring money from one account to another
+
+- Atomicity: transactions are all or nothing, if any part of it fails, the entire transaction is rolled back
+- Consistency: database always moves from one valid state to another
+- Isolation: transactions are independent of each other
+- Durability: once a transaction is committed, it is permanently saved
 
 ## ER Diagram
 
+> visual representation of data
+
 [ER model cardinality explained with examples](https://www.gleek.io/blog/er-model-cardinality)
+[ER diagrams](https://www.lucidchart.com/pages/er-diagrams)
 
-- strong entity: rectangle/square
-  - can be uniquely identified by its own attributes without relying on other entity
-- weak entity: rectangle that contains another rectangle or balloon with dotted underline
-  - cannot be uniquely identified by its own attributes
-  - depends on a strong entity to be identified
-- relationship: diamond
-  - id relationship: diamond that contains another diamond
+- strong entity (rectangle/square): can be uniquely identified by its own attributes without relying on other entity
+- weak entity: depends on a strong entity to be identified
+  - rectangle that contains another rectangle or balloon with dotted underline
+  - its primary key is in another entity
+    - cannot be uniquely identified by its own attributes
+- associative entity: M:N relationships that have attributes
+- relationship (diamond): describes how entities are associated with each other
+  - id/identifying relationship: diamond that contains another diamond
+    - relationship that defines the primary key of a weak entity
   - recursive relationship: occurs when an entity has multiple functions with itself
-- attribute: empty dot
+- attribute (empty dot): property or characteristic of an entity
   - identifying attribute: black dot or balloon with underlined attribute
-  - multivalued attributes: balloon that contains another balloon
-  - derived attributes: dotted baloon
-    - attribute that can be defined from another attributes
-- inheritance: triangle
+  - multivalued attribute: can have multiple values (e.g. phone number)
+    - balloon that contains another balloon
+  - derived attribute: attribute that can be defined from another attributes
+    - dotted baloon
+    - e.g. age is derived attribute from birth_date
+  - composite attribute: can be fragmented into sub-attributes (e.g. address => block, street, etc)
+- inheritance (triangle)
   - total or partial
-    - total: all instances of superclass must be instances of subclass
-    - partial: some instances of superclass must be instances of subclass
+    - total (t): all instances of superclass must be instances of at least one subclass
+    - partial (p): some instances of superclass may not belong to any subclasses
   - overlapped or disjoint
-    - disjoint: entities in superclass can only be instance of one subclass
-    - overlapped: entities in superclass can instances of multiples subclasses simultaneously
+    - disjoint (x): entities in superclass can only be instance of one subclass
+    - overlapping (c): entities in superclass can instances of multiples subclasses simultaneously
 
-### crow's notation
+### crow's foot notation
 
 - relationships are bidirected
 - there are symbols on both sides that represent min:max cardinality
@@ -144,9 +182,6 @@
   - e.g. MySQL, PostgreSQL, sqlite, MongoDB
 - DB (DataBase): organized collection of data that can be easily accessed, managed and updated
 - DBS (Database System) = DBMS + DB
-
-- degree of a table: nº of columns in table
-- cardinality: nº of rows in table
 
 - SQL sublanguages
   - DDL (Data Definition Language): object definition
@@ -248,18 +283,6 @@ CREATE INDEX idx_email ON Customers(Email);
 - up migration: change database to new state
 - down migration: revert database to previous state
 
-## ACID
-
-> properties of database transactions
-
-- transactions: a sequence of operations that are treated as a single unit of work
-  - e.g. transferring money from one account to another
-
-- Atomicity: transactions are all or nothing, if any part of it fails, the entire transaction is rolled back
-- Consistency: database always moves from one valid state to another
-- Isolation: transactions are independent of each other
-- Durability: once a transaction is committed, it is permanently saved
-
 ## metadata
 
 > data about data
@@ -274,40 +297,46 @@ CREATE INDEX idx_email ON Customers(Email);
   - what it includes: file type, creation date, access permissions, file size, owner, storage info
   - "how can we store, manage and protect this data?"
 
-
 ## relational algebra
 
-- Selection (σ)
-  - example: σ(age > 30)(employees)
-  - ```SELECT * FROM employees WHERE age > 30; ```
+- Selection (σ): `σ <conditions> (<table>)`
+  - example: σ age > 30 (employees)
+  - `SELECT * FROM employees WHERE age > 30;`
   - OBS: σ => Sigma => Select * => sElEct => whErE
-- Projection (π)
-  - example: π(name, age)(employees)
-  - ```SELECT name, age FROM employees;```
+- Projection (π): `π <columns> (<conditions>) (<table>)`
+  - example: π name, age (employees)
+  - `SELECT name, age FROM employees;`
   - OBS: π => PI => PIck => Projection
 - Union (∪)
   - example: employees ∪ contractors
-  - ```SELECT email FROM employees UNION SELECT email FROM contractors;```
+  - `SELECT email FROM employees UNION SELECT email FROM contractors;`
 - Intersection (∩)
   - example: employees ∩ contractors
-  - ```SELECT email FROM employees INTERSECT SELECT email FROM contractors;```
+  - `SELECT email FROM employees INTERSECT SELECT email FROM contractors;`
 - Difference (−)
   - example: employees − contractors
-  - ```SELECT email FROM employees EXCEPT SELECT email FROM contractors;```
+  - `SELECT email FROM employees EXCEPT SELECT email FROM contractors;`
 - Rename (ρ)
   - example: ρ(name/employee_name)(employees)
-  - ```SELECT name AS employee_name FROM employees;```
+  - `SELECT name AS employee_name FROM employees;`
   - OBS: ρ => Rho => Rename
 - Cartesian Product (×)
   - example: employees × departments
 - Join (⨝  or ٭)
   - example: employees ⨝  employees.department_id = departments.department_id departments
 
-
 ## normal forms and data normalization
 
+> rules used in relational database design to eliminate redundancy and ensure data integrity
+
+- split large, complex tables into smaller, simpler ones
+- while also defining relationships between tables to improve data consistency, storage efficiency and query performance
+
+- normalization: the process of applying the normal forms rules
+- Unnormalized Form (UNF or 0NF): table that is not even in 1NF
+
 ```
-BCNF ⊂ 3NF ⊂ 2NF ⊂ 1NF
+5NF ⊂ 4NF ⊂ BCNF ⊂ 3NF ⊂ 2NF ⊂ 1NF ⊂ 0NF
 ```
 
 > [!IMPORTANT]
@@ -317,32 +346,43 @@ BCNF ⊂ 3NF ⊂ 2NF ⊂ 1NF
 
 #### First Normal Form (1NF)
 
-- it must have a unique primary key
-- a cell can't have a nested table as its value
-  - a cell can't have multiple values
-    - may not even be possible
+- cells must be atomic (no repeating groups or lists/sets in a column)
+- all entries in a column are of the same type
 
 > [!TIP]
 > 1NF = 1 value per cell
 
 #### Second Normal Form (2NF)
 
-- table must be in 1NF
-- all non-key attributes must be fully dependent on the entire primary key
-  - non-key attributes: columns that are not part of the primary key
+- must be in 1NF
+- no partial dependency: every non-key column depends on the whole primary key
+  - non-key column: columns that are not part of the primary key
 
 > [!IMPORTANT]
-> tables can have composite primary keys (multiple columns that collectively functions as a single primary key
+> tables can have composite primary keys (multiple columns that collectively functions as a single primary key)
 
 #### Third Normal Form (3NF)
 
-- table must be in 2NF
-- all columns that aren't part of the primary key are dependent solely on the primary key
-- columns can't depend on other non-key attributes
+- must be in 2NF
+- no transitive dependencies (non-key columns shouldn't depend on other non-key columns)
 
-#### Boyce-Codd Normal Form (BCNF)
+#### Boyce-Codd Normal Form (BCNF or 3.5NF)
 
-- a column that's part of a primary key can't be entirely dependent on a column that's not part of that primary key
+- must be in 3NF
+- even candidate keys shouldn't depend on other non-key columns
+- candidate key: any column (or combination of columns) that can uniquely identify each row in a table, without redundancy
+  - must be unique and minimal (no extra columns, removing any part breaks uniqueness)
+
+#### Fourth Normal Form (4NF)
+
+- must be in BCNF
+- avoid storing multiple independent sets of data in one table
+- remove multivalued dependencies
+
+#### Fifth Normal Form (5NF)
+
+- must be in 4NF
+- eliminate redundancy from complex joins
 
 ### rules of thumb for database design
 
@@ -354,6 +394,7 @@ BCNF ⊂ 3NF ⊂ 2NF ⊂ 1NF
 
 ---
 
+- data consistency: data in the database is accurate, correct and reflects the real-world entities it represents (without contradictions)
 - database connection pool: mechanism that allows multiple applications/services to share a set of database connections
   - why do we create connection pools? to avoid the overhead of opening and closing a connection for each request
   - maintains a pool of open connections, instead of opening and closing a connection for each request
