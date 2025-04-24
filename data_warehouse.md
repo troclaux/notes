@@ -28,10 +28,16 @@
 - Load: store transformed data into the warehouse
 
 - transformation happens outside the warehouse
+- generally slower than ETL
 
 ## ELT (Extract, Load, Transform)
 
+- Extract: pull data from multiple sources
+- Load: store data into the warehouse
+- Transform: clean, validate and format data inside the warehouse
+
 - transformation happens inside the warehouse (using its resources)
+- generally faster than ETL
 
 ## fact table
 
@@ -42,6 +48,8 @@
 - represents events or transactions
 - often very large, with millions of rows
 
+- e.g. Sales, BudgetAllocation
+
 ## dimension table
 
 > stores descriptive attributes related to business dimensions
@@ -49,3 +57,31 @@
 - contains textual data or categorical values like names, descriptions, types
 - provides context to the numeric data in the fact table
 - generally smaller in size compared to fact tables
+
+- e.g. Customer, Product, Time, Employee, Date
+
+## schema types
+
+| Schema Type            | Fact Tables | Dimensions | Normalization | Complexity | Use Case                    |
+|------------------------|-------------|------------|----------------|------------|-----------------------------|
+| Star Schema            | 1           | Denormalized | No             | Low        | Fast querying, simple DW    |
+| Snowflake Schema       | 1           | Normalized   | Yes            | Medium     | Hierarchies, space savings  |
+| Fact Constellation     | Many        | Shared       | Mixed          | High       | Complex, enterprise DW      |
+
+### star schema
+
+- central fact table
+- connected to multiple dimension tables
+- dimension tables are denormalized
+
+### snowflake schema
+
+- extension of star schema
+- central fact table
+- dimension tables are normalized into multiple related tables
+- more joins, but reduces data redundancy
+
+### fact constellation schema (galaxy schema)
+
+- multiple fact tables share dimension tables
+- supports complex applications like combining sales and shipments
