@@ -5,6 +5,8 @@
 
 > open-source relational database management system
 
+[common PostgreSQL mistakes](https://wiki.postgresql.org/wiki/Don%27t_Do_This)
+
 ## data types
 
 - numeric types
@@ -42,7 +44,7 @@ sudo -u postgres psql
 - `-u postgres`: run as the postgres user
 - `psql`: open the PostgreSQL prompt
 
-to create user and database
+to create user and database:
 
 ```
 postgres=# CREATE USER lenny WITH PASSWORD 'leonard';
@@ -61,13 +63,17 @@ postgresql interactive terminal commands:
 - describe/list tables: `\dt`
 - describe/list users: `\du`
 - exit postgres prompt: `\q`
+- create new database: `CREATE DATABASE your_database_name;`
+
+> [!IMPORTANT]
+> use snake_case in postgresql, avoid camelCase
 
 ## connect to database from terminal
 
 ### using `psql` command-line arguments (recommended method)
 
 ```bash
-psql -U username -d database_name -h localhost -p 5432
+psql -h localhost -U username -d database_name 5432
 ```
 
 - doesn't expose the password in the command history
@@ -85,6 +91,17 @@ psql -U username -d database_name -h localhost -p 5432
     - `5432`: the port that postgresql is running on
     - `dbname`: the database name
 - can be used in `.env` as credentials for the application
+  - format: `DATABASE_URL=postgresql://<DB_USER>:<DB_PASSWORD>@<RDS_ENDPOINT>:5432/<DB_NAME>`
+  - e.g. `DATABASE_URL=postgresql://admin:mysecurepassword@your-db-instance.cle8abcd1234.sa-east-1.rds.amazonaws.com:5432/mydatabase`
+
+| **Component** | **Value** |
+|--------------|----------|
+| Protocol | `postgresql://` |
+| User | `<DB_USER>` |
+| Password | `<DB_PASSWORD>` |
+| Host (RDS Endpoint) | `<RDS_ENDPOINT>` |
+| Port | `5432` |
+| Database Name | `<DB_NAME>` |
 
 ## postgresql sql keywords
 
@@ -97,6 +114,7 @@ CREATE TABLE users (
     email TEXT UNIQUE NOT NULL
 );
 ```
+
 - `UUID`: Universally Unique IDentifier
   - ensures each value is globally unique
 - `PRIMARY KEY`: makes it the primary key for the table
