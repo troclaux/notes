@@ -1,21 +1,36 @@
 
-## properties
+# java
 
-- all code in java must be written inside a class
-- java uses a lot of memory because of java's virtual machine
 - object oriented
-
 - statically typed
 - is considered compiled AND interpreted
 - has garbage collection
-- functions are values (i.e. first-class citizens)
+- functions are values, but aren't true first-class citizens
+  - limited support to functional programming via lambdas
 - doesn't have hoisted declarations
 - type casting can be done explicitly or implicitly
 - strings aren't mutable
 - multiplatform: can run on windows or linux or mac without changing the code
 
+- all code in java must be written inside a class
+- java uses a lot of memory because of java's virtual machine
+
 - JVM (Java Virtual Machine): allows java to run in any OS (Linux, Windows, Mac)
 - JRE (Java Runtime Environment): contains JVM and all the extra tools and libraries needed to run a Java program
+
+structure of a java program:
+
+```java
+public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, world!");
+    }
+}
+```
+
+- `class`: every java program is made up of one or more classes
+- `main`: entry point of the application
+- `System.out.println`: prints to the console
 
 ## data types
 
@@ -32,11 +47,19 @@
   - default to null
   - use heap memory
 
-### primitive
+```java
+int age = 25;            // Integer
+double price = 19.99;    // Decimal
+char grade = 'A';        // Character
+boolean isOpen = true;   // Boolean
+String name = "Alice";   // String (object)
+```
 
-> store simple value directly in memory
+### primitive types
 
-- predefined in the Java language and occupy a fixed amount of memory
+> allow storing only one value at a particular location
+
+- predefined in the java language and occupy a fixed amount of memory
 
 - there are only 8 primitive data types in java:
   - `byte`: 8-bit integer (-128 to 127)
@@ -48,9 +71,11 @@
   - `boolean`: true or false
   - `char`: 16-bit Unicode character
 
-### reference or non-primitive
+### reference or non-primitive types
 
 > don't store the value directly but instead store a reference (memory address) to where the data is stored
+
+- reference types default to `null` if not initialized.
 
 - examples include:
   - `String`: sequence of characters
@@ -130,7 +155,7 @@ public class Main {
 - `protected`: can be accessed from within the same package and subclasses
 - `private`: can only by accessed from same class
   - creates the need for public methods inside the class that provide controlled access to private fields
-    - e.g.: getAccountNumber(), getBalance(), deposit(), withdraw()
+    - e.g.: `getAccountNumber()`, `getBalance()`, `deposit()`, `withdraw()`
 
 ### type casting
 
@@ -246,23 +271,6 @@ public class Student {
   }
 }
 ```
-
-## data types
-
-### primitive
-
-> Primitive data types: allow storing only one value at a particular location. They are predefined in the Java language and occupy a fixed amount of memory
-
-- There are only 8 primitive data types in Java:
-  - `int`, `double`, `boolean`, `char`, `float`, `long`, `short`, `byte`
-
-### object or non-primitive
-
-> unlike primitive data types, non-primitive ones are created by the users in java
-
-> object data types can be used to store more complex data than primitive data types
-
-- e.g. `String`, `Array`, `List`, `Set`, `Map` and `Class`
 
 
 ## data structures
