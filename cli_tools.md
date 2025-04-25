@@ -1,18 +1,27 @@
 
-# CLI Tools
+- [basic shell commands](./bash_shell.md)
+- [git](./git.md)
+- [docker](./docker.md)
+- [kubernetes](./kubernetes.md)
+- [psql](./postgresql.md)
+
+# CLI tools
+
+> Command Line Interface for typing commands
+
+- CLI (Command Line Interface) vs terminal vs shell
+  - CLI: interface for typing commands
+    - e.g. bash, powershell, CMD
+  - terminal: app that provides access to the shell via text input/output (frontend)
+    - e.g. gnome terminall, kitty, alacritty
+  - program that interprets commands and executes them
+    - e.g. bash, zsh, fish
 
 > [!IMPORTANT]
 > path behaviour changes depending on whether there is a trailing slash
 > with `/`: refers to the contents of the directory
 > without `/`: refers to the directory itself
 > behaviour present in `cp`, `mv`, `scp`, `rsync`, `ln`, `tar`, `zip`, `find`, `curl`, `du`
-
-## CLI tools with its own markdown notes
-
-- [basic shell commands](./bash_shell.md)
-- [git](./git.md)
-- [docker](./docker.md)
-- [psql](./postgresql.md)
 
 ## echo
 
@@ -499,7 +508,8 @@ fusermount -u ~/remote
 
 ### logs
 
-- `journalctl`: view logs from `systemd` journal
+- `journalctl`: view logs collected from `systemd`
+  - logs for services, kernel, boots, etc
   - `journalctl -u nginx`: shows logs for the nginx service
 - `docker logs`: view logs from docker container
 - `tail -f`: reads the end of a file as it grows
@@ -509,20 +519,30 @@ fusermount -u ~/remote
 ### network
 
 - `curl`
-- `ping`
-- `ss -tuln`
+- `ping`: checks if a host is reachable via ICMP (Internet Control Message Protocol)
+  - use cases:
+    - test network connectivity
+    - measure latency
+    - detect packet loss
+- `ss -tuln`: displays socket statistics (modern replacement for `netstat`)
+  - use case: see which ports your system is listening on
+  - `-t`: TCP connections
+  - `-u`: UDP connections
+  - `-l`: listening ports
+  - `-n`: show numeric IPs and ports (don't resolve names)
 - `netstat`
-- `lsof -i`
+- `lsof -i`: shows which processes have network connections open
+  - network connections are treated as files in linux
 
 ### disk/memory
 
-- `df -h`
-- `du -sh *`
-- `free -m`
+- `df -h`: show disk space usage of mounted filesystems
+- `du -sh *`: show size of each file/folder in current directory
+- `free -m`: displays memory usage
 
 ### permissions
 
-- `ls -l`
-- `chmod`
-- `chown`
-- `whoami`
+- `ls -l`: list files and directory in long format
+- `chmod`: change file/folder permissions
+- `chown`: change file/folder ownership
+- `whoami`: print current user
