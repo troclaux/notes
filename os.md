@@ -98,8 +98,7 @@ events that trigger process creation:
   - cannot be executed by more than one thread or process at a time
 - mutual exclusion: a parallel programming property that states:
   - only one process should access resources during critical sections
-- mutex:
-  - ensures that only one process has access to resources during critical sections
+- mutex: ensures that only one process has access to resources during critical sections
 - semaphore: a variable used to control access to a resource by multiple threads
   - used to prevent issues in critical sections
 - Scheduler: determines the order in which processes gain access to the CPU
@@ -136,7 +135,7 @@ categories of scheduling algorithms:
 - First Come First Serve (FCFS)
 - Shortest Job First (SJF)
 - Shortest Remaining Time Next (SRT)
-- Round Robin
+- Round Robin: preemptive algorithm that assigns each process/thread a fixed time slot in a rotating order
 
 - Priority scheduling
 - Multi-level queue scheduling
@@ -145,17 +144,13 @@ categories of scheduling algorithms:
 
 ## Deadlock
 
-> Occurs when a process depends on an event from another process and vice versa
+> occurs when a process depends on an event from another process and vice versa
 
-There are 4 conditions for a deadlock to occur, called Coffman's conditions:
-1. Mutual exclusion
-  - Each resource is either being used by one process or is available
-2. Hold and wait condition
-  - Processes holding previously allocated resources can request new ones
-3. No preemption
-  - Allocated resources cannot be forcibly taken away from a process
-4. Circular wait condition
-  - Processes form a 'cycle' of resource waiting
+- there are 4 conditions for a deadlock to occur, called Coffman's conditions:
+  - mutual exclusion: each resource is either being used by one process or is available
+  - hold and wait condition: processes holding previously allocated resources can request new ones
+  - no preemption: allocated resources cannot be forcibly taken away from a process
+  - circular wait condition: processes form a 'cycle' of resource waiting
 
 Possible solutions:
 - Ostrich algorithm
