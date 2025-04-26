@@ -91,7 +91,7 @@ FROM => WHERE => GROUP BY => HAVING => SELECT => ORDER BY => LIMIT
   - `FOREIGN KEY`: creates a column with the values of a column in another table
     - `CASCADE`: defines what happens to foreign keys when the reference is changed
       - `ON DELETE`: when a record in the primary table is deleted, any records in the foreign key table that reference the deleted primary key will also be deleted
-      - ON UPDATE: changes on primary table also apply to child tables
+      - `ON UPDATE`: changes on primary table also apply to child tables
 - `ALTER table`: modify existing table in the database
 - `DROP table`: delete a table and its data from the database
 - `TRUNCATE table`: delete all rows from a table without deleting the table itself
@@ -152,13 +152,6 @@ SELECT name FROM teachers;
 - `DISTINCT`: removes duplicate rows from the results of a query
   - `SELECT DISTINCT City FROM Customers;`
 
-- `GRANT`: gives permissions to a user or role
-  - `GRANT SELECT, INSERT ON Employees TO alice;`
-- `REVOKE`: remove previously granted permissions
-  - `REVOKE INSERT ON Employees FROM alice;`
-- `DENY`: explicitly block a permission
-  - `DENY SELECT ON Employees TO alice;`
-
 - aggregate functions: return only 1 result
   - `SUM()`: return the sum of all values in the column
   - `AVG()`: return the average value of the column
@@ -175,6 +168,12 @@ SELECT name FROM teachers;
   - table aliasing: `SELECT u.name FROM users AS u;`
 - `ON`: tells sql which columns to compare to join rows from two tables
   - defines how to join rows by matching column values
+  - use cases:
+    - `JOIN`
+    - `CREATE TRIGGER`
+    - `FOREIGN KEY`
+    - `GRANT`/`REVOKE`
+    - `CREATE INDEX`
 
 ```sql
 SELECT *
@@ -410,7 +409,7 @@ ON users (first_name, last_name, age);
   - you’re updating multiple tables and want consistency
   - you want to recover from errors during the process (e.g., using SAVEPOINT)
 
-- `BEGIN`: starts a new transaction
+- `BEGIN`/`START TRANSACTION`: starts a new transaction
   - use case: when you want multiple SQL statements to be executed as a single atomic unit
     - atomic unit: either all of the sql statements succeed or none of them do
 
@@ -481,6 +480,15 @@ DELETE FROM users;
 ```sql
 DELETE FROM users
 WHERE email = 'example@email.com';
+```
+
+> [!IMPORTANT]
+> use `=` when comparing non-NULL values
+> use `IS NULL` or `IS NOT NULL` only when checking for NULLs
+
+```sql
+DELETE FROM users
+WHERE email IS NULL;
 ```
 
 ```sql
