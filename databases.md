@@ -21,8 +21,9 @@
   - wisdom = knowledge + application
 
 - types of databases:
-  - relational databases
-    - uses sql
+  - SQL databases:
+    - relational
+    - analytical
     - data is stored in tables (rows and columns)
     - enforces schema and [ACID](./databases.md#acid) properties
     - examples: PostgreSQL, MySQL, oracle, microsoft sql server
@@ -401,3 +402,5 @@ CREATE INDEX idx_email ON Customers(Email);
     - creating a new database connection is expensive
       - authentication, initialization, etc
 - pagination: process of dividing a large dataset into smaller pages and providing navigation controls to allow users to browse data in smaller, manageable sections
+
+- dump a database = export entire structure and/or data of a database into a file, usually in sql format
