@@ -3,6 +3,8 @@
 
 > technology, processes and practices used to collect, integrate, analyze and present business information
 
+> transforms raw data into useful insights
+
 - main objective: support better data-driven decision-making in organizations
   - make informed, strategic decisions
   - identify business trends and patterns
@@ -11,16 +13,31 @@
   - gain competitive advantage
 
 - components:
-  - data collections
-  - data warehousing
-  - ETL/ELT processes
-  - analytics and reporting
-  - dashboards and visualization
+  - data visualization
+    - e.g. power bi (microsoft), tableau, google data studio
+  - data collection
+  - data storage
+    - e.g. amazon redshift, google bigquery, snowflake
+  - ETL tools
+    - e.g. apache NiFi
+  - OLAP tools
+    - e.g. ibm cognos, microsoft analysis services (SSAS)
+  - data analysis
+  - decision support
+
+- bi cycle
+  - data collection
+  - data processing and transformation
+  - data storage
+  - data analysis
+  - decision-making
 
 - BI vs data science vs data analytics
   - BI: descriptive (what happened?)
   - data analytics: diagnostic (why did it happen?)
   - data science: predictive/prescriptive (what will/could happen?)
+
+raw data => tools that extract and transform data => storage tools <= analysis tools
 
 ## OLTP (OnLine Transaction Processing)
 
@@ -61,3 +78,9 @@
 - MOLAP
 - ROLAP
 - HOLAP
+
+---
+
+- KPI (Key Performance Indicator): measures how effectively an organization is achieving key business objectives
+- data mining: process of automatically discovering useful patterns, trends, correlations or rules in large dataset
+
