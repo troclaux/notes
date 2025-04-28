@@ -25,7 +25,7 @@
 - data fetching: where your data lives and how to get it
 - rendering: when and where you render static or dynamic content
 - infrastructure: where you deploy, store and run your application code
-- scalability: how your application adapts as your team, data and traffic grow
+- scalability: how your application adapts as data traffic demand increases
 - API (Application Programming Interface): enables communication between 2 software applications
 - CORS (Cross-Origin Resource Sharing): security feature enforced by web browsers to prevent malicious websites from making unauthorized requests to another domain
   - a cross-origin request happens when the frontend and backend have different domains, protocols or ports
