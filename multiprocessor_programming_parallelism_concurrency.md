@@ -4,11 +4,12 @@
 > writing software that can run concurrently on multiple processors/cores to increase performance
 
 - processes vs threads
-  - process: independent unit with its own memory space
+  - process: independent program running in its own memory space
     - a process can contain multiple threads
+    - doesn't share memory by default (they're isolated)
   - thread: the smallest unit of execution within a process
-    - shares memory with other threads in the same process
-    - threads can share resources, such as memory and file handles
+    - shares resources with other threads in the same process, like memory space
+    - always belongs to a process
 
 ## parallelism and concurrency
 
