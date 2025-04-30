@@ -505,6 +505,8 @@ fusermount -u ~/remote
 - `htop`: enhanced `top` with colors and better ui
 - `systemctl status`: shows status of systemd service
   - e.g. `systemctl status apache`: shows if it's active, failed, etc
+- `systemd-analyze`: shows an overall boot time summary
+- `systemd-analyze blame`: show which units took the most time during boot
 
 ### logs
 
