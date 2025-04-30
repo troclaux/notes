@@ -1,4 +1,4 @@
-# Lei Geral de Proteção de Dados (LGPD)
+# Lei Geral de Proteção de Dados (LGPD) 13.709/2018
 
 - disposições gerais
 - tratamento de dados pessoais
