@@ -1,4 +1,6 @@
 
+# lógica
+
 ## lógica proposicional
 
 > proposição lógica: oração declarativa que é verdadeira ou falsa
@@ -35,7 +37,7 @@
 | --- | --- | --- |
 | conjunção | e/mas | p^q |
 | disjunção inclusiva | ou | pvq |
-| disjunção exclusiva | ou ..., ou | p⊻q p⊕v |
+| disjunção exclusiva | ou ..., ou | p⊻q p⊕q |
 | condicional | se ..., então/como/logo/implica/quando/toda vez que/somente se/porque/pois | p -> v |
 | bicondicional | se e somente se/assim como/se e só se | p <-> v |
 
@@ -230,11 +232,11 @@ como resolver questões:
 3. obter os valores lógicos das proposições simples presentes nas afirmações do enunciado (sempre que possível)
 4. verificar a resposta que apresenta uma proposição verdadeira
 
-As afirmações do enunciado que apresentam um "formato fácil" são as seguintes:
-- Proposição simples (verdadeira ou falsa)
-- Conjunção (e/∧) verdadeira
-- Disjunção inclusiva (ou/∨) falsa
-- Condicional (se...então/→) falsa
+- as afirmações do enunciado que apresentam um "formato fácil" são as seguintes:
+  - proposição simples (verdadeira ou falsa)
+  - conjunção (e/∧) verdadeira
+  - disjunção inclusiva (ou/∨) falsa
+  - condicional (se...então/→) falsa
 
 ## lógica de argumentação
 
