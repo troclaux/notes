@@ -1,7 +1,11 @@
 
 # Português
 
-## fonemas, letras, sílabas
+## ortografia
+
+> uso correto das letras e regras do acordo ortográfico
+
+### fonemas, letras, sílabas
 
 - fonema: unidade sonora
   - a palavra GATO tem 4 fonemas
@@ -25,6 +29,33 @@
   - cada letra representará um som
   - exemplo na mesma sílaba: CLaro, leTRa, FLores
   - exemplo em sílabas diferentes: aDVento, oBTuso, éTNico
+
+### X ou CH
+
+> palavras iniciadas por MEX- ou -ENX, com exceção de mecha e enchova, são escritas com X
+
+- exemplos: mexilhão, mexer, mexerica, México, enxada, enxerto, enxerido, mexerico
+
+### uso de letras maiúsculas e minúsculas
+
+- nomes próprios, de qualquer natureza
+  - exemplo: Câmara dos Deputados, Terra, Sol, Oceano Atlântico, Senado Federal
+- nomes comuns, quando personificados ou individualizados
+  - exemplo: o Estado, o País, a Nação
+- nomes de logradouros públicos
+  - exemplo: Avenida Brasil, Rua Ceará, Travessa dos Caetés, Parque Ary Barroso, Praça do Carmo
+- pronomes de tratamento e nas suas abreviaturas
+  - Vossa Excelência, Vossa Senhoria, Dom, Sona, V. Exa., V. Sa
+- no início de período ou citação
+  - Depois de reticências, ponto de exclamação, ponto de interrogação
+- datas oficiais, nomes de eventos/épocas históricas, festas religiosas, cerimônias tradicionais, grandes empreendimentos públicos ou institucionais
+  - Ano Novo, Idade Média, Dia das Mães, Sete de Setembro
+- títulos de livros, teses, dissertações ou monografias, artigos, jornais, revistas, filmes, músicas, peças, etc
+  - exemplos: Memórias Póstumas de Brás Cubas, Monalisa, Os Lusíadas
+- pontos cardeais
+  - exemplos: Sul, Nordeste, Leste Europeu, Oriente Médio
+- ramos do conhecimento humano
+  - exemplos: Português, Filosofia, Medicina
 
 ## encontros vocálicos
 
@@ -103,6 +134,9 @@
 - monossílabo átono: palavras com uma sílaba que possuem pronúncia fraca
   - exemplos: de, sem, em, a, com, em, por
 
+- regra do hiato: acentuar o "i" ou "u" tônico sozinho na sílaba (ou com s)
+  - e.g. baú, juízes, país, saúde, egoísmo
+
 ### oxítonas
 
 > acentuam-se oxítonas terminadas A, E, O, EM, ENS e os ditongos abertos ÉU, ÉI, ÓI
@@ -154,11 +188,7 @@
 | vem | 3ª pessoa do singular | Ela vem a pé. |
 | vêm | 3ª pessoa do plural | Elas vêm a pé. |
 | mantém (e derivados) | 3ª pessoa do singular | Ele mantém um relacionamento saudável com seus empregados. |
-<<<<<<< HEAD
-| mantém (e derivados) | 3ª pessoa do plural | Os patrões mantêm um relacionamento saudável com seus empregados |
-=======
 | mantêm (e derivados) | 3ª pessoa do plural | Os patrões mantêm um relacionamento saudável com seus empregados |
->>>>>>> Snippet
 
 ## emprego do hífen (-)
 
@@ -181,36 +211,23 @@
   - separar consoantes iguais
     - exemplos: super-romântico, hiper-resistente, sub-bibliotecário
 
-## X ou CH
+---
 
-> palavras iniciadas por MEX- ou -ENX, com exceção de mecha e enchova, são escritas com X
+## relações semânticas no texto (sinonímia, antonímia, hiponímia, hiperonímia)
 
-- exemplos: mexilhão, mexer, mexerica, México, enxada, enxerto, enxerido, mexerico
+- sinonímia: relação entre palavras que têm significados iguais ou semelhantes
+  - exemplos: feliz/contente, casa/lar
+- antonímia: relação entre palavras que têm significados opostos
+  - exemplos: claro/escuro, vida/morte
+- hiponímia: 
+- hiperonímia: 
 
-## uso de letras maiúsculas e minúsculas
+- linguagem conotativa: 
+- linguagem denotativa: 
 
-- nomes próprios, de qualquer natureza
-  - exemplo: Câmara dos Deputados, Terra, Sol, Oceano Atlântico, Senado Federal
-- nomes comuns, quando personificados ou individualizados
-  - exemplo: o Estado, o País, a Nação
-- nomes de logradouros públicos
-  - exemplo: Avenida Brasil, Rua Ceará, Travessa dos Caetés, Parque Ary Barroso, Praça do Carmo
-- pronomes de tratamento e nas suas abreviaturas
-  - Vossa Excelência, Vossa Senhoria, Dom, Sona, V. Exa., V. Sa
-- no início de período ou citação
-  - Depois de reticências, ponto de exclamação, ponto de interrogação
-- datas oficiais, nomes de eventos/épocas históricas, festas religiosas, cerimônias tradicionais, grandes empreendimentos públicos ou institucionais
-  - Ano Novo, Idade Média, Dia das Mães, Sete de Setembro
-- títulos de livros, teses, dissertações ou monografias, artigos, jornais, revistas, filmes, músicas, peças, etc
-  - exemplos: Memórias Póstumas de Brás Cubas, Monalisa, Os Lusíadas
-- pontos cardeais
-  - exemplos: Sul, Nordeste, Leste Europeu, Oriente Médio
-- ramos do conhecimento humano
-  - exemplos: Português, Filosofia, Medicina
+---
 
-## classes de palavras
-
-existem 10 classes gramaticais:
+## classes gramaticais
 
 1. substantivo
 1. adjetivo
@@ -224,18 +241,16 @@ existem 10 classes gramaticais:
 1. pronome
 
 - classes variáveis: flexionam de acordo com o número e gênero
-  - exemplos:
-    - substantivo: beija-flor, comida, Maria
-    - adjetivo: bonito, grosseiro, maluco, feliz
-    - pronome: eu, vossa excelência, me, mim, quantos, ninguém, meu, este
-    - numeral: primeiro, dois, metade, dúzia, triplo
-    - verbo: correr, andar, voar, viver
+  - substantivo: beija-flor, comida, Maria
+  - adjetivo: bonito, grosseiro, maluco, feliz
+  - pronome: eu, vossa excelência, me, mim, quantos, ninguém, meu, este
+  - numeral: primeiro, dois, metade, dúzia, triplo
+  - verbo: correr, andar, voar, viver
 - classes invariáveis: **não** flexionam de acordo com o número e gênero
-  - exemplos:
-    - advérbio: rapidamente, felizmente
-    - conjunção: mas, porque, ou, e
-    - preposição: até, desde, para, sobre, após, contra, de
-    - interjeição: uau!, ai!, uhul!, viva!, atenção!, ué!, hã?!, chega!
+  - advérbio: rapidamente, felizmente
+  - conjunção: mas, porque, ou, e
+  - preposição: até, desde, para, sobre, após, contra, de
+  - interjeição: uau!, ai!, uhul!, viva!, atenção!, ué!, hã?!, chega!
 
 ### substantivos
 
@@ -270,7 +285,6 @@ existem 10 classes gramaticais:
 > exemplo: Judas (substantivo próprio) foi um apóstolo.
 > exemplo: O amigo revelou-se judas (substantivo comum).
 
-
 #### flexão dos substantivos
 
 - flexão de substantivos: variações que palavras podem sofrer em relação a gênero, número e grau*
@@ -280,7 +294,7 @@ existem 10 classes gramaticais:
     - palavras como ônix ou tórax não vão ao plural
 
 - existem palavras que só são utilizadas no plural
-  - exemplos: núpcias, fezes, reais, arredores, répteis, projéteis
+  - exemplos: núpcias, fezes, arredores, répteis, projéteis
 
 - plural de substantivos compostos
   - quem varia varia, que não varia não varia
@@ -295,9 +309,8 @@ existem 10 classes gramaticais:
 
 | classes invariáveis | exemplo no singular | exemplo no plural |
 | --------------- | --------------- | --------------- |
-| substantivo + substantivo | couve-flor | couves-flores |
-| numeral + substantivo | quarta-feira | quartas-feiras |
-| adjetivo + substantivo | baixo-relevo | baixos-relevos |
+| verbo + substantivo | beija-flor | beija-flores |
+| interjeição + substantivo | ave-maria | ave-marias |
 
 - substantivo + preposição + substantivo: apenas o primeiro item se flexiona
   - pé de moleque => pés de moleque
@@ -309,6 +322,21 @@ existem 10 classes gramaticais:
 > classe variável que se refere ao substantivo ou termo de valor substantivo (como pronomes) para atribuir qualidade
 
 - exemplos: homens MAUS, objeto PESADO, camisa VERDE, carro DESTRUÍDO
+
+#### grau
+
+- normal: alto
+- comparativo
+  - de superioridade: mais alto que
+  - de igualdade: tão alto como
+  - de inferioridade: menos alto que
+- superlativo
+  - relativo
+    - de superioridade: o mais alto
+    - de inferioridade: o menos alto
+  - absoluto
+    - analítico: muito alto
+    - sintético: altíssimo
 
 #### classificação de adjetivos
 
@@ -406,6 +434,21 @@ existem 10 classes gramaticais:
 
 ---
 
+- coerência: lógica e clareza das ideias em um texto
+- coesão referencial: uso de palavras que retomam ou antecipam outras já mencionadas no texto
+- coesão sequencial: ligação entre as partes do texto por meio de conectivos que indicam ordem, causa, contraste, etc
+
+- tipos de discurso
+  - direto: reprodução exata da fala de alguém, geralmente marcada por travessão ou aspas
+    - exemplo: João disse: "Estou cansado."
+  - indireto: fala de alguém é reproduzida indiretamente, com mudanças de pronomes, verbos e sem travessões
+    - exemplo: João disse que estava cansado
+  - indireto livre: mistura a narração com a fala do personagem, sem marcas evidentes
+    - exemplo: João estava exausto. Como queria ir embora!
+
+- morfologia: estuda a forma das palavras (estrutura, flexões, tipo de palavra, se é substantivo/verbo/etc)
+- sintaxe: estuda a função que as palavras exercem dentro da oração (sujeito, predicado, objeto, etc)
+
 - alteração morfológica: troca de classes
 - número: classificação da palavra em singular ou plural
 - gênero: classificação da palavra em masculino ou feminino
@@ -419,8 +462,70 @@ existem 10 classes gramaticais:
   - exemplos: INfeliz, globalIZAÇÃO
 
 - infinitivo
-  - exemplo: fazer
+  - exemplo: fazer, pensar
 - gerúndio
-  - exemplo: fazendo
+  - exemplo: fazendo, pensando
 - particípio
-  - exemplo: feito
+  - exemplo: feito, pensado
+
+## morfologia / classes gramaticais
+
+> classifica função
+
+- classes variáveis: flexionam de acordo com o número e gênero
+  - substantivo: nomeia seres, coisas, ideias
+    - e.g. beija-flor, comida, Maria
+  - adjetivo: qualifica ou caracteriza o substantivo
+    - e.g. bonito, grosseiro, maluco, feliz
+  - pronome: palavra que representa um nome, um termo com a função de um nome, um adjetivo ou toda uma oração que a segue ou antecede
+    - e.g. eu, vossa excelência, me, mim, quantos, ninguém, meu, este
+  - numeral: indica quantidade, ordem
+    - e.g. primeiro, dois, metade, dúzia, triplo
+  - verbo: expressa ações, estados, fenômenos
+    - e.g. correr, andar, voar, viver
+- classes invariáveis: **não** flexionam de acordo com o número e gênero
+  - advérbio: modifica o verbo, adjetivo ou outro advérbio
+    - e.g. rapidamente, felizmente
+  - conjunção: conecta orações ou termos
+    - e.g. mas, porque, ou, e
+  - preposição: palavra gramatical, invariável, que liga dois elements de uma frase, estabelecendo uma relação entre eles
+    - e.g. até, desde, para, sobre, após, contra, de
+  - interjeição: classe de palavras utilizada para expressar emoções fortes do emissor do enun
+    - e.g. uau!, ai!, uhul!, viva!, atenção!, ué!, hã?!, chega!
+
+## sintaxe
+
+### termos da oração
+
+- sujeito
+- predicado
+- objeto direto
+- objeto indireto
+- complemento nominal
+- adjunto adnominal
+
+- concordância nominal: o ajuste de gênero (masculino/feminino) e número (singular/plural) entre o substantivo e os termos que o acompanham (adjetivos, artigos, pronomes, etc)
+  - exemplo: "As meninas alegres chegaram cedo." => alegres concorda com meninas
+- concordância verbal: É a concordância entre o verbo e o sujeito da oração em número e pessoa
+  - exemplo: "Ela chegou cedo." => chegou está no singular porque o sujeito "ela" é singular
+
+- regência nominal: relação de dependência entre um nome (substantivo, adjetivo ou advérbio) e os termos que os acompanham
+  - exemplo: Amor a Deus => o substantivo exige a preposição "a"
+- regência verbal: relação entre um verbo e seus complements (objetos diretos e indiretos)
+  - exemplo: Assisti ao filme => o verbo "assitir" exige a preposição "a" no sentido de "ver"
+
+## semântica
+
+> área que estudo o significado das palavras, expressões e frases
+
+- sinônimos: palavras que se aproxima semanticamente por uma relação de equivalência ou semelhança
+  - semanticamente: 
+- antônimos: palavras de significados opostos
+  - exemplo: frio e quente
+- homônimos: palavras com mesma forma (som ou grafia), mas significados diferentes
+  - homônimos perfeitos: mesma escrita e pronúncia
+    - exemplo: manga (da camisa) e manga (fruta)
+  - homófonos: mesma pronúncia, escrita diferente
+    - exemplo: cela e sela
+- parônimos: palavras com grafia e pronúncia parecidas, mas significados diferentes
+  - exemplo: ratificar (confirmar) e retificar (corrigir)
