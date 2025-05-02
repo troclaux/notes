@@ -1,4 +1,6 @@
 
+[authentication](./auth.md)
+
 # security
 
 ## concepts
@@ -68,27 +70,7 @@
 
 ## types of authentication
 
-1. something you know
-
-- id + password
-  - id can be email, username, etc
-- pin
-- security questions
-
-2. something you have
-
-- phone
-- token
-
-3. something you are
-
-- biometrics
-  - fingerprint
-  - face
-  - iris
-  - voice
-
-examples of methods of authentication:
+### authentication methods
 
 - id + password
   - id can be email, username, etc
@@ -97,6 +79,28 @@ examples of methods of authentication:
 - magic links
   - e.g. `https://example.com/login?token=...`
 - api keys
+
+### authentication factors
+
+1. something you know
+
+- id + password
+- pin
+- security questions
+
+2. something you have
+
+- phone
+- hardware token
+- smart card
+
+3. something you are
+
+- biometrics:
+  - fingerprint
+  - face recognition
+  - iris scan
+  - voice recognition
 
 ## encryption
 
@@ -122,9 +126,16 @@ plain text -> encryption (with public key) -> cipher text -> decryption (with pr
   - used to decrypt data
   - file becomes useless if lost
 
-## Public Key Infrastructure (PKI) is a comprehensive framework that enables secure electronic communication through the management of digital certificates and encryption keys. It encompasses a combination of hardware, software, policies, and procedures necessary for the creation, distribution, management, storage, and revocation of digital certificates.
+## Public Key Infrastructure (PKI)
 
-## Key Components of PKI
+> comprehensive framework that enables secure electronic communication through the management of digital certificates and encryption keys. It encompasses a combination of hardware, software, policies, and procedures necessary for the creation, distribution, management, storage and revocation of digital certificates
+
+- establishes trust in digital communications
+- provides mechanisms for encryption
+- enables authentication
+- ensures data integrity across various applications and services
+
+### key components of PKI
 
 1. Digital Certificates: These are electronic credentials that bind a public key to an entity (such as a user or device), ensuring that the entity is who it claims to be. Digital certificates function similarly to a passport in verifying identity
 
@@ -136,22 +147,20 @@ plain text -> encryption (with public key) -> cipher text -> decryption (with pr
    - Public Key: Available to anyone; used for encrypting data
    - Private Key: Kept secret by the owner; used for decrypting data encrypted with the corresponding public key
 
-## How PKI Works
+### how PKI works
 
-PKI facilitates secure communications by enabling:
-- Encryption: Data can be encrypted using the recipient's public key, ensuring that only the recipient can decrypt it with their private key
-- Authentication: Digital certificates confirm the identities of users and devices, preventing impersonation and ensuring that data is sent to the correct party
-- Integrity: Digital signatures can be used to verify that data has not been altered during transmission
+- PKI facilitates secure communications by enabling:
+  - encryption: data can be encrypted using the recipient's public key, ensuring that only the recipient can decrypt it with their private key
+  - authentication: digital certificates confirm the identities of users and devices, preventing impersonation and ensuring that data is sent to the correct party
+  - integrity: digital signatures can be used to verify that data has not been altered during transmission
 
-## Applications of PKI
+### applications of PKI
 
-PKI is widely used in various domains, including:
-- E-commerce: Securing online transactions
-- Internet Banking: Protecting sensitive financial information
-- Secure Email: Ensuring confidentiality and authenticity in email communications
-- IoT Devices: Managing secure connections between connected devices
-
-In summary, PKI is essential for establishing trust in digital communications, providing mechanisms for encryption, authentication, and data integrity across various applications and services
+- PKI is widely used in various domains, including:
+  - E-commerce: Securing online transactions
+  - Internet Banking: Protecting sensitive financial information
+  - Secure Email: Ensuring confidentiality and authenticity in email communications
+  - IoT Devices: Managing secure connections between connected devices
 
 ## firewalls
 
@@ -207,6 +216,76 @@ top 10 web application security risks:
   - level 2: establish unified strategic roadmap for software security within the organization
   - level 3: align security efforts with the relevant organizational indicators and asset values
 
+## database security
+
+- main objectives
+  - confidentiality: prevent unauthorized access to sensitive data
+  - integrity: ensure data is accurate and has not been tampered with
+  - availability: ensure data is data is accessible when needed by authorized users
+
+- access control models:
+  - DAC (Discretionary Access Control): access is controled by the owner of the resource
+  - MAC (Mandatory Access Control): access is controled by a central authority, based on strict policies
+  - RBAC (Role-Based Access Control): access is based on roles assigned to users (e.g. "admin", "manager", "employee")
+
+- create user
+  - postgresql: `CREATE USER myuser WITH PASSWORD 'mypassword';`
+  - mysql/mariadb: `CREATE USER 'myuser'@'localhost' IDENTIFIED BY 'mypassword';`
+
+role management in postgresql:
+
+```sql
+-- Create a role without login
+CREATE ROLE readonly;
+
+-- Grant privileges to the role
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO readonly;
+
+-- Create a user and assign the role
+CREATE USER analyst WITH PASSWORD 'securepass';
+GRANT readonly TO analyst;
+```
+
+role management in mysql/mariadb:
+
+```sql
+-- Create a role
+CREATE ROLE 'readonly';
+
+-- Grant privileges to the role
+GRANT SELECT ON mydatabase.* TO 'readonly';
+
+-- Create a user
+CREATE USER 'analyst'@'localhost' IDENTIFIED BY 'securepass';
+
+-- Assign the role to the user
+GRANT 'readonly' TO 'analyst'@'localhost';
+
+-- Set default active role for user (optional)
+SET DEFAULT ROLE 'readonly' TO 'analyst'@'localhost';
+```
+
+- `GRANT`: gives permissions to a user or role
+  - `GRANT SELECT, INSERT ON Employees TO alice;`
+- `REVOKE`: remove previously granted permissions
+  - `REVOKE INSERT ON Employees FROM alice;`
+- `DENY`: explicitly block a permission
+  - `DENY SELECT ON Employees TO alice;`
+
+## database security threats
+
+- SQL Injection: injecting malicious SQL into queries to dump data, modify/delete records or bypass login
+  - causes
+    - poorly filtered strings
+    - incorrect type handling
+    - signature evasion
+    - filter bypassing
+    - blind sql injection
+- credential stuffing: using leaked credentials from other breaches to access databases
+- brute force attacks: repeatedly trying username/password combinations until one works
+- Denial of Service (DoS): flooding the database with queries to exhaust resources
+- Man-in-the-Middle (MitM): intercepting database traffic, especially over insecure connections
+
 ## tools
 
 - [nmap](./cli_tools.md#nmap): network scanner that discovers hosts and services on a network
@@ -214,3 +293,16 @@ top 10 web application security risks:
 - metasploit: penetration testing framework that helps find vulnerabilities in systems
 - netcat (`nc`): networking utility that reads/writes data across network connections
 
+---
+
+- SDL (Security Development Lifecycle)
+  - process framework that integrates security and privacy considerations into every phase of software development
+  - goal: reduce vulnerabilities and development costs by embedding security early
+  - lifecycle stages: requirements => design => implementation => verification => release => response
+
+- CLASP (Comprehensive, Lightweight Application Security Process)
+  - set of security best practices for existing software development processes
+
+- BSIMM (Building Security in Maturity Model)
+
+- NIST SSDF (Secure Software Development Framework)
