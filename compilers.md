@@ -28,8 +28,9 @@
 > compile time: period when the source code is converted into machine code
 > runtime: period when the program is actually running after it has been compiled
 
-- compile time happens at runtime for interpreted languages
-- time happens before runtime for compiled languages
+- interpreted languages typically don't have a compile time phase
+  - instead, code is parsed and executed directly at runtime
+- compile time happens before runtime for compiled languages
 
 ## compilation process
 
@@ -46,12 +47,14 @@ for example, this is how a C program is compiled and executed:
 
 > [!NOTE]
 > the conversion of file extensions above is specific to C
+> the assembler receives assembly code (input) and converts it into machine code (output)
+> the linker receives object files (input) and combines them into an executable file (output)
+> the loader loads the executable file into memory and prepares it for execution
 
 - other languages' compiler/interpreter will translate to different types of files
   - for example, in python: file.py => bytecode => file.pyc
-    - bytecode: AST (Abstract Syntax Tree) representation of python code
-      - represents python code in a format that can be executed by the interpreter
-      - it's not machine code
+    - bytecode: low-level, platform-independent representation of your source code that the Python interpreter can execute
+      - it is not machine code, but an intermediate step between source code and actual execution
 
 1. preprocessing: focuses on textual replacements and macro expansion
 - this is done by the preprocessor
@@ -77,21 +80,27 @@ for example, this is how a C program is compiled and executed:
 - decodes instructions
 - executes instructions according to the Instruction Set Architecture (ISA)
 
-1. lexical analysis: converts source code into a stream of tokens (e.g. keywords, operators, identifiers)
+### compiler phases (language-agnostic)
+
+these are abstract steps that most compilers follow internally when transforming code, regardless of language:
+
+1. lexical analysis: converts source code into tokens (e.g. keywords, operators, identifiers)
 - tokenization: break source code into meaningful chunks called tokens
 - error detection: catch errors like unrecognized symbols or invalid characters
 - example:
   - input: `x = 2 + 3;`
   - output: tokens: `IDENTIFIER(x), ASSIGN(=), CONSTANT(2), PLUS(+), CONSTANT(3), SEMICOLON(;)`
-2. parsing (syntax analysis): uses grammar rules to analyse token stream and build the AST*
+2. syntax analysis (parsing): builds an AST using grammar rules (*)
 - Abstract Syntax Tree (AST): tree representation of the structure of source code written in a programming language
 - AST construction: combines tokens into tree nodes according to the programming languages grammar
 3. semantic analysis: verify the AST for semantic correctness (e.g. type checking, scope resolution, error handling, etc)
-4. intermediate code generation (IR): translate AST into an IR that is simpler and closer do machine code
-5. optimization: improve the intermediate code for efficiency (reduce runtime or memory usage)
-6. code generation: translate IR into machine code or assembly code for the target architecture
-7. assembly and linking: convert assembly code into machine code using an assembler
-8. loader and execution: prepare executable for execution
+4. intermediate code generation: translates the AST into an IR (*) that is simpler and closer to machine code
+- IR (Intermediate Representation): a simplified, structured form of code used internally by compilers for analysis, optimization and code generation
+  - e.g. python bytecode (`.pyc` files), java bytecode (used in java, kotlin, scala), LLVM IR (used in C, C++, rust, swift)
+5. optimization: improves IR for performance (reduce runtime or memory usage)
+6. code generation: converts IR to machine code/assembly code for the target architecture
+7. assembly and linking: produce final executable
+8. loader and execution: done by OS when program runs
 - load executable into memory
 - set up the runtime environment
 - begin execution at the entry point (e.g. `main` function)
@@ -146,3 +155,12 @@ type Example2 struct {
 > general rule of thumb to minimize padding
 > group fields of the same size together
 > order fields from largest to smallest in terms of size (e.g. `int64`, then `int32`, then `int16`, and finally `int8`)
+
+---
+
+- Abstract Syntax Tree (AST): tree representation of the structure of source code written in a programming language
+- transpiled languages: typescript
+  - source code is converted into another language
+  - e.g. typescript => JavaScript, sass => css
+  - transpilation typically converts between languages at a similar abstraction level (e.g., TypeScript → JavaScript), unlike compilation to machine code
+
