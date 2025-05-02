@@ -33,7 +33,7 @@ sudo apt install -y fonts-font-awesome network-manager-gnome
 ```
 
 - `sway`: tiling window manager
-- `kanshi`: display configuration tool
+- `kanshi` (deprecated): display configuration tool
 - `light`: modify display's brightness
 - `blueman`: bluetooth manager
 - `swaylock`: lock screen
