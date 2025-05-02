@@ -11,45 +11,48 @@
   - everything is an object
 
 - dynamically typed
+- strongly typed language
 - interpreted programming language
 - has garbage collection
 - doesn't have hoisted declarations
-- function-scoped: once a variable is declared inside a function, it is accessible anywhere inside that function
+- uses **function-level scope**, not block-level scope (like in JavaScript)
+    - variables defined inside functions have local scope (accessible only within the function)
+- functions are first-class citizens
 - immutable strings
 - multiplatform
 
 ## data types
 
-all variables are references to objects, so there are 2 categories:
-- immutable types: values that can be modified after they are created
-  - behave like value type
-  - int, float, complex, bool, str, typle, frozenset, bytes
-- mutable types: values that **cannot** be modified after they are created
-  - behave like reference type
-  - list, dict, set, objects, bytearray, memoryview
+- all variables are references to objects, so there are 2 categories:
+    - immutable types: values that **cannot** be modified after they are created
+        - behave like value types
+        - int, float, complex, bool, str, tuple, frozenset, bytes
+    - mutable types: values that **can** be modified after they are created
+        - behave like reference types
+        - list, dict, set, objects, bytearray, memoryview
 
 - text
-  - str
+    - str
 - numeric
-  - int
-  - float
-  - complex: for complex numbers
+    - int
+    - float
+    - complex: for complex numbers
 - sequence
-  - list
-  - tuple
-  - range
+    - list
+    - tuple
+    - range
 - map
-  - dict
+    - dict
 - set
-  - set
-  - frozenset
-    - immutable set
+    - set
+    - frozenset
+        - immutable set
 - boolean
-  - bool
-    - True
-    - False
+    - bool
+        - True
+        - False
 - binary
-  - bytes, bytearray, memoryview
+    - bytes, bytearray, memoryview
 - None
 
 ```python
@@ -104,7 +107,7 @@ person.clear()
 - f prefix before the string
 - interpolation: use curly braces `{}` to insert variables
 - use `:` to format the output
-  - example: `:.2f` to format a float number with 2 decimal places
+    - example: `:.2f` to format a float number with 2 decimal places
 
 ```python
 pi = 3.14159
@@ -130,7 +133,7 @@ isinstance([5, 6], list) # returns True
 
 ```python
 # converts float number into int
-int_num = int(4.0)
+int_num = int(4.9)  # Returns 4, not 5
 
 # converts int number into float
 float_num = float(4)
@@ -175,6 +178,9 @@ for fruit in fruits:
 for i in range(len(fruits)):
     print(fruits[i])
 
+for i, fruit in enumerate(fruits):
+    print(i, fruit)
+
 squares = [x**2 for x in range(5)]
 print(squares) # output: [0, 1, 4, 9, 16]
 
@@ -200,21 +206,20 @@ my_function('hello', 'world')
 - `str1.upper()`: return str1 in upper case
 - `str1.lower()`: return str1 in lower case
 - `str1.strip()`: remove leading/trailing spaces and line breaks from input string
-- `str1.replace(str2)`: if str2 is in str1, replace it
+- `str1.replace(old, new)`: replaces all occurrences of `old` with `new`
 - `str1.split()`: split string into a list of strings
-  - by default, the delimiter is space
-  - provide string/char as input to change default delimiter
+    - by default, the delimiter is space
+    - provide string/char as input to change default delimiter
 - `str1.count(str2)`: return the number of times str2 occurs in str1
 - `str1.isalnum()`: returns True if all chars in string are alphanumeric, False otherwise
 - `str1.isdigit()`: returns True if all chars in string are numbers, False otherwise
 - `list1.append(elem1)`: appends an element to the end of a list
 - `list1.copy()`: returns a copy of a list
 - `list1.insert(idx, elem1)`: inserts elem1 at index idx of the list
-- `list1.push(elem1)`: inserts elem1 at the end of list1
 - `list1.pop()`: removes and returns last element of list1
-  - if you provide a number as input, `pop()` will try to remove the number at that index
+    - if you provide a number as input, `pop()` will try to remove the number at that index
 - `list1.remove(elem1)`: first instance of elem1, if there's no instance of elem1 raises `ValueError`
-  - removes element by value
+    - removes element by value
 - `del list1[1:3]`: removes element by index
 - `list1.clear()`: removes all elements of list1
 - `list1.reverse()`: reverse the order of elements in list1
@@ -317,19 +322,19 @@ child.display_age()   # Method of ChildClass
 
 types of imports:
 - importing the whole module
-  - `import module_name`
+    - `import module_name`
 - importing specific functions or variables from a module
-  - `from module_name import function_name`
+    - `from module_name import function_name`
 - importing all functions and variables from a module
-  - `from module_name import *`
+    - `from module_name import *`
 - renaming a module during import
-  - `import module_name as alias`
+    - `import module_name as alias`
 
 ```python
 import my_module as mm
 import pandas as pd
 
-x = dir(pd)      # list the names of all functions and variables in a module
+x = dir(pd)  # returns a list of names (functions, classes, variables) defined in the pandas module
 ```
 
 ## packages
@@ -369,14 +374,14 @@ from my_package.module_b import Node
 > collection of packages and modules that provide specific functionality
 
 - can be built-in (come with Python) or third-party (need to be installed, normally using pip)
-  - standard library
-    - included with python
-    - no need to install
-    - e.g. `os`, `sys`, `math`, `random`, `datetime`, etc
-  - third-party libraries
-    - not included with python
-    - need to be installed
-    - e.g. `numpy`, `pandas`, `matplotlib`, `requests`, etc
+    - standard library
+        - included with python
+        - no need to install
+        - e.g. `os`, `sys`, `math`, `random`, `datetime`, etc
+    - third-party libraries
+        - not included with python
+        - need to be installed
+        - e.g. `numpy`, `pandas`, `matplotlib`, `requests`, etc
 
 standard library example
 ```python
@@ -390,30 +395,50 @@ print(math.sqrt(16))  # Outputs: 4.0
 > variable that can only take a set of fixed values
 
 ```python
-
 from enum import Enum
 
-Color = Enum('Color', ['RED', 'GREEN', 'BLUE'])
-print(Color.RED)  # this works, prints 'Color.RED'
-print(Color.TEAL) # this raises an exception
+# creates an Enum class named 'Color'
+class Color(Enum):
+    RED = 1
+    GREEN = 2
+    BLUE = 3
 
+print(Color.RED)  # this works, prints 'Color.RED'
+
+try:
+    print(Color.TEAL) # this raises an exception
+except AttributeError:
+    print("Color.TEAL is not a valid member")
 ```
 
 ## lambda functions
 
 > basically small functions that are declared with the `lambda` keyword
 
-lambda input1: operation which result will be returned
+syntax: `lambda arguments: operation that will generate output`
+
+- `map()` applies a function to each item in an iterable and returns a new iterable with the results.
+- `filter()` selects items from an iterable for which a function returns True.
+- `sorted()` returns a new sorted list and does not modify the original
+- `list.sort()`: sorts in-place
 
 ```python
 add_nums = lambda x, y: x + y
 print(add_nums(2, 3)) # 5
-```
 
-```python
 numbers = [1, 2, 3, 4, 5]
 squared = map(lambda x: x ** 2, numbers)
 print(list(squared))  # Outputs: [1, 4, 9, 16, 25]
+
+# keep only even numbers
+nums = [1, 2, 3, 4, 5, 6]
+evens = list(filter(lambda x: x % 2 == 0, nums))
+print(evens)  # output: [2, 4, 6]
+
+# sort words by length
+words = ["apple", "fig", "banana", "kiwi"]
+sorted_words = sorted(words, key=lambda w: len(w))
+print(sorted_words)  # output: ['fig', 'kiwi', 'apple', 'banana']
 ```
 
 ## automation with scripts
@@ -424,7 +449,7 @@ print(list(squared))  # Outputs: [1, 4, 9, 16, 25]
 - splinter: simplifies web application testing
 - scrapy: web crawling framework for extracting data from websites
 - windmill: tests web applications with automation and debugging tools
-  - OBS: Windmill => Web
+    - OBS: Windmill => Web
 - pytest: testing framework
 - ReportLab: creates pdf reports programmatically
 - PDFMiner: extracts texts, images, and metadata from pdfs
@@ -432,5 +457,3 @@ print(list(squared))  # Outputs: [1, 4, 9, 16, 25]
 - OpenPyXL: reads and writes excel files
 - PyXLL: allows you to create excel functions with python
 - XlsxWriter: creates excel files
-- Tagui: 
-- Robot Framework: 
