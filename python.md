@@ -8,7 +8,7 @@
 - parentheses in `if` statements are optional
 - huge variety of libraries
 - object oriented
-  - everything is an object
+    - everything is an object
 
 - dynamically typed
 - strongly typed language
