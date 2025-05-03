@@ -27,7 +27,7 @@
 order of operations in SQL query:
 
 ```
-FROM => WHERE => GROUP BY => HAVING => SELECT => ORDER BY => LIMIT
+FROM => JOIN => WHERE => GROUP BY => HAVING => SELECT => ORDER BY => LIMIT
 ```
 
 - `SELECT`: retrieve data from database
@@ -38,19 +38,11 @@ FROM => WHERE => GROUP BY => HAVING => SELECT => ORDER BY => LIMIT
 - `WHERE`: filter records based on conditions
   - `BETWEEN`: selects values within given range (values can be numbers, text or dates)
   - `LIKE`: filter records that matches the string
-    - wildcards: used for pattern matching, like regex
+    - wildcards: used for pattern matching
       - `%`: zero or more chars
         - `SELECT * FROM products WHERE product_name LIKE 'banana%';`
       - `_`: single char
         - `SELECT * FROM products WHERE product_name LIKE '__oot';`
-      - `[]`: any single char within the brackets
-      - `^`: any char NOT in the brackets
-        - `[^abc]`: matches any char that is not `a` or `b` or `c`
-      - `-`: any single char within specified range
-        - `[A-Z]` matches any uppercase letter
-        - `[0-9]` matches any digit
-        - `[a-zA-Z]` to match any letter regardless of case
-        - `[a-zA-Z0-9]` to match any alphanumeric character
 - `GROUP BY`: group records based on one or more columns
   - joins rows of a column that have same value
   - you must pass HOW to group the other values in the remaining columns
@@ -68,34 +60,35 @@ FROM => WHERE => GROUP BY => HAVING => SELECT => ORDER BY => LIMIT
   - data types: syntax is different depending on the DB (mysql, postgresql, etc)
     - numeric
       - data types that exist on mysql and postgresql
-        - SMALLINT
-        - BIGINT
-        - INTEGER
-      - only mysql
-        - DECIMAL
-        - FLOAT
-        - DOUBLE
-      - only postgresql
         - NUMERIC(precision, scale) precision: total number of digits that can be stored
           - scale: maximum number of digits to the right of the decimal point
-        - REAL
+        - INTEGER
+        - DECIMAL
+        - FLOAT
+        - SMALLINT
+        - BIGINT
         - DOUBLE PRECISION
+      - only mysql
+        - DOUBLE
+      - only postgresql
+        - REAL
     - character string: CHAR, VARCHAR
     - binary: binary
     - boolean: BOOLEAN
-    - data and time: data, datetime
+    - date and time: `DATE`, `TIME`, `DATETIME`, `TIMESTAMP`
 - `UPDATE`: modify existing data in a table
 - `DELETE`: remove data from a table
 
 - `CREATE TABLE`: create new table in the database
   - `FOREIGN KEY`: creates a column with the values of a column in another table
-    - `CASCADE`: defines what happens to foreign keys when the reference is changed
+    - `CASCADE`: defines what happens to dependent rows in the foreign key table when the referenced row is updated or deleted
       - `ON DELETE`: when a record in the primary table is deleted, any records in the foreign key table that reference the deleted primary key will also be deleted
       - `ON UPDATE`: changes on primary table also apply to child tables
 - `ALTER table`: modify existing table in the database
 - `DROP table`: delete a table and its data from the database
 - `TRUNCATE table`: delete all rows from a table without deleting the table itself
 - `RENAME`: `ALTER TABLE users RENAME TO customers;`
+  - postgresql syntax
 
 > [!WARNING]
 > when creating a table, the last attribute should not have a comma after it, just like in the example below
@@ -108,8 +101,8 @@ CREATE TABLE Customers (
 );
 ```
 
-- `CREATE database`: create new database
-- `DROP database`: delete a database and all its contents
+- `CREATE DATABASE`: create new database
+- `DROP mydatabase`: delete a database and all its contents
 
 - set operations: combine results from two `SELECT` statements (they must have the same number of columns and compatible types)
   - `UNION`: combines and remove duplicates
@@ -122,21 +115,21 @@ UNION
 SELECT name FROM teachers;
 ```
 
-- restrictions: enforce rules on tables/columns to endure data integrity
+- restrictions: enforce rules on tables/columns to ensure data integrity
   - table restrictions
     - column restrictions
       - `NULL`
         - you can't compare `NULL` with equal sign (e.g. `WHERE NOME=NULL`)
-        - you should use `IS` keywork (e.g. `WHERE NOME IS NULL`)
+        - use `IS` keywork (e.g. `WHERE NOME IS NULL`)
       - `NOT NULL`
       - `UNIQUE`
       - `FOREIGN KEY`
-      - `CHECK` custom data type with specific constraints
+      - `CHECK` enforces a condition on values in a column
   - assertions: apply conditions across the whole table
 
 - constraints: enforce rules on table's data
   - `PRIMARY KEY`: value can't be NULL and has to be UNIQUE
-    - the primary key can be one column or a set of columns
+    - the primary key can be one column or a set of columns (e.g. `PRIMARY KEY (user_id, order_id)`)
   - `FOREIGN KEY`: links the value of a column in table1 to the value of another column in table2
     - `CASCADE`: explained before
   - `UNIQUE`: all values in the column are distinct
@@ -217,15 +210,13 @@ CREATE TABLE workout_exercises (
 
 ## subqueries
 
-- subqueries queries:
-  - `IN`: filter results from another sql query
-    - This operator checks if a value matches any value in a list and is suitable for one-to-many comparisons
-  - `EXISTS`
-  - `ALL`
-  - `SOME`
-  - `ANY`
-
-use `IN` when the subquery may return one or more values
+- `IN`: filter results from another sql query
+  - checks if a value exists in a list or subquery result
+  - use when the subquery may return multiple values
+- `EXISTS`
+- `ALL`
+- `SOME`
+- `ANY`
 
 ```sql
 SELECT id, song_name, artist_id
@@ -466,9 +457,27 @@ CREATE TABLE employees(
 ```
 
 ```sql
+SELECT id, name
+FROM users
+WHERE id = 1;
+```
+
+```sql
 SELECT employee_name, salary
 FROM employees
 WHERE salary BETWEEN 30000 and 60000;
+```
+
+```sql
+SELECT product_name, quantity
+FROM products
+WHERE quantity NOT BETWEEN 20 and 100;
+```
+
+```sql
+SELECT *
+FROM Orders
+WHERE OrderDate BETWEEN '01/07/1996' AND '31/07/1996';
 ```
 
 delete all records in users table:
@@ -489,18 +498,6 @@ WHERE email = 'example@email.com';
 ```sql
 DELETE FROM users
 WHERE email IS NULL;
-```
-
-```sql
-SELECT product_name, quantity
-FROM products
-WHERE quantity NOT BETWEEN 20 and 100;
-```
-
-```sql
-SELECT *
-FROM Orders
-WHERE OrderDate BETWEEN '01/07/1996' AND '31/07/1996';
 ```
 
 ```sql
@@ -533,12 +530,6 @@ RENAME COLUMN salary TO invoice;
 UPDATE users
 SET name = 'John Doe', salary = 20000
 WHERE id = 5;
-```
-
-```sql
-SELECT id, name
-WHERE id = 1
-FROM users;
 ```
 
 ```sql
