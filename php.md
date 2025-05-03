@@ -99,6 +99,31 @@ $middleName = null;
 $file = fopen("example.txt", "r");
 ```
 
+### type checking
+
+- `is_int()`
+- `is_string()`
+- `is_array()`
+- `is_object()`
+- `is_null()`
+- `is_bool()`
+
+```php
+$val = 42;
+if (is_int($val)) {
+  echo "It's an integer";
+}
+```
+
+### type casting
+
+```php
+$val = "10";
+$intVal = (int)$val;      // 10
+$floatVal = (float)$val;  // 10.0
+$boolVal = (bool)$val;    // true
+```
+
 ## if else
 
 ```php
@@ -129,7 +154,6 @@ foreach ($colors as $color) {
 ```
 
 ## functions
-
 
 ```php
 function greet($name) {
