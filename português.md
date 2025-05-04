@@ -205,11 +205,53 @@
     - hipermercado, superbactéria
   - unir consoante com vogal
     - hiperativo, interescolar, supereconômico
+  - entre palavras com elementos de ligação
+    - exemplos: mão de obra; dia a dia; café com leite; cão de guarda; ponto e vírgula; bicho de sete cabeças; pé de moleque
+de moleque; cara de pau
 - usa-se hífen para
   - separar vogais iguais
     - exemplos: micro-ondas, contra-ataque, auto-observação
   - separar consoantes iguais
     - exemplos: super-romântico, hiper-resistente, sub-bibliotecário
+  - antes de palavra com "h"
+    - extra-humano, pré-história, sub-hepático, super-homem
+  - recém, além, aquem, sem, pós, pre, ex, vice
+    - exemplos: recém-nascido, recém-casado, pré-datado, além-túmulo, pós-graduação, vice-presidente, ex-presidente, sem-terra, pré-vestibular
+
+## palavras facilmente trocadas
+
+- mal: oposto de "bem"
+- mau: oposto de "bom"
+
+- há: verbo impessoal haver, basta substituir "há" por "existir" na sentença
+- a: preposição
+
+- a fim: locução prepositiva com sentido de propósito, finalidade
+- afim: semelhante, correlato
+  - exemplo: matemática e estatística são matérias afins.
+
+- onde: usado para verbos que pedem a preposição "em"
+  - exemplo: Onde você mora? Moro em Caxias.
+- aonde: usado para verbos que pedem a preposição "a" (a + onde)
+  - exemplo: Aonde quer que eu vá, eu levo você
+
+- mas: conjunção adversativa, como "porém"
+  - exemplo: Ela come muito, mas não engorda.
+- mais: oposto de menos
+  - exemplo: Estudei um pouco de manhã; à noite estudei mais.
+
+- Porque: troque por "pois"
+  - exemplo:
+    - Fui aprovado porque estudei.
+    - Estude, porque a prova vai ser difícil.
+- Por que: troque por "por qual razão"/"por qual motivo"
+  - exemplo: Por que você é pão-duro?
+- Por quê: ocorre em final de frase interrogativa
+  - exemplo: Nunca fumou e morreu de câncer. Por quê?
+- Porquê: substantivo que vem acompanhado de um artigo ("o", "um")
+  - exemplo:
+    - Ainda não sei o porquê de toda essa confusão.
+    - Se fez isso, deve ter algum porquê.
 
 ---
 
@@ -219,11 +261,15 @@
   - exemplos: feliz/contente, casa/lar
 - antonímia: relação entre palavras que têm significados opostos
   - exemplos: claro/escuro, vida/morte
-- hiponímia: 
-- hiperonímia: 
+- hiponímia: palavras que são subclasses de outra, similar a [hereditariedade](./python.md#inheritance) em ciência da computação
+  - e.g. maçã, banana e uva são hipônimos de fruta
+- hiperonímia: palavra que é super classe em relação a outra
+  - e.g. fruta é hiperônimo de maçã, banana e uva
 
-- linguagem conotativa: 
-- linguagem denotativa: 
+- linguagem conotativa: linguagem com sentido literal
+  - e.g. "o céu está azul hoje"
+- linguagem denotativa: linguagem com sentido figurado
+  - e.g. "ele vive nas nuvens", "ele tem coração de pedra", "o tempo voa quando estamos felizes"
 
 ---
 
@@ -468,6 +514,21 @@
 - particípio
   - exemplo: feito, pensado
 
+## pronome
+
+> classe de palavras que substituem ou acompanham os substantivos
+
+- tipos:
+  - pessoal
+    - reto: eu, tu, ele, nós, vós, eles...
+    - oblíquo: me, mim, comigo, contigo, se, si, consigo...
+    - de tratamento: senhor, senhora, Vossa Alteza, você...
+  - possessivo: meu, minha, teu, nosso, vosso...
+  - demonstrativo: este, esse, aquilo...
+  - indefinido: algum, nenhum, outro, qualquer...
+  - interrogativo: qual, quanto, que, quem...
+  - relativo: o qual, cujo...
+
 ## morfologia / classes gramaticais
 
 > classifica função
@@ -513,6 +574,27 @@
   - exemplo: Amor a Deus => o substantivo exige a preposição "a"
 - regência verbal: relação entre um verbo e seus complements (objetos diretos e indiretos)
   - exemplo: Assisti ao filme => o verbo "assitir" exige a preposição "a" no sentido de "ver"
+
+### voz ativa
+
+> o sujeito pratica a ação
+
+- estrutura: sujeito + verbo + objeto
+- exemplo:
+  - "O aluno escreveu a redação."
+    - sujeito: o aluno
+    - verbo: escreveu
+    - objeto: a redação
+
+### voz passiva
+
+> o sujeito sofre/recebe a ação
+
+- estrutura: objeto da ativa vira sujeito + verbo ser + particípio + (agente da passiva)
+- exemplo: "A redação foi escrita pelo aluno."
+  - sujeito: a redação (recebe a ação)
+  - verbo: foi escrita
+  - agente da passiva: pelo aluno
 
 ## semântica
 
