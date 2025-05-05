@@ -1,7 +1,7 @@
 
 - [CLI tools](./cli_tools.md)
 
-# Shell
+# shell
 
 > program that interacts with the kernel to access and manage system resources
 
@@ -10,7 +10,7 @@
 - `!!`: run last command
 - `$(...)`: command substitution
   - `nvim $(find . | fzf)`: open a file from a fuzzy find in neovim
-  - only works in strings with double quotes
+  - quoting the substitution (e.g. `"$()"`) prevents word splitting and pathname expansion, which is usually desirable
     - `name="Arthur" && echo 'Hello, '"$name"'! How are you today?'  # Output: Hello, Arthur! How are you today?`
 
 - `ls`: list items in current directory
@@ -38,13 +38,13 @@
 
 - `*`: matches zero or more characters except slashes `/`
 - `**`: matches zero or more directories
-- `?`: match any single ocurrence of any character
+- `?`: match any single occurrence of any character
 - `[abcd]`: matches any character inside the square brackets
 - ranges:
   - `[A-Z]`: matches strings that go from uppercase A to uppercase Z
-  - `[A-Za-z0-9]`: matches any alphanumerical string
+  - `[A-Za-z0-9]`: matches any single alphanumerical string
 - `[!abcd]` or `[^abcd]`: matches any character that is NOT inside the square brackets
-- `{}`: match a group of names/wildcard patterns
+- `{}` (brace expansion): generates arbitrary strings (not a pattern match)
   - `{3..9}`: defines range inside curly braces
 
 example:
@@ -80,7 +80,9 @@ ls *[0-9]?.{jpg,png}
 - `|` (pipe): forward/pipe the output of a cli program as the input for the next program
   - `cat file.txt | wc -l`
 - `|&`: pipe both stdout and stderr to the next command
-- `||` (logical OR): pipe stdout to the next command
+  - shorthand for `2>&1 |`
+  - bash-specific (not POSIX)
+- `||` (logical OR): run next command only if the previous command fails (exit status != 0)
   - `ls this_file_does_not_exist.txt || echo 'file not found'`
 - `&&` (logical AND): runs the next command only if the previous command was successful
   - `command_1 && command_2 && command_3`
@@ -102,11 +104,9 @@ ls *[0-9]?.{jpg,png}
 - `./script.sh`: run script
 - `echo $?`: print exit status of last command
 - `exit 0`: exit script with status 0
-  - 1: error
-- `exit 1`: exit script with status 1
-  - 0: success
+  - learn about status codes [here](#exit-status)
 
-### variables
+## variables
 
 ```bash
 greeting=Hello
@@ -119,6 +119,16 @@ echo "$greeting $name"
 ```bash
 cd "$(find "$HOME" -type d | fzf)"
 ```
+
+### special variables
+
+- `$#`: the number of arguments passed to the script
+- `$?`: holds the exit status (return code) of the last command that was run
+- `$@`: a list of all the arguments, each one preserved as a separate word (i.e., quoted separately)
+- `$*`: all the arguments passed, but treated as a single string (unless quoted properly)
+- `$0`: the name of the script file being executed
+- `$1`: the first argument passed to the script
+- `$2`: the second argument, and so on...
 
 ### strings
 
@@ -139,7 +149,7 @@ cd "$(find "$HOME" -type d | fzf)"
 
 The script belows does the following:
 
-1. checks if directory ~/.config/nvim exists
+1. checks if directory `~/.config/nvim` exists
 2. recursively change ownership of directory contents
 
 > [!IMPORTANT]
@@ -150,15 +160,22 @@ The script belows does the following:
 ```bash
 #!/bin/bash
 
-if [[ condition ]]
+if [ condition ]
 then
   statement
-elif [[ condition ]]; then
+elif [ condition ]; then
   statement
 else
   do this by default
 fi
 ```
+
+- `num1 -eq num2`: num1 is equal to num2
+- `num1 -ge num2`: num1 is greater than or equal to num2
+- `num1 -gt num2`: num1 is greater than num2
+- `num1 -le num2`: num1 is less than or equal to num2
+- `num1 -lt num2`: num1 is less than num2
+- `num1 -ne num2`: num1 is not equal to num2
 
 practical example:
 
@@ -178,22 +195,13 @@ fi
 - check if a file exists and is not empty: `if [ -s "path/to/your/file" ]; then`
 
 ```bash
-if [ -d "~/.config/nvim" ]; then
+if [ -d "$HOME/.config/nvim" ]; then
   sudo chown -R $USER ~/.config/nvim/
   echo "Successfully changed ownership of ~/.config/nvim/ directory"
 else
   echo "Failed to change ownership of ~/.config/nvim. Directory does not exist"
 fi
 ```
-
-| OPERATION | SYNTAX | EXPLANATION |
-| --- | --- | --- |
-| Equality | num1 -eq num2 | is num1 equal to num2 |
-| Greater than or equal to | num1 -ge num2 | is num1 greater than equal to num2 |
-| Greater than | num1 -gt num2 | is num1 greater than num2 |
-| Less than or equal to | num1 -le num2 | is num1 less than equal to num2 |
-| Less than | num1 -lt num2 | is num1 less than num2 |
-| Not equal to | num1 -ne num2 | is num1 not equal to num2 |
 
 ### loops
 
@@ -233,7 +241,7 @@ done
 ```
 
 ```bash
-for FILE in *; do cp $FILE "$FILE.bak"; done;
+for FILE in *; do cp "$FILE" "$FILE.bak"; done
 ```
 
 reminder: ranges are simpler than loops:
@@ -251,14 +259,63 @@ touch eixo_5/cnu_eixo_5_mq_aula_0{3..9}.md
 - changing filenames in another directory:
   - `for file in pdfs/cnu_*; do mv "$file" "pdfs/${file#pdfs/cnu_}"; done`
 
+## exit status
+
+> number that a command or script returns when it finishes running
+
+> this number tells whether the operation was successful or not
+
+- exit status is also called return code
+- every command in a shell script returns an exit status
+
+- 0 = success
+- 1-255 = error: different programs use different numbers to represent different types of errors
+
+- `exit 0`: exit shellscript with `0`
+
+## standard data streams
+
+in unix-like systems, every process has three standard data streams:
+
+| Stream   | File Descriptor | Purpose                           |
+| -------- | --------------- | --------------------------------- |
+| `stdin`  | `0`             | Standard Input (input to program) |
+| `stdout` | `1`             | Standard Output (normal output)   |
+| `stderr` | `2`             | Standard Error (error messages)   |
+
+- `stdin`: input stream (default: keyboard)
+- `stdout`: output stream for program output (default: terminal screen)
+- `stderr`: output stream for error messages (default: also the terminal)
+
+useful redirection examples:
+
+```bash
+command > out.txt           # send stdout to file
+command 2> err.txt          # send stderr to file
+command > out.txt 2>&1      # send both stdout and stderr to file
+command &> combined.txt     # same as above (Bash shortcut)
+command < input.txt         # read stdin from file
+```
+
+## POSIX
+
+> Portable Operating Systm Interface
+
+> standards define by IEEE to maintain compatibility between unix-like operating systems
+
+- defines core APIs, command-line utilities and shell behaviour that compliant systems and scripts should support
+- examples:
+  - shell syntax: `test`, `if`, `while`, `for`, etc
+  - commands like `ls`, `cp`, `mv`, `find`, `grep`, `awk`, `sed`
+  - system calls like `fork()`, `exec()`, `open()`, `read()`, `write()`
+
 ## zsh
 
 > [!TIP]
 > add private credentials like API keys or personal info in `~/.zshenv` as environment variables
-> `export MY_CREDENTIAL="my_email@mail.com`
+> `export MY_CREDENTIAL="my_email@mail.com"`
 
-- list all keybindings:
-  - `bindkey`
+- list all keybindings: `bindkey`
 - creating zsh keybinds:
   - `bindkey -s '^h' "nvim . -c 'Telescope find_files'\n"`
   - `bindkey -s '^b' "!!\n\n"`
