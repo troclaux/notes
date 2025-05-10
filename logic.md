@@ -13,6 +13,8 @@
 
 ### proposições simples
 
+> proposição que não pode ser divida em proposições menores
+
 > [!NOTE]
 > sentenças abertas não são proposições
 > e.g. `x + 9 = 10`
@@ -38,8 +40,8 @@
 | conjunção | e/mas | p^q |
 | disjunção inclusiva | ou | pvq |
 | disjunção exclusiva | ou ..., ou | p⊻q p⊕q |
-| condicional | se ..., então/como/logo/implica/quando/toda vez que/somente se/porque/pois | p -> v |
-| bicondicional | se e somente se/assim como/se e só se | p <-> v |
+| condicional | se ..., então/como/logo/implica/quando/toda vez que/somente se/porque/pois | p -> q |
+| bicondicional | se e somente se/assim como/se e só se | p <-> q |
 
 - nem = `^~`
   - pedro não estuda nem trabalha = `~p^~q`
@@ -60,7 +62,7 @@
 > se p, então q => s e => s uficiente
 
 ```
-p <-> v = ~(p ⊕ v)
+p <-> q = ~(p ⊕ q)
 ```
 
 ### ordem de precedência de negação
@@ -105,11 +107,10 @@ disjunção exclusiva/x-or
 p -> q = ~q -> ~p
 p -> q = ~p v q
 p v q = ~p -> q
-
-~(p ^ q) = ~p v ~q = p -> ~q = q -> ~p
-~(p v q) = ~p ^ ~q
-
 ~(p -> q) = p ^ ~q
+
+~(p ^ q) = ~p v ~q
+~(p v q) = ~p ^ ~q
 
 (p -> r) ^ (q -> r) = (p v q) -> r
 
@@ -120,7 +121,7 @@ p v q = q v p
 
 p <-> q = (p -> q) ^ (q -> p)
 p <-> q = ~(p ⊻ q)
-p ⊻ q = (~p) ⊻ (~q) = (~p) <-> q = p <-> (~q)
+p ⊻ q = (~p) <-> q =  p <-> (~q)
 ```
 
 ## Lógica de Primeira Ordem (LPO)
@@ -140,18 +141,32 @@ p ⊻ q = (~p) ⊻ (~q) = (~p) <-> q = p <-> (~q)
 ### negação de proposições quantificadas
 
 - proposição universal afirmativa
-  - exemplo: todo marinheiro é pescados
+  - exemplo: todo marinheiro é pescador
+    - `M(x)` = "x é marinheiro"
+    - `P(x)` = "x é pescador"
+    - `∀x (M(x) -> P(x))`
 - proposição universal negativa
   - exemplo: todo brasileiro **não** é mentiroso
+    - `B(x)` = "x é brasileiro"
+    - `M(x)` = "x é mentiroso"
+    - `∀x (B(x) -> ~M(x))`
 - proposição particular afirmativa
   - exemplo: existe um matemático que é engenheiro
+    - `M(x)` = "x é matemático"
+    - `E(x)` = "x é engenheiro"
+    - `∃x (M(x) ^ E(x))`
 - proposição particular negativa
   - exemplo: existe um matemático que **não** é engenheiro
+    - `M(x)` = "x é matemático"
+    - `E(x)` = "x é engenheiro"
+    - `∃x (M(x) ∧ ~E(x))`
 
 para negar alguma proposição quantificada:
 
 - proposição universal afirmativa <=> proposição particular negativa
+  - `~(∀x P(x)) <=> ∃x ~P(x)`
 - proposição universal negativa <=> proposição particular afirmativa
+  - `∀x ~P(x) <=> ~(∃x P(x))`
 
 passo a passo:
 
@@ -268,8 +283,7 @@ como resolver questões:
   - premissas verdadeiras e conclusão falsa
   - premissas falsas e conclusão verdadeira
   - premissas falsas e conclusão falsa
-- não há uma relação direta entre a validade de um argumento e a veracidade da sua conclusãoválido nesses cenários:
-
+- não há uma relação direta entre a validade de um argumento e a veracidade da sua conclusão
 
 ### regra da transitividade condicional
 
@@ -302,7 +316,7 @@ dadas as premissas, podemos deduzir as conclusões abaixo:
   - premissa 1: p -> q
   - premissa 2: q -> r
   - conclusão: p -> r
-- dilema construtivo ou silogismo disjuntivo
+- dilema construtivo
   - premissa 1: p -> q
   - premissa 2: r -> s
   - premissa 3: p v r
@@ -310,5 +324,6 @@ dadas as premissas, podemos deduzir as conclusões abaixo:
 - dilema destrutivo
   - premissa 1: p -> q
   - premissa 2: r -> s
-  - premissa 3: ~q ou ~s
-  - conclusão: ~p ou ~r
+  - premissa 3: ~q v ~s
+  - conclusão: ~p v ~r
+
