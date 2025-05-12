@@ -184,6 +184,42 @@ when a user visits a webpage:
 
 ## types of web applications
 
+- Progressive Web Application (PWA): aims to provide UX similar to a native mobile app in the web browser
+- web app: an application that runs in a web browser, not installed on the user's device
+  - technology: Built using HTML, CSS, JavaScript (e.g. React, Angular, Vue)
+  - platform: works across all platforms (windows, android, iOS, etc) via a browser
+  - pros:
+    - cross-platform by default
+    - easier to update (just update the server)
+    - no need for app store approval
+  - cons:
+    - limited access to device hardware (e.g. camera, GPS)
+    - slower performance than native apps
+    - no offline support (unless using Progressive Web App features)
+- hybrid app: A mix of web and native apps. It's a web app wrapped inside a native container
+  - technology: Web tech (HTML, CSS, JS) + frameworks like Ionic, React Native, or Flutter
+  - platform: Runs on both iOS and Android from a single codebase
+  - pros:
+    - write once, run everywhere
+    - access to some native features
+    - faster to develop than two separate native apps
+  - cons:
+    - may have performance issues for complex apps
+    - some native functionalities might require plugins or custom code
+    - ui might not feel 100% native
+- native app: an application developed specifically for a particular platform (e.g. Android or iOS)
+  - technology:
+    - android: Java or Kotlin
+    - iOS: Swift or Objective-C
+  - platform: only works on the platform it was built for
+  - pros
+    - best performance
+    - full access to device features (camera, GPS, notifications, etc)
+    - better user experience
+  - cons:
+    - more expensive and time-consuming (you need to build separate apps for iOS and Android)
+    - requires app store submission and approval
+
 ### Single Page Application (SPA)
 
 - dynamically updates the content on a single page without requiring full page reload
