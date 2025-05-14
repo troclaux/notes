@@ -3,9 +3,10 @@
 
 - object oriented
 - statically typed
+- strongly typed language
 - is considered compiled AND interpreted
 - has garbage collection
-- functions are values, but aren't true first-class citizens
+- methods are values, but aren't true first-class citizens
   - limited support to functional programming via lambdas
 - doesn't have hoisted declarations
 - type casting can be done explicitly or implicitly
@@ -48,11 +49,13 @@ public class HelloWorld {
   - use heap memory
 
 ```java
-int age = 25;            // Integer
-double price = 19.99;    // Decimal
-char grade = 'A';        // Character
-boolean isOpen = true;   // Boolean
-String name = "Alice";   // String (object)
+int age = 25;                    // Integer
+double price = 19.99;            // Decimal
+char grade = 'A';                // Character
+boolean isOpen = true;           // Boolean
+String name = "Alice";           // String (object)
+int[] numbers = new int[5]       // Array
+int[] numbers = {0, 1, 2, 3, 4}  // Array
 ```
 
 ### primitive types
@@ -83,6 +86,19 @@ String name = "Alice";   // String (object)
   - `Class`: blueprint for creating objects
   - `Interface`: contract for classes to implement
   - `Enum`: special data type for constants
+
+#### string operations
+
+- concatenation: `"hello" + "world"`
+
+- `"hello".length()`: returns number of characters
+- `"abc".charAt(1)`: returns char at index
+- `"hello".substring(1, 4)`: returns part of the string (starts with char at index 1 and ends with char at index 3)
+- `"hello".contains("ll")`: checks if sequence exists in string
+- `"a,b,c".split(",")`: splits string into array
+- `"a,b,c".split(",")`: splits string into array
+- `"a".equals("A")`: compares strings (case-sensitive)
+  - don't use `==` to compare strings, because `==` compares memory addresses
 
 ## basics
 
@@ -272,6 +288,29 @@ public class Student {
 }
 ```
 
+- check if object belongs to a class: `System.out.println(a instanceof Animal); // true`
+
+```java
+public class Java {
+  public static void main(String[] args) {
+
+    interface Animal {
+      void fazerSom();
+    }
+    // Método abstrato (sem corpo)
+    class Cachorro implements Animal {
+      public void fazerSom() {
+        System.out.println("Au au!");
+      }
+    }
+
+    Cachorro doggy1 = new Cachorro();
+    doggy1.fazerSom();
+    System.out.println(doggy1 instanceof Animal); // true
+
+  }
+}
+```
 
 ## data structures
 
@@ -503,3 +542,12 @@ java program development:
   - `stop()`: stops playing animation/audio/video
   - `paint()`: draws something on the applet
   - `destroy()`: free resources, called when the browser is closed
+
+---
+
+## running java on the cli
+
+1. write code in a file that ends with `.java` (e.g. `HelloWorld.java`)
+1. compile the program: `javac HelloWorld.java`
+1. run the program: `java HelloWorld`
+
