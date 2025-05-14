@@ -19,13 +19,14 @@
     - automatic scaling
   - pay only for what you use
   - e.g. AWS Lambda, DynamoDB
-- fully managed service
-  - visibility and control of the machines
+- fully managed service: cloud provider manages the service's infrastructure and resources
+  - the user focuses only on using the service
   - pay for machine runtime
   - e.g. AWS RDS, Google Cloud SQL
 - private cloud: cloud infrastructure that is operated solely for a single organization
+  - IBM cloud private
 - public cloud: cloud infrastructure that is available to the general public
-
+  - AWS, Azure, GCP
 - Compute: CPU
 - Memory: RAM
 - Storage: Data
@@ -33,7 +34,7 @@
 - Network: Routers, switches, DNS servers
 
 - advantages of cloud computing
-  - On-demand resources can be provisioned without human interaction
+  - on-demand resources can be provisioned without human interaction
   - resources are available over the network, and can be accessed by diverse client platforms
   - quickly and easily scale based on demand (stop guessing capacity)
   - measured payment for resources (pay only what you use)
@@ -76,17 +77,17 @@
 - SaaS (Software as a Service): software that is centrally hosted and licensed on a subscription basis
   - e.g. Google Drive
 
-|                         | On-site      | IaaS           | PaaS           | SaaS           |
-|-------------------------|--------------|----------------|----------------|----------------|
-| **Applications**   | You | You | You | Service provider |
-| **Data**           | You | You | You | Service provider |
-| **Runtime**        | You | You | Service provider | Service provider |
-| **Middleware**     | You | You | Service provider | Service provider |
-| **O/S**            | You | You | Service provider | Service provider |
-| **Virtualization** | You | Service provider | Service provider | Service provider |
-| **Servers**        | You | Service provider | Service provider | Service provider |
-| **Storage**        | You | Service provider | Service provider | Service provider |
-| **Networking**     | You | Service provider | Service provider | Service provider |
+|                    | On-site | IaaS             | PaaS             | SaaS             |
+|--------------------|---------|------------------|------------------|------------------|
+| **Applications**   | You     | You              | You              | Service provider |
+| **Data**           | You     | You              | You              | Service provider |
+| **Runtime**        | You     | You              | Service provider | Service provider |
+| **Middleware**     | You     | You              | Service provider | Service provider |
+| **O/S**            | You     | You              | Service provider | Service provider |
+| **Virtualization** | You     | Service provider | Service provider | Service provider |
+| **Servers**        | You     | Service provider | Service provider | Service provider |
+| **Storage**        | You     | Service provider | Service provider | Service provider |
+| **Networking**     | You     | Service provider | Service provider | Service provider |
 
 - CaaS (Communication as a Service): provides communication services over the internet
   - e.g. Skype
@@ -199,7 +200,7 @@
 
 ## Data Analysis and BigData
 
-| **Azure**                          | **AWS**                            | **GCP**                            |
+| **Azure**                           | **AWS**                            | **GCP**                            |
 |-------------------------------------|------------------------------------|------------------------------------|
 | Azure Synapse Analytics             | AWS Redshift                       | Google BigQuery                    |
 | Azure Data Lake Storage             | AWS Athena                         | Google Cloud Dataproc              |
@@ -209,9 +210,6 @@
 
 ---
 
-- OLAP
-  - used for platforms with intense read operations
-  - used for analyzing large quantities of data from multiple perspectives or dimension
-- OLTP
-  - used for transactional processing of data in real-time
-  - used for processing business transactions such as order processing, inventory management, etc
+- cloud-native: building apps specifically designed to run in cloud environment
+  - fully leverages the benefits of cloud computing
+- edge computing: computing model where data processing happens close to where the data is generated, at the edge of the network
