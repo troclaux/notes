@@ -73,6 +73,22 @@
 
 - print spooler
 
+## program creation
+
+1. os creates a new process
+1. os uses virtual memory manager to allocate different regions of memory for the process
+1. the stack is automatically created by the os
+1. the heap is also set up by the os
+1. execution starts
+
+- stack: special region of memory that
+  - automatically manages memory
+  - is used for function calls (e.g. return addresses, function parameters, local variables)
+  - Last-In, First-Out
+- heap: another special region of memory
+  - manages memory manually (you have to allocate and free)
+  - used for dynamic memory allocation at runtime
+
 ## process creation, termination, and hierarchy
 
 events that trigger process creation:
