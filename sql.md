@@ -60,7 +60,8 @@ FROM => JOIN => WHERE => GROUP BY => HAVING => SELECT => ORDER BY => LIMIT
   - data types: syntax is different depending on the DB (mysql, postgresql, etc)
     - numeric
       - data types that exist on mysql and postgresql
-        - NUMERIC(precision, scale) precision: total number of digits that can be stored
+        - `NUMERIC(precision, scale)`
+          - precision: total number of digits that can be stored
           - scale: maximum number of digits to the right of the decimal point
         - INTEGER
         - DECIMAL
@@ -73,7 +74,7 @@ FROM => JOIN => WHERE => GROUP BY => HAVING => SELECT => ORDER BY => LIMIT
       - only postgresql
         - REAL
     - character string: CHAR, VARCHAR
-    - binary: binary
+    - binary: BINARY(32)
     - boolean: BOOLEAN
     - date and time: `DATE`, `TIME`, `DATETIME`, `TIMESTAMP`
 - `UPDATE`: modify existing data in a table
@@ -143,7 +144,7 @@ SELECT name FROM teachers;
 - `ALIAS`: temporary name for column
   - `select firstname as "first name", lastname as "last name" from employees;`
 - `DISTINCT`: removes duplicate rows from the results of a query
-  - `SELECT DISTINCT City FROM Customers;`
+  - `SELECT DISTINCT city FROM customers;`
 
 - aggregate functions: return only 1 result
   - `SUM()`: return the sum of all values in the column
@@ -174,7 +175,7 @@ FROM orders o
 JOIN customers c ON o.customer_id = c.id;
 ```
 
-## constraints
+## named constraints
 
 > rules that allow data to be entered into a table only if it meets the predefined conditions
 
@@ -241,7 +242,7 @@ WHERE user_id = (
     WHERE name = 'David'
 );
 ```
-## Join
+## join
 
 > combines data from multiple tables into a single result set
 
@@ -358,6 +359,8 @@ WHERE department = 'IT';
 ## performance
 
 ### index
+
+> performance optimization structure that allows the database to retrieve rows more quickly
 
 - creates a binary tree
 - faster to look up values in a column
@@ -545,8 +548,7 @@ CREATE TABLE employees (
     name TEXT NOT NULL,
     department_id INTEGER,
     CONSTRAINT fk_departments
-    FOREIGN KEY (department_id)
-    REFERENCES departments(id)
+    FOREIGN KEY (department_id) REFERENCES departments(id)
 );
 ```
 
