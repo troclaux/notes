@@ -27,6 +27,7 @@
   - e.g. `chmod +x script.sh`
 - `chown`: change ownership of file or directory
   - e.g. `sudo chown -R $USER ~/.config/nvim/`
+- `read -p "Enter your age" variable_name`: read user input
 
 > [!IMPORTANT]
 > path behaviour changes depending on whether there is a trailing slash
@@ -143,19 +144,8 @@ cd "$(find "$HOME" -type d | fzf)"
     - double-quoted strings allow variable expansion, command substitution, and certain escape sequences
   - partial interpretation
     - while most special characters are preserved, $, `, and \ (when followed by certain characters) are interpreted
-- read user input: `read -p "Enter your age" variable_name`
 
 ## if else
-
-The script belows does the following:
-
-1. checks if directory `~/.config/nvim` exists
-2. recursively change ownership of directory contents
-
-> [!IMPORTANT]
-> single brackets `[` and double `[[` brackets behave differently
-> `[` is in POSIX, `[[` isn't in POSIX
-> [explanation](https://unix.stackexchange.com/questions/49007/when-should-i-use-vs-in-bash-single-vs-double-brackets)
 
 ```bash
 #!/bin/bash
@@ -194,6 +184,11 @@ fi
 - check if a directory exists: `if [ -d "path/to/your/directory" ]; then`
 - check if a file exists and is not empty: `if [ -s "path/to/your/file" ]; then`
 
+The script belows does the following:
+
+1. checks if directory `~/.config/nvim` exists
+2. recursively change ownership of directory contents
+
 ```bash
 if [ -d "$HOME/.config/nvim" ]; then
   sudo chown -R $USER ~/.config/nvim/
@@ -202,6 +197,11 @@ else
   echo "Failed to change ownership of ~/.config/nvim. Directory does not exist"
 fi
 ```
+
+> [!IMPORTANT]
+> single brackets `[` and double `[[` brackets behave differently
+> `[` is in POSIX, `[[` isn't in POSIX
+> [explanation](https://unix.stackexchange.com/questions/49007/when-should-i-use-vs-in-bash-single-vs-double-brackets)
 
 ### loops
 
@@ -244,13 +244,16 @@ done
 for FILE in *; do cp "$FILE" "$FILE.bak"; done
 ```
 
-reminder: ranges are simpler than loops:
+> [!TIP]
+> ranges are simpler than loops
 
 ```bash
 touch eixo_5/cnu_eixo_5_mq_aula_0{3..9}.md
 ```
-- you can also use loops simplify operations on multiple files with similar names:
-  - `for i in {5..7}; do touch cnu_eixo_5_aula_0$i.md; done`
+
+> [!TIP]
+> use loops to simplify operations with multiple files with similar names
+> `for i in {5..7}; do touch cnu_eixo_5_aula_0$i.md; done`
 
 ### renaming files
 
