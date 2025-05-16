@@ -6,7 +6,7 @@
 - control node: executes playbooks and connects to the managed nodes
   - where ansible is installed and run
 - managed nodes (hosts): servers that are configured by ansible
-  - don't need ansible installed, just ansible installed
+  - don't need ansible installed, only control node requires ansible
 - inventory: list of managed nodes
   - static: plain text file (`ini`, `yaml` or `json`) with hardcoded IPs/hostnames
   - dynamic: used when infrastructure is dynamic (e.g. AWS, azure, GCP or kubernetes)
@@ -60,7 +60,8 @@
         enabled: true  # Ensure the service will automatically start on boot
 ```
 
-- playbook header `---` (mandatory): this marks the beginning of the yaml file
+- playbook header `---` (optional): this marks the beginning of the YAML file
+  - it's optional but recommended for clarity and compatibility
   - not strictly necessary but it's a good practice
 - `name`: describes playbook in human-readable form
 - `hosts`: specifies target machines
@@ -96,7 +97,9 @@
 - `copy`: copy files
 
 ```yaml
-- copy: src=/local/file dest=/remote/path
+- ansible.builtin.copy:
+  src: /local/file
+  dest: /remote/path
 ```
 
 - `file`: manage files/directories
@@ -130,8 +133,9 @@ tasks:
       - tmux
 
   - name: Install Docker
-    apt: name=docker state=present
-    tags: docker
+    apt:
+      name: docker
+      state: present
 ```
 
 ## variables
