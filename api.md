@@ -1,7 +1,7 @@
 
 # API (Application Programming Interface)
 
-> rules and protocols that allows different software programs to communicate with each other
+> rules and protocols that allow different software programs to communicate with each other
 
 [what are apis](https://www.redhat.com/en/topics/api/what-are-application-programming-interfaces)
 [API design - principles and best practices](https://yourbasic.org/algorithms/your-basic-api/)
@@ -12,7 +12,7 @@
 - defines the structure of requests and responses
 - APIs allow services to communicate with other services without knowing how they're implemented
   - service: software component that provides specific functionality
-- normally they implement CRUD operations
+- normally they implement [CRUD](/databases.md#crud) operations
   - Create, Read, Update, Delete
   - can use http verbs: Get, Post, Put, Delete
 
@@ -20,12 +20,12 @@
   - RESTful APIs
   - SOAP (Simple Object Access Protocol) APIs
   - RPC (Remote Procedure Call) APIs
-  - Websocket APIs
+  - WebSocket APIs
 
 - scope of use:
   - private APIs: used internally in enterprises to connect systems within the business
   - public APIs: open to the public
-  - Composite APIs: combines multiple APIs to address complex requirements
+  - Composite APIs: combine multiple APIs to address complex requirements
 
 ## endpoints
 
@@ -59,12 +59,12 @@
   - server does not store any client-specific session data between requests
   - each request is independent and can be understood in isolation
 - implementation of the client and server can be created independently of one another
-- does not necessarily uses HTTP as underlying protocol for communication
+- while REST is most commonly implemented over HTTP, it is not strictly bound to it
 
 ## testing
 
 - recommended tools:
-  - `curl` (not recommended)
+  - `curl`
   - jest + supertest
 
 ## 5 commandments
