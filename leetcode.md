@@ -1,7 +1,7 @@
 
-# LeetCode
+# leetcode
 
-## General Tips
+## general tips
 
 - read the problem carefully
 - clarify any doubts
@@ -12,8 +12,7 @@
 - when using recursion, handle base cases
 - read documentation
 - recognize common problem-solving patterns:
-  - sliding window
-  - two pointers
+  - sliding window: use two pointers
   - fast-slow pointers
 - recognize when to use algorithms
   - divide and conquer
@@ -22,6 +21,7 @@
   - recursion
 - ask LLM
   - use reasoning models for complex problems
+- when greedy solution fails, recursion with memoization is a powerful fallback to explore all paths and find a global solution
 
 ## debugging
 
@@ -42,12 +42,25 @@
 > break a problem into smaller sub-problems, solve each only once, and store the solutions to sub-problems to avoid redundant computation and optimize the solution
 
 - typical example: fibonacci sequence
+- normally uses a matrix to store solutions
 
 ### memoization
 
 > store results of expensive function calls and returns cached result when the same input occurs again
 
-- can be used in fibonacci sequence
+- `@lru_cache(None)`: built-in python decorator that caches the results of function calls with a specific argument
+
+```python
+from functools import lru_cache
+
+@lru_cache(maxsize=None)
+def fibonacci(n):
+    if n <= 1:
+        return n
+    return fibonacci(n-1) + fibonacci(n-2)
+```
+
+without `lru_cache`:
 
 ```python
 def fibonacci(n, memo = {}):
@@ -65,22 +78,26 @@ def fibonacci(n, memo = {}):
 
 ### knapsack problem
 
-### longest increasing subsequence
+TODO
 
 ## Specific Problems and Tips
 
 ### 1 Two Sum
 
-- Use `map` to easily search elements
-- Define the complement then search it
-- If you want to get the complement but don't want to get the first occurrence, you can create a map where you only add an element after you find that the complement is equal to the number
-- Example: `[1, 2, 2, 3]` target is 4
+- use `map` to easily search elements
+- define the complement then search it
+- if you want to get the complement but don't want to get the first occurrence, you can create a map where you only add an element after you find that the complement is equal to the number
+- example: `[1, 2, 2, 3]` target is 4
   - 1 in map | 2, 2, 3 remain
+
+### 3 longest substring without repeating characters
+
+TODO
 
 ### 14 Longest Common Prefix
 
-- If it's a common prefix, restrict the length of the loop
-  - The maximum length of the prefix is the length of the shortest word
+- if it's a common prefix, restrict the length of the loop
+  - the maximum length of the prefix is the length of the shortest word
 
 ### 21 merge two sorted lists
 
@@ -96,6 +113,10 @@ a = b if a > b else c
 - to replace elements in-place, track index positions with an offset variable
 - beware off-by-1 errors
 
+### 49 group anagrams
+
+TODO
+
 ### 58 length of last word
 
 - One line Python solution
@@ -107,13 +128,14 @@ a = b if a > b else c
 
 ### 100 Same Tree
 
-- Recursion is a way to call future iterations of DFS without having to create a data structure to store memory of all iterations
+- recursion is a way to call future iterations of DFS without having to create a data structure to store memory of all iterations
 
 ### 101 Symmetric Tree
 
-- Identify points where the solution should change behavior
-  - That way, you can define the functions that will compute each part of the solution
-- Pay attention to the return type of the function; it normally helps you start building the logic behind a recursive solution
+- identify points where the solution should change behavior
+  - that way, you can define the functions that will compute each part of the solution
+- pay attention to the return type of the function
+  - it normally helps you start building the logic behind a recursive solution
 
 ### 103 Maximum Depth of Binary Tree
 
@@ -130,6 +152,22 @@ max(recursive_function(), recursive_function())
 - For `i in length//2`:
   - You don't need to pass through all characters
 
+### 136 single number
+
+- linear time complexity
+- constant extra space
+  - the memory used can't grow with the size of input
+  - fixed extra memory used
+  - not allowed: arrays/dictionaries/sets that grow with the input
+- bitwise operations can be useful
+- the solution uses xor
+  - 0 XOR num = num
+  - num XOR num = 0
+  - 8000 >> 3 = 1000
+    - 8000/(2^3)
+  - 1000 << 3 = 8000
+    - 1000 * (2^3)
+
 ### 141 linked list cycle
 
 - turtle and hare solution
@@ -143,7 +181,7 @@ max(recursive_function(), recursive_function())
 
 ### 202 happy number
 
-- If you want to separate the digits of a number in a list, you can convert the number to a string and `.append(int(char))` into the list
+- if you want to separate the digits of a number in a list, you can convert the number to a string and `.append(int(char))` into the list
 
 ```python
 n = 223 => digits = [2, 2, 3]
@@ -151,20 +189,20 @@ n = 223 => digits = [2, 2, 3]
 
 ### 219 contains duplicate ii
 
-- Only store what is necessary
-  - If you need to check only the last difference during iteration, don't save all the differences in a list
+- only store what is necessary
+  - if you need to check only the last difference during iteration, don't save all the differences in a list
 
 ### 222 Count Complete Tree Nodes
 
-- The base cases tell you how to start the function:
-  - What happens when input is empty?
-  - What happens when input is one element?
-  - The recursion happens when?
-  - The function's input format is a hint on how to solve the problem
+- the base cases tell you how to start the function:
+  - what happens when input is empty?
+  - what happens when input is one element?
+  - the recursion happens when?
+  - the function's input format is a hint on how to solve the problem
 
 ### 226 Invert Binary Tree
 
-- In Python, you don't need a buffer to switch 2 variables' values
+- in python, you don't need a buffer to switch 2 variables' values
 
 ```python
 a, b = b, a
