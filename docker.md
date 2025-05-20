@@ -39,7 +39,8 @@
 
 ## CLI commands
 
-- list running containers (their names, ports and images): `docker ps`
+- list all running containers' name, id, image, command, time of creation and status: `docker ps`
+  - list all containers (running, stopped, exited, etc): `docker ps -a`
 - pull specific docker image: `docker pull node:18-alpine`
 - list available images: `docker images`
 - remove an image: `docker rmi nginx`
@@ -50,12 +51,12 @@
 - stop container: `docker stop <container_id>`
 - restart container: `docker restart <container_id>`
 - run container with interactive shell: `docker run -it ubuntu bash`
-- list running containers: `docker ps`
-- list all containers: `docker ps -a`
-- get logs of a running container: `docker logs <container_id>`
-  - `-f`: shows live logs (useful for debugging)
 - remove container: `docker rm <container_id>`
 - remove all stopped containers: `docker container prune`
+
+- get logs of a running container: `docker logs <container_id>`
+  - `-f`: shows live logs (useful for debugging)
+- get detailed information about Docker objects (containers, images, volumes, networks, etc) in json format: `docker inspect <object_name_or_id>`
 
 - build docker image: `docker build -t my-app-tag:1.0 .`
   - `-t`: assigns a tag to the image (defaults to `latest` if no tag is given)
