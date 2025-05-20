@@ -1,7 +1,9 @@
 [sql](./sql.md)
-[postgresql](./postgresql.md)
+[PostgreSQL](./postgresql.md)
 [MySQL](./mysql.md)
+[MariaDB](./mariadb.md)
 [MongoDB](./mongodb.md)
+[redis](./redis.md)
 
 # databases
 
@@ -20,31 +22,6 @@
   - example: due to the drop in temperature, we should alert farmers to prepare for potential crop damage
   - wisdom = knowledge + application
 
-- types of databases:
-  - SQL databases:
-    - relational
-    - analytical
-    - data is stored in tables (rows and columns)
-    - enforces schema and [ACID](./databases.md#acid) properties
-    - examples: PostgreSQL, MySQL, oracle, microsoft sql server
-  - NoSQL databases:
-    - document-oriented:
-      - store data as documents (often json or bson)
-      - flexible schema
-      - examples: MongoDB, CouchDB
-    - key-value stores:
-      - data is stored as key-value pairs
-      - very fast ookups
-      - examples: redis, dynamodb
-    - column family stores:
-      - stores data in columns instead of rows
-      - optimized for reading/writing large volumes of data
-      - examples: apache cassandra, hbase
-    - graph databases:
-      - store data as nodes and edges (like a graph)
-      - great for representing relationships
-      - examples: neo4j, arangodb
-
 - record = row = tuple
   - single data entry in a table
 - field = column = attribute
@@ -57,6 +34,40 @@
 - failover: automatic switching from a primary database to a replica in case of failure
   - guarantees redundancy
 - failback: return to original database once it's fixed again
+
+- caching: stores frequently accessed data in-memory to reduce database load and improve performance
+  - common strategies:
+    - write-through cache: updates cache and database simultaneously
+    - lazy-loading cache: updates cache only when requested
+  - examples: [Redis](./redis.md), Memcached
+
+## types of databases
+
+- SQL databases:
+  - relational
+  - analytical
+  - data is stored in tables (rows and columns)
+  - enforces schema and [ACID](./databases.md#acid) properties
+  - examples: [PostgreSQL](/postgresql.md), [MySQL](./mysql.md), oracle, microsoft sql server
+- NoSQL databases:
+  - document-oriented:
+    - store data as documents (often json or bson)
+      - BSON: binary format that represents JSON-like data structures
+        - faster to parse than json
+    - flexible schema
+    - examples: [MongoDB](./mongodb.md), CouchDB
+  - key-value stores:
+    - data is stored as key-value pairs
+    - very fast lookups
+    - examples: [redis](./redis.md), dynamodb
+  - column family stores:
+    - stores data in columns instead of rows
+    - optimized for reading/writing large volumes of data
+    - examples: apache cassandra, hbase
+  - graph databases:
+    - store data as nodes and edges (like a graph)
+    - great for representing relationships
+    - examples: neo4j, arangodb
 
 ## CRUD
 
@@ -79,12 +90,15 @@
 - Isolation: transactions are independent of each other
 - Durability: once a transaction is committed, it is permanently saved
 
-## ER Diagram
+## ER diagram
 
 > visual representation of data
 
 [ER model cardinality explained with examples](https://www.gleek.io/blog/er-model-cardinality)
 [ER diagrams](https://www.lucidchart.com/pages/er-diagrams)
+
+> [!WARNING]
+> is NOT a UML diagram
 
 - strong entity (rectangle/square): can be uniquely identified by its own attributes without relying on other entity
 - weak entity: depends on a strong entity to be identified
@@ -135,46 +149,8 @@
 ### barker notation
 
 - `#`: primary key
-- `*` or `·`: obligatory attribute
+- `*` or `·`: mandatory attribute
 - `o`: optional attribute
-
-```
-+----------------+          +----------------+          +----------------+
-|   Customer     |          |     Order      |          |    Product     |
-|----------------|          |----------------|          |----------------|
-|*CustomerID     |     1,M  |*OrderID        |          |*ProductID      |
-| Name           |----------| OrderDate      |     1,M  | ProductName    |
-| Email          |          |#CustomerID     |----------| Price          |
-+----------------+          +----------------+          +----------------+
-                              0,M  |                         0,M   |
-                                   |                               |
-                                   |                               |
-                                   +-------------------------------+
-                                                1,M
-                                           +------------+
-                                           |  OrderItem |
-                                           |------------|
-                                           |*OrderItemID|
-                                           |#OrderID    |
-                                           |#ProductID  |
-                                           | Quantity   |
-                                           +------------+
-```
-
-## Class diagram
-
-- cardinality symbols
-  - how to read class diagrams:
-    - Entity1 ----------------------> 0..* Entity2
-    - Entity1 can have 0..* relations with Entity2
-      - the multiplicity is closer to the entity it applies to
-  - multiplicity
-    - 1: one to one
-    - *: many
-    - 0..1: zero or one
-    - 0..*: zero or many
-    - 1..*: one or many
-    - n..m: n to m
 
 ## theory
 
