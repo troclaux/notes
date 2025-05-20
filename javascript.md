@@ -1,3 +1,4 @@
+
 # JavaScript
 
 ## properties
@@ -5,6 +6,7 @@
 - almost everything is an object
 
 - dynamically typed
+- weakly typed language
 - interpreted programming language
 - has garbage collection
 - functions are values (i.e. first-class citizens)
@@ -386,27 +388,27 @@ delete person.age;             // removes age, person.age changes to undefined
 
 > stringified representation of a JavaScript Object
 
-- structured data
+- semi-structured data
 - lightweight data interchange format
 - contains keys/value pairs
-- keys are always strings
-- values can be strings, numbers, object literals, arrays, booleans, or null (not undefined)
-  - OBS: JSON doesn't support `underfined` as a value
-- can be parsed and converted to JavaScript objects
+- keys are always strings and must be surrounded by double quotes
+- doesn't have comment syntax (e.g. `//` or `/* */`)
+- values can be strings, numbers, object literals, arrays, booleans (`true` or `false`) or `null` (not undefined)
+  - OBS: JSON doesn't support `undefined` as a value
+- can be parsed and converted to JavaScript objects with `JSON.parse()`
 
 > [!NOTE]
-> don't add comma at the end of the last element of a JSON object or array
+> unlike JavaScript, trailing commas are not allowed in JSON
 
-```javascript
-my_object = {
+```json
+{
   "name": "John",
   "age": 25,
   "isStudent": true,
   "job": null,
-  "address": undefined,
   "father": { "name": "Bob", "age": 40 },
   "fruits": ["apple", "banana", "cherry"]
-};
+}
 ```
 
 - `JSON.stringify()`: converts a JavaScript object to a JSON string
@@ -422,7 +424,7 @@ my_object = {
 
 ## modules
 
-> reusable pieces of code that can be exported from one program and imported into another
+> file that contain code that can be imported/exported from/to other files
 
 examples of `import` statements:
 
@@ -435,6 +437,7 @@ import 'module-name';                        // import for side effects only
 ```
 
 - to import a function from another file, it must be exported from the file where it’s defined
+- each module has its own scope
 - 2 types of exports:
   - named exports: when you use only the `export` keyword
   - default exports: when you use the `export default` keywords
@@ -576,10 +579,12 @@ fetchData()
 - `#` indicates that a variable is private and should not be accesses directly from outside the class
   - e.g. `#age`
 
-## versions
+## ECMAScript
 
-> ECMAScript (ES): standardized version of JavaScript
+> standardized especification that defines how the javascript language should work
 
+- blueprint for javascript
+- javascript is an implementation of ECMAScript, just like browsers (chrome) or runtimes (node.js) follow this blueprint
 - new ECMAScript versions are released yearly, adding incremental improvements
 - modern javascript incorporates features from ES6 and later versions
 
@@ -598,3 +603,4 @@ fetchData()
     - spread and rest operators (`...`)
     - promises
 - ES7 (2016), ES8 (2017), ES9 (2018), ..., ES15 (2024)
+
