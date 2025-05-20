@@ -25,16 +25,18 @@
     - kubelet: communicates with the control plane, manages pod lifecycle
     - kube-proxy: manages networking, forwards traffic to pods
     - container runtime (e.g., containerd, Docker): runs the actual containers
-  - node roles: all machines in the cluster are nodes, some are control plane nodes, some are worker nodes
+  - node roles: all machines in the cluster are nodes
+    - control plane components typically run on designated nodes (control plane nodes)
     - worker node
       - runs user applications (pods)
-      - handles most of the compute workload
+      - runs workloads
     - control plane (master) node
       - runs core Kubernetes components (API server, scheduler, controller manager, etc.)
       - usually replicated (at least 3 replicas for HA in production)
 - cluster: group of nodes, highest-level structure in kubernetes
-- object: cluster's desired state
+- object: persistent entity representing the desired state of a component in the cluster (e.g., Pod, Deployment, Service)
 - workload: application(s) running on the cluster
+- service: method for exposing a network application that is running as one or more pods in your cluster
 
 - imagine a kubernetes cluster as a city:
   - cluster = the entire city
@@ -47,8 +49,9 @@ kubernetes cluster architecture:
 
 - master node (control plane): manages the cluster and schedules workloads
   - kube-apiserver: provides the interaction for management tools (e.g. kubectl or kubernetes dashboard)
-  - etcd: key-value storate that holds the current state of the kubernetes cluster
-    - basically a cluster backup
+  - etcd: key-value store that holds the **desired** state of all kubernetes objects
+    - used by control plane to ensure current state matches desired state
+    - can also be backed up to restore the cluster state
   - scheduler: allocates unscheduled pods on different nodes based on the workload
   - controller-manager: set of containers that manages the cluster with actions (e.g. replicating pods)
     - checks if something needs to be repaired or if a container died and needs to be restarted
@@ -145,8 +148,8 @@ spec:
     - ExternalName: DNS alias
 - Ingress: manages external HTTP/HTTPS traffic to services
   - provides routing rules and supports SSL termination
-- NetworkPolicy: controls traffic between pods based on rules
-  - e.g. route traffic from example.com to specific service
+- NetworkPolicy: controls traffic between pods based on labels and rules
+  - doesn't control external access like traffic from example.com
 
 ### configuration and secrets management
 
@@ -180,6 +183,14 @@ every manifest must include at least these top‑level fields:
   - `namespace` (optional)
   - `labels` and `annotations` (optional)
 - `spec`: specification of your desired state, the fields here vary depending on `kind`
+  - `replicas`: desired number of copies of a pod
+  - `selector`: defines which pods the controller will manage
+    - `matchLabels`: matches `labels` in `metadata`
+  - `containers`: list of containers that will run inside the pod
+  - `name`: container name
+  - `ports`:
+    - `containerPort`: port that the container listens on internally
+    - `protocol`: protocol to be used by container port, usually `TCP` or `UDP` (default)
 
 Pod YAML example:
 
@@ -254,6 +265,16 @@ spec:
   - `LoadBalancer`: assigns a public IP (if running on a cloud provider)
   - `Ingress`: routes traffic to services based on URL paths or domains
 
+## pod lifecycle
+
+> phases a pod goes through from creation to termination
+
+- pending: pod has been accepted by the kubernetes cluster, but one or more of its containers hasn't started yet
+- running: pod has been bound to a node and all containers have been created
+- succeeded: all containers in the pod have terminated successfully
+- failed: all containers have terminated, but at least one has failed
+- unknown: the state of the pod couldn't be determined
+
 ## helm
 
 > package manager for kubernetes
@@ -274,7 +295,7 @@ spec:
 - cert-manager is responsible for:
   - creation of certificates
   - uses an Issuer or ClusterIssuer to obtain a certificate
-    - Issuer: another name for Certificate Authorities (CAs)
+    - Issuer: resource that defines how certificates are requested from a Certificate Authority (e.g., Let’s Encrypt)
   - stores the certificate in a kubernetes Secret
 - how the certificate is used:
   - the Secret containing the certificate is referenced in an Ingress resource
@@ -289,7 +310,7 @@ spec:
 
 ## tools
 
-- kubeadmn: set up and manage kubernetes clusters easily
+- kubeadm: set up and manage kubernetes clusters easily
 
 ### k3s
 
