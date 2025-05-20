@@ -52,7 +52,6 @@ namespace MyApp {
 }
 ```
 
-
 ## data types
 
 - `int`: integer numbers
@@ -76,6 +75,7 @@ string name = "Alice";
 object data = "some value";
 
 int[] numbers = new int[3];                    // Array of 3 integers (default values 0)
+int[] vetor = { 1, 2, 3 };
 string[] names = { "Alice", "Bob", "Carol" };  // Array with 3 strings
 
 var score = 95;                                // Inferred as int
@@ -196,8 +196,17 @@ class Program
 
 - `public`: no restrictions
 - `private`: only within the same class
-- `protected`: in the same class or any derived class
+- `protected`: in the same class or any child class
 - `internal`: in the same assembly/project only
 - `protected internal`: in the same assembly or any derived class, even if it's in another assembly
 - `private protected`: in the same class or derived classes but only within the same assembly
+
+---
+
+## running c# on the cli
+
+1. write code in a file that ends with `.cs` that has a `Program` class (e.g. `Program.cs`)
+1. create `.csproj` file: `dotnet new console -o .`
+1. build: `dotnet build`
+1. run: `dotnet run`
 
