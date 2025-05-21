@@ -19,13 +19,14 @@
 
 ## basic syntax
 
-php code is written between `<?php` and `?>` tags:
+php code is written between `<?php` and `?>` (optional) tags:
 
 ```php
 <?php
 echo "Hello, world!";
 ?>
 ```
+
 > [!NOTE]
 > You don’t need to close the `<?php` tag in pure PHP files because:
 > the PHP interpreter assumes the file ends with PHP code
