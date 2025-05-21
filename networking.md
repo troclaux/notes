@@ -1,8 +1,7 @@
-
-# networking
-
 [web development](./web_development.md)
 [aws](./aws.md)
+
+# networking
 
 [computer networking: a top-down approach](https://www.amazon.com/Computer-Networking-Top-Down-Approach-7th/dp/0133594149)
 
@@ -35,7 +34,8 @@
 
 - endpoint: device or node that is participating in a network communication
   - defined by a combination of [IP address](#ip-internet-protocol) and [port number](#ports)
-- socket: mechanism that enables communication between two endpoints via IP address and port
+- socket: endpoint for sending or receiving data across a computer network
+  - combination of IP address, port number and the protocol (usually TCP or UDP)
 
 properties of the internet:
 - interoperability: different devices can communicate with each other seamlessly
@@ -487,14 +487,14 @@ long example of HTTPS communication:
         - `192.168.1.0/25` => IPs from `.0` to `.127`
         - `192.168.1.128/25` => IPs from `.128` to `.255`
 
-| Feature          | Public IP | Private IP |
-|-----------------|----------|-----------|
-| Scope      | Global (Internet) | Local (LAN) |
-| Uniqueness | Unique worldwide | Unique within a local network |
-| Assigned by | ISP or cloud provider | Router (via DHCP) or manually |
+| Feature       | Public IP                    | Private IP                                |
+|---------------|------------------------------|-------------------------------------------|
+| Scope         | Global (Internet)            | Local (LAN)                               |
+| Uniqueness    | Unique worldwide             | Unique within a local network             |
+| Assigned by   | ISP or cloud provider        | Router (via DHCP) or manually             |
 | Accessibility | Accessible from the internet | Not accessible from the internet directly |
-| Cost | Often requires payment | Free to use |
-| Example | `8.8.8.8` (Google DNS) | `192.168.1.1` (Wi-Fi router) |
+| Cost          | Often requires payment       | Free to use                               |
+| Example       | `8.8.8.8` (Google DNS)       | `192.168.1.1` (Wi-Fi router)              |
 
 ### network access layer
 
@@ -511,8 +511,6 @@ long example of HTTPS communication:
 - MAC address uses 6 bytes = 48 bits
 - `byte:byte:byte:byte:byte:byte`
 - example: `47:3E:2A:B2:11:24`
-
----
 
 ## ports
 
@@ -542,8 +540,6 @@ long example of HTTPS communication:
 - HTTP 80
 - HTTPS 443
 - DHCPv6 546/547
-
----
 
 ## network encapsulation
 
