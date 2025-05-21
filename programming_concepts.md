@@ -53,8 +53,6 @@ class Printer {
 ```
 
 - inheritance: a class derives properties and behavior from another class
-- aggregation: one class contains another, but both exist independently
-- composition: one class contains anohter and the contained object cannot exist independently
 
 - primitives: fundamental data types that are not composed of other data types
   - e.g. integers, floating-point numbers, characters, booleans, null or undefined values
