@@ -4,6 +4,7 @@
 > open-source relational database management system
 
 - can replace MySQL, but is maintained separately from MySQL
+- default port is 3306
 
 ## cli commands
 
