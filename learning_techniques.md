@@ -46,7 +46,7 @@
 - stop making excuses
 - avoid self-fulfilling prophecies
 - use mnemonics
-  - [mnemonic learning website](www.memrise.com)
+  - [mnemonic learning website](https://www.memrise.com)
 
 ## mindset and attitude
 
@@ -65,11 +65,13 @@
 
 ### chunking
 
+steps:
+
+1. focus
+2. understand
+3. gain context
+
 - compact packages of information for easy access
-- steps:
-  1. focus
-  2. understand
-  3. gain context
 - context requires top-down (survey) and bottom-up (learn basics)
 
 ### recall and review
@@ -80,11 +82,13 @@
 - avoid looking at answers immediately
 
 ### deliberate practice
-- focus on the hardest material deliberately.
-- overlearning can be counterproductive.
-- interleave learning by mixing different topics.
+
+- focus on the hardest material deliberately
+- overlearning can be counterproductive
+- interleave learning by mixing different topics
 
 ### testing and assessment
+
 - test checklist (did i do the following?):
   - effort in understanding
   - collaboration with classmates
@@ -133,12 +137,14 @@
 - focus on the process, not just the product
 
 ## additional tips
+
 - use mit courseware for resources
 - tell yourself to stop wasting time and get on with tasks
 - determine triggers for distractions and adjust plans accordingly
 - visual and spatial memory techniques can be helpful
 
 ## study checklist before tests
+
 - review effort and understanding
 - work with classmates
 - outline solutions
