@@ -578,7 +578,6 @@ SELECT product_name, min(price)
 FROM products;
 ```
 
-
 ```sql
 SELECT AVG(columnName) FROM tableName;
 ```

@@ -55,7 +55,8 @@ function add(x: number, y: number): number {
 let sum: number = add(5, 10);  // sum is inferred as number
 
 class Animal {
-  private name: string;
+  private name: string;      // must assign it
+  private nickname?: string; // optional
 
   constructor(name: string) {
     this.name = name;
@@ -166,3 +167,9 @@ console.log(getArea(triangle));   // Output: 6
 export const name: string = "Alice";
 import { name } from './moduleFile';
 ```
+
+## cli
+
+- create a `tsconfig.json` and initialize a project: `tsc --init`
+- convert `.ts` file to `.js`: `tsc example.tsc`
+
