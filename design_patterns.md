@@ -397,16 +397,16 @@ with facade:
 
 ```python
 class Water:
-    def boil(self):
-        print("Boiling water...")
+  def boil(self):
+    print("Boiling water...")
 
 class TeaLeaves:
-    def add(self):
-        print("Adding tea leaves...")
+  def add(self):
+    print("Adding tea leaves...")
 
 class Cup:
-    def pour(self):
-        print("Pouring tea into the cup...")
+  def pour(self):
+    print("Pouring tea into the cup...")
 
 # Client code needs to know and handle all the steps
 water = Water()
@@ -452,11 +452,11 @@ tea_maker.make_tea()
 
 > reduces the cost of creating and manipulating a large number of similar objects
 
-- problem: a program must support a huge number of objects which barely fit into available RAM
-- solution: 
 - good for classes with objects that contain almost identical data across all instances
 
-- each object's attributes define its state, define 2 types of state:
+- problem: a program must support a huge number of objects which barely fit into available RAM
+
+- solution: each object's attributes define its state, define 2 types of state:
   - intrinsic state: data that is shared across multiple objects
     - other objects can read it, but not change it
     - an object that only stores the intrinsic state is called a flyweight
