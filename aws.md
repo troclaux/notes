@@ -145,13 +145,94 @@
 
 > compute service that allows you to launch virtual servers in the cloud
 
-## Lambda
+- instance: a virtual server in the cloud
+- AMI: a template for your instance (OS + configs)
+- EBS (Elastic Block Store): persistent block storage for instances
+- Security Groups: virtual firewalls that control traffic
+- key pairs: used for SSH access to Linux or RDP to Windows instances
+- elastic IP: static public IP address for your instance
+
+1. choose an AMI (ubuntu, amazon linux, windows, etc)
+1. choose an instance type (e.g. t2.micro, m5.large)
+1. configure instance details (VPC, subnet, IAM role, etc.)
+1. add storage (EBS volumes)
+1. add tags (e.g. MyServer)
+1. configure security group (firewall rules)
+1. launch (with a key pair for SSH)
+
+- pricing models
+  - on-demand: ideal for short-term use, expensive
+  - reserved: commit to 1 or 3 years, cheaper
+  - spot instances: bid for unused capacity, cheapest
+
+## lambda
 
 > serverless service that lets you run code without provisioning or managing servers
 
 ## S3 - Simple Storage Service
 
 > scalable object storage service that allows you to store and retrieve data from anywhere on the web
+
+- use cases
+  - backup and restore
+  - [data lake](/data_warehouse.md#types-of-data-repositories) and analytics
+  - web hosting (static files)
+  - media storage and distribution
+  - application assets (images, audio, etc)
+  - log storage
+
+- properties
+  - serverless: no server or infrastructure to manage
+  - scalable: automatically scales to any amount of data
+  - durable
+  - event-driven: can trigger lambda, sqs, sns on object creation or deletion
+  - durable: 11 9s (99.999999999%) durability
+
+- key: unique identifier for an object within a bucket (often a filename or path)
+- object: stored data (file + metadata + unique key)
+- url structure to an s3 object: `https://<bucket-name>.s3.<region>.amazonaws.com/<object-key>`
+  - `https://my-unique-bucket.s3.us-east-1.amazonaws.com/documents/report.pdf`
+- bucket: container that stores objects (like a folder)
+  - must have unique name globally
+- region: bucket location (affects latency)
+- storage class: determines availability, durability and cost
+  - standard: frequently accesses data
+    - instant data retrieval
+    - expensive
+  - intelligent-tiering: automatically moves data between frequent/infrequent tiers
+    - instant-minutes retrieval
+    - moderate cost + monitoring fee
+  - glacier: long-term storage
+    - 12+ hours to retrieve data
+    - cheap
+
+- versioning: option to retain multiple versions of objects
+- can host static sites
+- there are no real folders
+- the key must be unique in the bucket
+
+### usage
+
+1. create a bucket (e.g. `my-app-assets` in `sa-east-1`)
+1. upload an object (`logo.png`)
+1. access it with: `https://my-app-assets.s3.amazonaws.com/logo.png`
+1. use IAM policies or s3 bucket policies to control access
+
+#### aws cli example
+
+```bash
+# create a bucket
+aws s3 mb s3://my-bucket-name
+
+# upload a file
+aws s3 cp ./file.txt s3://my-bucket-name/
+
+# download a file
+aws s3 cp s3://my-bucket-name/file.txt .
+
+# list files
+aws s3 ls s3://my-bucket-name/
+```
 
 ## EBS - Elastic Block Store
 
@@ -322,6 +403,8 @@ ns-1234.awsdns-01.co.uk
 ## AMI - Amazon Machine Image
 
 > a template that contains a software configuration (e.g. operating system, application server, applications) that is used to launch EC2 instances
+
+> complete snapshot of a virtual machine
 
 ## Elastic Beanstalk
 
