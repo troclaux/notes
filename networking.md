@@ -474,6 +474,14 @@ long example of HTTPS communication:
 > IPv4 bytes * 2² bytes => IPv6
 > 32 bits * 2² = 128 bits
 
+- subnet mask: 32-bit number used in IP networking to divide IP addresses into two parts:
+  - network portion: identifies the specific network
+  - host portion: identifies the specific device (host) on that network
+  - example: for the ip address `192.168.1.10` with the subnet mask `255.255.255.0`:
+    - subnet mask (binary): `11111111.11111111.11111111.00000000`
+    - first 24 bits (`255.255.255`) are the network part
+    - last 8 bits (`0`) are the host part
+
 - CIDR (Classless Inter-Domain Routing) notation: compact way to represent IP ranges (e.g. `192.168.1.0/24`)
   - `192.168.1.0/24` has two parts
     - network address or starting IP (`192.168.1.0`): identifies the subnet or block of IPs
@@ -606,6 +614,30 @@ TODO
 ## Network Interfaces
 
 TODO
+
+## gRPC
+
+> framework that allows services to communicate with each other across networks, using Remote Procedure Calls (RPCs)
+
+- open source
+- developed by google
+- useful for microservices architectures
+
+- RPC (Remote Procedure Call): similar to calling a function locally, but it actually runs on a remote server
+- protocol buffers (protobuf): gRPC uses this binary serialization format for defining interfaces and message payloads
+  - faster and more compact than JSON or XML
+
+- use cases
+  - communication between microservices in a distributed system
+  - efficient backend apis for mobile or IoT clients
+  - replacing rest apis where performance and strict contract enforcement are needed
+
+### how it works
+
+1. define a service using `.proto` files (protocol buffers)
+1. generate code for client and server in the desired language
+1. client calls a method as if it's local (gRPC handles communication over HTTP/2)
+1. server receives the request, executes the function and sends the response
 
 ## Basic Network Troubleshooting
 
