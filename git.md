@@ -2,7 +2,7 @@
 
 # git
 
-> version control system (VCS) design to track changes in files
+> version control system (VCS) designed to track changes in files
 
 - allows multiple developers to work on the same project without interfering in each others changes
 
@@ -27,10 +27,13 @@
 ## basic commands
 
 - SHA-1 hash can be used to see the contents of a commit: `git cat-file -p <hash>`
-- search commits for a specific string: `git log -S`
+- search code code/content changes of each commit: `git log -S <pattern>`
 - log the commits of remote repo: `git log remote/branch`, `git log origin/primeagen`
 - set the default upstream branch for the master branch: `git branch --set-upstream-to=origin/master master`
 - show history of commits in a graph: `git log --oneline --graph`
+
+- search commit messages: `git log --grep="fix container image push"`
+- view git diff using commit hash: `git show abc123def456`
 
 ### git switch
 
