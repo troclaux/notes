@@ -218,3 +218,14 @@ So BST property is not violated anywhere
 - insertion, deletion and loop-up are guaranteed O(n * log(n))
 - because AVL is balanced, lookups in AVL are faster than red-black
 - red-black trees are better for insert intensive tasks
+
+### B-tree
+
+> self-balancing search tree
+
+- efficiently manages large amounts of sorted data stored on disk
+- commonly used in databases and file systems
+
+properties of B-tree of order _m_:
+
+- each node can have at most m children
