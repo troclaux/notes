@@ -20,6 +20,11 @@
   - pay only for data transfer out of the cloud
     - data transfer in is free
 
+- options to manage aws
+  - aws management console
+  - aws CLI
+  - aws SDK
+
 ## AWS CLI
 
 > manage aws resources with CLI commands
@@ -57,7 +62,7 @@
 - `Version`: the version of the policy language, defined by date
 - `ID`: optional identifier for the policy
 - `Statement`: contains individual permission rules
-  - `"Sid": "AllowListBuckets"`: unique identifier for this permission block
+  - `"Sid": "AllowListBuckets"` (Statement ID): unique identifier for this permission block
   - `Effect`: defines if this permission is allowed or not
   - `"Action": "s3:GetObject"`: allows the use to list objects in the root of the specified S3 bucket
   - `Resource`: list of resources to which the actions apply
@@ -75,8 +80,25 @@
     - Used whenever you want to call APIs
 
 - IAM Policy: set of permissions for aws resources
-- IAM Roles: identity that grants temporary credentials to aws services or users to perform tasks
+  - a policy can exist without a role, but a role can't do anything useful without a policy
+- IAM Roles: identity that grants temporary permissions to aws services or users to perform tasks
   - set of IAM policies
+
+### IAM role
+
+> identity in aws that you can assume temporarily to get specific permissions
+
+- use cases
+  - grant temporary access to aws services without long-term credentials
+  - assign permissions to services like ec2 or lambda
+  - to switch roles across accounts securely
+
+- key components of a role:
+  - trust policy: defines who can assume the role (e.g. ec2, lambda, another account)
+  - permissions policy defines what the role can do (e.g. access s3, write logs)
+  - session duration
+  - assume role
+
 
 ### IAM Security Tools
 
@@ -165,9 +187,40 @@
   - reserved: commit to 1 or 3 years, cheaper
   - spot instances: bid for unused capacity, cheapest
 
+### ec2 instance tenancy
+
+- shared (default): multiple aws accounts may share the same physical hardware
+- dedicated instance: your instance runs on single-tenant hardware
+- dedicated host: your instance runs on a physical server with ec2 instance capacity fully dedicated to your use
+
 ## lambda
 
-> serverless service that lets you run code without provisioning or managing servers
+> serverless compute service that lets you run code in response to events
+
+- examples of events
+  - file uploads
+  - http requests
+  - database changes
+
+- properties
+  - serverless
+  - event-driven
+  - short-lived functions: each invocation runs in an isolated environment with max duration of 15 minutes
+  - stateless: each function runs independently
+
+### workflow
+
+1. write a function in Python, Node.js, Java, Go, etc
+1. deploy it to Lambda (manually, with the CLI, or using IaC like Terraform)
+1. configure a trigger (e.g. HTTP endpoint, S3 upload)
+1. lambda runs your code when the event occurs
+1. get billed per request and per compute time (in milliseconds)
+
+use case example: resize images uploaded to an S3 bucket
+
+1. upload triggers an S3 event
+1. aws Lambda receives the event, processes the image (e.g. resizes it)
+1. stores the output back to S3
 
 ## S3 - Simple Storage Service
 
@@ -211,7 +264,7 @@
 - there are no real folders
 - the key must be unique in the bucket
 
-### usage
+### workflow
 
 1. create a bucket (e.g. `my-app-assets` in `sa-east-1`)
 1. upload an object (`logo.png`)
