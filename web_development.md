@@ -73,7 +73,7 @@
 
 - service: functionality or resource that a service provides to an client upon request
 
-- endpoint: specific URL where the server provides a resource/service
+- [endpoint](/api.md#endpoints): specific URL where the server provides a resource/service
   - example:
     - endpoint url: `https://api.example.com/books`
     - `app.get('/books', ...)`: defines an endpoint that listens for GET requests at the /books URL
