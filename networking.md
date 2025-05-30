@@ -417,23 +417,38 @@ long example of HTTPS communication:
 - reliable, ordered, error-checked delivery of data
 - works on top of IP
 
-3-way handshake (connection setup)
+##### 3-way handshake (connection setup)
 
-1. client sends SYN (Synchronize) packet to server, requesting to start a connection
-1. server responds with a SYN-ACK (Synchronize-Acknowledgment)
-1. clients sends final ACK packet to server (Acknowledgment) to confirm
-1. connection established
+1. connection establishment
 
-- tcp segment structure
-  - header
-    - source port
-    - destination port
-    - sequence number
-    - checksum (for error-checking)
-    - flags (e.g ACK)
-    - etc
-  - payload (optional data)
-    - can be an http request
+- client sends SYN (Synchronize) packet to server, requesting to start a connection
+- server responds with a SYN-ACK (Synchronize-Acknowledgment)
+- clients sends final ACK packet to server (Acknowledgment) to confirm
+
+2. data trasfer
+
+- data is split into segments
+- each segment has a sequence number
+- receiver sends ACKs for received data
+- if ACK is not received, sender retransmits
+
+3. connection termination
+
+- either side can initiate a FIN (finish) packet
+- the other side ACKs and optionally sends its own FIN
+- once both sides acknowledge each other's FIN, the connection is closed
+
+##### tcp segment structure
+
+- header
+  - source port
+  - destination port
+  - sequence number
+  - checksum (for error-checking)
+  - flags (e.g ACK)
+  - etc
+- payload (optional data)
+  - can be an http request
 
 #### UDP (User Datagram Protocol)
 
