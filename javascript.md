@@ -13,28 +13,21 @@
 - function-scoped: once a variable is declared inside a function, it is accessible anywhere inside that function
 - hoisted declarations: variables and functions can be used before they are declared
 - immutable strings
-- multiplatform
 
 ## data types
 
-- value types: Number, String, Boolean, Null, Undefined
-- reference types: Object, Array and Function
-
-> [!IMPORTANT]
-> in JavaScript, almost everything is an object
-
-- Number: represents both integers and floating-point numbers
-- String
-- Boolean: `true` or `false`
-- Null
-- Undefined: variable that has been declared but not assigned a value
-- Object: collections of related data and/or functionality
-  - arrays are Object
-- Symbol
-- BigInt
-
-- `typeof`: returns the type of the variable
-- `instanceof`: returns boolean value indicating weather the object is an instance of the specified constructor or class
+- primitive types
+  - `number`: represents both integers and floating-point numbers
+  - `string`
+  - `boolean`: `true` or `false`
+  - `null`
+  - `undefined`: variable that has been declared but not assigned a value
+    - arrays are Object
+  - `symbol`
+  - `bigint`
+- reference types
+  - `object`: collections of related data and/or functionality
+    - arrays and functions are objects in javascript
 
 ```javascript
 let name = "Alice";     // String
@@ -72,16 +65,24 @@ let map = new Map();
 map.set("name", "Alice");
 map.set("age", 25);
 console.log(map.get("name")); // "Alice"
-
 ```
 
 - `let`: variable that can be reassigned
   - block-scoped
+  - cannot be redeclared within the same scope
 - `const`: variable that cannot be reassigned
   - block-scoped
+  - cannot be redeclared within the same scope
+  - if it holds an object or array, it can still be mutated
 - `var`: variable that can be reassigned and redeclared
-  - avoid using `var`
   - function-scoped
+- `typeof`: returns the type of the variable
+- `instanceof`: returns boolean value indicating weather the object is an instance of the specified constructor or class
+
+- `==`: compares value
+  - performs type coercion: converts the operands to the same type before comparing
+- `===`: compares value and type
+  - doesn't do type coercion
 
 ### arrays
 
@@ -109,19 +110,16 @@ console.log(spliced); // Outputs: [2, 3]
 console.log(arr); // Outputs: [1, 'a', 'b', 4, 5]
 ```
 
-array methods that don't mutate the original array:
-- `map()`: creates a new array by applying a function to each element of an existing array
-  - `const doubledNumbers = numbers.map((number) => number * 2);`
-- `filter()`: creates a new array with elements that pass a test specified by a function
-- `reduce()`: applies a function to each element of an array to reduce the array to a single value
-- `forEach()`: calls a function for each element in an array
-- `some()`: checks if at least one element in an array passes a test specified by a function
-- `every()`: checks if all elements in an array pass a test specified by a function
-
-- `find()`: returns the first element in an array that passes a test specified by a function
-- `findIndexOf()`: returns the index of the first element in an array that passes a test specified by a function
-
-examples
+- array methods that don't mutate the original array:
+  - `map()`: creates a new array by applying a function to each element of an existing array
+    - `const doubledNumbers = numbers.map((number) => number * 2);`
+  - `filter()`: creates a new array with elements that pass a test specified by a function
+  - `reduce()`: applies a function to each element of an array to reduce the array to a single value
+  - `forEach()`: calls a function for each element in an array
+  - `some()`: checks if at least one element in an array passes a test specified by a function
+  - `every()`: checks if all elements in an array pass a test specified by a function
+  - `find()`: returns the first element in an array that passes a test specified by a function
+  - `findIndexOf()`: returns the index of the first element in an array that passes a test specified by a function
 
 ```javascript
 let numbers = [1, 2, 3, 4, 5];
@@ -145,9 +143,7 @@ colors.forEach((color) => {
 
 const num = [1, 2, 3, 4, 5];
 const sum = nums.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-
 ```
-
 
 ### template literals
 
@@ -158,13 +154,11 @@ const sum = nums.reduce((accumulator, currentValue) => accumulator + currentValu
 - interpolation is done using `${}`
 
 ```javascript
-
 const name = 'John';
 const age = 30;
 
 const greeting = `Hello, my name is ${name} and I am ${age} years old.`;
 console.log(greeting); // outputs "Hello, my name is John and I am 30 years old."
-
 ```
 
 ### type casting
@@ -182,26 +176,6 @@ console.log(greeting); // outputs "Hello, my name is John and I am 30 years old.
   - `const text = (123).toString();`
 - `Boolean()`: converts a value to a boolean
   - `const bool = Boolean(0);`
-
-## data structures
-
-- [arrays](#arrays)
-- `new`: call the constructor function and returns a new object
-  - defining a constructor is optional in javascript
-  - if not defined, a default one is used
-
-- data structures that need to be manually implemented:
-  - queues
-  - stacks
-  - linked lists
-  - doubly linked lists
-  - etc
-
-### objects
-
-
-```javascript
-```
 
 ### sets
 
@@ -281,41 +255,37 @@ switch (day) {
 ## loops
 
 ```javascript
+// while loop
 let i = 0;
-
 while (i < 5) {
-  console.log(i);
+  console.log('while:', i);
   i++;
 }
-```
-
-```javascript
 
 // for loop
-for (let i = 0; i < 5; i++) {
-  console.log(i);
+for (let j = 0; j < 5; j++) {
+  console.log('for:', j);
 }
 
-// do while loop
-let i = 0;
+// do...while loop
+let k = 0;
 do {
-  console.log(i);
-  i++;
-} while (i < 5);
+  console.log('do...while:', k);
+  k++;
+} while (k < 5);
 
-// for of loop
+// for...of loop
 let fruits = ['apple', 'banana', 'cherry'];
 for (let fruit of fruits) {
-  console.log(fruit);
+  console.log('for...of:', fruit);
 }
-
 ```
 
 ## functions
 
 types of function initialization:
-```javascript
 
+```javascript
 // function declaration
 function greet(name) {
   return "Hello, " + name + "!";
@@ -332,7 +302,6 @@ const multiply = (a, b) => a * b;
 console.log(greet("Alice")); // Output: Hello, Alice!
 console.log(add(2, 3)); // Output: 5
 console.log(multiply(4, 5)); // Output: 20
-
 ```
 
 ## object oriented programming
@@ -342,9 +311,14 @@ console.log(multiply(4, 5)); // Output: 20
   - defining properties in the class is optional
 - object: hash map that contains a collection of string-value pairs
 - `constructor()`: special method for creating and initializing an object created with a class
-- `this`: used to call the constructor of a parent class
+- `this`
+  - in a method (object function): refers to the object the method is called on
+  - in a regular function: refers to the global object
+  - in an arrow function: `this` is lexically bound, it refers to the surrounding context where the function was defined
   - can be used to allow method chaining: [code example in builder implementation](./design_patterns.md#builder)
-- `new`: creates a new instance of a class
+- `new`: call the constructor function and returns a new object
+  - defining a constructor is optional in javascript
+  - if not defined, a default one is used
 - `extends`: used to create a child class that inherits from a parent class
 - `static`: defines a static method for a class
 - `super()`: calls the constructor of a parent class
@@ -352,7 +326,6 @@ console.log(multiply(4, 5)); // Output: 20
 - methods don't need the `function` keyword
 
 ```javascript
-
 class Person {
   constructor(name, age) {
     this.name = name;
@@ -366,11 +339,9 @@ class Person {
 
 const myPerson1 = new Person("John", 30);
 const myPerson2 = new Person("Alice", 25);
-
 ```
 
 ```javascript
-
 let person = {
   firstName: "John",
   lastName: "Doe",
@@ -388,6 +359,9 @@ delete person.age;             // removes age, person.age changes to undefined
 
 > stringified representation of a JavaScript Object
 
+> [!IMPORTANT]
+> json is not javascript
+
 - semi-structured data
 - lightweight data interchange format
 - contains keys/value pairs
@@ -397,8 +371,13 @@ delete person.age;             // removes age, person.age changes to undefined
   - OBS: JSON doesn't support `undefined` as a value
 - can be parsed and converted to JavaScript objects with `JSON.parse()`
 
-> [!NOTE]
-> unlike JavaScript, trailing commas are not allowed in JSON
+- json vs javascript:
+  - json:
+    - only double quotes allowed
+    - no comments
+  - javascript object
+    - can use single quotes
+    - has comments
 
 ```json
 {
@@ -429,7 +408,7 @@ delete person.age;             // removes age, person.age changes to undefined
 examples of `import` statements:
 
 ```javascript
-import myDefault from 'module-name';         // default import
+import foo from 'module-name';               // default import
 import { foo, bar } from 'module-name';      // named import
 import { foo as myFoo } from 'module-name';  // named import with alias
 import * as myModule from 'module-name';     // namespace import
@@ -437,6 +416,7 @@ import 'module-name';                        // import for side effects only
 ```
 
 - to import a function from another file, it must be exported from the file where it’s defined
+- variables/functions are not exported by default
 - each module has its own scope
 - 2 types of exports:
   - named exports: when you use only the `export` keyword
@@ -456,7 +436,6 @@ import 'module-name';                        // import for side effects only
   - `import greet, { name, sayName } from './module.js';`
 
 ```javascript
-
 // mathFunctions.js
 export function add(x, y) {
   return x + y;
@@ -465,13 +444,11 @@ export function add(x, y) {
 export function subtract(x, y) {
   return x - y;
 }
-
 ```
 
 in another file, you can import these named exports:
 
 ```javascript
-
 // main.js
 import { addTwo as add, subtract } from './modules/mathFunctions.js';
 
@@ -486,7 +463,6 @@ console.log(subtract(5, 3));  // Output: 2
 - `finally`: optional block of code that runs after try and catch, regardless of the outcome
 
 ```javascript
-
 try {
   let x = 10 / 0;
   console.log(x);
@@ -495,51 +471,40 @@ try {
 } finally {
   console.log('This runs no matter what');
 }
-
 ```
 
 ## asynchronous operations
 
-callback < promise < async/await
-
-- async/await
-  - `async`: makes a function asynchronous
-  - `await`: pauses the execution of the function until the promise is resolved
-    - frequently used with `fetch('https://api.example.com/data')` to make HTTP requests
-  - recommended
-  - more readable
-  - prevents callback hell
-- callback: function passed as argument to another function that gets executed once the asynchronous operation is done
-  - not recommended
-  - hard error handling
-  - hard to read because of callback hell
-    - callback hell: nested callbacks makes code hard to read
-- promise: is an object that represents a value that might available now, in the future, or never
-  - not recommended
-  - hard to read
-  - hard error handling
+- promise: object that represents a value that might available now, in the future, or never
   - prevents callback hell
   - object can be in 3 states:
     - pending: operation in progress
     - resolved (fulfilled): operation completed successfully
     - rejected: operation failed
+- `async`/`await` (recommended)
+  - `async`: marks a function that returns a Promise
+  - `await`: pauses the execution of the function until a Promise is resolved
+    - frequently used with `fetch('https://api.example.com/data')` to make HTTP requests
+  - more readable
+  - prevents callback hell
+- callback (not recommended): function passed as argument to another function that gets executed once the asynchronous operation is done
+  - hard error handling
+  - hard to read because of callback hell
+    - callback hell: nested callbacks makes code hard to read
 
 async/await example:
 
 ```javascript
-
 async function fetchData() {
   const response = await fetch('https://api.example.com/data');
   const data = await response.json();
   console.log(data);
 }
-
 ```
 
 callback example (not recommended):
 
 ```javascript
-
 function fetchData(callback) {
   setTimeout(() => {
     callback("Data received");
@@ -549,13 +514,11 @@ function fetchData(callback) {
 fetchData((data) => {
   console.log(data);  // Logs "Data received" after 2 seconds
 });
-
 ```
 
 example of promise:
 
 ```javascript
-
 function fetchData() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -571,7 +534,6 @@ fetchData()
   .catch((error) => {
     console.error(error);  // Handles errors
   });
-
 ```
 
 ## conventions
