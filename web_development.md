@@ -83,7 +83,7 @@ when a user visits a webpage:
 
 1. client (browser) makes a request to the server
 1. server returns an HTML file to the browser
-1. the browser reads HTML and then constructs the DOM
+1. the browser parses HTML and then constructs the DOM tree, where each html element becomes a node
 
 - DOM (Document Object Model): representation of the HTML elements of a webpage as a tree of nodes and objects
   - each part of the page becomes a node

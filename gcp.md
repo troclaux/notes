@@ -51,7 +51,7 @@
 
 ## cloud build API
 
-> fully managed* CI/CD service
+> fully managed (*) CI/CD service
 
 - automates build, test and deployment of software applications
 

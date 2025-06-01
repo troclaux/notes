@@ -286,6 +286,7 @@ function Profile() {
   - browsers will show a validation message if you try to submit without filling required fields
 
 Example of how these work together:
+
 ```html
 <!-- When you click "Email", it focuses the input field -->
 <label htmlFor="email">Email</label>

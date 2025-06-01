@@ -1,7 +1,7 @@
 
 # cloud computing
 
-> delivery of computing services over the internet
+> delivery of computing services (servers, databases, networking, software) over the internet
 
 - service: a software that provides functionality and performs a task or set of tasks for your system
   - examples:
@@ -17,7 +17,7 @@
   - no visibility in the machines
   - no server management
     - automatic scaling
-  - pay only for what you use
+  - pay-as-you-go model: only pay for what you use
   - e.g. AWS Lambda, DynamoDB
 - fully managed service: cloud provider manages the service's infrastructure and resources
   - the user focuses only on using the service
