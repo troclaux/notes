@@ -6,25 +6,22 @@
 ## basic concepts
 
 - HTML = HyperText Markup Language
-- describes the structure of a webpage
-- HTML5 is the most recent version
+- HTML5 features:
   - compatible with previous versions
-  - new features:
-    - semantic elements: convey meaning to browsers and search engines
-      - improve SEO (Seach Engine Optimization) because:
-        - crawlers can understand what each part of the page represents
-          - crawler: programs used by search engines to automatically browse and index web pages
-          - better accessibility for screen readers
-      - e.g. `<header></header>`, `<footer></footer>`, `<article></article>`, `<nav></nav>`
-    - audio and video support
-    - canvas element
-      - `<element></element>`
-    - offline storage
-    - improvements for form controls
-
-- html element: starting tag (e.g. `<p>`) + content + closing tag (e.g. `</p>`)
+  - semantic elements: convey meaning to browsers and search engines
+    - improve SEO (Search Engine Optimization) because:
+      - crawlers can understand what each part of the page represents
+        - crawler: programs used by search engines to automatically browse and index web pages
+        - better accessibility for screen readers
+    - e.g. `<header></header>`, `<footer></footer>`, `<article></article>`, `<nav></nav>`
+  - audio and video support
+  - canvas element: used for rendering graphics via javascript, it creates a drawing surface on the page
+  - offline storage
+  - improvements for form controls
 
 ## basic structure
+
+- html element: starting tag (e.g. `<p>`) + content + closing tag (e.g. `</p>`)
 
 ```html
 <!DOCTYPE html>
@@ -40,7 +37,7 @@
 </html>
 ```
 
-- `<!DOCTYPE html>`: document type declaration that tells the browser that this is an HTML5 document
+- `<!DOCTYPE html>`: document type declaration that tells the browser that this is an HTML5 document (not case sensitive)
 - `<html>`: root element of an HTML page
 - `<head>`: contains metadata about the HTML document, e.g. title, character encoding, etc
   - `<meta>`: provides metadata about HTML document
@@ -53,34 +50,33 @@
 ## elements
 
 - block elements: start a new line, take up 100% of the width of their container by default
-  - `<br>` (self-closing): Inserts a single line break
+  - `<p>`: defines a paragraph
+  - `<div>`: generic container
+  - `<span>`: wrap small chunks of text for styling
+  - `<ul>`: defines an unordered list
+    - `<ol>`: defines an ordered list
+    - `<li>`: defines a list item
+  - `<table>`: defines a table
+    - `<tr>` stands for "table row". Defines a row in the table
+    - `<th>` stands for "table header". Defines a header cell in the table
+    - `<td>` stands for "table data". Defines a cell in the table
+  - semantic elements:
+    - `<header>`: Represents a container for introductory content or a set of navigational links
+    - `<nav>`: Defines a set of navigation links
+    - `<section>`: Defines a section in a document, such as chapters, tabs, etc
+    - `<footer>`: Represents a container for the footer of a document or a section
+- inline elements: do not start a new line
+  - `<button>`: Defines a clickable button
   - `<a>`: defines the URL a link goes to in an `<a>` tag
     - e.g. `<a href="https://example.com">Visit Site</a>`
     - OBS: `<a>` => Anchor, `href` => Hypertext REFerence
-  - `<p>`: defines a paragraph
-  - `<div>`: defines a section in a document
-  - `<span>`: wrap small chunks of text for styling
   - `<img src="image.jpg" alt="A picture">` (self-closing): defines an image
     - `src`: define image path
     - `alt`: shows when image fails to load and when screen reader is used (accessibility)
-  - `<ul>`: defines an unordered list
-  - `<ol>`: defines an ordered list
-  - `<li>`: defines a list item
-  - `<input>`: defines an input control
-  - `<table>`: defines a table
-  - `<tr>` stands for "table row". Defines a row in the table
-  - `<th>` stands for "table header". Defines a header cell in the table
-  - `<td>` stands for "table data". Defines a cell in the table
-- inline elements: do not start a new line
   - `<strong>`: bold text
   - `<em>`: italic text
   - `<br>`: line break
-  - `<button>`: Defines a clickable button
-- semantic elements
-  - `<header>`: Represents a container for introductory content or a set of navigational links
-  - `<nav>`: Defines a set of navigation links
-  - `<section>`: Defines a section in a document, such as chapters, tabs, etc
-  - `<footer>`: Represents a container for the footer of a document or a section
+  - `<input>`: defines an input control
 - other elements
   - `<script>`: embed javascript code within html document
 
@@ -209,7 +205,7 @@ var paragraph = document.getElementById("myParagraph");
 console.log(paragraph.textContent); // Output: Hello, World!
 ```
 
-- changing content: `paragraph.textContent = "Hi there!;`
+- changing content: `paragraph.textContent = "Hi there!";`
 - changing css:
   - `paragraph.style.color = "blue";`
   - `paragraph.style.fontSize = "20px";`
