@@ -1,16 +1,20 @@
 
-# Terraform
+# terraform
 
 > Infrastructure as Code (IaC) tool that lets you define cloud resources in human-readable configuration files
 
-## Core Concepts
+## core concepts
 
-- Provider: plugin that allows Terraform to interact with cloud platforms (AWS, Azure, GCP)
-- Resource: infrastructure object you want to manage (EC2 instance, S3 bucket)
-- State: Terraform's record of all managed infrastructure
-- Module: reusable Terraform configurations
+- provider: plugin that allows Terraform to interact with cloud platforms (AWS, Azure, GCP)
+- resource: infrastructure object you want to manage (EC2 instance, S3 bucket)
+- state: Terraform's record of all managed infrastructure
+- module: directory with `.tf` files
+  - enables reusability
+  - 2 types:
+    - root module: directory where `terraform init` and `terraform apply` is run, the entry point
+    - child module: any module referenced from another modul
 
-## Basic Structure
+## basic structure
 
 ```hcl
 # Provider configuration
@@ -75,3 +79,4 @@ terraform apply -auto-approve
 - `aws_security_group`: security group for EC2 instances
 - `aws_s3_bucket`: S3 bucket
 - `aws_iam_role`: Identity and Access Management role
+
