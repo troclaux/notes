@@ -90,9 +90,20 @@ echo -n "Hello World"
 wc file.txt
 ```
 
+## xargs
+
+- find and delete `.log` files: `find . -name "*.log" | xargs rm`
+- count number of lines in all `.txt` files: `ls *.txt | xargs wc -l`
+
 ## xdg-open
 
 ## sed
+
+> search, replace, delete and insert lines in a file or stream
+
+- replace all instances of a word in a file: `sed -i.bak 's/old/new/g' file.txt`
+  - `-i.bak`: makes a backup file named `file.txt.bak`
+- delete line 2: `sed '2d' file.txt`
 
 ## curl
 
