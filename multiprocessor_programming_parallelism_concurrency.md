@@ -16,9 +16,13 @@
 - concurrency: ability of a program to manage multiple tasks at the same time
   - can happen on a single-core system with task switching
 - parallelism: ability to execute multiple tasks at the same time
-  - requires a multi-core system where multiple tasks can be executed simultaneously
+  - requires a multi-core or multi-processor system
 - asynchronous: starting a task that runs on the background without blocking the main program flow
   - means that the program performs non-blocking tasks, usually involving I/O operations
+- synchronous: blocks execution until finished
+  - program waits for the current task to complete before moving on to the next line of code
+- sequential: instructions are executed in a specific sequence, one after the other
+  - doesn't necessarily imply blocking
 
 ## locks and synchronizations
 
