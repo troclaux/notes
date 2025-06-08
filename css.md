@@ -10,13 +10,17 @@
 - comment with `/* */`
 - viewport: visible part of a web page in the browser window, it's what the users sees without scrolling
 
-syntax:
+syntax of a css property:
 
 ```
 selector {
-    property: value;
+  property1: value1;
+  property2: value2;
 }
 ```
+
+- declaration: `property1: value1;`
+- declaration block: `{ ... }`
 
 example:
 
@@ -38,8 +42,9 @@ div#profile {
 
 ## selectors
 
-- element selector (e.g. `p` styles all `<p>` tags)
+- element selector
   - `p { color: red; }`
+    - `p` styles all `<p>` tags
 - class selector
   - `.myClass { color: red; }`
 - id selector
@@ -48,7 +53,7 @@ div#profile {
   - `a[target="_blank"] { color: red; }`
     - will apply the style to all `<a>` elements with `target="_blank"`
 - global selector (`*`)
-  - selects all elements
+  - selects every element in the web page
 - select multiple elements: `div, p { ... }`
 
 > [!IMPORTANT]
@@ -76,6 +81,7 @@ div#profile {
   - `border-radius`: round the corner of an element's border box
 - `display`: can be `block`, `inline`, `flex`, `grid`
   - `inline-block`: no newline, allows settign width and height
+  - `flex`: 
 - `position`:
   - `relative`: positions the element relative to its normal position
   - `absolute`: positions the element relative to the nearest positioned ancestor
@@ -86,19 +92,37 @@ div#profile {
 - `float`: position element to the left or right of its container
 - `z-index`: element with higher value will be displayed on top when overlapping
 
-### how to center a div
+### how to center an element vertically and horizontally
+
+#### with flexbox
 
 ```html
-p {
+<div class="container">
+  <p>Sample text</p>
+</div>
+```
+
+```css
+.container {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: center; /* horizontal alignment */
+  align-items: center;     /* vertical alignment */
 }
 ```
 
 - `flex-direction`: defines main-axis (default is horizontal)
 - `justify-content`: positions content in the main axis
 - `align-items`: items are aligned in the cross-axis (default is vertical)
+
+#### with grid layout
+
+```css
+.parent {
+  display: grid;
+  place-content: center;
+  place-items: center;
+}
+```
 
 ## types of units
 
@@ -133,7 +157,7 @@ p {
 
 > allow css to apply rules based on screen size, resolution or device type
 
-```html
+```css
 @media (max-width: 600px) {
   body { font-size: 14px; }
 }
@@ -149,21 +173,49 @@ p {
   - border
   - margin: outer layer
 
+## pseudo-classes
+
+> keywords added to selectors that specify a special state of the selected elements
+
+- `:hover`: when the user hovers over an element
+- `:active`: while the element is being clicked
+- `:focus`: when an element (like an input) gains focus
+
+```css
+button:hover {
+  background-color: blue;
+}
+```
+
+## pseudo-elements
+
+> style specific parts of elements without needing additional markup
+
+- `::before`: inserts content before an element
+- `::after`: inserts content after an element
+- `::first-letter`: styles the first letter of a block
+- `::first-line`: styles the first line of text
+
+```css
+p::first-letter {
+  font-size: 200%;
+  color: red;
+}
+```
+
 ## specificity hierarchy
 
 > defines priority of application of hierarchy in case of conflict
 
-highest priority
+**HIGHEST PRIORITY**
 
 - inline style: `<h1 style="color: pink;">`
 - id selectors: `#navbar`
-- classes and pseudo-classes (?): `.container`
-  - pseudo-class: define a special state of an element
-    - e.g. `p:hover` (mouse over link), `h1:link` (unvisited link)
+- classes and pseudo-classes: `.container`
 - attributes
-- elements and pseudo-elements (?): `h1`
+- elements and pseudo-elements: `h1`
 
-lowest priority
+**LOWEST PRIORITY**
 
 ## flexbox
 
