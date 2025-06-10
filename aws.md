@@ -23,7 +23,155 @@
 - options to manage aws
   - aws management console
   - aws CLI
-  - aws SDK
+  - aws SDK: allows the access and management of aws services programmatically
+
+- reliability: ability to recover from failures and maintain availability
+  - dynamically acquire computing resources to meet demand
+
+- region: geographic area (e.g. `us-east-1` or `sa-east-1`)
+  - each region is completely independent from others
+  - each region has 3 to 6 Availability Zones, with few exceptions
+
+- IAM users: individual
+- IAM groups: collections of IAM users
+- AWS organizations: allows management of multiple AWS accounts under one umbrella
+
+## best practices
+
+- least privilege principle: concede the minimum amount of privileges as possible
+- Don't use root account (except for aws account setup)
+- Don't create multiple aws accounts, create aws users within an aws account
+
+## aws well-architected framework
+
+> set of best practices and guidelines created by amazon to help cloud architects design and operate secure, resilient and efficient infrastructure for their applications
+
+6 pillars:
+
+1. operational excellence
+1. security
+1. reliability
+1. performance efficiency
+1. cost optimization
+1. sustainability
+
+### operational excellence
+
+> running and monitoring systems effectively and continually improving processes and procedures
+
+- IaC
+- automate the creation of annotated documentation after every build
+- make frequent, small, reversible changes
+- anticipate failure
+- learn from all operational failures
+
+#### services
+
+- prepare
+  - CloudFormation
+  - AWS Config
+- operate
+  - CloudFormation
+  - AWS Config
+  - cloudtrail
+  - cloudwatch
+  - aws x-ray (tracy api calls/http requests)
+- evolve
+  - cloudformation
+  - codebuild
+  - codecommit
+  - codedeploy
+  - codepipeline
+
+### security
+
+> protect information, systems and assets
+
+- identity and access management
+- data protection (at rest and in transit)
+- incident response
+- threat detection
+
+#### services
+
+- identity and access management
+  - IAM
+  - STS (Security Token Service): grants temporary credentials to users or services
+  - MFA token
+  - AWS organizations: centrally manage multiple aws accounts
+- detective controls
+  - aws config
+  - CloudTrail
+  - CloudWatch
+- infrastructure protection
+  - CloudFront
+  - VPC
+  - shield
+  - WAF (Web Application Firewall)
+  - Inspector
+- data protection
+  - KMS
+  - S3
+  - ELB
+  - EBS (Elastic Block Store)
+  - RDS
+- incident response
+  - IAM
+  - CloudFormation
+  - CloudWatch events
+
+### reliability
+
+> ensure a system can recover from failures and meet customer demands
+
+- automated recovery
+- failure management
+- distributed system design
+
+#### services
+
+- failure management
+  - CloudFormation
+  - route 53
+  - s3
+
+### performance efficiency
+
+> use computing resources efficiently to meet system requirements as demand changes
+
+- use serverless and managed services where possible
+- monitor and improve performance
+- test different instance types and configurations
+
+### cost optimization
+
+> ability to run systems to deliver business value at the lowest price point
+
+- use cost-effective resources
+  - spot instance
+  - reserved instance
+  - s3 glacier
+- turn off unused resources
+- monitor usage and budget
+  - aws services to track expenditure
+    - budgets
+    - cost and usage report
+    - cost explorer
+    - reserved instance reporting
+
+- match supply and demand
+  - auto scaling
+  - lambda
+- optimize overtime
+  - trusted advisor
+  - cost and usage report
+  - news blog
+
+### sustainability
+
+- optimize energy consumption
+- improve efficiency across system lifecycle
+- use managed services to reduce waste
 
 ## AWS CLI
 
@@ -108,8 +256,14 @@
 
 ### IAM Guidelines and Best Practices
 
-- don’t use the root account (except for aws account setup)
-- don’t create multiple aws accounts, create aws users within an aws account
+- don't use the root account (except for aws account setup)
+- don't create multiple aws accounts, create aws users within an aws account
+- assign users to groups and assign permissions to groups
+  - if you are responsible for the company resources
+    - create a groups with the policy "administrator access" and create an aws user that belongs to this group
+- create strong password policy
+  - use and enforce MFA
+- create and use roles to give permisssions to aws srevices
 
 - dedicated host: your instance runs on a physical server fully dedicated to your use
   - an isolated server with configurations you can control
@@ -193,6 +347,14 @@
 - dedicated instance: your instance runs on single-tenant hardware
 - dedicated host: your instance runs on a physical server with ec2 instance capacity fully dedicated to your use
 
+### EBS (Elastic Block Store)
+
+> provides block-level storage that can be attached to ec2 instances
+
+- tightly integrated with Amazon EC2
+- block-level storage: refers to a type of data storage where data is saved in fixed-sized chunks called blocks
+  - each block has its own address, and the system (like an operating system or a database) can read/write to these blocks individually
+
 ## lambda
 
 > serverless compute service that lets you run code in response to events
@@ -264,6 +426,14 @@ use case example: resize images uploaded to an S3 bucket
 - there are no real folders
 - the key must be unique in the bucket
 
+- compatible databases:
+  - [postgresql](./postgresql.md)
+  - [mysql](./mysql.md)
+  - [mariadb](./mariadb.md)
+  - oracle
+  - microsoft sql server
+  - aurora
+
 ### workflow
 
 1. create a bucket (e.g. `my-app-assets` in `sa-east-1`)
@@ -286,6 +456,24 @@ aws s3 cp s3://my-bucket-name/file.txt .
 # list files
 aws s3 ls s3://my-bucket-name/
 ```
+
+### shared responsibility model
+
+- aws is responsible for
+  - infrastructure
+    - global security
+    - durability
+    - availability
+    - sustain concurrent loss of data in 2 facilities
+  - configuration and vulnerability analysis
+  - compliance validation
+- me
+  - s3 versioning
+  - s3 bucket policies
+  - s3 replication setup
+  - logging and monitoring
+  - s3 storage classes
+  - data encryption at rest and in transit
 
 ## EBS - Elastic Block Store
 
@@ -337,9 +525,30 @@ aws s3 ls s3://my-bucket-name/
 
 > fully managed NoSQL database service that provides fast and predictable performance with seamless scalability
 
+- fully managed by aws
+- key-value database
+- highly available with replication across 3 AZ
+- NoSQL database
+- auto scalability
+- single-digit millisecond latency retrieval
+- integrated with IAM for
+  - security
+  - authorization
+  - administration
+
 ## ElastiCache
 
 > fully managed in-memory caching service that makes it easy to deploy, operate, and scale popular open-source compatible in-memory data stores
+
+- low-latency
+- managed by aws
+  - os maintenance
+  - optimizations
+  - setup
+  - configuration
+  - monitoring
+  - failure recovery
+  - backups
 
 ## Redshift
 
@@ -392,6 +601,20 @@ ns-1234.awsdns-01.co.uk
 
 > content delivery network (CDN) service that delivers data, videos, applications and APIs to customers globally with low latency and high transfer speeds
 
+- CDN (Content Delivery Network): caches static content (images, css, js) at edge locations globally
+- improves content delivery by caching the content at edge locations
+- DDoS protections
+- integrated with
+  - shield
+  - aws web application firewall
+  - s3 bucket
+  - custom origin (http)
+    - which can be:
+      - application load balancer
+      - ec2 instance
+      - s3 website (you must first enable bucket static s3 website)
+      - any http backend you want
+
 ## KMS (Key Management Service)
 
 > managed service that allows you to create and control the encryption keys used to encrypt your data
@@ -406,7 +629,18 @@ ns-1234.awsdns-01.co.uk
 
 ## SQS - Simple Queue Service
 
-> fully managed message queuing service that allows you to decouple and scale microservices, distributed systems, and serverless applications
+> message queuing service that allows you to decouple and scale microservices, distributed systems and serverless applications
+
+- fully managed
+- low latency
+- messages are kept for 14 days
+- messages can be
+  - xml
+  - json
+
+- producer service: produces requests to sqs
+- consumer service: consumers requests from sqs
+- decoupling: when both producers and consumers scale independently from each other
 
 ## Step Functions
 
@@ -416,17 +650,49 @@ ns-1234.awsdns-01.co.uk
 
 > fully managed source control service that makes it easy for teams to host secure and highly scalable private Git repositories
 
-## CodePipeline
-
-> fully managed continuous integration and continuous delivery (CI/CD) service that automates the build, test, and deploy phases of your release process
+- aws' github competitor
+- source control service
+- fully managed
 
 ## CodeBuild
 
 > fully managed build service that compiles source code, runs tests, and produces software packages that are ready to deploy
 
+- similar to github actions and gitlab ci
+- use cases
+  - compile source code
+  - run tests
+  - produce packages that are ready to be deployed (by CodeDeploy, for example)
+- benefits
+
 ## CodeDeploy
 
-> fully managed deployment service that automates software deployments to a variety of compute services such as EC2, Lambda, and on-premises servers
+> fully managed deployment service that automates software deployments to a variety of compute services such as EC2, Lambda and on-premises servers
+
+- works with
+  - ec2 instance
+  - on-premise servers
+- servers/instances must be provisioned and configured ahead of time with CodeDeploy agent
+
+## CodePipeline
+
+> continuous integration and continuous delivery (CI/CD) service that automates the build, test and deploy phases of your release process
+
+- fully managed
+- similar to github actions and gitlab ci
+- compatible with:
+  - CodeCommit
+  - CodeBuild
+  - CodeDeploy
+  - elastic Beanstalk
+  - CloudFormation
+  - github
+  - 3rd party services
+  - custom plugins
+
+## CodeArtifact
+
+## CodeStar
 
 ## ECS (Elastic Container Service)
 
@@ -449,9 +715,47 @@ ns-1234.awsdns-01.co.uk
 - optimize resource utilization
 - get a unified view of operational health
 
+### CloudWatch Alarm
+
+> monitor metric or math expression and perform one or more actions based on it over a specific time periond
+
+> trigger notifications for any metric
+
+- alarm actions
+  - auto scaling: increase/decrease ec2 instances "desired" count
+  - ec2 actions: stop, terminate, reboot or recover ec2 instance
+  - [sns](#sns-simple-notification-service) notifications: send notification into sns topic
+- can choose period on which to evaluate the alarm
+- statistic types: %, max, min, sum, sampleCount, etc
+- alarm states
+  - OK
+  - INSUFICIENT_DATA
+  - ALARM
+
+### CloudWatch Logs
+
+> logging service that collects, monitors and stores log data from various aws resources, applications and services in real time
+
+- log groups: container for logs from similar sources
+- log streams
+
 ## CloudFormation
 
 > fully managed service that allows you to create and manage AWS resources using templates
+
+- template: configuration file that defines infrastructure
+- similar to terraform
+- uses json or yaml
+- easily generate diagrams of your templates
+- no need to define ordering and orchestration
+- use existing templates on the web
+- support for almost all aws resources
+
+### workflow
+
+1. you write a template
+1. upload template to CloudFormation
+1. CloudFormation provisions and manages the resources
 
 ## AMI - Amazon Machine Image
 
@@ -462,6 +766,34 @@ ns-1234.awsdns-01.co.uk
 ## Elastic Beanstalk
 
 > fully managed service that allows you to deploy and manage web applications and services
+
+- developer is only responsible for the application
+- PaaS
+- uses CloudFormation to provision the application
+- managed service
+  - instance configuration and OS is handled by Beanstalk
+  - deployment strategy is configurable but managed by Beanstalk
+- load balancing and auto-scaling
+- 3 architecture models
+  - singe instance deployment
+  - LB + ASG
+    - good for production or pre-production web applications
+  - ASG only
+    - good for non-web apps in productions (workers, etc)
+
+- support for:
+  - go
+  - java se
+  - node.js
+  - php
+  - python
+  - ruby
+  - single container docker
+  - multi-container docker
+  - pre-configured docker
+- CloudWatch integration for monitoring
+  - checks app health
+  - publishes health events
 
 ## Kinesis
 
@@ -486,6 +818,18 @@ ns-1234.awsdns-01.co.uk
 ## Athena
 
 > interactive query service that allows you to analyze data in Amazon S3 using standard SQL
+
+- uses sql to query files
+- analyze data in s3 using serverless sql
+- supports
+  - csv, json, orc, avro, parquet
+- use compressed or columns data to reduce cost
+
+- use cases:
+  - business intelligence
+  - analytics
+  - reporting
+  - analyza and query vpc flow logs
 
 ## EMR - Elastic MapReduce
 
@@ -537,3 +881,5 @@ sudo chmod 666 /var/run/docker.sock
   - resources are shared and coordinated to achieve a common goal
 - grid: distributed computing system that connects multiple computers or servers to work together on a common task or problem
   - decentralized
+- hybrid service: service that can operate both in the cloud and on-premises
+
