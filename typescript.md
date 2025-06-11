@@ -19,7 +19,13 @@
 
 ## basic syntax
 
-examples:
+- `boolean`
+- `string`
+- `number`
+- `bigint`
+- `null`
+- `undefined`
+- `symbol`
 
 ```typescript
 let isDone: boolean = false;
@@ -70,6 +76,7 @@ class Animal {
 let dog = new Animal("Dog");
 dog.speak(); // Output: Dog makes a noise.
 ```
+
 ## interface and type
 
 - `interface` and `type` are used to define custom types
@@ -166,6 +173,26 @@ console.log(getArea(triangle));   // Output: 6
 ```typescript
 export const name: string = "Alice";
 import { name } from './moduleFile';
+```
+
+```typescript
+// default import
+import React from 'react';
+import myFunction from './utils';
+
+// named imports
+import { useState, useEffect } from 'react';
+import { add, subtract } from './math';
+
+// ranaming imports
+import { add as addition } from './math';
+
+// import all
+import * as mathUtils from './math';
+mathUtils.add(2, 3);
+
+// default + named imports
+import React, { useState } from 'react';
 ```
 
 ## cli
