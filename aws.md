@@ -14,7 +14,7 @@
 - infrastructure: the physical or virtual resources that support the operation of a system
   - e.g. servers, storage, network, databases, etc
 
-- pricing of AWS
+- types of pricing in AWS
   - pay for compute time
   - pay for data stored in the cloud
   - pay only for data transfer out of the cloud
@@ -27,20 +27,27 @@
 
 - reliability: ability to recover from failures and maintain availability
   - dynamically acquire computing resources to meet demand
+- high availability: design and implementation of systems that are resilient to failures and can continue operating with minimal downtime
+  - key characteristics
+    - redundancy
+    - failover mechanisms
+    - geographic distribution
+    - health monitoring
+    - scalability and elasticity
 
-- region: geographic area (e.g. `us-east-1` or `sa-east-1`)
+- region: separate geographic areas (e.g. `us-east-1` or `sa-east-1`)
   - each region is completely independent from others
   - each region has 3 to 6 Availability Zones, with few exceptions
+    - Availability Zone (AZ): isolated locations within each region
 
 - IAM users: individual
 - IAM groups: collections of IAM users
 - AWS organizations: allows management of multiple AWS accounts under one umbrella
+  - AWS organizations Service Control Policies (SCPs): centrally manage and restrict permissions across all accounts
 
-## best practices
-
-- least privilege principle: concede the minimum amount of privileges as possible
-- Don't use root account (except for aws account setup)
-- Don't create multiple aws accounts, create aws users within an aws account
+- shared responsibility model: the line of responsibility shifts based on the level of abstraction provided by the service
+  - aws is responsible for security **OF** the cloud
+  - I am responsible for security **IN** the cloud
 
 ## aws well-architected framework
 
@@ -55,6 +62,12 @@
 1. cost optimization
 1. sustainability
 
+- well-architected tool: free tool to review your architectures against the 6 pillars of well-architected framework
+  - how to use:
+    - select your workload and answer questions
+    - review your answers against the 6 pillars
+    - obtain advise
+
 ### operational excellence
 
 > running and monitoring systems effectively and continually improving processes and procedures
@@ -64,6 +77,9 @@
 - make frequent, small, reversible changes
 - anticipate failure
 - learn from all operational failures
+
+> [!TIP]
+> operational excellence is the devops pillar
 
 #### services
 
@@ -143,6 +159,25 @@
 - monitor and improve performance
 - test different instance types and configurations
 
+#### services
+
+- selection
+  - auto scaling
+  - lambda
+  - ebs
+  - s3
+  - rds
+- review
+  - cloudformation
+  - aws news blog
+- monitoring
+  - cloudwatch
+- tradeoffs
+  - rds
+  - elasticache
+  - snowball
+  - cloudfront
+
 ### cost optimization
 
 > ability to run systems to deliver business value at the lowest price point
@@ -163,7 +198,8 @@
   - auto scaling
   - lambda
 - optimize overtime
-  - trusted advisor
+  - trusted advisor: analyzes your aws account provides recommendations to optimize your aws environment
+    - improves security, performance, fault tolerance, service limits and cost optimization
   - cost and usage report
   - news blog
 
@@ -247,12 +283,24 @@
   - session duration
   - assume role
 
+### shared responsibility
+
+- aws
+  - infrastructure
+  - configuration and vulnerability analysis
+  - compliance validation
+- me
+  - users, groups, roles, policies, management and monitoring
+  - enable MFA on all accounts
+  - rotate all keys often
+  - use iam tools to apply appropriate permissions
 
 ### IAM Security Tools
 
 - IAM Credentials Report (account-level)
 - IAM Access Advisor (user-level)
-  - Use this information to revise your policies (Least privilege principle)
+  - use this information to revise your policies (least privilege principle)
+- IAM policy simulator: test and debug IAM policies to check what actions are allowed/denied for specific users, groups, roles
 
 ### IAM Guidelines and Best Practices
 
@@ -272,18 +320,20 @@
 
 > facilitates managing network traffic
 
-- acts as a "firewall" for EC2 instances
-- regulate:
+- acts as a "firewall"
+- define:
   - access to ports
   - authorized IP ranges (IPv4 and IPv6)
   - control of inbound and outbound network traffic
 - can be attached to multiple instances
 - locked down to a region/VPC combination
 - lives "outside" the EC2
-  - if traffic is blocked, the EC2 instance won’t see it
-- it's good to keep 1 separate security group for SSH access
-- if your application is not accessible (time out), then it's a security group issue
-- if you application gives a "connection refused" error, then it's an application error or it's not launched
+  - if traffic is blocked, the EC2 instance won't see it
+
+> [!TIP]
+> it's good to keep 1 separate security group for SSH access.
+> if your application is not accessible (time out), then it's a security group issue.
+> if you application gives a "connection refused" error, then it's an application error or it's not launched.
 
 > [!IMPORTANT]
 > all inbound traffic is blocked by default
@@ -317,7 +367,7 @@
   - SSH into the instance:
     - `ssh -i <file>.pem ec2-user@<public_IP>`
 
-## EC2 - Elastic Compute Cloud
+## EC2 (Elastic Compute Cloud)
 
 > compute service that allows you to launch virtual servers in the cloud
 
@@ -336,16 +386,84 @@
 1. configure security group (firewall rules)
 1. launch (with a key pair for SSH)
 
-- pricing models
-  - on-demand: ideal for short-term use, expensive
-  - reserved: commit to 1 or 3 years, cheaper
-  - spot instances: bid for unused capacity, cheapest
+- inbound traffic: instance <= traffic = outside
+- outbound traffic: instance = traffic => outside
+
+### shared responsibility model
+
+- aws
+  - infrastructure (global network security)
+  - isolation on physical host
+  - replacing faulty hardware
+  - compliance validation
+- me
+  - security groups rules
+  - OS patches and updates
+  - software and utilities installed on the EC2 instance
+  - IAM roles assigned to EC2 instances
+  - IAM user access management
+  - data security on your instance
+
+### purchasing options
+
+- on-demand: ideal for short-term use, expensive
+  - predictable pricing
+  - highest cost but no upfront payment
+  - no long-term commitment
+- reserved: commit to 1 or 3 years, cheaper
+  - long workloads
+  - up to 72% discount compared to on-demand
+- spot instances: bid for unused capacity, cheapest
+  - no guaranteed availability, aws can terminate them when the spot price exceeds your bid price
+- savings plans
+  - commitment to an amount of usage
+  - discount based on long-term usage
+- capacity reservations
+- dedicated instances
+- dedicated hosts
+
+### sizing and configuration options
+
+- os
+- cpu
+- ram
+- storage space
+  - network-attached (ebs and efs)
+  - hardware (ec2 instance store)
+- network card
+- firewall rules: security group
+- ec2 user data: script that is launched at the first start of an instance
+
+#### right sizing
+
+> process of looking at deployed instances and identifying opportunities to eliminate or downsize without compromising capacity or other requirements, which results in lower costs
+
+- when to right size:
+  - before a cloud migration
+  - continuously after the cloud onboarding process (requirements change over time)
+
+- tools that can help
+  - cloudwatch
+  - cost explorer
+  - trusted advisor
 
 ### ec2 instance tenancy
 
 - shared (default): multiple aws accounts may share the same physical hardware
-- dedicated instance: your instance runs on single-tenant hardware
-- dedicated host: your instance runs on a physical server with ec2 instance capacity fully dedicated to your use
+- dedicated instance: instance runs on single-tenant hardware
+- dedicated host: instance runs on a physical server with ec2 instance capacity fully dedicated to your use
+
+## ec2 image builder
+
+> automate the creation, testing and distribution of AMIs or container images
+
+- can be run on a schedule (weekly, whenever packages are updated, etc)
+
+1. ec2 image builder initiates temporary builder ec2 instance
+1. temporary builder ec2 instance builds the image
+1. once the image is built, it is saved as an AMI
+1. new ec2 instance is launched to test ec2 instance, if it fails, the pipeline stops here
+1. if the test is successful, the AMI is made available to other aws regions or accounts
 
 ### EBS (Elastic Block Store)
 
@@ -384,7 +502,7 @@ use case example: resize images uploaded to an S3 bucket
 1. aws Lambda receives the event, processes the image (e.g. resizes it)
 1. stores the output back to S3
 
-## S3 - Simple Storage Service
+## S3 (Simple Storage Service)
 
 > scalable object storage service that allows you to store and retrieve data from anywhere on the web
 
@@ -475,11 +593,11 @@ aws s3 ls s3://my-bucket-name/
   - s3 storage classes
   - data encryption at rest and in transit
 
-## EBS - Elastic Block Store
+## EBS (Elastic Block Store)
 
 > block storage service that allows you to create and attach storage volumes to EC2 instances
 
-## VPC - Virtual Private Cloud
+## VPC (Virtual Private Cloud)
 
 > virtual network that allows you to launch AWS resources in a logically isolated section of the cloud
 
@@ -517,7 +635,7 @@ aws s3 ls s3://my-bucket-name/
   - e.g. private ec2 can download updates or access external APIs without being publicly exposed
   - usually are placed in a public subnet and route private subnet traffic through it
 
-## RDS - Relational Database Service
+## RDS (Relational Database Service)
 
 > managed database service that allows you to set up, operate, and scale relational databases in the cloud
 
@@ -525,8 +643,8 @@ aws s3 ls s3://my-bucket-name/
 
 > fully managed NoSQL database service that provides fast and predictable performance with seamless scalability
 
-- fully managed by aws
 - key-value database
+- high availability
 - highly available with replication across 3 AZ
 - NoSQL database
 - auto scalability
@@ -535,6 +653,21 @@ aws s3 ls s3://my-bucket-name/
   - security
   - authorization
   - administration
+
+### DynamoDB tables
+
+> data storage
+
+- read/write data
+- auto scaling
+- high availability
+
+### DynamoDB streams
+
+> change log for table
+
+- captures real-time changes: inserts, updates, deletes
+- it's optional
 
 ## ElastiCache
 
@@ -623,11 +756,11 @@ ns-1234.awsdns-01.co.uk
 
 > fully managed service that makes it easy for developers to create, publish, maintain, monitor, and secure APIs at any scale
 
-## SNS - Simple Notification Service
+## SNS (Simple Notification Service)
 
 > fully managed messaging service that allows you to send notifications to a large number of recipients
 
-## SQS - Simple Queue Service
+## SQS (Simple Queue Service)
 
 > message queuing service that allows you to decouple and scale microservices, distributed systems and serverless applications
 
@@ -698,11 +831,11 @@ ns-1234.awsdns-01.co.uk
 
 > fully managed container orchestration service that allows you to run, stop, and manage Docker containers on a cluster of EC2 instances
 
-## ECR - Elastic Container Registry
+## ECR (Elastic Container Registry)
 
 > fully managed Docker container registry that makes it easy to store, manage, and deploy Docker container images
 
-## EKR - Elastic Kubernetes Service
+## EKR (Elastic Kubernetes Service)
 
 > fully managed Kubernetes service that allows you to run, manage, and scale containerized applications using Kubernetes
 
@@ -757,11 +890,22 @@ ns-1234.awsdns-01.co.uk
 1. upload template to CloudFormation
 1. CloudFormation provisions and manages the resources
 
-## AMI - Amazon Machine Image
+## AMI (Amazon Machine Image)
 
 > a template that contains a software configuration (e.g. operating system, application server, applications) that is used to launch EC2 instances
 
 > complete snapshot of a virtual machine
+
+| Feature        | **AMI**                               | **Docker Image**                       |
+| -------------- | ------------------------------------- | -------------------------------------- |
+| **Used for**   | Launching **EC2 virtual machines**    | Launching **containers**               |
+| **Includes**   | OS, configuration, apps               | App + its dependencies (usually no OS) |
+| **Managed by** | EC2 (VMs)                             | Docker Engine / ECS / Kubernetes       |
+| **Isolation**  | Full virtual machine (hardware-level) | Process-level isolation                |
+| **Size**       | Typically large (GBs)                 | Typically small (MBs)                  |
+| **Boots**      | An entire VM                          | A single app or service                |
+| **Boot Time**  | Slower (typically 30s–2min)           | Fast (usually <1s)                     |
+| **Why?** | Full virtual machine boots up: OS, kernel, networking, etc. | Container shares host OS and starts as a process |
 
 ## Elastic Beanstalk
 
@@ -831,7 +975,7 @@ ns-1234.awsdns-01.co.uk
   - reporting
   - analyza and query vpc flow logs
 
-## EMR - Elastic MapReduce
+## EMR (Elastic MapReduce)
 
 > big data processing service that allows you to run Apache Hadoop, Spark, and other big data frameworks on AWS
 
@@ -848,29 +992,123 @@ sudo usermod -a -G docker ec2-user
 sudo chmod 666 /var/run/docker.sock
 ```
 
+## aws knowledge center
+
+- contains most frequent and common questions and requests about:
+  - popular services
+  - compute
+  - IoT
+  - analytics
+  - customer engagement
+  - management and governance
+  - application integration
+  - database
+  - migration and trasfer
+  - account and billing management
+  - developer tools
+  - networking and content delivery
+  - business applications
+  - front-end web and mobile
+  - security, identity and compliance
+
+## STS (Security Token Service)
+
+> create temporary, short-term credentials to access your aws resources with limited privileges
+
+## cognito
+
+> create a database of users for your mobile and web applications
+
+- similar to auth0 and firebase
+- identity for web/mobile application's users
+- don't create an IAM user for the clients of your application, use Cognito
+- instead of giving your app's users aws iam accounts (which are meant for admins and systems), you use cognito to manage their identities securely
+- also capable of signing in with google/facebook/twitter accounts
+
+## aws directory services
+
+> suite of managed directory services that makes it easy to set up, manage and scale directory services in the AWS Cloud
+
+- directory services: systems that manage information about users, computers, printers and other resources in the network
+  - usually on on-premises systems
+- can integrate with microsoft active directory services
+- microsoft active directory: directory service for windows domain networks
+  - windows domain network: type of computer network in that manages user accounts, computers and other resources
+    - features
+      - centralized authentication: users log in with one set of credentials across all computers in the domain
+      - domain controller: special server that runs active directory and handles logins, access rights and security policies
+
+## aws iam identity center
+
+> easy single login
+
+- one login for all your
+  - aws accounts in aws organizations
+  - business cloud applications (e.g. salesforce, box, microsoft 365)
+  - ec2 windows instances
+
 ## pricing
 
 ### data transfer
 
 - inbound (data going into aws services): free
 - within the same Availability Zone (AZ): free
-- from aws to the internet (first 100GB/month): Free
+- from aws to the internet (first 100GB/month): free
 
 ## tutorials
 
 - [setup kubernetes in ec2 instance tutorial](https://varunmanik1.medium.com/setting-up-a-kubernetes-cluster-on-aws-ec2-with-ubuntu-22-04-lts-and-kubeadm-5c54930a4659)
 
-## tools
+## networking costs per GB
 
-- cert-manager to automate generation of certificates
-- kubeadmn: set up and manage kubernetes clusters easily
-- k3s: easy install kubernetes
+> [!TIP]
+> use private IP to save money and better network performance.
+> use same AZ for maximum savings (at the cost of high availability)
+
+TODO
+
+## billing tools
+
+- pricing calculator: estimates costs in the cloud
+
+- tracking costs in the cloud
+  - billing dashboard
+  - cost allocation tags
+  - cost and usage reports
+  - cost explorer
+- monitoring agains costs plans
+  - billing alarms
+
+TODO
+
+## best practices
+
+### account
+
+- least privilege principle: concede the minimum amount of privileges as possible
+- don't use root account (except for aws account setup)
+- don't create multiple aws accounts, create aws users within an aws account
+- operate multiple accounts using aws organizations
+- use SCP (Service Control Policies) to restrict account power
+- easily setup multiple accounts with best-practices with AWS Control Tower
+- use tags and cost allocation tags for easy management and billing
+- iam guidelines: MFA, least-privilege, password policy, password rotation
+- config to record all resources configurations and compliance over time
+- cloudformation to deploy stacks acrosss accounts and region
+- trusted advisor to get insights, choose a support plan adapted to your needs
+  - support plan: subscription for trusted advisor features
+    - basic/free, developer, business, enterprise
+- send service logs and access logs to s3 or cloudwatch logs
+  - if your account is compromised: change the root password, delete and rotate all passwords/keys, contact the aws support
+- cloudtrail to record api calls made within your account
+- if your account is compromised: change the root password, delete and rotate all passwords/keys, contact AWS support
 
 ---
 
 - serverless: server doesn't requires provisioning and scaling
   - e.g. aws lambda, azure functions, google cloud functions
-- Read replica: is a copy of a database that can be used to offload read operations from the primary database
+- read replica: is a copy of a database that can be used to offload read operations from the primary database
+  - doesn't contribute to high availability, since they are all located in a single AZ
 - server provisioning: the process of setting up physical or virtual hardware; installing and configuring software, such as the operating system and applications; and connecting it to middleware, network, and storage components
 - failover: ability of a system or service to automatically switch to a backup or secondary system when the primary system becomes unavailable or experiences a failure. This is important for ensuring high availability and minimizing downtime for critical applications and services.
 - VPC (Virtual Private Cloud): virtual network infrastructure that allows users to provision a logically isolated section where they can launch AWS resources in a virtual network
@@ -883,3 +1121,4 @@ sudo chmod 666 /var/run/docker.sock
   - decentralized
 - hybrid service: service that can operate both in the cloud and on-premises
 
+- what is aws patch manager?
