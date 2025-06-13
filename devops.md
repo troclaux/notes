@@ -1,7 +1,11 @@
+[github actions](./github_actions.md)
+[docker](./docker.md)
+[kubernetes](./kubernetes.md)
+[ansible](./ansible.md)
 
 # DevOps
 
-> set of practices that combines software development (Dev) and IT operations (Ops) to shorten the development lifecycle while delivering features, fixes, and updates frequently and reliably
+> set of practices that combines software development (Dev) and IT operations (Ops) to shorten the development lifecycle while delivering features, fixes and updates frequently and reliably
 
 - combination of culture, practices and tools that increases an organization's ability to deliver applications and services
 
@@ -20,7 +24,16 @@
       - verify each integration with automated builds and tests to detect problems early
     - Continuous Deployment/Delivery (CD): process of automatically deploying code changes to production environment after the code has been built and tested
   - version control
-  - infrastructure as code
+  - infrastructure as code: practice of managing computing infrastructure with configuration files instead of manually
+    - benefits
+      - consistency: ensures that environments are configured the same way every time, eliminating manual errors
+      - repeatability: spin up identical environments (e.g. dev, staging, prod) easily
+      - faster provisioning
+      - track changes: allow rollbacks and audit history
+      - collaboration: teams can review and approve infrastructure changes like application code via pull requests
+      - automation
+      - documentation
+      - clear configuration
   - microservices architecture: architecture where a large application is split into smaller, independent services
   - monitoring and logging
   - security integration (DevSecOps)
@@ -44,11 +57,11 @@
   - monitoring: prometheus, grafana
 
 - good practices for a CI/CD pipeline:
-  - Deterministic builds: The same code should always produce the same build
-  - Fast builds: The faster the better. This makes getting bug fixes and new features out to users faster
-  - Portable: This is why I love when the majority of a CI/CD pipeline is just bash scripts
+  - deterministic builds: The same code should always produce the same build
+  - fast builds: The faster the better. This makes getting bug fixes and new features out to users faster
+  - portable: This is why I love when the majority of a CI/CD pipeline is just bash scripts
     - easier to run locally and on any CI/CD platform
-  - Fully automated: The fewer manual steps, the better
+  - fully automated: The fewer manual steps, the better
     - less error-prone
 
 ## introducing devops in workplace
