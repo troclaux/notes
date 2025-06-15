@@ -10,13 +10,13 @@
 
 ## compiled vs interpreted
 
-- compiled languages: C, C++, Golang, Rust
-  - source code is transformed into machine code (binary code) before it is executed
+- compiled languages: source code is transformed into machine code (binary code) before it is executed
+  - e.g. C, C++, Golang, Rust
   - compiled binary is specific to the architecture and OS it was compiled for
   - a machine doesn't need the compiler to run the compiled executable
   - faster execution time
-- interpreted languages: JavaScript, Python, Ruby
-  - source code is executed line-by-line by an interpreter at runtime
+- interpreted languages: source code is executed line-by-line by an interpreter at runtime
+  - e.g. JavaScript, Python, Ruby
   - as long as the OS has an interpreter, the code can be run on any platform
   - a machine needs the interpreter to run the source code
   - slower execution time
@@ -28,8 +28,7 @@
 > compile time: period when the source code is converted into machine code
 > runtime: period when the program is actually running after it has been compiled
 
-- interpreted languages typically don't have a compile time phase
-  - instead, code is parsed and executed directly at runtime
+- interpreted languages typically skip full compilation to machine code, but may compile to bytecode before execution (e.g. `.py` => `.pyc` files)
 - compile time happens before runtime for compiled languages
 
 ## compilation process
@@ -47,9 +46,11 @@ for example, this is how a C program is compiled and executed:
 
 > [!NOTE]
 > the conversion of file extensions above is specific to C
-> the assembler receives assembly code (input) and converts it into machine code (output)
+> the assembler receives assembly code (input) and converts it into object code (output)
 > the linker receives object files (input) and combines them into an executable file (output)
 > the loader loads the executable file into memory and prepares it for execution
+
+- object code: partially compiled machine code but not yet linked into a complete executable
 
 - other languages' compiler/interpreter will translate to different types of files
   - for example, in python: file.py => bytecode => file.pyc
