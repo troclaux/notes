@@ -498,6 +498,13 @@ sshfs user@remote_host:/home/user/shared /mnt/remote_share
 fusermount -u ~/remote
 ```
 
+## fc
+
+> open the most recent command for editing and then run it
+
+- edit and run a command from history: `fc <number>`
+  - use `history` or control+r to find the number
+
 ## troubleshooting commands
 
 - process status: `ps aux`, `top`, `htop`, `systemctl status`
