@@ -56,383 +56,12 @@
     - you protect what you do inside the cloud
       - files, data, etc
 
-## aws well-architected framework
-
-> set of best practices and guidelines created by amazon to help cloud architects design and operate secure, resilient and efficient infrastructure for their applications
-
-6 pillars:
-
-1. operational excellence
-1. security
-1. reliability
-1. performance efficiency
-1. cost optimization
-1. sustainability
-
-- well-architected tool: free tool to review your architectures against the 6 pillars of well-architected framework
-  - how to use:
-    - select your workload and answer questions
-    - review your answers against the 6 pillars
-    - obtain advise
-
-### operational excellence
-
-> running and monitoring systems effectively and continually improving processes and procedures
-
-- IaC
-- automate the creation of annotated documentation after every build
-- make frequent, small, reversible changes
-- anticipate failure
-- learn from all operational failures
-
-> [!TIP]
-> operational excellence is the devops pillar
-
-#### services
-
-- prepare
-  - CloudFormation
-  - AWS Config
-- operate
-  - CloudFormation
-  - AWS Config
-  - cloudtrail
-  - cloudwatch
-  - aws x-ray (tracy api calls/http requests)
-- evolve
-  - cloudformation
-  - codebuild
-  - codecommit
-  - codedeploy
-  - codepipeline
-
-### security
-
-> protect information, systems and assets
-
-- identity and access management
-- data protection (at rest and in transit)
-- incident response
-- threat detection
-
-#### services
-
-- identity and access management
-  - IAM
-  - STS (Security Token Service): grants temporary credentials to users or services
-  - MFA token
-  - AWS organizations: centrally manage multiple aws accounts
-- detective controls
-  - aws config
-  - CloudTrail
-  - CloudWatch
-- infrastructure protection
-  - CloudFront
-  - VPC
-  - shield
-  - WAF (Web Application Firewall)
-  - Inspector
-- data protection
-  - KMS
-  - S3
-  - ELB
-  - EBS (Elastic Block Store)
-  - RDS
-- incident response
-  - IAM
-  - CloudFormation
-  - CloudWatch events
-
-### reliability
-
-> ensure a system can recover from failures and meet customer demands
-
-- automated recovery
-- failure management
-- distributed system design
-
-#### services
-
-- failure management
-  - CloudFormation
-  - route 53
-  - s3
-
-### performance efficiency
-
-> use computing resources efficiently to meet system requirements as demand changes
-
-- use serverless and managed services where possible
-- monitor and improve performance
-- test different instance types and configurations
-
-#### services
-
-- selection
-  - auto scaling
-  - lambda
-  - ebs
-  - s3
-  - rds
-- review
-  - cloudformation
-  - aws news blog
-- monitoring
-  - cloudwatch
-- tradeoffs
-  - rds
-  - elasticache
-  - snowball
-  - cloudfront
-
-### cost optimization
-
-> ability to run systems to deliver business value at the lowest price point
-
-- use cost-effective resources
-  - spot instance
-  - reserved instance
-  - s3 glacier
-- turn off unused resources
-- monitor usage and budget
-  - aws services to track expenditure
-    - budgets
-    - cost and usage report
-    - cost explorer
-    - reserved instance reporting
-
-- match supply and demand
-  - auto scaling
-  - lambda
-- optimize overtime
-  - trusted advisor: analyzes your aws account provides recommendations to optimize your aws environment
-    - improves security, performance, fault tolerance, service limits and cost optimization
-  - cost and usage report
-  - news blog
-
-### sustainability
-
-- optimize energy consumption
-- improve efficiency across system lifecycle
-- use managed services to reduce waste
-
 ## AWS CLI
 
 > manage aws resources with CLI commands
 
 - list all IAM users in your AWS account: `aws iam list-users`
 - get secret from aws secrets manager: `aws secretsmanager get-secret-value --secret-id peso-env-secret --region sa-east-1`
-
-## IAM (Identity and Access Management)
-
-> manage access to AWS services and resources securely
-
-### Policy structure
-
-```json
-{
-  "Version": "2012-10-17",
-  "Id": "Policy12345",
-  "Statement": [
-    {
-      "Sid": "AllowListBuckets",
-      "Effect": "Allow",
-      "Action": "s3:ListBucket",
-      "Resource": "arn:aws:s3:::example-bucket"
-    },
-    {
-      "Sid": "AllowGetObjects",
-      "Effect": "Allow",
-      "Action": "s3:GetObject",
-      "Resource": "arn:aws:s3:::example-bucket/*"
-    }
-  ]
-}
-```
-
-- `Version`: the version of the policy language, defined by date
-- `ID`: optional identifier for the policy
-- `Statement`: contains individual permission rules
-  - `"Sid": "AllowListBuckets"` (Statement ID): unique identifier for this permission block
-  - `Effect`: defines if this permission is allowed or not
-  - `"Action": "s3:GetObject"`: allows the use to list objects in the root of the specified S3 bucket
-  - `Resource`: list of resources to which the actions apply
-  - `Condition`: conditions for when this policy is in effect
-
-- IAM Password Policy: You can decide the requirements for password creation
-
-- MFA (Multi Factor Authentication): multi-step account login process that requires users to enter more information than just a password
-  - e.g. password && (code sent to email || secret question || fingerprint scan)
-
-- Options to access AWS:
-  - AWS Management Console
-  - AWS Command Line Interface (CLI)
-  - AWS Software Developer Kit (SDK)
-    - Used whenever you want to call APIs
-
-- IAM Policy: set of permissions for aws resources
-  - a policy can exist without a role, but a role can't do anything useful without a policy
-- IAM Roles: identity that grants temporary permissions to aws services or users to perform tasks
-  - set of IAM policies
-
-### IAM role
-
-> identity in aws that you can assume temporarily to get specific permissions
-
-- use cases
-  - grant temporary access to aws services without long-term credentials
-  - assign permissions to services like ec2 or lambda
-  - to switch roles across accounts securely
-
-- key components of a role:
-  - trust policy: defines who can assume the role (e.g. ec2, lambda, another account)
-  - permissions policy defines what the role can do (e.g. access s3, write logs)
-  - session duration
-  - assume role
-
-### shared responsibility
-
-- aws
-  - infrastructure
-  - configuration and vulnerability analysis
-  - compliance validation
-- me
-  - users, groups, roles, policies, management and monitoring
-  - enable MFA on all accounts
-  - rotate all keys often
-  - use iam tools to apply appropriate permissions
-
-### IAM Security Tools
-
-- IAM Credentials Report (account-level)
-- IAM Access Advisor (user-level)
-  - use this information to revise your policies (least privilege principle)
-- IAM policy simulator: test and debug IAM policies to check what actions are allowed/denied for specific users, groups, roles
-
-### IAM Guidelines and Best Practices
-
-- don't use the root account (except for aws account setup)
-- don't create multiple aws accounts, create aws users within an aws account
-- assign users to groups and assign permissions to groups
-  - if you are responsible for the company resources
-    - create a groups with the policy "administrator access" and create an aws user that belongs to this group
-- create strong password policy
-  - use and enforce MFA
-- create and use roles to give permisssions to aws srevices
-
-- dedicated host: your instance runs on a physical server fully dedicated to your use
-  - an isolated server with configurations you can control
-
-## VPC (Virtual Private Cloud)
-
-> virtual network that allows you to launch AWS resources in a logically isolated section of the cloud
-
-- allows management over IP addresses, subnets, routing and security
-- must have a CIDR block
-- allows the creation of public and private subnets
-  - subnet: smaller network inside larger network
-    - helps organize and manage traffic in a network by dividing it into chunks
-    - subnets allow better allocation of IPs from a larger IP range
-    - each subnet in aws is associated with one route table
-    - use CIDR notation (e.g. `192.168.1.0/24`)
-
-- **public vs private subnet**
-  - public subnets have route to internet gateway
-    - this means:
-      - instances can send traffic to the internet
-      - instances can receive traffic from the internet, if security rules allows it
-  - private subnets do not have route to internet gateway
-    - this means:
-      - instances CANNOT initiate outbound internet traffic (unless via NAT gateway)
-      - instances CANNOT receive ANY inbound traffic directly from the internet
-
-- route table: defines how traffic flows inside VPC
-  - contains rules like:
-    - to reach the internet (0.0.0.0/0), go through the Internet Gateway
-    - to reach the private subnet, stay local
-  - each subnet is associated with a route table
-  - only one route table per subnet is allowed
-
-| Feature    | Route Tables       | Security Groups            |
-| ---------- | ------------------ | -------------------------- |
-| Scope      | Subnet-level       | Instance-level             |
-| Purpose    | Direct traffic     | Allow or deny traffic      |
-| Layer      | Layer 3 (Network)  | Layer 4 (Transport)        |
-| Stateful?  | No                 | Yes                        |
-| Controls   | Where traffic goes | Whether traffic is allowed |
-| Applied To | Subnets            | EC2 instances, ENIs        |
-
-- internet gateway: allows public subnets to access the internet and receive traffic from it
-  - attached to a VPC
-  - required for ec2 instances in public subnets to:
-    - download packages
-    - be accessed via SSH or a browser
-- NAT (Network Address Translation) gateway: allows private subnets to access the internet, but prevents the internet from initiating a connection back
-  - e.g. private ec2 can download updates or access external APIs without being publicly exposed
-  - usually are placed in a public subnet and route private subnet traffic through it
-
-### vpc flow logs
-
-> feature that captures information about the ip traffic going to and from network interfaces
-
-- network interface: virtual network card that connects ec2 instances and other aws resources to a vpc network
-- what the vpc flow logs capture
-  - source ip and destination ip
-  - source port and destination port
-  - protocol (tcp, udp)
-  - traffic acceptance (accept or reject)
-  - bytes transferred
-
-## security groups
-
-> facilitates managing network traffic
-
-- acts as a "firewall"
-- define:
-  - access to ports
-  - authorized IP ranges (IPv4 and IPv6)
-  - control of inbound and outbound network traffic
-- can be attached to multiple instances
-- locked down to a region/VPC combination
-- lives "outside" the EC2
-  - if traffic is blocked, the EC2 instance won't see it
-
-> [!TIP]
-> it's good to keep 1 separate security group for SSH access.
-> if your application is not accessible (time out), then it's a security group issue.
-> if you application gives a "connection refused" error, then it's an application error or it's not launched.
-
-> [!IMPORTANT]
-> all inbound traffic is blocked by default
-> all outbound traffic is authorized by default
-
-- Ports:
-  - 22 = SSH (Secure Shell): log into a linux instance
-  - 3389 = RDP (Remote Desktop Protocol): log into a windows instance
-  - 21 = FTP (File Transfer Protocol)
-  - 22 = SFTP (Secure File Transfer Protocol)
-  - 80 = HTTP : access unsecured websites
-  - 443 = HTTPS: access secured websites
-
-#### security groups vs firewalls
-
-| Feature | AWS Security Groups | Traditional Firewalls (e.g., `ufw`, `iptables`) |
-|--------|--------------------------|-----------------------------------------------------|
-| Level | AWS-level (cloud) | OS-level (server) |
-| Type | Virtual firewall for EC2 and services | Software firewall on the OS |
-| Rules | Stateful (return traffic automatically allowed) | Stateful or stateless |
-| Scope | Applied per EC2 instance | Applies to whole server |
-| Use Case | Allow inbound on port 22 from your IP, or 443 to everyone | Block/allow ports directly on EC2 OS |
-
-### SSH Access
-
-- Create an identity file `.pem` for SSH:
-  - EC2 Dashboard > Key Pair > Create Key Pair
-  - Copy the public IP of the instance (used in the SSH command)
-  - Move the `.pem` file to a secure location and restrict permissions:
-    - `chmod 0400 <file>.pem`
-  - SSH into the instance:
-    - `ssh -i <file>.pem ec2-user@<public_IP>`
 
 ## EC2 (Elastic Compute Cloud)
 
@@ -560,6 +189,269 @@
 
 - it's recommended to detach ebs volume to do a snapshot
 - use ebs snapshots as a buffer to copy ebs volumes across AZ
+
+## IAM (Identity and Access Management)
+
+> manage access to AWS services and resources securely
+
+### Policy structure
+
+```json
+{
+  "Version": "2012-10-17",
+  "Id": "Policy12345",
+  "Statement": [
+    {
+      "Sid": "AllowListBuckets",
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::example-bucket"
+    },
+    {
+      "Sid": "AllowGetObjects",
+      "Effect": "Allow",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::example-bucket/*"
+    }
+  ]
+}
+```
+
+- `Version`: the version of the policy language, defined by date
+- `ID`: optional identifier for the policy
+- `Statement`: contains individual permission rules
+  - `"Sid": "AllowListBuckets"` (Statement ID): unique identifier for this permission block
+  - `Effect`: defines if this permission is allowed or not
+  - `"Action": "s3:GetObject"`: allows the use to list objects in the root of the specified S3 bucket
+  - `Resource`: list of resources to which the actions apply
+  - `Condition`: conditions for when this policy is in effect
+
+- IAM Password Policy: You can decide the requirements for password creation
+
+- MFA (Multi Factor Authentication): multi-step account login process that requires users to enter more information than just a password
+  - e.g. password && (code sent to email || secret question || fingerprint scan)
+
+- Options to access AWS:
+  - AWS Management Console
+  - AWS Command Line Interface (CLI)
+  - AWS Software Developer Kit (SDK)
+    - Used whenever you want to call APIs
+
+- IAM Policy: set of permissions for aws resources
+  - a policy can exist without a role, but a role can't do anything useful without a policy
+- IAM Roles: identity that grants temporary permissions to aws services or users to perform tasks
+  - set of IAM policies
+
+### IAM role
+
+> identity in aws that you can assume temporarily to get specific permissions
+
+- use cases
+  - grant temporary access to aws services without long-term credentials
+  - assign permissions to services like ec2 or lambda
+  - to switch roles across accounts securely
+
+- key components of a role:
+  - trust policy: defines who can assume the role (e.g. ec2, lambda, another account)
+  - permissions policy defines what the role can do (e.g. access s3, write logs)
+  - session duration
+  - assume role
+
+### shared responsibility
+
+- aws
+  - infrastructure
+  - configuration and vulnerability analysis
+  - compliance validation
+- me
+  - users, groups, roles, policies, management and monitoring
+  - enable MFA on all accounts
+  - rotate all keys often
+  - use iam tools to apply appropriate permissions
+
+### IAM Security Tools
+
+- IAM Credentials Report (account-level)
+- IAM Access Advisor (user-level)
+  - use this information to revise your policies (least privilege principle)
+- IAM policy simulator: test and debug IAM policies to check what actions are allowed/denied for specific users, groups, roles
+
+### IAM Guidelines and Best Practices
+
+- don't use the root account (except for aws account setup)
+- don't create multiple aws accounts, create aws users within an aws account
+- assign users to groups and assign permissions to groups
+  - if you are responsible for the company resources
+    - create a groups with the policy "administrator access" and create an aws user that belongs to this group
+- create strong password policy
+  - use and enforce MFA
+- create and use roles to give permisssions to aws srevices
+
+- dedicated host: your instance runs on a physical server fully dedicated to your use
+  - an isolated server with configurations you can control
+
+## security groups
+
+> facilitates managing network traffic
+
+- acts as a "firewall"
+- define:
+  - access to ports
+  - authorized IP ranges (IPv4 and IPv6)
+  - control of inbound and outbound network traffic
+- can be attached to multiple instances
+- locked down to a region/VPC combination
+- lives "outside" the EC2
+  - if traffic is blocked, the EC2 instance won't see it
+
+> [!TIP]
+> it's good to keep 1 separate security group for SSH access.
+> if your application is not accessible (time out), then it's a security group issue.
+> if you application gives a "connection refused" error, then it's an application error or it's not launched.
+
+> [!IMPORTANT]
+> all inbound traffic is blocked by default
+> all outbound traffic is authorized by default
+
+- Ports:
+  - 22 = SSH (Secure Shell): log into a linux instance
+  - 3389 = RDP (Remote Desktop Protocol): log into a windows instance
+  - 21 = FTP (File Transfer Protocol)
+  - 22 = SFTP (Secure File Transfer Protocol)
+  - 80 = HTTP : access unsecured websites
+  - 443 = HTTPS: access secured websites
+
+#### security groups vs firewalls
+
+| Feature | AWS Security Groups | Traditional Firewalls (e.g., `ufw`, `iptables`) |
+|--------|--------------------------|-----------------------------------------------------|
+| Level | AWS-level (cloud) | OS-level (server) |
+| Type | Virtual firewall for EC2 and services | Software firewall on the OS |
+| Rules | Stateful (return traffic automatically allowed) | Stateful or stateless |
+| Scope | Applied per EC2 instance | Applies to whole server |
+| Use Case | Allow inbound on port 22 from your IP, or 443 to everyone | Block/allow ports directly on EC2 OS |
+
+### SSH Access
+
+- Create an identity file `.pem` for SSH:
+  - EC2 Dashboard > Key Pair > Create Key Pair
+  - Copy the public IP of the instance (used in the SSH command)
+  - Move the `.pem` file to a secure location and restrict permissions:
+    - `chmod 0400 <file>.pem`
+  - SSH into the instance:
+    - `ssh -i <file>.pem ec2-user@<public_IP>`
+
+## VPC (Virtual Private Cloud)
+
+> virtual network that allows you to launch AWS resources in a logically isolated section of the cloud
+
+- allows management over IP addresses, subnets, routing and security
+- must have a CIDR block
+- allows the creation of public and private subnets
+  - subnet: smaller network inside larger network
+    - helps organize and manage traffic in a network by dividing it into chunks
+    - subnets allow better allocation of IPs from a larger IP range
+    - each subnet in aws is associated with one route table
+    - use CIDR notation (e.g. `192.168.1.0/24`)
+
+- **public vs private subnet**
+  - public subnets have route to internet gateway
+    - this means:
+      - instances can send traffic to the internet
+      - instances can receive traffic from the internet, if security rules allows it
+  - private subnets do not have route to internet gateway
+    - this means:
+      - instances CANNOT initiate outbound internet traffic (unless via NAT gateway)
+      - instances CANNOT receive ANY inbound traffic directly from the internet
+
+- route table: defines how traffic flows inside VPC
+  - contains rules like:
+    - to reach the internet (0.0.0.0/0), go through the Internet Gateway
+    - to reach the private subnet, stay local
+  - each subnet is associated with a route table
+  - only one route table per subnet is allowed
+
+| Feature    | Route Tables       | Security Groups            |
+| ---------- | ------------------ | -------------------------- |
+| Scope      | Subnet-level       | Instance-level             |
+| Purpose    | Direct traffic     | Allow or deny traffic      |
+| Layer      | Layer 3 (Network)  | Layer 4 (Transport)        |
+| Stateful?  | No                 | Yes                        |
+| Controls   | Where traffic goes | Whether traffic is allowed |
+| Applied To | Subnets            | EC2 instances, ENIs        |
+
+- internet gateway: allows public subnets to access the internet and receive traffic from it
+  - attached to a VPC
+  - required for ec2 instances in public subnets to:
+    - download packages
+    - be accessed via SSH or a browser
+- NAT (Network Address Translation) gateway: allows private subnets to access the internet, but prevents the internet from initiating a connection back
+  - e.g. private ec2 can download updates or access external APIs without being publicly exposed
+  - usually are placed in a public subnet and route private subnet traffic through it
+
+### vpc flow logs
+
+> feature that captures information about the ip traffic going to and from network interfaces
+
+- network interface: virtual network card that connects ec2 instances and other aws resources to a vpc network
+- what the vpc flow logs capture
+  - source ip and destination ip
+  - source port and destination port
+  - protocol (tcp, udp)
+  - traffic acceptance (accept or reject)
+  - bytes transferred
+
+## lambda
+
+> serverless compute service that lets you run code in response to events
+
+- examples of events
+  - file uploads
+  - http requests
+  - database changes
+
+- properties
+  - serverless
+  - event-driven
+  - short-lived functions: each invocation runs in an isolated environment with max duration of 15 minutes
+  - stateless: each function runs independently
+
+### workflow
+
+1. write a function in Python, Node.js, Java, Go, etc
+1. deploy it to Lambda (manually, with the CLI, or using IaC like Terraform)
+1. configure a trigger (e.g. HTTP endpoint, S3 upload)
+1. lambda runs your code when the event occurs
+1. get billed per request and per compute time (in milliseconds)
+
+use case example: resize images uploaded to an S3 bucket
+
+1. upload triggers an S3 event
+1. aws Lambda receives the event, processes the image (e.g. resizes it)
+1. stores the output back to S3
+
+## RDS (Relational Database Service)
+
+> managed database service that allows you to set up, operate and scale relational databases in the cloud
+
+- supports multiple engines:
+  - [postgresql](./postgresql.md)
+  - [mysql](./mysql.md)
+  - [mariadb](./mariadb.md)
+  - oracle
+  - microsoft sql server
+  - aurora
+
+- read replica: is a copy of a database that can be used to offload read operations from the primary database
+  - doesn't contribute to high availability, since they are all located in a single AZ
+- multi-AZ: failover in case of AZ outage (high availability)
+- multi-region (uses read replicas): spans multiple aws regions (e.g. `sa-east-1` and `us-east-1`)
+  - disaster recovery in case of region issue
+  - how it works:
+    - Your main DB lives in one region (e.g. eu-west-1 in Ireland)
+    - you create read replicas in other regions (e.g. U.S. or Asia)
+    - local apps can read from these replicas — reduces latency
+    - writes still go to the main DB only
 
 ## S3 (Simple Storage Service)
 
@@ -769,58 +661,6 @@ aws s3 ls s3://my-bucket-name/
     - TIP: EB S => S ingle instance
   - s3: object storage with scalability and durability
 
-## lambda
-
-> serverless compute service that lets you run code in response to events
-
-- examples of events
-  - file uploads
-  - http requests
-  - database changes
-
-- properties
-  - serverless
-  - event-driven
-  - short-lived functions: each invocation runs in an isolated environment with max duration of 15 minutes
-  - stateless: each function runs independently
-
-### workflow
-
-1. write a function in Python, Node.js, Java, Go, etc
-1. deploy it to Lambda (manually, with the CLI, or using IaC like Terraform)
-1. configure a trigger (e.g. HTTP endpoint, S3 upload)
-1. lambda runs your code when the event occurs
-1. get billed per request and per compute time (in milliseconds)
-
-use case example: resize images uploaded to an S3 bucket
-
-1. upload triggers an S3 event
-1. aws Lambda receives the event, processes the image (e.g. resizes it)
-1. stores the output back to S3
-
-## RDS (Relational Database Service)
-
-> managed database service that allows you to set up, operate and scale relational databases in the cloud
-
-- supports multiple engines:
-  - [postgresql](./postgresql.md)
-  - [mysql](./mysql.md)
-  - [mariadb](./mariadb.md)
-  - oracle
-  - microsoft sql server
-  - aurora
-
-- read replica: is a copy of a database that can be used to offload read operations from the primary database
-  - doesn't contribute to high availability, since they are all located in a single AZ
-- multi-AZ: failover in case of AZ outage (high availability)
-- multi-region (uses read replicas): spans multiple aws regions (e.g. `sa-east-1` and `us-east-1`)
-  - disaster recovery in case of region issue
-  - how it works:
-    - Your main DB lives in one region (e.g. eu-west-1 in Ireland)
-    - you create read replicas in other regions (e.g. U.S. or Asia)
-    - local apps can read from these replicas — reduces latency
-    - writes still go to the main DB only
-
 ## Amazon FSx
 
 > fully managed service that allows you to launch high-performance file systems in the cloud
@@ -966,6 +806,166 @@ use case example: resize images uploaded to an S3 bucket
   - business applications
   - front-end web and mobile
   - security, identity and compliance
+
+## aws well-architected framework
+
+> set of best practices and guidelines created by amazon to help cloud architects design and operate secure, resilient and efficient infrastructure for their applications
+
+6 pillars:
+
+1. operational excellence
+1. security
+1. reliability
+1. performance efficiency
+1. cost optimization
+1. sustainability
+
+- well-architected tool: free tool to review your architectures against the 6 pillars of well-architected framework
+  - how to use:
+    - select your workload and answer questions
+    - review your answers against the 6 pillars
+    - obtain advise
+
+### operational excellence
+
+> running and monitoring systems effectively and continually improving processes and procedures
+
+- IaC
+- automate the creation of annotated documentation after every build
+- make frequent, small, reversible changes
+- anticipate failure
+- learn from all operational failures
+
+> [!TIP]
+> operational excellence is the devops pillar
+
+#### services
+
+- prepare
+  - CloudFormation
+  - AWS Config
+- operate
+  - CloudFormation
+  - AWS Config
+  - cloudtrail
+  - cloudwatch
+  - aws x-ray (tracy api calls/http requests)
+- evolve
+  - cloudformation
+  - codebuild
+  - codecommit
+  - codedeploy
+  - codepipeline
+
+### security
+
+> protect information, systems and assets
+
+- identity and access management
+- data protection (at rest and in transit)
+- incident response
+- threat detection
+
+#### services
+
+- identity and access management
+  - IAM
+  - STS (Security Token Service): grants temporary credentials to users or services
+  - MFA token
+  - AWS organizations: centrally manage multiple aws accounts
+- detective controls
+  - aws config
+  - CloudTrail
+  - CloudWatch
+- infrastructure protection
+  - CloudFront
+  - VPC
+  - shield
+  - WAF (Web Application Firewall)
+  - Inspector
+- data protection
+  - KMS
+  - S3
+  - ELB
+  - EBS (Elastic Block Store)
+  - RDS
+- incident response
+  - IAM
+  - CloudFormation
+  - CloudWatch events
+
+### reliability
+
+> ensure a system can recover from failures and meet customer demands
+
+- automated recovery
+- failure management
+- distributed system design
+
+#### services
+
+- failure management
+  - CloudFormation
+  - route 53
+  - s3
+
+### performance efficiency
+
+> use computing resources efficiently to meet system requirements as demand changes
+
+- use serverless and managed services where possible
+- monitor and improve performance
+- test different instance types and configurations
+
+#### services
+
+- selection
+  - auto scaling
+  - lambda
+  - ebs
+  - s3
+  - rds
+- review
+  - cloudformation
+  - aws news blog
+- monitoring
+  - cloudwatch
+- tradeoffs
+  - rds
+  - elasticache
+  - snowball
+  - cloudfront
+
+### cost optimization
+
+> ability to run systems to deliver business value at the lowest price point
+
+- use cost-effective resources
+  - spot instance
+  - reserved instance
+  - s3 glacier
+- turn off unused resources
+- monitor usage and budget
+  - aws services to track expenditure
+    - budgets
+    - cost and usage report
+    - cost explorer
+    - reserved instance reporting
+
+- match supply and demand
+  - auto scaling
+  - lambda
+- optimize overtime
+  - trusted advisor: analyzes your aws account provides recommendations to optimize your aws environment
+    - improves security, performance, fault tolerance, service limits and cost optimization
+  - cost and usage report
+  - news blog
+
+### sustainability
+
+- optimize energy consumption
+- improve efficiency across system lifecycle
+- use managed services to reduce waste
 
 ## CloudFormation
 
