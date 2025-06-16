@@ -4,6 +4,8 @@
 > cloud computing platform that provides a wide range of services and tools for building and managing applications and infrastructure in the cloud
 
 - cloud computing: the delivery of computing services over the internet
+- serverless: server doesn't requires provisioning and scaling
+  - e.g. aws lambda, azure functions, google cloud functions
 - service: a software that provides functionality and performs a task or set of tasks for your system
   - examples:
     - apache
@@ -368,6 +370,18 @@
 - NAT (Network Address Translation) gateway: allows private subnets to access the internet, but prevents the internet from initiating a connection back
   - e.g. private ec2 can download updates or access external APIs without being publicly exposed
   - usually are placed in a public subnet and route private subnet traffic through it
+
+### vpc flow logs
+
+> feature that captures information about the ip traffic going to and from network interfaces
+
+- network interface: virtual network card that connects ec2 instances and other aws resources to a vpc network
+- what the vpc flow logs capture
+  - source ip and destination ip
+  - source port and destination port
+  - protocol (tcp, udp)
+  - traffic acceptance (accept or reject)
+  - bytes transferred
 
 ## security groups
 
@@ -1405,17 +1419,17 @@ sudo chmod 666 /var/run/docker.sock
 - within the same Availability Zone (AZ): free
 - from aws to the internet (first 100GB/month): free
 
-## tutorials
-
-- [setup kubernetes in ec2 instance tutorial](https://varunmanik1.medium.com/setting-up-a-kubernetes-cluster-on-aws-ec2-with-ubuntu-22-04-lts-and-kubeadm-5c54930a4659)
-
-## networking costs per GB
+### networking costs per GB
 
 > [!TIP]
 > use private IP to save money and better network performance.
 > use same AZ for maximum savings (at the cost of high availability)
 
 TODO
+
+## tutorials
+
+- [setup kubernetes in ec2 instance tutorial](https://varunmanik1.medium.com/setting-up-a-kubernetes-cluster-on-aws-ec2-with-ubuntu-22-04-lts-and-kubeadm-5c54930a4659)
 
 ## billing tools
 
@@ -1455,25 +1469,15 @@ TODO
 
 ---
 
-- serverless: server doesn't requires provisioning and scaling
-  - e.g. aws lambda, azure functions, google cloud functions
 - server provisioning: the process of setting up physical or virtual hardware; installing and configuring software, such as the operating system and applications; and connecting it to middleware, network, and storage components
-- failover: ability of a system or service to automatically switch to a backup or secondary system when the primary system becomes unavailable or experiences a failure. This is important for ensuring high availability and minimizing downtime for critical applications and services.
-- VPC (Virtual Private Cloud): virtual network infrastructure that allows users to provision a logically isolated section where they can launch AWS resources in a virtual network
+- failover: ability of a system/service to automatically switch to a backup/secondary system when the primary system becomes unavailable or experiences a failure
+  - important for ensuring high availability and minimizing downtime for critical applications and services
 - topology: the arrangement of nodes or devices in a network
   - e.g. star, ring, bus, mesh, tree
 - cluster: a group of interconnected computers or servers that work together to perform a specific task or function
-  - commonly used in high-performance computing, data processing, and distributed systems to improve performance, scalability, and fault tolerance
+  - commonly used in high-performance computing, data processing and distributed systems to improve performance, scalability, and fault tolerance
   - resources are shared and coordinated to achieve a common goal
 - grid: distributed computing system that connects multiple computers or servers to work together on a common task or problem
   - decentralized
 - hybrid service: service that can operate both in the cloud and on-premises
-- vpc flow logs: feature that captures information about the ip traffic going to and from network interfaces
-  - network interface: virtual network card that connects ec2 instances and other aws resources to a vpc network
-  - what the vpc flow logs capture
-    - source ip and destination ip
-    - source port and destination port
-    - protocol (tcp, udp)
-    - traffic acceptance (accept or reject)
-    - bytes transferred
 
