@@ -42,6 +42,7 @@
   - each region is completely independent from others
   - each region has 3 to 6 Availability Zones, with few exceptions (AZ ⊆ region)
     - Availability Zone (AZ): isolated locations within each region
+- edge locations (points of presence): for content delivery as close as possible to users
 
 - IAM users: individual
 - IAM groups: collections of IAM users
@@ -405,16 +406,21 @@
 
 > serverless compute service that lets you run code in response to events
 
-- examples of events
-  - file uploads
-  - http requests
-  - database changes
-
-- properties
-  - serverless
-  - event-driven
-  - short-lived functions: each invocation runs in an isolated environment with max duration of 15 minutes
-  - stateless: each function runs independently
+- short-lived functions: each invocation runs in an isolated environment with max duration of 15 minutes
+- stateless: each function runs independently
+- price based on number of calls and duration of compute time
+- increasing ram also improves cpu and network
+- event-driven
+  - examples of events
+    - file uploads
+    - http requests
+    - database changes
+- supports
+  - node.js
+  - python
+  - golang
+  - java
+  - c# (.NET core and powershell)
 
 ### workflow
 
@@ -661,16 +667,6 @@ aws s3 ls s3://my-bucket-name/
     - TIP: EB S => S ingle instance
   - s3: object storage with scalability and durability
 
-## Amazon FSx
-
-> fully managed service that allows you to launch high-performance file systems in the cloud
-
-- amazon FSx for Windows File Server: for windoes-based applications that require SMB protocol and Active Directory integration
-- amazon FSx for Lustre: used for machine learning, analytics, video processing, financial modeling
-  - high performance computing
-  - scalable file storage
-  - lustre = linux + cluster
-
 ## amazon managed blockchain
 
 > fully managed service that makes it easy to create, manage and scale blockchain networks
@@ -709,7 +705,19 @@ aws s3 ls s3://my-bucket-name/
 
 ## API Gateway
 
-> fully managed service that makes it easy for developers to create, publish, maintain, monitor, and secure APIs at any scale
+> fully managed service that makes it easy for developers to create, publish, maintain, monitor and secure APIs at any scale
+
+client <= REST API => API gateway <= proxy requests => lambda <= CRUD => DynamoDB
+
+- scalable and serverless API
+- supports
+  - rest
+  - websocket apis
+  - security
+  - user authentication
+  - api throttling
+  - api keys
+  - monitoring
 
 ## Athena
 
@@ -967,17 +975,52 @@ aws s3 ls s3://my-bucket-name/
 - improve efficiency across system lifecycle
 - use managed services to reduce waste
 
+## batch
+
+> fully managed batch processing at any scale
+
+- batch: tasks that can be run in parallel and don't require real-time interaction
+  - typically large volumes of data
+- batch jobs are defined as docker images and run on [ECS](#ecs-elastic-container-service)
+- uses ec2 instances
+  - you can configure whether aws batch should use spot instances, on-demand instances, or a mix
+
+### batch vs lambda
+
+- lambda
+  - maximum execution time of 15 min, after that the function is forcefully terminated, regardless of whether it's done
+  - supports specific runtimes (python, node.js, java, go, etc) that aws explicitly provides and maintains
+  - limited temporary disk space (512 MB)
+  - serverless
+- batch
+  - no time limit
+  - able to run any runtime as long as it's packaged as a Docker image
+  - can rely on EBS volumes or instance store for disk space
+  - not serverless
+
+## CDK (Cloud Development Kit)
+
+> define cloud infrastructure using familiar programming languages
+
+- compatible with
+  - javascript/typescript
+  - python
+  - java
+  - .NET
+- code is compiled into CloudFormation template (json/yaml)
+
 ## CloudFormation
 
 > fully managed service that allows you to create and manage AWS resources using templates
 
+- IaC, similar to terraform
 - template: configuration file that defines infrastructure
-- similar to terraform
 - uses json or yaml
 - easily generate diagrams of your templates
 - no need to define ordering and orchestration
 - use existing templates on the web
 - support for almost all aws resources
+- easily see the cost of each service
 
 ### workflow
 
@@ -987,7 +1030,7 @@ aws s3 ls s3://my-bucket-name/
 
 ## CloudFront
 
-> content delivery network (CDN) service that delivers data, videos, applications and APIs to customers globally with low latency and high transfer speeds
+> CDN service that delivers data, videos, applications and APIs to customers globally with low latency and high transfer speeds
 
 - CDN (Content Delivery Network): caches static content (images, css, js) at edge locations globally
 - improves content delivery by caching the content at edge locations
@@ -1001,7 +1044,32 @@ aws s3 ls s3://my-bucket-name/
       - application load balancer
       - ec2 instance
       - s3 website (you must first enable bucket static s3 website)
-      - any http backend you want
+      - any http backend
+
+### cloudfront vs s3 cross region replication
+
+- cloudfront
+  - global edge network
+  - files are cached for a TTL (Time To Live) (maybe a day)
+  - great for static content that must be available everywhere
+- S3 Cross Region Replication
+  - must be setup for each region if you want replication to happen
+  - files are updated in near real-time
+  - read only
+  - great for dynamic content that need to be available at low latency in few regions
+
+## CloudTrail
+
+> get history of events or api calls made within your aws account via aws cli, aws console, aws sdk or aws services
+
+- provides governance
+  - governance: monitoring activity, ensuring compliance, auditability and accountability
+- enabled by default
+- to store logs long-term, put logs from cloudtrail into: cloudwatch logs or s3
+
+### insights
+
+> automated analysis of applications services
 
 ## CloudWatch
 
@@ -1021,7 +1089,7 @@ aws s3 ls s3://my-bucket-name/
 - alarm actions
   - auto scaling: increase/decrease ec2 instances "desired" count
   - ec2 actions: stop, terminate, reboot or recover ec2 instance
-  - [sns](#sns-simple-notification-service) notifications: send notification into sns topic
+  - sns notifications: send notification into sns topic
 - can choose period on which to evaluate the alarm
 - statistic types: %, max, min, sum, sampleCount, etc
 - alarm states
@@ -1033,23 +1101,71 @@ aws s3 ls s3://my-bucket-name/
 
 > logging service that collects, monitors and stores log data from various aws resources, applications and services in real time
 
-- log groups: container for logs from similar sources
-- log streams
+- log groups: container for logs from similar sources (e.g. ecs app in production, specific lambda function)
+- log streams: sequence of log events from a single source within a log group
+
+- log group = folder
+- log stream = file inside the folder
+- log event = line in the file
+
+- adjustable cloudwatch logs retention: can be 1 week, month, year, etc
+
+## CloudWatch Logs for EC2
+
+- by default, no logs from ec2 instance will go to cloudwatch
+- run cloudwatch agent on ec2 to push log files
+- make sure iam permissions are correct
+- cloudwatch log agent can be setup on-premises too
+
+### CloudWatch Metrics
+
+> provides metrics from aws resources
+
+- ec2 instances
+  - cpu utilization
+  - status checks
+  - network
+    - default metrics every 5 min (if you pay more, every 1 min)
+- ebs volumes
+  - disk reads/writes
+- s3 buckets
+  - BucketSizeBytes
+  - NumberOfObjects
+  - AllRequests
+- billing
+  - total estimated charge
+- service limits
+  - service api usage
+- custom metrics
+
+## Cloud9
+
+> cloud IDE that can be used in the browser
+
+- allows code collaboration in real-time
 
 ## CodeArtifact
 
-> TODO
+> fully managed artifact repository service
+
+- use cases:
+  - publish your executable/binary in common dependency management tools (e.g. npm, yarn, pip, maven, gradle)
+  - manage versioned software artifacts
+
+- artifact: package or binary like `.jar`, `tgz` (tarball)
 
 ## CodeBuild
 
-> fully managed build service that compiles source code, runs tests, and produces software packages that are ready to deploy
+> fully managed build service that compiles source code, runs tests and produces software packages that are ready to deploy
 
 - similar to github actions and gitlab ci
+- fully managed, serverless
+- pay-as-you-go pricing
+- can be triggered by [CodePipeline](#codepipeline)
 - use cases
   - compile source code
   - run tests
   - produce packages that are ready to be deployed (by CodeDeploy, for example)
-- benefits
 
 ## CodeCommit
 
@@ -1061,30 +1177,39 @@ aws s3 ls s3://my-bucket-name/
 
 ## CodeDeploy
 
-> fully managed deployment service that automates software deployments to a variety of compute services such as EC2, Lambda and on-premises servers
+> fully managed deployment service that automates software deployments to a variety of compute services
 
 - works with
   - ec2 instance
+  - lambda
   - on-premise servers
+- hybrid service
 - servers/instances must be provisioned and configured ahead of time with CodeDeploy agent
 
 ## CodePipeline
 
-> continuous integration and continuous delivery (CI/CD) service that automates the build, test and deploy phases of your release process
+> service that orchestrates full CI/CD workflow
 
 - fully managed
-- similar to github actions and gitlab ci
+- can activate [codebuild](#codebuild)
 - compatible with:
-  - CodeCommit
-  - CodeBuild
-  - CodeDeploy
-  - elastic Beanstalk
-  - CloudFormation
-  - github
+  - [CodeCommit](#codecommit)
+  - [CodeBuild](#codebuild)
+  - [CodeDeploy](#codedeploy)
+  - [elastic Beanstalk](#elastic-beanstalk)
+  - [CloudFormation](#cloudformation)
+  - [github](./github.md)
   - 3rd party services
   - custom plugins
 
+codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, ecs, etc)
+
 ## CodeStar
+
+> unified user interface to easily manage software development activities
+
+- quick way to setup CodeCommit, CodePipeline, CodeBuild, CodeDeploy, Elastic Beanstalk, EC2, etc
+- edit the code "in the cloud" using AWS Cloud9
 
 ## Cognito
 
@@ -1095,6 +1220,16 @@ aws s3 ls s3://my-bucket-name/
 - don't create an IAM user for the clients of your application, use Cognito
 - instead of giving your app's users aws iam accounts (which are meant for admins and systems), you use cognito to manage their identities securely
 - also capable of signing in with google/facebook/twitter accounts
+
+## DMS (Database Migration Service)
+
+> migrate databases to aws
+
+- resilient and self healing
+- source database remains available during the migration
+- supports
+  - homogeneous migration (e.g. oracle to oracle)
+  - heterogeneous migration (e.g. sql server to aurora)
 
 ## DocumentDB
 
@@ -1147,6 +1282,9 @@ aws s3 ls s3://my-bucket-name/
 ## ECR (Elastic Container Registry)
 
 > fully managed Docker container registry that makes it easy to store, manage, and deploy Docker container images
+
+- private docker registry
+- stored docker images can be run by [ECS](#ecs-elastic-container-service) or [fargate](#fargate)
 
 ## EFS (Elastic File System)
 
@@ -1238,7 +1376,7 @@ aws s3 ls s3://my-bucket-name/
   - instance configuration and OS is handled by Beanstalk
   - deployment strategy is configurable but managed by Beanstalk
 - load balancing and auto-scaling
-- 3 architecture models
+- 3 architecture models: 
   - singe instance deployment
   - LB + ASG
     - good for production or pre-production web applications
@@ -1259,9 +1397,109 @@ aws s3 ls s3://my-bucket-name/
   - checks app health
   - publishes health events
 
+## EventBridge
+
+> serverless event bus service that makes it easy to build event-driven applications at scale
+
+- serverless
+- use events to connect application components together
+
+- event: json message that describes something that happened in a system
+  - events come from aws services, custom apps or saas providers
+- event bus: pipeline where events are sent and rules are applied to process them
+- event source: origin of the event
+- rules: match certain events and define what should happen when a match occurs
+- targets: aws services or resources that receive matched events and act on them
+  - common targets: lambda (run code), step functions (start workflow), sqs (enqueue messsage), sns (publish to topic), etc
+
+event example:
+
+```json
+{
+  "source": "aws.ec2",
+  "detail-type": "EC2 Instance State-change Notification",
+  "detail": {
+    "instance-id": "i-1234567890abcdef0",
+    "state": "terminated"
+  }
+}
+```
+
+## fargate
+
+> launch docker containers on aws
+
+- fully managed
+- allocates the exact cpu and ram requested
+
+## FSx
+
+> fully managed service that allows you to launch high-performance file systems in the cloud
+
+- amazon FSx for Windows File Server: for windoes-based applications that require SMB protocol and Active Directory integration
+- amazon FSx for Lustre: used for machine learning, analytics, video processing, financial modeling
+  - high performance computing
+  - scalable file storage
+  - lustre = linux + cluster
+
+## global accelerator
+
+> improve application availability and performance using the aws global network
+
+- uses private network to optimize the route to your application
+
+### cloudfront vs global accelerator
+
+- both
+  - use AWS global network
+  - use edge locations around the world
+  - integrate with AWS Shield for DDoS protection
+- Cloudfront is a Content Delivery Network
+  - improves performance for cacheable content
+  - content is served at the edge
+- Global Accelerator
+  - no caching
+  - proxying packets at the edge to the application over TCP or UDP
+  - good for HTTP use cases that require static IP addresses
+  - good for HTTP use cases that require deterministic, fast regional failover
+
+## global applications
+
+> applications deployed in multiple geographies
+
+- global applications decrease latency
+- Disaster Recovery (DR): If An AWS Region Goes Down (Earthquake, Storms, Power Shutdown, Politics)
+  - in this cenario, you can switch to another region and keep the application working
+  - DR plan increases the availability of your application
+- attack protection: distributed global infrastructure is harder to attack
+
+### global applications architecture
+
+> how an application is set up to run across different regions
+
+- active-active: multiple instances in different regions executes read/write operations
+  - lowers read's latency
+  - lowers write's latency
+- active-passive: when 1 instance executes read/write, while the other only executes read
+  - lowers read's latency
+- multi-region
+- single-region
+
+## glue
+
+> managed Extract, Transform, Load (ETL) service
+
+- prepare and transform data for analytics
+- fully serverless
+- glue data catalog: catalog of datasets
+- can be used by [athena](#athena), [redshift](#redshift), [EMR](#emr-elastic-mapreduce)
+
 ## Kinesis
 
-> fully managed service that allows you to collect, process, and analyze real-time streaming data
+> fully managed service that allows you to collect, process and analyze real-time streaming data
+
+- unlimited scalability
+- cloud-native service: proprietary protocol from aws
 
 ## KMS (Key Management Service)
 
@@ -1271,6 +1509,29 @@ aws s3 ls s3://my-bucket-name/
 
 > deploy and manage applications/websites with pre-configured cloud resources
 
+- simpler alternative to using ec2, rds, elb, ebs, route 53...
+- high availability
+- no auto-scaling
+- limited aws integrations, kinda of a standalone service
+- use cases
+  - simple web applications
+    - has templates for: LAMP, nginx, MEAN, node.js
+  - websites
+    - has templates for: wordpress, magento, etc
+
+## local zones
+
+> extend VPC to more locations
+
+- local zones are an extension of an aws region
+- compatible with ec2, rds, ecs, ebs, elasticache, direct connect
+
+## MQ
+
+> managed message broker service for rabbitmq and activemq
+
+- doesn't scale as much as [sqs](#sqs-simple-queue-service) and [sns](#sns-simple-notification-service)
+
 ## neptune
 
 > fully managed graph database
@@ -1278,6 +1539,28 @@ aws s3 ls s3://my-bucket-name/
 - high availability
 - replication across 3 AZ
 - great for knowledge graphs
+
+## OpsWorks
+
+> manages chef and puppet
+
+- chef and puppet are tools that perform server configuration automatically
+- alternative to [SSM](#ssm-systems-manager)
+
+## outposts
+
+> fully managed service that extends aws infrastructure, services and tools to virtually any on-premises or edge locations
+
+> run aws services locally on your own hardware, while still being managed from the aws cloud
+
+- you are responsible for the outposts rack physical security
+- benefits
+  - low latency access to on-premise systems
+  - local data processing
+  - data residency
+  - easier migration from on-premises to the cloud
+  - fully managed service
+- compatible services: ec2, ebs, s3, eks, ecs, rds, emr
 
 ## QLDB (Quantum Ledger DataBase)
 
@@ -1321,10 +1604,12 @@ aws s3 ls s3://my-bucket-name/
 
 > scalable domain name system (DNS) web service that translates domain names into IP addresses
 
+- managed dns
 - hosted zone: logical container within aws route 53 that holds DNS records for domains
   - DNS records: maps domain name to a specific resource (e.g. IP address, mail server)
     - types:
       - `A` (Address): points a domain/subdomain directly to a public IPv4 address
+      - `AAAA`: url => ipv6
       - `CNAME` (Canonical NAME): redirects one domain or subdomain to another domain or subdomain
       - `MX` (Mail Exchange): specifies mail exchange servers for receiving email
       - `TXT` (TeXT): holds text information, often used for verification purposes or SPF records (email authentication)
@@ -1360,15 +1645,48 @@ ns-123.awsdns-01.net
 ns-1234.awsdns-01.co.uk
 ```
 
+### routing policies
+
+> control how DNS queries are answered
+
+- simple routing policy: route traffic to a single resource (e.g. a web server or an S3 bucket)
+  - no health checks
+  - no request distribution
+- weighted routing policy: distributes requests across resources (ex: EC2 instances)
+  - has health checks
+- latency routing policy: uses latency as criteria
+  - has health checks
+- failover routing policy: for high availability and disaster recovery
+  - for disaster recovery
+  - has primary instance and failover instance
+  - has health checks
+
 ## SNS (Simple Notification Service)
 
 > fully managed messaging service that allows you to send notifications to a large number of recipients
+
+- unlimited scalability
+- cloud-native service: proprietary protocol from aws
+- no message retention
+
+- event publishers: sends message to one SNS topic
+- event subscribers: listens to the sns topic notifications
+  - each subscriberto the topic will get all the messages
+  - services that can be target subscribers:
+    - sqs
+    - lambda
+    - kinesis data firehose
+    - emails
+    - sms
+    - mobile notifications
+    - http(s) endpoints
 
 ## SQS (Simple Queue Service)
 
 > message queuing service that allows you to decouple and scale microservices, distributed systems and serverless applications
 
 - fully managed
+- unlimited scalability
 - low latency
 - messages are kept for 14 days
 - messages can be
@@ -1378,6 +1696,24 @@ ns-1234.awsdns-01.co.uk
 - producer service: produces requests to sqs
 - consumer service: consumers requests from sqs
 - decoupling: when both producers and consumers scale independently from each other
+
+## SSM (SystemS Manager)
+
+> centrally view, manage, and operate nodes (ec2 or on-premises) at scale in AWS, on-premises and multicloud environments
+
+- run commands, patch and configure servers
+- hybrid service
+- not just a single service, it is a suite of products
+- features
+  - patching automation for enhanced compliance
+  - run commands across entire fleet of servers
+  - store parameter configuration with the SSM Parameter Store
+
+### workflow
+
+1. install SSM agent onto the systems we control
+1. its installed by default on Amazon Linux AMI and Ubuntu AMI
+1. if an instance can't be controlled with SSM, it's probably an issue with SSM agent
 
 ## Step Functions
 
@@ -1397,6 +1733,21 @@ ns-1234.awsdns-01.co.uk
 ## STS (Security Token Service)
 
 > create temporary, short-term credentials to access your aws resources with limited privileges
+
+## wavelength
+
+> brings aws services to the edge of the 5G networks
+
+- ultra-low latency applications through 5G networks
+- traffic doesn't leave Communication Service Provider's (CSP) network
+- no additional charges or service agreements
+- use cases
+  - smart cities
+  - ML-assisted diagnostics
+  - connected vehicles
+  - interactive video streams
+  - AR/VR
+  - online gaming
 
 ## aws common tasks
 
