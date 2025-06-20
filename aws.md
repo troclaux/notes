@@ -195,6 +195,16 @@
 
 > manage access to AWS services and resources securely
 
+- root account/user: has complete and unrestricted access to all aws services and billing features in the account
+  - original identity created when you dign up for aws account
+  - root user is not an IAM user
+  - capabilities
+    - change account settings
+    - close your aws account
+    - change or cancel your aws support plan
+    - register as seller in the reserved instance marketplace
+- IAM user: individual user identity created and managed within an AWS account using the IAM service
+
 ### Policy structure
 
 ```json
@@ -365,42 +375,127 @@
       - instances CANNOT initiate outbound internet traffic (unless via NAT gateway)
       - instances CANNOT receive ANY inbound traffic directly from the internet
 
-- route table: defines how traffic flows inside VPC
+| Feature        | Route Tables       | Security Groups            | Internet Gateway               |
+| -------------- | ------------------ | -------------------------- | ------------------------------ |
+| **Scope**      | Subnet-level       | Instance-level             | VPC-level                      |
+| **Purpose**    | Direct traffic     | Allow or deny traffic      | Enable internet connectivity   |
+| **Layer**      | Layer 3 (Network)  | Layer 4 (Transport)        | Layer 3 (Network)              |
+| **Stateful?**  | No                 | Yes                        | Yes                            |
+| **Controls**   | Where traffic goes | Whether traffic is allowed | Provides external access point |
+| **Applied To** | Subnets            | EC2 instances, ENIs        | Entire VPC                     |
+
+- route table: defines how traffic flows within the VPC (between subnets) and between the VPC and external networks (like the internet), by specifying the next hop for outbound traffic
+  - hop: one step in the path that network traffic takes from a source to a destination
+    - e.g. if a packet goes from a computer → to a router → to another router → to the destination server, that's 3 hops
+  - only controls outbound routing (cannot restrict inbound traffic)
   - contains rules like:
     - to reach the internet (0.0.0.0/0), go through the Internet Gateway
     - to reach the private subnet, stay local
   - each subnet is associated with a route table
   - only one route table per subnet is allowed
-
-| Feature    | Route Tables       | Security Groups            |
-| ---------- | ------------------ | -------------------------- |
-| Scope      | Subnet-level       | Instance-level             |
-| Purpose    | Direct traffic     | Allow or deny traffic      |
-| Layer      | Layer 3 (Network)  | Layer 4 (Transport)        |
-| Stateful?  | No                 | Yes                        |
-| Controls   | Where traffic goes | Whether traffic is allowed |
-| Applied To | Subnets            | EC2 instances, ENIs        |
-
-- internet gateway: allows public subnets to access the internet and receive traffic from it
+  - a vpc can have multiple route tables
+- internet gateway: allows instances in vpc to send traffic to the internet and enables the instances to receive responses from the internet
   - attached to a VPC
   - required for ec2 instances in public subnets to:
     - download packages
     - be accessed via SSH or a browser
-- NAT (Network Address Translation) gateway: allows private subnets to access the internet, but prevents the internet from initiating a connection back
+- NAT (Network Address Translation) gateway (aws-managed): managed aws service that allows instances in a private subnet to connect to the internet, but prevents the internet from initiating a connection back
   - e.g. private ec2 can download updates or access external APIs without being publicly exposed
   - usually are placed in a public subnet and route private subnet traffic through it
+- NAT instances (self-managed): is an ec2 instance configured manually to perform the same function as NAT gateway
+
+- Network ACL (Access Control List): security layer used in networks to control inbound/outbound traffic at the subnet level
+  - stateless: rules must be defined for both inbound and outbound traffic
+  - supports ALLOW and DENY rules
+  - rules only include IP addresses
+
+### ENI (Elastic Network Interface)
+
+> manages network connectivity for an ec2 instance in a vpc
+
+- allows you to create multiple network interfaces for an ec2 instance
+- use cases
+  - creating a management network interface
+  - creating a network interface for traffic that needs to be isolated from other traffic
 
 ### vpc flow logs
 
 > feature that captures information about the ip traffic going to and from network interfaces
 
 - network interface: virtual network card that connects ec2 instances and other aws resources to a vpc network
+- captures network information from aws managed interfaces like ELB, elasticache, rds, aurora, etc
+- vpc flow logs data can go to S3, cloudwatch logs, kinesis data firehose
 - what the vpc flow logs capture
   - source ip and destination ip
   - source port and destination port
   - protocol (tcp, udp)
   - traffic acceptance (accept or reject)
   - bytes transferred
+
+### endpoints
+
+> privately connect VPC to aws services without using public IPs or going through the internet
+
+- provides better security and lower latency to access aws services
+- VPC endpoint gateway if you want to connect to s3 or DynamoDB
+- VPC endpoint interface if you want to connect to other aws services
+
+### peering
+
+> connect 2 VPCs privately using aws' network and make them behave as if they are the same network
+
+- IP address ranges can't overlap
+
+### PrivateLink
+
+> privately connect to a service in a 3rd party vpc
+
+- most secure and scalable way to
+  - expose a service to 1000s of vpcs
+- doesn't require
+  - vpc peering
+  - internet gateway
+  - nat
+  - route tables
+- requires
+  - network load balancer
+  - [ENI](#eni-elastic-network-interface)
+
+### direct connect + site-to-site vpn
+
+- site-to-site vpn: connect on-premises network to your aws vpc
+  - secure "bridge" between physical data center and cloud network
+- direct connect (DX): dedicated network connection between your on-premises, bypassing the public internet
+
+### client vpn
+
+> securely access AWS resources and on-premises networks that are not publicly accessible (i.e. private networks)
+
+- the connection goes over the public internet, but the traffic is encrypted end-to-end
+- allows your device to act as if it's inside the private network
+
+### transit gateway
+
+> connecto to multiple VPCs and/or on-premises infrastructure through a centralized hub
+
+- works with
+  - connect gateway
+  - vpn connections
+  - vpc
+  - subnets
+  - internet gateway
+  - nat gateway/instances
+  - nacl
+  - security groups
+  - vpc peering
+  - elastic ip
+  - vpc endpoints
+  - PrivateLink
+  - vpc flow logs
+  - site-to-site vpn
+  - client vpc
+  - direct connect
+  - transit gateway
 
 ## lambda
 
@@ -667,6 +762,22 @@ aws s3 ls s3://my-bucket-name/
     - TIP: EB S => S ingle instance
   - s3: object storage with scalability and durability
 
+## Abuse
+
+> report suspected aws resources used for abusive or illegal purposes
+
+- abuse and prohibited behaviors:
+  - spam
+  - DoS attacks
+  - DDoS attacks
+  - intrusion attempts
+  - hosting objectionable, prohibited or illegal content (e.g. phishing websites)
+  - copyrighted content
+  - distributing malware
+- contact the aws abuse team via
+  - aws abuse form
+  - abuse@amazonaws.com
+
 ## amazon managed blockchain
 
 > fully managed service that makes it easy to create, manage and scale blockchain networks
@@ -760,6 +871,22 @@ client <= REST API => API gateway <= proxy requests => lambda <= CRUD => DynamoD
     - schedules scaling: anticipate scaling based on known usage patterns
   - predictive scaling: uses machine learning to predict future traffic
 
+## aws artifact
+
+> provides on-demand access to aws compliance documentation, agreements and audits
+
+- doesn't do audits, only provides access to the results of audits done on aws
+
+## aws certificate manager
+
+> easily provision, manage and deploy SSL/TLS certificates
+
+- SSL/TLS certificate provides encryption for websites (HTTPS)
+- supports both public and private tls certificates
+- free of charge for public tls certificates
+- automatic tls certificate renewal
+- integrates with ELB, cloudfront distributions, APIs on API gateway
+
 ## aws config
 
 > assess, audit and evaluate the configurations of your aws resources
@@ -814,6 +941,26 @@ client <= REST API => API gateway <= proxy requests => lambda <= CRUD => DynamoD
   - business applications
   - front-end web and mobile
   - security, identity and compliance
+
+## aws network firewall
+
+> deploy essential network protections for your VPCs
+
+> filter traffic entering and leaving a VPC
+
+- features
+  - traffic filtering
+  - inspect the content of packets, not just headers
+  - logging and monitoring
+
+## aws secrets manager
+
+> stores secrets
+
+- can force rotation of secrets after a period of time
+- automate generation of secrets on rotations (uses lambda)
+- integrates with [rds](#rds-relational-database-service)
+- secrets are encrypted using [KMS](#kms-key-management-service)
 
 ## aws well-architected framework
 
@@ -1057,6 +1204,21 @@ client <= REST API => API gateway <= proxy requests => lambda <= CRUD => DynamoD
   - files are updated in near real-time
   - read only
   - great for dynamic content that need to be available at low latency in few regions
+
+## CloudHSM (Cloud Hardware Security Module)
+
+> provides dedicated, single-tenant hardware to securely generate, store and manage cryptographic keys
+
+- dedicated: the hardware is exclusively assigned to your organization
+- single-tenant: only your organization uses the hardware
+
+- types of CMKs (Customer Master Key)
+  - customer-managed CMKs: created, managed and used by the customer
+  - aws-managed CMKs: created, managed and used by aws
+  - aws-owned CMKs: collection of CMKs that aws services own and managed, used across multiple accounts
+  - CloudHSM keys: CMKs generated and stored in dedicated CloudHSM hardware
+    - the customer has full control over key management
+    - required for highly regulated environments
 
 ## CloudTrail
 
