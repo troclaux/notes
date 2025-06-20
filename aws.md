@@ -1348,6 +1348,23 @@ client <= REST API => API gateway <= proxy requests => lambda <= CRUD => DynamoD
 - hybrid service
 - servers/instances must be provisioned and configured ahead of time with CodeDeploy agent
 
+## CodeGuru
+
+> machine learning-powered service for automated code reviews and application performance recommendations
+
+- features
+  - codeguru reviewer: automated code reviews for static code analysis (development)
+    - identifies critial issues, security vulnerabilities, bugs
+  - codeguru profiles: visibility/recommendations about application performance during runtime (production)
+    - visibility: visual representation of performance (e.g. cpu usage)
+    - helps understand runtime behavior of your application
+    - minimal overhead on application
+    - features
+      - identify and remove code inefficiencies
+      - improve application performance (e.g. reduce CPU utilization)
+      - decrease compute costs
+      - anomaly detection
+
 ## CodePipeline
 
 > service that orchestrates full CI/CD workflow
@@ -1382,6 +1399,23 @@ codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, 
 - don't create an IAM user for the clients of your application, use Cognito
 - instead of giving your app's users aws iam accounts (which are meant for admins and systems), you use cognito to manage their identities securely
 - also capable of signing in with google/facebook/twitter accounts
+
+## Comprehend
+
+> uses Natural Language Processing (NLP) to extract insights about the content of documents
+
+- fully managed and serverless service
+- uses machine learning to find insights and relationships in text
+- capabilities
+  - analyzes text using tokenization
+  - organize a collection of text files by topic
+  - analyze customer interactions as positive or negative
+
+## Detective
+
+> investigates and identifies the root cause of security issues or suspicious activities using ML and graphs
+
+- generates visualizations with details and context to get to the root cause
 
 ## DMS (Database Migration Service)
 
@@ -1647,7 +1681,7 @@ event example:
 - multi-region
 - single-region
 
-## glue
+## Glue
 
 > managed Extract, Transform, Load (ETL) service
 
@@ -1655,6 +1689,68 @@ event example:
 - fully serverless
 - glue data catalog: catalog of datasets
 - can be used by [athena](#athena), [redshift](#redshift), [EMR](#emr-elastic-mapreduce)
+
+## GuardDuty
+
+> threat detection service that continuously monitors aws data sources
+
+- uses machine learning algorithms and anomaly detection
+- analyses the following data sources
+  - cloudtrail events logs
+  - vpc flow logs
+  - dns logs
+
+## health dashboard
+
+> personalized alerts and remediation guidance when aws outages that might impact your aws account or resources
+
+- global service
+
+### service health (public view)
+
+- shows
+  - all regions
+  - all services health
+  - historical information for each day
+
+### your account (personalized view)
+
+- provides
+  - alerts and remediation guidance when AWS is experiencing events that may impact you
+  - personalized view into the performance and availability of AWS services you are using
+  - relevant or timely information to help you manage events in progress
+  - proactive notification to help you plan for scheduled activities
+  - aggregate data from entire AWS Organization
+
+## Inspector
+
+> automated security assessment service that helps improve security and compliance
+
+- only for ec2 instances, ecr container images and lambda functions
+- scans aws workloads for vulnerabilities and unintended network exposure
+  - aws workloads: applications, services or processes that are running on aws infrastructure
+
+## IQ
+
+> find professional help for your aws projects
+
+- engage and pay aws certified 3rd party experts for on-demand project work
+
+for customers:
+
+1. submit request
+2. review responses
+3. select expert
+4. work securely
+5. pay per milestone
+
+for experts:
+
+1. create profile
+2. connect with customers
+3. start a proposal
+4. work securely
+5. get paid
 
 ## Kinesis
 
@@ -1666,6 +1762,21 @@ event example:
 ## KMS (Key Management Service)
 
 > managed service that allows you to create and control the encryption keys used to encrypt your data
+
+### workflow
+
+you can use aws management console or aws cli
+
+1. you create a customer master key (CMK) in KMS
+1. you use the CMK to encrypt your data
+1. when you need to decrypt your data, you use the same CMK
+
+## Lex
+
+> add chatbots that speak natural language to applications
+
+- uses Automatic Speech Recognition (ASR) to convert speech to text
+- uses natural language understanding to recognize the intent of text, callers
 
 ## Lightsail
 
@@ -1681,12 +1792,18 @@ event example:
   - websites
     - has templates for: wordpress, magento, etc
 
-## local zones
+## Local Zones
 
 > extend VPC to more locations
 
 - local zones are an extension of an aws region
 - compatible with ec2, rds, ecs, ebs, elasticache, direct connect
+
+## Macie
+
+> fully managed data security service that uses machine learning and pattern matching to discover and protect sensitive data
+
+- helps identify and alert you to sensitive data, such as Personally Identifiable Information (PII) in s3 buckets
 
 ## MQ
 
@@ -1694,7 +1811,7 @@ event example:
 
 - doesn't scale as much as [sqs](#sqs-simple-queue-service) and [sns](#sns-simple-notification-service)
 
-## neptune
+## Neptune
 
 > fully managed graph database
 
@@ -1724,6 +1841,12 @@ event example:
   - fully managed service
 - compatible services: ec2, ebs, s3, eks, ecs, rds, emr
 
+## Polly
+
+> convert text to speech using deep learnign
+
+- allows development of applications that talk
+
 ## QLDB (Quantum Ledger DataBase)
 
 > fully managed ledger database
@@ -1751,6 +1874,19 @@ event example:
   - Athena
   - S3
 
+## Rekognition
+
+> image recognition and video analysis with ML
+
+- capable of:
+  - face analysis for
+    - user verification
+    - identifying gender, age range, emotions
+    - face search
+  - people counting
+  - labeling
+  - content moderation
+
 ## Redshift
 
 > fully managed data warehouse service that allows you to run complex queries on large datasets
@@ -1761,6 +1897,15 @@ event example:
 - load data every hour, not every second
 - has sql interface for queries
 - can be integrated with aws tools, such as quicksight, tableau
+
+## re:Post
+
+> aws-managed Q&A service
+
+> forum to ask technical questions to experts
+
+- free, similar to stackoverflow
+- don't use it to make questions that are time-sensitive or involve any proprietary information
 
 ## Route 53
 
@@ -1822,6 +1967,23 @@ ns-1234.awsdns-01.co.uk
   - for disaster recovery
   - has primary instance and failover instance
   - has health checks
+
+## Security Hub CSPM (Cloud Security Posture Management)
+
+> gives centralized view of aws security status
+
+- helps identify security issues across aws accounts and services
+- continuously monitors security best practices and compliance standards
+- aggregates alerts from various aws services
+  - config, GuardDuty, inspector, macie, iam access analyzer, aws firewall manager, aws health, aws partner network solutions
+
+## Shield
+
+> protects networks and applications by analyzing network security configurations and providing managed DDoS protection
+
+- shield standard: free protection from DDoS attacks, SYN/UDP floods, reflection attacks
+- shield advanced: paid 24/7 DDoS protection
+  - 24/7 access to aws DDoS response team
 
 ## SNS (Simple Notification Service)
 
