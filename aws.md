@@ -1953,6 +1953,15 @@ for experts:
 4. work securely
 5. get paid
 
+## Kendra
+
+> fully managed document search service powered by ML
+
+- extract answers from within a document (text, pdf, html, powerpoint, etc)
+- natural language search capabilities
+- can learn from user interactions/feedback to promote preferred results
+- ability to manually fine-tune search results
+
 ## Kinesis
 
 > fully managed service that allows you to collect, process and analyze real-time streaming data
@@ -2042,6 +2051,20 @@ you can use aws management console or aws cli
   - fully managed service
 - compatible services: ec2, ebs, s3, eks, ecs, rds, emr
 
+## Personalize
+
+> fully managed ML service to build apps with real-time personalized recommendations
+
+- same technology used by amazon
+- integrates with
+  - existing websites
+  - applications
+  - sms
+  - email marketing systems
+- implement in days, not months
+- no need to build, train and deploy ML solutions
+- use cases: retail stores, media, entertainment, etc
+
 ## Polly
 
 > convert text to speech using deep learnign
@@ -2075,6 +2098,21 @@ you can use aws management console or aws cli
   - Athena
   - S3
 
+## RAM (Resource Access Manager)
+
+> allows you to grant access to the resources you own to other accounts
+
+## Redshift
+
+> fully managed data warehouse service that allows you to run complex queries on large datasets
+
+- based on postgresql, but it's not used for OLTP
+- used for OLAP (analytics and data warehouse)
+- 10x better performance in comparison to other data ware houses
+- load data every hour, not every second
+- has sql interface for queries
+- can be integrated with aws tools, such as quicksight, tableau
+
 ## Rekognition
 
 > image recognition and video analysis with ML
@@ -2087,17 +2125,6 @@ you can use aws management console or aws cli
   - people counting
   - labeling
   - content moderation
-
-## Redshift
-
-> fully managed data warehouse service that allows you to run complex queries on large datasets
-
-- based on postgresql, but it's not used for OLTP
-- used for OLAP (analytics and data warehouse)
-- 10x better performance in comparison to other data ware houses
-- load data every hour, not every second
-- has sql interface for queries
-- can be integrated with aws tools, such as quicksight, tableau
 
 ## re:Post
 
@@ -2169,6 +2196,19 @@ ns-1234.awsdns-01.co.uk
   - has primary instance and failover instance
   - has health checks
 
+## SageMaker
+
+> fully managed service for developers to train machine learning models that can make predictions
+
+lets say you want to build a model that predicts your exam score
+
+- SageMaker can help in all steps below and do more:
+  - gather past data
+  - label with a score (0 to 10 in the exam)
+  - build a ML model
+  - train and tune ML model
+  - SageMaker now make predictions
+
 ## Security Hub CSPM (Cloud Security Posture Management)
 
 > gives centralized view of aws security status
@@ -2177,6 +2217,14 @@ ns-1234.awsdns-01.co.uk
 - continuously monitors security best practices and compliance standards
 - aggregates alerts from various aws services
   - config, GuardDuty, inspector, macie, iam access analyzer, aws firewall manager, aws health, aws partner network solutions
+
+## Service Catalog
+
+> allows organizations to manage/distribute approved resources (can be applications or aws resources)
+
+## Service Quotas
+
+> notifies you when you are close to a service quota value threshold
 
 ## Shield
 
@@ -2258,6 +2306,43 @@ ns-1234.awsdns-01.co.uk
 ## STS (Security Token Service)
 
 > create temporary, short-term credentials to access your aws resources with limited privileges
+
+## Textract
+
+> extracts text, handwriting and data from any scanned documents using AI and ML
+
+- read and process any type of document (PDFs, images, etc)
+
+## Translate
+
+> natural and accurate language translation
+
+## Trascribe
+
+> automatically converts speech to text
+
+- uses deep learning process called Automatic Speech Recognition
+- fully managed
+- automatically removes Personally Identifiable Information (PII) using Redaction
+
+## Trusted Advisor
+
+> analyze your aws accounts and provides recommendations
+
+- provides recommendations on 5 categories:
+  - cost optimization
+  - performance
+  - security
+  - fault tolerance
+  - service limits
+
+## WAF (Web Application Firewall)
+
+> create security rules that control bot traffic and block common attack patterns
+
+> protects web application from common web exploits (layer 7)
+
+- deploy on ALB, API gateway, cloudfront
 
 ## wavelength
 
