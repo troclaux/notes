@@ -57,6 +57,144 @@
     - you protect what you do inside the cloud
       - files, data, etc
 
+## table of contents
+
+### compute
+
+- [EC2 (Elastic Compute Cloud)](#ec2-elastic-compute-cloud)
+- [Lambda](#lambda)
+- [Elastic Beanstalk](#elastic-beanstalk)
+- [Auto Scaling Group](#auto-scaling-group)
+- [Batch](#batch)
+- [Fargate](#fargate)
+- [Lightsail](#lightsail)
+
+### storage
+
+- [S3 (Simple Storage Service)](#s3-simple-storage-service)
+- [EFS (Elastic File System)](#efs-elastic-file-system)
+- [FSx](#fsx)
+- [Storage Gateway](#storage-gateway)
+
+### database
+
+- [RDS (Relational Database Service)](#rds-relational-database-service)
+- [Aurora](#aurora)
+- [DynamoDB](#dynamodb)
+- [DocumentDB](#documentdb)
+- [Neptune](#neptune)
+- [ElastiCache](#elasticache)
+- [QLDB](#qldb-quantum-ledger-database)
+
+### analytics and big data
+
+- [Athena](#athena)
+- [Redshift](#redshift)
+- [Kinesis](#kinesis)
+- [EMR (Elastic MapReduce)](#emr-elastic-mapreduce)
+- [Glue](#glue)
+- [QLDB (Quantum Ledger Database)](#qldb-quantum-ledger-database)
+
+### networking and content delivery
+
+- [VPC (Virtual Private Cloud)](#vpc-virtual-private-cloud)
+- [CloudFront](#cloudfront)
+- [Route 53](#route-53)
+- [API Gateway](#api-gateway)
+- [Global Accelerator](#global-accelerator)
+- [Elastic Load Balancer (ELB)](#elb-elastic-load-balancer)
+- [Direct Connect](#direct-connect-site-to-site-vpn)
+- [Wavelength](#wavelength)
+
+### security
+
+- [IAM (Identity and Access Management)](#iam-identity-and-access-management)
+- [Security Groups](#security-groups)
+- [KMS (Key Management Service)](#kms-key-management-service)
+- [Secrets Manager](#aws-secrets-manager)
+- [Security Hub (CSPM)](#security-hub-cspm-cloud-security-posture-management)
+- [Shield](#shield)
+- [WAF (Web Application Firewall)](#waf-web-application-firewall)
+- [Cognito](#cognito)
+- [Artifact](#aws-artifact)
+- [Detective](#detective)
+- [CloudHSM](#cloudhsm-cloud-hardware-security-module)
+- [Inspector](#inspector)
+- [GuardDuty](#guardduty)
+- [Macie](#macie)
+- [Directory Services](#aws-directory-services)
+- [STS (Security Token Service)](#sts-security-token-service)
+
+### billing and costing management
+
+- [Budgets](#budgets): track usage, costs, reserved instances and get alerts
+- [Billing Dashboard](#billing-dashboard): high level overview + free tier dashboard
+- [Cost Explorer](#cost-explorer): view detailed current usage and forecast usage
+- [Pricing Calculator](#pricing-calculator): estimates costs in the cloud
+- [Savings Plans](#savings-plans): easy way to save based on long-term usage of aws
+- [Cost and Usage Reports](#cost-and-usage-reports): most comprehensive billing dataset
+- [Cost Allocation Tags](#cost-allocation-tags): tag resources to create detailed reports
+- [Cost Anomaly Detection](#cost-anomaly-detection): detect unusual spending using machine learning
+- [Compute Optimizer](#compute-optimizer): recommends resources configurations to reduce cost
+- [Billing Alarms](#billing-alarms): notifications to monitor billing
+- [Consolidated Billing](#consolidated-billing): centralized billing across all aws accounts in an aws organization
+- [Service Quotas](#service-quotas): notifies you when you're close to service quota threshold
+
+### devops
+
+- [CodeCommit](#codecommit)
+- [CodeBuild](#codebuild)
+- [CodeDeploy](#codedeploy)
+- [CodePipeline](#codepipeline)
+- [CodeStar](#codestar)
+- [Cloud9](#cloud9)
+- [CloudFormation](#cloudformation)
+- [CDK (Cloud Development Kit)](#cdk-cloud-development-kit)
+- [Elastic Container Service (ECS)](#ecs-elastic-container-service)
+- [Elastic Kubernetes Service (EKS)](#ekr-elastic-kubernetes-service)
+- [ECR (Elastic Container Registry)](#ecr-elastic-container-registry)
+- [OpsWorks](#opsworks)
+- [Step Functions](#step-functions)
+- [EventBridge](#eventbridge)
+- [X-Ray](#x-ray)
+
+### ai and machine learning
+
+- [aws connect](#aws-connect)
+- [SageMaker](#sagemaker)
+- [Comprehend](#comprehend)
+- [Lex](#lex)
+- [Polly](#polly)
+- [Rekognition](#rekognition)
+- [Translate](#translate)
+- [Transcribe](#transcribe)
+- [Macie](#macie)
+- [CodeGuru](#codeguru)
+- [QuickSight](#quicksight)
+- [GuardDuty](#guardduty)
+- [Forecast](#forecast)
+- [Kendra](#kendra)
+- [Personalize](#personalize)
+- [Textract](#textract)
+
+### application integration
+
+- [SNS (Simple Notification Service)](#sns-simple-notification-service)
+- [SQS (Simple Queue Service)](#sqs-simple-queue-service)
+- [API Gateway](#api-gateway)
+
+### management and governance
+
+- [CloudWatch](#cloudwatch)
+- [CloudTrail](#cloudtrail)
+- [SSM (Systems Manager)](#ssm-systems-manager)
+- [Service Quotas](#service-quotas)
+- [AWS Config](#aws-config)
+- [Well-Architected Framework](#aws-well-architected-framework)
+- [Health Dashboard](#health-dashboard)
+- [Control Tower](#control-tower)
+- Trusted Advisor
+
 ## AWS CLI
 
 > manage aws resources with CLI commands
@@ -301,11 +439,24 @@
 - dedicated host: your instance runs on a physical server fully dedicated to your use
   - an isolated server with configurations you can control
 
+### IAM access analyzer
+
+> used to find out which resources are shared outside your trusted boundaries (called a Zone of Trust)
+
+- checks these types of resources:
+  - s3 buckets, iam roles, kms keys, lambda functions, sqs queues, Secrets Manager secrets
+- iam access analyzer creates a finding if a resource (like an s3 bucket or iam role) allows access from:
+  - an aws not in your organization
+  - the public internet
+  - anonymous users
+  - unrelated external aws account
+
 ## security groups
 
 > facilitates managing network traffic
 
 - acts as a "firewall"
+- supports ALLOW rules only
 - define:
   - access to ports
   - authorized IP ranges (IPv4 and IPv6)
