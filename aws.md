@@ -1104,6 +1104,19 @@ client <= REST API => API gateway <= proxy requests => lambda <= CRUD => DynamoD
   - inspect the content of packets, not just headers
   - logging and monitoring
 
+## aws organizations
+
+> centrally manage multiple aws accounts
+
+- allows management of permissions
+- AWS organizations Service Control Policies (SCPs): centrally manage and restrict permissions across all accounts
+  - SCPs do not grand permissions, they **limit** them
+  - does not apply to master account
+  - applies to all the users and roles of the account, including root
+- api is available to automate aws account creation
+
+- Organizational Unit (OU): used to group accounts within the organization
+
 ## aws secrets manager
 
 > stores secrets
@@ -1295,6 +1308,12 @@ client <= REST API => API gateway <= proxy requests => lambda <= CRUD => DynamoD
   - able to run any runtime as long as it's packaged as a Docker image
   - can rely on EBS volumes or instance store for disk space
   - not serverless
+
+## Budgets
+
+> send alarms when cost exceeds budget
+
+- types of metrics for budget restriction: usage, cost, reservation, savings plans
 
 ## CDK (Cloud Development Kit)
 
@@ -1562,6 +1581,27 @@ codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, 
   - organize a collection of text files by topic
   - analyze customer interactions as positive or negative
 
+## Consolidated Billing
+
+- when enabled, combine usage across all aws accounts in the aws organization to share
+  - volume pricing
+  - reserved instances
+  - savings plans discounts
+
+## Control Tower
+
+> automatically set up aws organizations to organize accounts and implements SCPs (Service Control Policies)
+
+- easy way to set up and govern a secure multi-account aws environment
+- benefits
+  - automate the setup of multiple aws accounts in a few clicks
+  - automatically apply recommended security, compliance and operational settings
+  - automate ongoing policy management using guardrails
+
+## Cost Anomaly Detection
+
+> continuously monitor your cost and usage using ML to detect unusual spending
+
 ## Detective
 
 > investigates and identifies the root cause of security issues or suspicious activities using ML and graphs
@@ -1772,12 +1812,22 @@ event example:
 }
 ```
 
-## fargate
+## Fargate
 
 > launch docker containers on aws
 
 - fully managed
 - allocates the exact cpu and ram requested
+
+## Forecast
+
+> fully managed service that uses ML to deliver highly accurate forecasts
+
+- example scenario: predict the future sales of a raincoat
+- use cases
+  - product demand planning
+  - financial planning
+  - resource planning
 
 ## FSx
 
