@@ -7,12 +7,7 @@
 - serverless: server doesn't requires provisioning and scaling
   - e.g. aws lambda, azure functions, google cloud functions
 - service: a software that provides functionality and performs a task or set of tasks for your system
-  - examples:
-    - apache
-    - nginx
-    - postgresql
-    - auth0
-    - prometheus
+  - e.g. apache, nginx, postgresql, auth0
 - infrastructure: the physical or virtual resources that support the operation of a system
   - e.g. servers, storage, network, databases, etc
 
@@ -40,10 +35,11 @@
 
 - region: separate geographic areas (e.g. `us-east-1` or `sa-east-1`)
   - each region is completely independent from others
-  - each region has 3 to 6 Availability Zones, with few exceptions (AZ ⊆ region)
+  - each region has 3 to 6 Availability Zones, with few exceptions (AZ ⊂ region)
     - Availability Zone (AZ): isolated locations within each region
 - edge locations (points of presence): for content delivery as close as possible to users
 
+- root user: the original account owner with full administrative access to all AWS services and resources
 - IAM users: individual
 - IAM groups: collections of IAM users
 - AWS organizations: allows management of multiple AWS accounts under one umbrella
@@ -61,139 +57,139 @@
 
 ### compute
 
-- [EC2 (Elastic Compute Cloud)](#ec2-elastic-compute-cloud)
-- [Lambda](#lambda)
-- [Elastic Beanstalk](#elastic-beanstalk)
 - [Auto Scaling Group](#auto-scaling-group)
 - [Batch](#batch)
+- [EC2 (Elastic Compute Cloud)](#ec2-elastic-compute-cloud)
+- [Elastic Beanstalk](#elastic-beanstalk)
 - [Fargate](#fargate)
+- [Lambda](#lambda)
 - [Lightsail](#lightsail)
 
 ### storage
 
-- [S3 (Simple Storage Service)](#s3-simple-storage-service)
 - [EFS (Elastic File System)](#efs-elastic-file-system)
 - [FSx](#fsx)
+- [S3 (Simple Storage Service)](#s3-simple-storage-service)
 - [Storage Gateway](#storage-gateway)
 
 ### database
 
-- [RDS (Relational Database Service)](#rds-relational-database-service)
 - [Aurora](#aurora)
-- [DynamoDB](#dynamodb)
 - [DocumentDB](#documentdb)
-- [Neptune](#neptune)
+- [DynamoDB](#dynamodb)
 - [ElastiCache](#elasticache)
+- [Neptune](#neptune)
 - [QLDB](#qldb-quantum-ledger-database)
+- [RDS (Relational Database Service)](#rds-relational-database-service)
 
 ### analytics and big data
 
 - [Athena](#athena)
-- [Redshift](#redshift)
-- [Kinesis](#kinesis)
 - [EMR (Elastic MapReduce)](#emr-elastic-mapreduce)
 - [Glue](#glue)
+- [Kinesis](#kinesis)
 - [QLDB (Quantum Ledger Database)](#qldb-quantum-ledger-database)
+- [Redshift](#redshift)
 
 ### networking and content delivery
 
-- [VPC (Virtual Private Cloud)](#vpc-virtual-private-cloud)
-- [CloudFront](#cloudfront)
-- [Route 53](#route-53)
 - [API Gateway](#api-gateway)
-- [Global Accelerator](#global-accelerator)
-- [Elastic Load Balancer (ELB)](#elb-elastic-load-balancer)
+- [CloudFront](#cloudfront)
 - [Direct Connect](#direct-connect-site-to-site-vpn)
+- [Elastic Load Balancer (ELB)](#elb-elastic-load-balancer)
+- [Global Accelerator](#global-accelerator)
+- [Route 53](#route-53)
+- [VPC (Virtual Private Cloud)](#vpc-virtual-private-cloud)
 - [Wavelength](#wavelength)
 
 ### security
 
+- [Artifact](#aws-artifact)
+- [CloudHSM](#cloudhsm-cloud-hardware-security-module)
+- [Cognito](#cognito)
+- [Detective](#detective)
+- [Directory Services](#aws-directory-services)
+- [GuardDuty](#guardduty)
 - [IAM (Identity and Access Management)](#iam-identity-and-access-management)
-- [Security Groups](#security-groups)
+- [Inspector](#inspector)
 - [KMS (Key Management Service)](#kms-key-management-service)
+- [Macie](#macie)
+- [STS (Security Token Service)](#sts-security-token-service)
 - [Secrets Manager](#aws-secrets-manager)
+- [Security Groups](#security-groups)
 - [Security Hub (CSPM)](#security-hub-cspm-cloud-security-posture-management)
 - [Shield](#shield)
 - [WAF (Web Application Firewall)](#waf-web-application-firewall)
-- [Cognito](#cognito)
-- [Artifact](#aws-artifact)
-- [Detective](#detective)
-- [CloudHSM](#cloudhsm-cloud-hardware-security-module)
-- [Inspector](#inspector)
-- [GuardDuty](#guardduty)
-- [Macie](#macie)
-- [Directory Services](#aws-directory-services)
-- [STS (Security Token Service)](#sts-security-token-service)
 
 ### billing and costing management
 
-- [Budgets](#budgets): track usage, costs, reserved instances and get alerts
+- [Billing Alarms](#billing-alarms): notifications to monitor billing
 - [Billing Dashboard](#billing-dashboard): high level overview + free tier dashboard
-- [Cost Explorer](#cost-explorer): view detailed current usage and forecast usage
-- [Pricing Calculator](#pricing-calculator): estimates costs in the cloud
-- [Savings Plans](#savings-plans): easy way to save based on long-term usage of aws
-- [Cost and Usage Reports](#cost-and-usage-reports): most comprehensive billing dataset
+- [Budgets](#budgets): track usage, costs, reserved instances and get alerts
+- [Compute Optimizer](#compute-optimizer): recommends resources configurations to reduce cost
+- [Consolidated Billing](#consolidated-billing): centralized billing across all aws accounts in an aws organization
 - [Cost Allocation Tags](#cost-allocation-tags): tag resources to create detailed reports
 - [Cost Anomaly Detection](#cost-anomaly-detection): detect unusual spending using machine learning
-- [Compute Optimizer](#compute-optimizer): recommends resources configurations to reduce cost
-- [Billing Alarms](#billing-alarms): notifications to monitor billing
-- [Consolidated Billing](#consolidated-billing): centralized billing across all aws accounts in an aws organization
+- [Cost Explorer](#cost-explorer): view detailed current usage and forecast usage
+- [Cost and Usage Reports](#cost-and-usage-reports): most comprehensive billing dataset
+- [Pricing Calculator](#pricing-calculator): estimates costs in the cloud
+- [Savings Plans](#savings-plans): easy way to save based on long-term usage of aws of compute services (ec2, fargate, lambda)
 - [Service Quotas](#service-quotas): notifies you when you're close to service quota threshold
 
 ### devops
 
-- [CodeCommit](#codecommit)
+- [CDK (Cloud Development Kit)](#cdk-cloud-development-kit)
+- [Cloud9](#cloud9)
+- [CloudFormation](#cloudformation)
 - [CodeBuild](#codebuild)
+- [CodeCommit](#codecommit)
 - [CodeDeploy](#codedeploy)
 - [CodePipeline](#codepipeline)
 - [CodeStar](#codestar)
-- [Cloud9](#cloud9)
-- [CloudFormation](#cloudformation)
-- [CDK (Cloud Development Kit)](#cdk-cloud-development-kit)
-- [Elastic Container Service (ECS)](#ecs-elastic-container-service)
-- [Elastic Kubernetes Service (EKS)](#ekr-elastic-kubernetes-service)
 - [ECR (Elastic Container Registry)](#ecr-elastic-container-registry)
+- [Elastic Container Service (ECS)](#ecs-elastic-container-service)
+- [Elastic Kubernetes Service (EKS)](#eks-elastic-kubernetes-service)
+- [EventBridge](#eventbridge)
 - [OpsWorks](#opsworks)
 - [Step Functions](#step-functions)
-- [EventBridge](#eventbridge)
 - [X-Ray](#x-ray)
 
 ### ai and machine learning
 
 - [aws connect](#aws-connect)
-- [SageMaker](#sagemaker)
-- [Comprehend](#comprehend)
-- [Lex](#lex)
-- [Polly](#polly)
-- [Rekognition](#rekognition)
-- [Translate](#translate)
-- [Transcribe](#transcribe)
-- [Macie](#macie)
 - [CodeGuru](#codeguru)
-- [QuickSight](#quicksight)
-- [GuardDuty](#guardduty)
+- [Comprehend](#comprehend)
 - [Forecast](#forecast)
+- [GuardDuty](#guardduty)
 - [Kendra](#kendra)
+- [Lex](#lex)
+- [Macie](#macie)
 - [Personalize](#personalize)
+- [Polly](#polly)
+- [QuickSight](#quicksight)
+- [Rekognition](#rekognition)
+- [SageMaker](#sagemaker)
 - [Textract](#textract)
+- [Transcribe](#transcribe)
+- [Translate](#translate)
 
 ### application integration
 
+- [API Gateway](#api-gateway)
 - [SNS (Simple Notification Service)](#sns-simple-notification-service)
 - [SQS (Simple Queue Service)](#sqs-simple-queue-service)
-- [API Gateway](#api-gateway)
 
 ### management and governance
 
-- [CloudWatch](#cloudwatch)
+- [AWS Config](#aws-config)
 - [CloudTrail](#cloudtrail)
+- [CloudWatch](#cloudwatch)
+- [Control Tower](#control-tower)
+- [Health Dashboard](#health-dashboard)
 - [SSM (Systems Manager)](#ssm-systems-manager)
 - [Service Quotas](#service-quotas)
-- [AWS Config](#aws-config)
+- [Trusted Advisor](#trusted-advisor)
 - [Well-Architected Framework](#aws-well-architected-framework)
-- [Health Dashboard](#health-dashboard)
-- [Control Tower](#control-tower)
-- Trusted Advisor
 
 ## AWS CLI
 
@@ -509,6 +505,8 @@
 
 - allows management over IP addresses, subnets, routing and security
 - must have a CIDR block
+- elastic ip: fixed public IPv4 address attached to ec2 instance
+  - ongoing cost if not attached to ec2 instance or if the instance is stopped
 - allows the creation of public and private subnets
   - subnet: smaller network inside larger network
     - helps organize and manage traffic in a network by dividing it into chunks
@@ -857,7 +855,7 @@ aws s3 ls s3://my-bucket-name/
     - glacier deep archive
       - retrieval options:
         - standard: 12 hours (medium cost)
-        - bulk: 48 hours (lowest cost)
+        - bulk: under 24 hours (lowest cost)
 
 ### Replication (CRR and SRR)
 
@@ -996,13 +994,13 @@ client <= REST API => API gateway <= proxy requests => lambda <= CRUD => DynamoD
   - reporting
   - analyza and query vpc flow logs
 
-## aurora
+## Aurora
 
 > proprietary relational database engine that is part of rds
 
 - fully managed
 - highly available
-- costs more than rds (20% more), but is more efficient
+- costs more than rds, but is more efficient
 - supports postgresql and mysql
 - auto scales in increments of 10 GB
 
