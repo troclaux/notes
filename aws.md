@@ -19,8 +19,9 @@
 
 - options to manage aws
   - aws management console
-  - aws CLI
-  - aws SDK: allows the access and management of aws services programmatically
+  - AWS Command Line Interface (CLI)
+  - AWS Software Developer Kit (SDK): allows the access and management of aws services programmatically
+    - Used whenever you want to call APIs
 
 - reliability: ability to recover from failures and maintain availability
   - dynamically acquire computing resources to meet demand
@@ -209,6 +210,13 @@
 - key pairs: used for SSH access to Linux or RDP to Windows instances
 - elastic IP: static public IP address for your instance
 
+- inbound traffic: traffic that comes into a resource from the outside
+  - instance <= traffic = outside
+- outbound traffic: traffic that goes out from a resource to an external destination
+  - instance = traffic => outside
+
+### workflow
+
 1. choose an AMI (ubuntu, amazon linux, windows, etc)
 1. choose an instance type (e.g. t2.micro, m5.large)
 1. configure instance details (VPC, subnet, IAM role, etc.)
@@ -217,23 +225,26 @@
 1. configure security group (firewall rules)
 1. launch (with a key pair for SSH)
 
-- inbound traffic: instance <= traffic = outside
-- outbound traffic: instance = traffic => outside
-
 ### shared responsibility model
 
-- aws
-  - infrastructure (global network security)
-  - isolation on physical host
-  - replacing faulty hardware
-  - compliance validation
-- me
-  - security groups rules
-  - OS patches and updates
-  - software and utilities installed on the EC2 instance
-  - IAM roles assigned to EC2 instances
-  - IAM user access management
-  - data security on your instance
+> defines which security and compliance tasks are handled by AWS and which are handled by the customer
+
+> [!IMPORTANT]
+> Varies slightly depending on the aws service.
+> depends partially in which category the service belongs: IaaS, PaaS, SaaS.
+> Not every IaaS service has exactly the same responsibility model. The same applies to PaaS and SaaS categories.
+
+|                    | On-site | IaaS             | PaaS             | SaaS             |
+|--------------------|---------|------------------|------------------|------------------|
+| **Applications**   | You     | You              | You              | Service provider |
+| **Data**           | You     | You              | You              | Service provider |
+| **Runtime**        | You     | You              | Service provider | Service provider |
+| **Middleware**     | You     | You              | Service provider | Service provider |
+| **OS**             | You     | You              | Service provider | Service provider |
+| **Virtualization** | You     | Service provider | Service provider | Service provider |
+| **Servers**        | You     | Service provider | Service provider | Service provider |
+| **Storage**        | You     | Service provider | Service provider | Service provider |
+| **Networking**     | You     | Service provider | Service provider | Service provider |
 
 ### purchasing options
 
@@ -246,12 +257,11 @@
   - up to 72% discount compared to on-demand
 - spot instances: bid for unused capacity, cheapest
   - no guaranteed availability, aws can terminate them when the spot price exceeds your bid price
-- savings plans
-  - commitment to an amount of usage
+- savings plans: commit to an amount of usage
   - discount based on long-term usage
-- capacity reservations
-- dedicated instances
-- dedicated hosts
+- capacity reservations: guarantees instance capacity in a specific AZ
+- dedicated instances: instances that run on hardware dedicated to your account, but aws manages the host
+- dedicated hosts: get an entire physical server to yourself
 
 ### sizing and configuration options
 
@@ -376,12 +386,6 @@
 - MFA (Multi Factor Authentication): multi-step account login process that requires users to enter more information than just a password
   - e.g. password && (code sent to email || secret question || fingerprint scan)
 
-- Options to access AWS:
-  - AWS Management Console
-  - AWS Command Line Interface (CLI)
-  - AWS Software Developer Kit (SDK)
-    - Used whenever you want to call APIs
-
 - IAM Policy: set of permissions for aws resources
   - a policy can exist without a role, but a role can't do anything useful without a policy
 - IAM Roles: identity that grants temporary permissions to aws services or users to perform tasks
@@ -481,23 +485,21 @@
 
 #### security groups vs firewalls
 
-| Feature | AWS Security Groups | Traditional Firewalls (e.g., `ufw`, `iptables`) |
-|--------|--------------------------|-----------------------------------------------------|
-| Level | AWS-level (cloud) | OS-level (server) |
-| Type | Virtual firewall for EC2 and services | Software firewall on the OS |
-| Rules | Stateful (return traffic automatically allowed) | Stateful or stateless |
-| Scope | Applied per EC2 instance | Applies to whole server |
-| Use Case | Allow inbound on port 22 from your IP, or 443 to everyone | Block/allow ports directly on EC2 OS |
+| Feature  | AWS Security Groups                                       | Traditional Firewalls (e.g., `ufw`, `iptables`) |
+|----------|-----------------------------------------------------------|-------------------------------------------------|
+| Level    | AWS-level (cloud)                                         | OS-level (server)                               |
+| Type     | Virtual firewall for EC2 and services                     | Software firewall on the OS                     |
+| Rules    | Stateful (return traffic automatically allowed)           | Stateful or stateless                           |
+| Scope    | Applied per EC2 instance                                  | Applies to whole server                         |
+| Use Case | Allow inbound on port 22 from your IP, or 443 to everyone | Block/allow ports directly on EC2 OS            |
 
 ### SSH Access
 
-- Create an identity file `.pem` for SSH:
-  - EC2 Dashboard > Key Pair > Create Key Pair
-  - Copy the public IP of the instance (used in the SSH command)
-  - Move the `.pem` file to a secure location and restrict permissions:
-    - `chmod 0400 <file>.pem`
-  - SSH into the instance:
-    - `ssh -i <file>.pem ec2-user@<public_IP>`
+1. create an identity file `.pem` for SSH:
+1. EC2 Dashboard => Key Pair => Create Key Pair
+1. copy the public IP of the instance (used in the SSH command)
+1. move the `.pem` file to a secure location and restrict permissions: `chmod 0400 <file>.pem`
+1. SSH into the instance: `ssh -i <file>.pem ec2-user@<public_IP>`
 
 ## VPC (Virtual Private Cloud)
 
@@ -515,7 +517,7 @@
     - use CIDR notation (e.g. `192.168.1.0/24`)
 
 - **public vs private subnet**
-  - public subnets have route to internet gateway
+  - public subnets in AWS need an Internet Gateway to allow internet access
     - this means:
       - instances can send traffic to the internet
       - instances can receive traffic from the internet, if security rules allows it
@@ -1050,6 +1052,12 @@ client <= REST API => API gateway <= proxy requests => lambda <= CRUD => DynamoD
   - check whether all resources are in approved regions
   - make sure CloudTrail is enabled and logging correctly
 
+## aws connect
+
+> AI-powered application that provides contact center
+
+- set up call centers or customer service systems
+
 ## aws directory services
 
 > suite of managed directory services that makes it easy to set up, manage and scale directory services in the AWS Cloud
@@ -1390,25 +1398,28 @@ client <= REST API => API gateway <= proxy requests => lambda <= CRUD => DynamoD
 
 ## CloudTrail
 
-> get history of events or api calls made within your aws account via aws cli, aws console, aws sdk or aws services
+> get history of events or API calls made within your aws account via aws cli, aws console, aws sdk or aws services
 
-- provides governance
+- provides governance and auditing
   - governance: monitoring activity, ensuring compliance, auditability and accountability
 - enabled by default
 - to store logs long-term, put logs from cloudtrail into: cloudwatch logs or s3
 
+> [!TIP]
+> cloudtrAIl => ApI
+
 ### insights
 
-> automated analysis of applications services
+> automates the analysis of cloudtrail events to detect unusual activity
 
 ## CloudWatch
 
 > monitoring and observability service that provides data and insights
 
-- monitor your applications
+- monitors resources, applications,  performance and operational health
+  - unified view of operational health
 - respond to system-wide performance changes
 - optimize resource utilization
-- get a unified view of operational health
 
 ### CloudWatch Alarm
 
@@ -1440,7 +1451,7 @@ client <= REST API => API gateway <= proxy requests => lambda <= CRUD => DynamoD
 
 - adjustable cloudwatch logs retention: can be 1 week, month, year, etc
 
-## CloudWatch Logs for EC2
+### CloudWatch Logs for EC2
 
 - by default, no logs from ec2 instance will go to cloudwatch
 - run cloudwatch agent on ec2 to push log files
@@ -1694,7 +1705,7 @@ codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, 
   - throughput
   - requests and data transfer (for IA)
 
-## EKR (Elastic Kubernetes Service)
+## EKS (Elastic Kubernetes Service)
 
 > fully managed Kubernetes service that allows you to run, manage, and scale containerized applications using Kubernetes
 
@@ -1899,11 +1910,9 @@ event example:
   - vpc flow logs
   - dns logs
 
-## health dashboard
+## Health Dashboard
 
-> personalized alerts and remediation guidance when aws outages that might impact your aws account or resources
-
-- global service
+> global service that provides personalized alerts and remediation guidance for aws outages that might impact your aws account or resources
 
 ### service health (public view)
 
@@ -2034,7 +2043,7 @@ you can use aws management console or aws cli
 - chef and puppet are tools that perform server configuration automatically
 - alternative to [SSM](#ssm-systems-manager)
 
-## outposts
+## Outposts
 
 > fully managed service that extends aws infrastructure, services and tools to virtually any on-premises or edge locations
 
@@ -2290,7 +2299,7 @@ lets say you want to build a model that predicts your exam score
 
 > fully managed service that allows you to coordinate multiple AWS services into serverless workflows
 
-## storage gateway
+## Storage Gateway
 
 > hybrid cloud storage service that enables on-premises applications to seamlessly use aws cloud storage
 
@@ -2434,7 +2443,7 @@ TODO
 - use tags and cost allocation tags for easy management and billing
 - iam guidelines: MFA, least-privilege, password policy, password rotation
 - config to record all resources configurations and compliance over time
-- cloudformation to deploy stacks acrosss accounts and region
+- cloudformation to deploy stacks across accounts and region
 - trusted advisor to get insights, choose a support plan adapted to your needs
   - support plan: subscription for trusted advisor features
     - basic/free, developer, business, enterprise
