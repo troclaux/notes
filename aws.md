@@ -234,17 +234,38 @@
 > depends partially in which category the service belongs: IaaS, PaaS, SaaS.
 > Not every IaaS service has exactly the same responsibility model. The same applies to PaaS and SaaS categories.
 
-|                    | On-site | IaaS             | PaaS             | SaaS             |
-|--------------------|---------|------------------|------------------|------------------|
-| **Applications**   | You     | You              | You              | Service provider |
-| **Data**           | You     | You              | You              | Service provider |
-| **Runtime**        | You     | You              | Service provider | Service provider |
-| **Middleware**     | You     | You              | Service provider | Service provider |
-| **OS**             | You     | You              | Service provider | Service provider |
-| **Virtualization** | You     | Service provider | Service provider | Service provider |
-| **Servers**        | You     | Service provider | Service provider | Service provider |
-| **Storage**        | You     | Service provider | Service provider | Service provider |
-| **Networking**     | You     | Service provider | Service provider | Service provider |
+|                     | On-site | IaaS             | PaaS                 | SaaS             |
+|---------------------|---------|------------------|----------------------|------------------|
+| **Data**            | You     | You              | You                  | You              |
+| **Applications**    | You     | You              | You/Service provider | Service provider |
+| **Runtime**         | You     | You              | Service provider     | Service provider |
+| **Middleware**      | You     | You              | Service provider     | Service provider |
+| **OS**              | You     | You              | Service provider     | Service provider |
+| **Virtualization**  | You     | Service provider | Service provider     | Service provider |
+| **Servers**         | You     | Service provider | Service provider     | Service provider |
+| **Storage**         | You     | Service provider | Service provider     | Service provider |
+| **Networking**      | You     | Service provider | Service provider     | Service provider |
+
+- data: information your application uses (e.g. customer records, documents, transactions)
+  - you are ALWAYS responsible for your data
+- applications: the actual software you use or build (e.g. web app, analytics tool)
+- runtime: the environment where code runs (e.g. JVM, node.js, python interpreter)
+- middleware: software that connects applications or services (e.g. message brokers, APIs, databases, caching systems)
+- os: the system software that runs on a server or VM (e.g. Linux, Windows Server)
+- virtualization: software that abstracts physical hardware into virtual machines (e.g. a hypervisor like VMware or Xen)
+- servers: physical or virtual machines that process workloads (CPUs, RAM, etc)
+- storage: where your data is saved (e.g. hard drives, SSDs, cloud object storage like Amazon S3)
+- networking: The communication layer (e.g. routers, switches, firewalls, internet access, VPCs, load balancers)
+  - it allows components to talk to each other or external users
+
+- customer: responsibility for security in the cloud
+  - customer data
+  - platform, applications, IAM
+  - OS, networking traffic protection (encryption, integrity, identity)
+  - client-side and server-side encryption
+  - authentication
+- aws: responsibility for security of the cloud
+  - compute, storage, database, networking
 
 ### purchasing options
 
@@ -2351,7 +2372,7 @@ lets say you want to build a model that predicts your exam score
 
 - deploy on ALB, API gateway, cloudfront
 
-## wavelength
+## Wavelength
 
 > brings aws services to the edge of the 5G networks
 
@@ -2451,6 +2472,49 @@ TODO
   - if your account is compromised: change the root password, delete and rotate all passwords/keys, contact the aws support
 - cloudtrail to record api calls made within your account
 - if your account is compromised: change the root password, delete and rotate all passwords/keys, contact AWS support
+
+### architecting and ecosystem
+
+- stop guessing your capacity needs
+- test systems at production scale
+- automate to make architectural architectural experimentation easier
+- allow for evolutionary architecture
+  - design based on changing requirements
+
+### security
+
+- penetrationg testing
+  - you dont need prior approval to run penetrationg tests for the following services
+    - ec2 instances
+    - nat gateways
+    - ELB
+    - RDS
+    - cloudfront
+    - aurora
+    - api gateways
+    - lambda and lambda edge functions
+    - lightsail resources
+    - elastic beanstalk environments
+    - this list can increase overtime
+  - prohibited activities
+    - DNS zone walking via route 53 hosted zones
+    - Denial of Service (DoS)
+    - Distributed Denial of Service (DDoS)
+    - Simulated DoS
+    - Simullated DDoS
+    - Port flooding
+    - protocol flooding
+    - request flooding
+      - login request flooding
+      - API request flooding
+    - for any other simulated events, contact aws-security-simulated-event@amazon.com
+
+### DDoS protection on aws
+
+- aws shield standard
+- aws shield advanced
+- aws waf
+- cloudfront and route 53
 
 ---
 
