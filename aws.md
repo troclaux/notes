@@ -2357,6 +2357,23 @@ lets say you want to build a model that predicts your exam score
   - AR/VR
   - online gaming
 
+## x-ray
+
+> visual analysis of applications services
+
+> helps developers gain insights into the performance/behavior of applications running in a microservices architecture or distributed system
+
+- distributed tracing service
+  - tracing service: tool that helps developers track/visualize the flow of requests through an application
+
+- advantages
+  - troubleshooting performance (bottlenecks)
+  - understand dependencies in a microservice architecture
+  - pinpoint service issues
+  - review request behavior
+  - find errors and exceptions
+  - identify users that are impacted by problems
+
 ## aws common tasks
 
 ### install docker on amazon linux 2
