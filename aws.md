@@ -34,11 +34,16 @@
     - health monitoring
     - scalability and elasticity
 
-- region: separate geographic areas (e.g. `us-east-1` or `sa-east-1`)
-  - each region is completely independent from others
-  - each region has 3 to 6 Availability Zones, with few exceptions (AZ ⊂ region)
-    - Availability Zone (AZ): isolated locations within each region
-- edge locations (points of presence): for content delivery as close as possible to users
+- aws global infrastructure
+  - region: separate geographic areas (e.g. `us-east-1` or `sa-east-1`)
+    - each region is completely independent from others
+    - each region has 3 to 6 Availability Zones, with few exceptions (AZ ⊂ region)
+  - Availability Zone (AZ): isolated locations within each region
+  - edge networks (Points of Presence): for content delivery as close as possible to users
+
+- aws global services: services that are NOT tied to a specific region and operate across all regions
+  - e.g. IAM, route 53, cloudfront, WAF, shield, aws organizations, aws artifact
+  - TIP: if a service manages access, identity or DNS for your entire aws environment, it's likely global
 
 - root user: the original account owner with full administrative access to all AWS services and resources
 - IAM users: individual
@@ -258,7 +263,7 @@
 - networking: The communication layer (e.g. routers, switches, firewalls, internet access, VPCs, load balancers)
   - it allows components to talk to each other or external users
 
-- customer: responsibility for security in the cloud
+- you/customer: responsibility for security in the cloud
   - customer data
   - platform, applications, IAM
   - OS, networking traffic protection (encryption, integrity, identity)
@@ -1116,6 +1121,7 @@ client <= REST API => API gateway <= proxy requests => lambda <= CRUD => DynamoD
   - business applications
   - front-end web and mobile
   - security, identity and compliance
+- written and maintained by aws staff
 
 ## aws network firewall
 
@@ -1140,6 +1146,20 @@ client <= REST API => API gateway <= proxy requests => lambda <= CRUD => DynamoD
 - api is available to automate aws account creation
 
 - Organizational Unit (OU): used to group accounts within the organization
+
+## aws professional services and partner network
+
+> global group of experts available to work alongside your team and help achieve cloud goals faster
+
+- often partner with APN (Aws Partner Network) members
+- APN: global community of partners that help customers build, market and sell their offerings on aws
+  - offerings = products, services or solutions that apn provides to customers using aws infrastructure
+- types of APN partners
+  - APN technology partners: provide hardware, connectivity or software solutions
+  - APN consulting partners: help customers desing, architect, build, migrate and manage workloads on aws
+  - APN training partners: deliver aws-authored training to organizations and individuals
+- aws competency program: recognize APN partners that have demonstrated technical expertise
+- aws navigate program: helps apn partners improve specialized skills
 
 ## aws secrets manager
 
@@ -2451,6 +2471,31 @@ sudo chmod 666 /var/run/docker.sock
 
 ## pricing
 
+- global AWS services: IAM, CloudFront, Amazon Route 53, WAF, Amazon Chime, DynamoDB, WorkDocs, WorkMail, WorkSpaces, WorkLink, Service Certificates
+
+- AWS services that include a free tier for 12 months for new AWS customers:
+  - EC2, S3, RDS, EBS, ECR, CloudFront, ElastiCache, DynamoDB*, Glacier*, Lambda*
+
+- Free AWS services: Security Groups, Auto Scaling, CloudFormation
+  - Lambda (1M requests/month)
+  - DynamoDB (25 GB storage)
+  - CloudWatch (10 custom metrics and alarms)
+  - Amazon Q Developer (Unlimited autocomplete suggestions)
+  - Aurora DSQL (100k DPUs)
+  - CloudFront (1 TB of data trasfer out)
+  - aws blogs, forums, guides, quick starts
+
+- What AWS services are never free (need to pay to use): WAF, Inspector, Route 53, EBS volumes, ELB (WIREE)
+
+### models
+
+- pay as you go
+- pay per use
+- pay less by using more
+- pay less when you reserve
+- pay less when AWS grows
+- no up-front investment
+
 ### data transfer
 
 - inbound (data going into aws services): free
@@ -2468,20 +2513,6 @@ TODO
 ## tutorials
 
 - [setup kubernetes in ec2 instance tutorial](https://varunmanik1.medium.com/setting-up-a-kubernetes-cluster-on-aws-ec2-with-ubuntu-22-04-lts-and-kubeadm-5c54930a4659)
-
-## billing tools
-
-- pricing calculator: estimates costs in the cloud
-
-- tracking costs in the cloud
-  - billing dashboard
-  - cost allocation tags
-  - cost and usage reports
-  - cost explorer
-- monitoring agains costs plans
-  - billing alarms
-
-TODO
 
 ## best practices
 
