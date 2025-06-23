@@ -280,7 +280,7 @@
   - no guaranteed availability, aws can terminate them when the spot price exceeds your bid price
 - savings plans: commit to an amount of usage
   - discount based on long-term usage
-- capacity reservations: guarantees instance capacity in a specific AZ
+- capacity reservations: reserve instance capacity in a specific AZ
 - dedicated instances: instances that run on hardware dedicated to your account, but aws manages the host
 - dedicated hosts: get an entire physical server to yourself
 
@@ -304,10 +304,7 @@
   - before a cloud migration
   - continuously after the cloud onboarding process (requirements change over time)
 
-- tools that can help
-  - cloudwatch
-  - cost explorer
-  - trusted advisor
+- tools that can help: cloudwatch, cost explorer, trusted advisor
 
 ### ec2 instance tenancy
 
@@ -1153,6 +1150,26 @@ client <= REST API => API gateway <= proxy requests => lambda <= CRUD => DynamoD
 - integrates with [rds](#rds-relational-database-service)
 - secrets are encrypted using [KMS](#kms-key-management-service)
 
+## aws support plans
+
+- basic/free: available to all aws customers by default
+- developer
+- business
+- enterprise
+
+| Plan       | Cost (Starting)     | Access Type          | Use Case         | Response Time (Critical) |
+| ---------- | ------------------- | -------------------- | ---------------- | ------------------------ |
+| Basic      | Free                | Docs & Forums        | Learning/Test    | Not available            |
+| Developer  | $29/mo or 3%        | Email (Business hrs) | Dev/Test         | < 12–24 hrs              |
+| Business   | $100/mo or % usage  | 24/7 Chat/Phone      | Production       | < 1 hr                   |
+| Enterprise | $15k/mo or % usage  | TAM + 24/7 support   | Mission-Critical | < 15 mins                |
+
+- TAM (Technical Account Manager)
+
+## aws training and certification
+
+> help individuals/organizations build cloud skills through online courses and credentials
+
 ## aws well-architected framework
 
 > set of best practices and guidelines created by amazon to help cloud architects design and operate secure, resilient and efficient infrastructure for their applications
@@ -1341,6 +1358,21 @@ client <= REST API => API gateway <= proxy requests => lambda <= CRUD => DynamoD
 > send alarms when cost exceeds budget
 
 - types of metrics for budget restriction: usage, cost, reservation, savings plans
+
+## CAF (Cloud Adoption Framework)
+
+> framework provided by aws to assist adoption of cloud computing for your infrastructure
+
+six key perspectives:
+
+| Perspective | Focus Area                    | Example Stakeholders  |
+| ----------- | ----------------------------- | --------------------- |
+| Business    | Business value and goals      | Executives, finance   |
+| People      | Skills and change management  | HR, training teams    |
+| Governance  | Risk and compliance           | Risk officers, legal  |
+| Platform    | Cloud architecture            | Architects, engineers |
+| Security    | Data and asset protection     | Security teams        |
+| Operations  | Manage/monitor cloud services | IT ops, admins        |
 
 ## CDK (Cloud Development Kit)
 
