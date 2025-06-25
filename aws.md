@@ -1790,6 +1790,15 @@ codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, 
   - automatically apply recommended security, compliance and operational settings
   - automate ongoing policy management using guardrails
 
+## Cost Allocation Tags
+
+> organize and track aws costs by assigning metadata to your aws resources
+
+- how it works: you apply tags (key-value pairs) to resources, like `Environment=Production` or `Team=Finance`
+- types of tags
+  - aws-generated
+  - user-defined
+
 ## Cost Anomaly Detection
 
 > continuously monitor your cost and usage using ML to detect unusual spending
@@ -1817,6 +1826,13 @@ codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, 
 - nosql database
 - store, query and index json data
 - highly available with replication across 3 AZ
+
+## DRS (Disaster Recovery Service or Elastic Disaster Recovery)
+
+> recover your applications and systems quickly after a disaster
+
+- provides disaster recovery for on-premises and cloud-based applications by continuously replicating your servers to aws
+- enables fail over to aws and fail back once systems are restored
 
 ## DynamoDB
 
@@ -2011,6 +2027,13 @@ event example:
 - fully managed
 - allocates the exact cpu and ram requested
 
+## FIS (Fault Injection Simulator)
+
+> test the resilience of your applications (chaos engineering)
+
+- similar to netflix's chaos monkey
+- supports EC2, ECS, EKS, RDS, etc
+
 ## Forecast
 
 > fully managed service that uses ML to deliver highly accurate forecasts
@@ -2026,12 +2049,9 @@ event example:
 > fully managed service that allows you to launch high-performance file systems in the cloud
 
 - amazon FSx for Windows File Server: for windoes-based applications that require SMB protocol and Active Directory integration
-- amazon FSx for Lustre: used for machine learning, analytics, video processing, financial modeling
-  - high performance computing
-  - scalable file storage
-  - lustre = linux + cluster
+- amazon FSx for Lustre (out-of-scope): used for machine learning, analytics, video processing, financial modeling
 
-## global accelerator
+## Global Accelerator
 
 > improve application availability and performance using the aws global network
 
@@ -2097,6 +2117,9 @@ event example:
 
 > global service that provides personalized alerts and remediation guidance for aws outages that might impact your aws account or resources
 
+- shows status and availability of your aws resources
+- can be used to subscribe to an RSS feed to be notified of the status of all aws service interruptions
+
 ### service health (public view)
 
 - shows
@@ -2113,35 +2136,28 @@ event example:
   - proactive notification to help you plan for scheduled activities
   - aggregate data from entire AWS Organization
 
+## Infrastructure Composer
+
+> no-code tool that helps you design and deploy aws infrastructure using cloudformation
+
+- uses cloudformation templates
+- ideal for begginers that are unfamiliar with writing YAML/JSON templates manually
+
 ## Inspector
 
 > automated security assessment service that helps improve security and compliance
 
 - only for ec2 instances, ecr container images and lambda functions
 - scans aws workloads for vulnerabilities and unintended network exposure
-  - aws workloads: applications, services or processes that are running on aws infrastructure
 
-## IQ
+## IoT core
 
-> find professional help for your aws projects
+> managed service that lets connected IoT devices interact with aws services and other devices securely
 
-- engage and pay aws certified 3rd party experts for on-demand project work
-
-for customers:
-
-1. submit request
-2. review responses
-3. select expert
-4. work securely
-5. pay per milestone
-
-for experts:
-
-1. create profile
-2. connect with customers
-3. start a proposal
-4. work securely
-5. get paid
+- enables IoT (Internet of Things) devices to connect, send data and receive commands using aws
+- offers secure communication
+- register, manage and monitor IoT devices
+- route data to aws services (e.g. lambda, s3, dynamodb) automatically
 
 ## Kendra
 
@@ -2177,6 +2193,10 @@ you can use aws management console or aws cli
 
 - uses Automatic Speech Recognition (ASR) to convert speech to text
 - uses natural language understanding to recognize the intent of text, callers
+
+## License Manager
+
+> helps you manage software licenses from vendors like Microsoft, Oracle, IBM across aws and on-premises environments
 
 ## Lightsail
 
