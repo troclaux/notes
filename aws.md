@@ -2225,6 +2225,27 @@ you can use aws management console or aws cli
 
 - helps identify and alert you to sensitive data, such as Personally Identifiable Information (PII) in s3 buckets
 
+## Marketplace
+
+> digital catalog where customer can find, buy and deploy third-party software, services and data that run on aws
+
+- sell SaaS solutions to aws customers
+- buy software that has been bundled into customized AMIs by the aws marketplace sellers
+
+## Migration Evaluator
+
+> assess cost and feasibility of migrating to aws
+
+- helps estimating cost savings, right-sizing opportunities and optimal aws services for your workloads
+- gathers data about your existing infrastructure and analyzes it
+
+## Migration Hub
+
+> provides central dashboard to track and manage application migrations to aws
+
+- tracks status of servers and applications as they move to aws
+- no extra charge for using migration hub
+
 ## MQ
 
 > managed message broker service for rabbitmq and activemq
@@ -2436,6 +2457,10 @@ lets say you want to build a model that predicts your exam score
 
 > notifies you when you are close to a service quota value threshold
 
+## SES (Simple Email Service)
+
+> fully managed service for sending emails
+
 ## Shield
 
 > protects networks and applications by analyzing network security configurations and providing managed DDoS protection
@@ -2554,20 +2579,13 @@ lets say you want to build a model that predicts your exam score
 
 - deploy on ALB, API gateway, cloudfront
 
-## Wavelength
+## Well-Architected Tool
 
-> brings aws services to the edge of the 5G networks
+> free tool to review your architectures against the 6 pillars of the Well-Architected Framework and adopt best practices
 
-- ultra-low latency applications through 5G networks
-- traffic doesn't leave Communication Service Provider's (CSP) network
-- no additional charges or service agreements
-- use cases
-  - smart cities
-  - ML-assisted diagnostics
-  - connected vehicles
-  - interactive video streams
-  - AR/VR
-  - online gaming
+1. select your workload and answer questions
+1. review your answers against the 6 pillars
+1. obtain advice
 
 ## x-ray
 
@@ -2600,8 +2618,6 @@ sudo chmod 666 /var/run/docker.sock
 ```
 
 ## pricing
-
-- global AWS services: IAM, CloudFront, Amazon Route 53, WAF, Amazon Chime, DynamoDB, WorkDocs, WorkMail, WorkSpaces, WorkLink, Service Certificates
 
 - AWS services that include a free tier for 12 months for new AWS customers:
   - EC2, S3, RDS, EBS, ECR, CloudFront, ElastiCache, DynamoDB*, Glacier*, Lambda*
