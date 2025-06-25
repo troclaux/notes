@@ -39,18 +39,11 @@
     - each region is completely independent from others
     - each region has 3 to 6 Availability Zones, with few exceptions (AZ ⊂ region)
   - Availability Zone (AZ): isolated locations within each region
-  - edge networks (Points of Presence): for content delivery as close as possible to users
+  - edge location : physical aws data center located close to users, caching content and reducing latency
 
 - aws global services: services that are NOT tied to a specific region and operate across all regions
-  - e.g. IAM, route 53, cloudfront, WAF, shield, aws organizations, aws artifact
+  - e.g. IAM, Route 53, CloudFront, WAF, Shield, aws organizations, aws artifact, DynamoDB, WorkDocs, WorkMail, WorkSpaces
   - TIP: if a service manages access, identity or DNS for your entire aws environment, it's likely global
-
-- root user: the original account owner with full administrative access to all AWS services and resources
-- IAM users: individual
-- IAM groups: collections of IAM users
-- AWS organizations: allows management of multiple AWS accounts under one umbrella
-  - allows management of permissions
-  - AWS organizations Service Control Policies (SCPs): centrally manage and restrict permissions across all accounts
 
 - shared responsibility model: the line of responsibility shifts based on the level of abstraction provided by the service
   - aws is responsible for security **OF** the cloud
@@ -362,7 +355,9 @@
 
 > manage access to AWS services and resources securely
 
-- root account/user: has complete and unrestricted access to all aws services and billing features in the account
+### types of identity management
+
+- root account/user: has complete and unrestricted access to all aws services, resources and billing features in the account
   - original identity created when you dign up for aws account
   - root user is not an IAM user
   - capabilities
@@ -371,8 +366,25 @@
     - change or cancel your aws support plan
     - register as seller in the reserved instance marketplace
 - IAM user: individual user identity created and managed within an AWS account using the IAM service
+- IAM groups: collections of IAM users, permissions applied to the group apply to all members
+- AWS organizations: allows management of multiple AWS accounts under one umbrella
+  - allows management of permissions
+  - AWS organizations Service Control Policies (SCPs): centrally manage and restrict permissions across all accounts
+- IAM roles: identity in aws that you can assume temporarily to get specific permissions
+  - use cases
+    - grant temporary access to aws services without long-term credentials
+    - assign permissions to services like ec2 or lambda
+    - to switch roles across accounts securely
+  - key components of a role:
+    - trust policy: defines who can assume the role (e.g. ec2, lambda, another account)
+    - permissions policy defines what the role can do (e.g. access s3, write logs)
+    - session duration
+    - assume role
+- federated access
+  - federated identity: allows external users (like an organization's active directory or Google) to access aws without needing IAM user accounts
+  - often done using AWS Single Sign-On (SSO) or SAML 2.0
 
-### Policy structure
+### policy structure
 
 ```json
 {
@@ -413,21 +425,6 @@
   - a policy can exist without a role, but a role can't do anything useful without a policy
 - IAM Roles: identity that grants temporary permissions to aws services or users to perform tasks
   - set of IAM policies
-
-### IAM role
-
-> identity in aws that you can assume temporarily to get specific permissions
-
-- use cases
-  - grant temporary access to aws services without long-term credentials
-  - assign permissions to services like ec2 or lambda
-  - to switch roles across accounts securely
-
-- key components of a role:
-  - trust policy: defines who can assume the role (e.g. ec2, lambda, another account)
-  - permissions policy defines what the role can do (e.g. access s3, write logs)
-  - session duration
-  - assume role
 
 ### shared responsibility
 
