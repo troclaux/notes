@@ -1095,6 +1095,18 @@ client <= REST API => API gateway <= proxy requests => lambda <= CRUD => DynamoD
 
 - doesn't do audits, only provides access to the results of audits done on aws
 
+## aws backup
+
+> fully managed backup service that makes it easy to centralize and automate the backup of data across aws services
+
+- can automate backups for:
+  - EBS volumes
+  - RDS databases
+  - DynamoDB tables
+  - EFS file systems
+  - S3
+  - AWS storage gateways
+
 ## aws certificate manager
 
 > easily provision, manage and deploy SSL/TLS certificates
@@ -1104,6 +1116,19 @@ client <= REST API => API gateway <= proxy requests => lambda <= CRUD => DynamoD
 - free of charge for public tls certificates
 - automatic tls certificate renewal
 - integrates with ELB, cloudfront distributions, APIs on API gateway
+
+## aws compliance
+
+> helps customers meet security, regulatory and compliance requirements
+
+- shares responsibility model
+- while AWS infrastructure is compliant, customers must configure their services and applications properly to remain compliant
+- aws complies with global compliance standards like:
+  - ISO 27001
+  - SOC 1, SOC 2, SOC 3
+  - PCI DSS (for payment data)
+  - HIPAA (for healthcare data)
+  - GDPR (EU data protection)
 
 ## aws config
 
@@ -1138,6 +1163,17 @@ client <= REST API => API gateway <= proxy requests => lambda <= CRUD => DynamoD
       - centralized authentication: users log in with one set of credentials across all computers in the domain
       - domain controller: special server that runs active directory and handles logins, access rights and security policies
 
+## aws firewall manager
+
+> allows you to centrally manage and configure firewall rules across aws accounts and resources
+
+- helps you manage
+  - WAF rules
+  - aws Shield advanced protections
+  - vpc security groups
+  - route 53 resolver dns firewall rules
+  - network firewalls
+
 ## aws iam identity center
 
 > easy single login
@@ -1167,7 +1203,7 @@ client <= REST API => API gateway <= proxy requests => lambda <= CRUD => DynamoD
   - security, identity and compliance
 - written and maintained by aws staff
 
-## aws network firewall
+## aws network firewall (out-of-scope)
 
 > deploy essential network protections for your VPCs
 
@@ -1213,6 +1249,16 @@ client <= REST API => API gateway <= proxy requests => lambda <= CRUD => DynamoD
 - automate generation of secrets on rotations (uses lambda)
 - integrates with [rds](#rds-relational-database-service)
 - secrets are encrypted using [KMS](#kms-key-management-service)
+
+## aws storage gateway
+
+> seamless integration between on-premises environments and aws cloud storage, helping with backup, archiving and disaster recovery
+
+- hybrid cloud storage service
+- types of gateways
+  - file gateway: stores files as objects in S3
+  - tape gateway
+  - volume gateway
 
 ## aws support plans
 
@@ -1455,6 +1501,7 @@ six key perspectives:
 
 - IaC, similar to terraform
 - template: configuration file that defines infrastructure
+- provision the same aws infrastructure across multiple AWS accounts and regions
 - uses json or yaml
 - easily generate diagrams of your templates
 - no need to define ordering and orchestration
@@ -1473,6 +1520,7 @@ six key perspectives:
 > CDN service that delivers data, videos, applications and APIs to customers globally with low latency and high transfer speeds
 
 - CDN (Content Delivery Network): caches static content (images, css, js) at edge locations globally
+- PoP (Points of Presence): edge locations used by cloudfront
 - improves content delivery by caching the content at edge locations
 - DDoS protections
 - integrated with
@@ -1602,7 +1650,7 @@ six key perspectives:
 
 - allows code collaboration in real-time
 
-## CodeArtifact
+## CodeArtifact (out-of-scope)
 
 > fully managed artifact repository service
 
@@ -1633,7 +1681,7 @@ six key perspectives:
 - source control service
 - fully managed
 
-## CodeDeploy
+## CodeDeploy (out-of-scope)
 
 > fully managed deployment service that automates software deployments to a variety of compute services
 
@@ -1644,7 +1692,7 @@ six key perspectives:
 - hybrid service
 - servers/instances must be provisioned and configured ahead of time with CodeDeploy agent
 
-## CodeGuru
+## CodeGuru (out-of-scope)
 
 > machine learning-powered service for automated code reviews and application performance recommendations
 
