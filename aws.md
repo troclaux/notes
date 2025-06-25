@@ -962,6 +962,10 @@ aws s3 ls s3://my-bucket-name/
   - create your own scalable private network
 - compatible with hyperledger and ethereum frameworks
 
+## Amazon Q
+
+> generative AI assistant design to help users analyze data, write code and answer questions using natural language
+
 ## Amazon WorkSpaces
 
 > provides virtual desktops to users that can be accessed from anywhere
@@ -996,6 +1000,16 @@ aws s3 ls s3://my-bucket-name/
 | **Boot Time**  | Slower (typically 30s–2min)           | Fast (usually <1s)                     |
 | **Why?** | Full virtual machine boots up: OS, kernel, networking, etc. | Container shares host OS and starts as a process |
 
+## Amplify
+
+> build and deploy full-stack web and mobile application quickly
+
+- features:
+  - hosting static web apps
+  - authenticatoin
+  - graphql/rest apis
+  - works with frameworks like react, angular, vue and mobile platforms (iOS/android)
+
 ## API Gateway
 
 > fully managed service that makes it easy for developers to create, publish, maintain, monitor and secure APIs at any scale
@@ -1011,6 +1025,16 @@ client <= REST API => API gateway <= proxy requests => lambda <= CRUD => DynamoD
   - api throttling
   - api keys
   - monitoring
+
+## Application Discovery Service
+
+> plan migrations to aws by collecting information about on-premises data centers
+
+- often used with [Migration Hub](#migration-hub) to centralize migration tracking
+
+## Application Migration Service
+
+> lift-and-shift (rehost) service that simplifies, expedites and reduces the cost of migrating application to aws
 
 ## AppStream 2.0
 
@@ -1034,6 +1058,13 @@ client <= REST API => API gateway <= proxy requests => lambda <= CRUD => DynamoD
   - analytics
   - reporting
   - analyza and query vpc flow logs
+
+## Audit Manager
+
+> automate audit preparation for compliance with regulations and standards
+
+- automates evidence collection
+- continuously collects and organizes aws resource configurations and activity
 
 ## Aurora
 
