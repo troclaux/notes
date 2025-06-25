@@ -63,6 +63,7 @@
 - [Fargate](#fargate)
 - [Lambda](#lambda)
 - [Lightsail](#lightsail)
+- [Outposts](#outposts)
 
 ### storage
 
@@ -87,6 +88,7 @@
 - [EMR (Elastic MapReduce)](#emr-elastic-mapreduce)
 - [Glue](#glue)
 - [Kinesis](#kinesis)
+- [OpenSearch Service](#opensearch-service)
 - [QLDB (Quantum Ledger Database)](#qldb-quantum-ledger-database)
 - [Redshift](#redshift)
 
@@ -99,10 +101,10 @@
 - [Global Accelerator](#global-accelerator)
 - [Route 53](#route-53)
 - [VPC (Virtual Private Cloud)](#vpc-virtual-private-cloud)
-- [Wavelength](#wavelength)
 
 ### security
 
+- [AWS Firewall Manager](#aws-firewall-manager)
 - [Artifact](#aws-artifact)
 - [CloudHSM](#cloudhsm-cloud-hardware-security-module)
 - [Cognito](#cognito)
@@ -120,22 +122,23 @@
 - [Shield](#shield)
 - [WAF (Web Application Firewall)](#waf-web-application-firewall)
 
-### billing and costing management
+### cloud financial management
 
-- [Billing Alarms](#billing-alarms): notifications to monitor billing
-- [Billing Dashboard](#billing-dashboard): high level overview + free tier dashboard
+- Billing Alarms: notifications to monitor billing
+- Billing Dashboard: high level overview + free tier dashboard
 - [Budgets](#budgets): track usage, costs, reserved instances and get alerts
-- [Compute Optimizer](#compute-optimizer): recommends resources configurations to reduce cost
+- Compute Optimizer: recommends resources configurations to reduce cost (used for EC2, EC2 auto scaling group, EBS, Lambda)
 - [Consolidated Billing](#consolidated-billing): centralized billing across all aws accounts in an aws organization
 - [Cost Allocation Tags](#cost-allocation-tags): tag resources to create detailed reports
 - [Cost Anomaly Detection](#cost-anomaly-detection): detect unusual spending using machine learning
-- [Cost Explorer](#cost-explorer): view detailed current usage and forecast usage
-- [Cost and Usage Reports](#cost-and-usage-reports): most comprehensive billing dataset
-- [Pricing Calculator](#pricing-calculator): estimates costs in the cloud
-- [Savings Plans](#savings-plans): easy way to save based on long-term usage of aws of compute services (ec2, fargate, lambda)
+- Cost Explorer: view detailed current usage and forecast usage, also create custom reports
+- Cost and Usage Reports: most comprehensive billing dataset, most granular report in aws
+- Pricing Calculator: estimates costs in the cloud
+- Savings Plans: easy way to save based on long-term usage of aws of compute services (ec2, fargate, lambda)
 - [Service Quotas](#service-quotas): notifies you when you're close to service quota threshold
+- [Marketplace](#marketplace)
 
-### devops
+### devops and site reliability engineering
 
 - [CDK (Cloud Development Kit)](#cdk-cloud-development-kit)
 - [Cloud9](#cloud9)
@@ -149,12 +152,15 @@
 - [Elastic Container Service (ECS)](#ecs-elastic-container-service)
 - [Elastic Kubernetes Service (EKS)](#eks-elastic-kubernetes-service)
 - [EventBridge](#eventbridge)
+- [FIS](#fis-fault-injection-simulator)
+- [Infrastructure Composer](#infrastructure-composer)
 - [OpsWorks](#opsworks)
 - [Step Functions](#step-functions)
 - [X-Ray](#x-ray)
 
 ### ai and machine learning
 
+- [Amazon Q](#amazon-q)
 - [aws connect](#aws-connect)
 - [CodeGuru](#codeguru)
 - [Comprehend](#comprehend)
@@ -175,8 +181,10 @@
 ### application integration
 
 - [API Gateway](#api-gateway)
+- [EventBridge](#eventbridge)
 - [SNS (Simple Notification Service)](#sns-simple-notification-service)
 - [SQS (Simple Queue Service)](#sqs-simple-queue-service)
+- [Step Functions](#step-functions)
 
 ### management and governance
 
@@ -360,11 +368,21 @@
 - root account/user: has complete and unrestricted access to all aws services, resources and billing features in the account
   - original identity created when you dign up for aws account
   - root user is not an IAM user
-  - capabilities
-    - change account settings
-    - close your aws account
+  - exclusive capabilities
+    - change the aws account's settings (name, password, email, access keys, MFA)
+    - close the aws account
+    - active IAM access to the billing and cost management console
+    - view certain tax invoices
+    - register as seller in the ec2 reserved instance marketplace
     - change or cancel your aws support plan
-    - register as seller in the reserved instance marketplace
+    - if the only IAM admin accidentally revokes their own permissions, sign into root account to restore IAM user permissions
+    - modify root user MFA settings
+    - edit or delete policy that denies all principals for both SQS (only resource-based policies) or S3 bucket
+  - security protection methods for root account:
+    - enable MFA
+    - create IAM users and avoid using root user for daily tasks
+    - store the root user credentials securely, and use it only when absolutely necessary
+    - use aws organizations for centralized management to reduce the need to access root account often
 - IAM user: individual user identity created and managed within an AWS account using the IAM service
 - IAM groups: collections of IAM users, permissions applied to the group apply to all members
 - AWS organizations: allows management of multiple AWS accounts under one umbrella
