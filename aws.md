@@ -665,9 +665,9 @@
   - elastic ip
   - vpc endpoints
   - PrivateLink
-  - vpc flow logs
+  - pc flow logs
   - site-to-site vpn
-  - client vpc
+  - client vpn
   - direct connect
   - transit gateway
 
@@ -952,7 +952,7 @@ aws s3 ls s3://my-bucket-name/
   - aws abuse form
   - abuse@amazonaws.com
 
-## amazon managed blockchain
+## Amazon Managed Blockchain
 
 > fully managed service that makes it easy to create, manage and scale blockchain networks
 
@@ -961,6 +961,14 @@ aws s3 ls s3://my-bucket-name/
   - join public blockchain networks
   - create your own scalable private network
 - compatible with hyperledger and ethereum frameworks
+
+## Amazon WorkSpaces
+
+> provides virtual desktops to users that can be accessed from anywhere
+
+## Amazon WorkSpaces Secure Browser
+
+> offers secure access to web content without exposing the network and without full desktop
 
 ## AMI (Amazon Machine Image)
 
@@ -1003,6 +1011,14 @@ client <= REST API => API gateway <= proxy requests => lambda <= CRUD => DynamoD
   - api throttling
   - api keys
   - monitoring
+
+## AppStream 2.0
+
+> fully managed service that lets you stream desktop applications to users over the internet
+
+## AppSync
+
+> fully managed service that simplifies developing graphql APIs
 
 ## Athena
 
