@@ -12,10 +12,10 @@
   - e.g. servers, storage, network, databases, etc
 
 - types of pricing in AWS
-  - pay for compute time
-  - pay for data stored in the cloud
+  - pay for compute time: EC2, Lambda, Fargate
+  - pay for data stored in the cloud: S3, EBS, RDS
   - pay only for data transfer out of the cloud
-    - data transfer in is free
+    - data transfer into aws is free
 
 - options to manage aws
   - aws management console
@@ -2798,6 +2798,7 @@ cost comparison: (cheap) Backup and Restore < Pilot Light < Warm Standby < Multi
 
 ---
 
+- aws workloads: applications, services or processes that are running on aws infrastructure
 - server provisioning: the process of setting up physical or virtual hardware; installing and configuring software, such as the operating system and applications; and connecting it to middleware, network, and storage components
 - failover: ability of a system/service to automatically switch to a backup/secondary system when the primary system becomes unavailable or experiences a failure
   - important for ensuring high availability and minimizing downtime for critical applications and services
@@ -2809,4 +2810,5 @@ cost comparison: (cheap) Backup and Restore < Pilot Light < Warm Standby < Multi
 - grid: distributed computing system that connects multiple computers or servers to work together on a common task or problem
   - decentralized
 - hybrid service: service that can operate both in the cloud and on-premises
+- principal: an entity that can make a request to aws (e.g. IAM users, IAM roles, federated users, aws services)
 
