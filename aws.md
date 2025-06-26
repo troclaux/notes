@@ -20,7 +20,9 @@
 - options to manage aws
   - aws management console
   - AWS Command Line Interface (CLI)
-  - AWS Software Developer Kit (SDK): allows the access and management of aws services programmatically
+  - AWS Software Developer Kit (SDK): allows developers to interact with aws services using programming languages
+    - allows the access and management of aws services programmatically
+    - supports python, java, javascript, .NET, ruby, golang, etc
     - Used whenever you want to call APIs
 
 - reliability: ability to recover from failures and maintain availability
@@ -90,6 +92,7 @@
 - [Kinesis](#kinesis)
 - [OpenSearch Service](#opensearch-service)
 - [QLDB (Quantum Ledger Database)](#qldb-quantum-ledger-database)
+- [QuickSight](#quicksight)
 - [Redshift](#redshift)
 
 ### networking and content delivery
@@ -160,8 +163,8 @@
 
 ### ai and machine learning
 
+- [Amazon Connect](#amazon-connect)
 - [Amazon Q](#amazon-q)
-- [aws connect](#aws-connect)
 - [CodeGuru](#codeguru)
 - [Comprehend](#comprehend)
 - [Forecast](#forecast)
@@ -231,48 +234,6 @@
 1. configure security group (firewall rules)
 1. launch (with a key pair for SSH)
 
-### shared responsibility model
-
-> defines which security and compliance tasks are handled by AWS and which are handled by the customer
-
-> [!IMPORTANT]
-> Varies slightly depending on the aws service.
-> depends partially in which category the service belongs: IaaS, PaaS, SaaS.
-> Not every IaaS service has exactly the same responsibility model. The same applies to PaaS and SaaS categories.
-
-|                     | On-site | IaaS             | PaaS                 | SaaS             |
-|---------------------|---------|------------------|----------------------|------------------|
-| **Data**            | You     | You              | You                  | You              |
-| **Applications**    | You     | You              | You/Service provider | Service provider |
-| **Runtime**         | You     | You              | Service provider     | Service provider |
-| **Middleware**      | You     | You              | Service provider     | Service provider |
-| **OS**              | You     | You              | Service provider     | Service provider |
-| **Virtualization**  | You     | Service provider | Service provider     | Service provider |
-| **Servers**         | You     | Service provider | Service provider     | Service provider |
-| **Storage**         | You     | Service provider | Service provider     | Service provider |
-| **Networking**      | You     | Service provider | Service provider     | Service provider |
-
-- data: information your application uses (e.g. customer records, documents, transactions)
-  - you are ALWAYS responsible for your data
-- applications: the actual software you use or build (e.g. web app, analytics tool)
-- runtime: the environment where code runs (e.g. JVM, node.js, python interpreter)
-- middleware: software that connects applications or services (e.g. message brokers, APIs, databases, caching systems)
-- os: the system software that runs on a server or VM (e.g. Linux, Windows Server)
-- virtualization: software that abstracts physical hardware into virtual machines (e.g. a hypervisor like VMware or Xen)
-- servers: physical or virtual machines that process workloads (CPUs, RAM, etc)
-- storage: where your data is saved (e.g. hard drives, SSDs, cloud object storage like Amazon S3)
-- networking: The communication layer (e.g. routers, switches, firewalls, internet access, VPCs, load balancers)
-  - it allows components to talk to each other or external users
-
-- you/customer: responsibility for security in the cloud
-  - customer data
-  - platform, applications, IAM
-  - OS, networking traffic protection (encryption, integrity, identity)
-  - client-side and server-side encryption
-  - authentication
-- aws: responsibility for security of the cloud
-  - compute, storage, database, networking
-
 ### purchasing options
 
 - on-demand: ideal for short-term use, expensive
@@ -289,6 +250,14 @@
 - capacity reservations: reserve instance capacity in a specific AZ
 - dedicated instances: instances that run on hardware dedicated to your account, but aws manages the host
 - dedicated hosts: get an entire physical server to yourself
+
+### instance types (out-of-scope)
+
+- general pupose: T3, M5
+- compute optimized: C5
+- memory optimized: R5
+- storage optimized: I3
+- accelerated computing: P3, for GPU-based workloads
 
 ### sizing and configuration options
 
@@ -351,13 +320,8 @@
 - block-level storage: refers to a type of data storage where data is saved in fixed-sized chunks called blocks
   - each block has its own address
   - the system can read/write to these blocks individually
-
-#### EBS snapshots
-
-> backup for an ebs volume
-
-- it's recommended to detach ebs volume to do a snapshot
-- use ebs snapshots as a buffer to copy ebs volumes across AZ
+- EBS snapshots: backup for an ebs volume
+  - use ebs snapshots as a buffer to copy ebs volumes across AZ
 
 ## IAM (Identity and Access Management)
 
@@ -538,6 +502,54 @@
 1. copy the public IP of the instance (used in the SSH command)
 1. move the `.pem` file to a secure location and restrict permissions: `chmod 0400 <file>.pem`
 1. SSH into the instance: `ssh -i <file>.pem ec2-user@<public_IP>`
+
+## shared responsibility model
+
+> defines which security and compliance tasks are handled by AWS and which are handled by the customer
+
+> [!IMPORTANT]
+> Varies slightly depending on the aws service.
+> depends partially in which category the service belongs: IaaS, PaaS, SaaS.
+> Not every IaaS service has exactly the same responsibility model. The same applies to PaaS and SaaS categories.
+
+|                     | On-site | IaaS             | PaaS                 | SaaS             |
+|---------------------|---------|------------------|----------------------|------------------|
+| **Data**            | You     | You              | You                  | You              |
+| **Applications**    | You     | You              | You/Service provider | Service provider |
+| **Runtime**         | You     | You              | Service provider     | Service provider |
+| **Middleware**      | You     | You              | Service provider     | Service provider |
+| **OS**              | You     | You              | Service provider     | Service provider |
+| **Virtualization**  | You     | Service provider | Service provider     | Service provider |
+| **Servers**         | You     | Service provider | Service provider     | Service provider |
+| **Storage**         | You     | Service provider | Service provider     | Service provider |
+| **Networking**      | You     | Service provider | Service provider     | Service provider |
+
+- data: information your application uses (e.g. customer records, documents, transactions)
+  - you are ALWAYS responsible for your data
+- applications: the actual software you use or build (e.g. web app, analytics tool)
+- runtime: the environment where code runs (e.g. JVM, node.js, python interpreter)
+- middleware: software that connects applications or services (e.g. message brokers, APIs, databases, caching systems)
+- os: the system software that runs on a server or VM (e.g. Linux, Windows Server)
+- virtualization: software that abstracts physical hardware into virtual machines (e.g. a hypervisor like VMware or Xen)
+- servers: physical or virtual machines that process workloads (CPUs, RAM, etc)
+- storage: where your data is saved (e.g. hard drives, SSDs, cloud object storage like Amazon S3)
+- networking: The communication layer (e.g. routers, switches, firewalls, internet access, VPCs, load balancers)
+  - it allows components to talk to each other or external users
+
+- you/customer: responsibility for security in the cloud
+  - customer data
+  - platform, applications, IAM
+  - OS, networking traffic protection (encryption, integrity, identity)
+  - client-side and server-side encryption
+  - authentication
+- aws: responsibility for security of the cloud
+  - compute, storage, database, networking
+
+- examples of each category:
+  - on-premises: aws outposts
+  - IaaS: EC2, VPC, ELB, EBS, S3
+  - PaaS: Elastic Beanstalk, Lambda, Amazon API Gateway, Fargate, RDS, Aurora
+  - SaaS: WorkSpaces, QuickSight
 
 ## VPC (Virtual Private Cloud)
 
@@ -967,6 +979,12 @@ aws s3 ls s3://my-bucket-name/
   - aws abuse form
   - abuse@amazonaws.com
 
+## Amazon Connect
+
+> AI-powered application that provides contact center
+
+- set up call centers or customer service systems
+
 ## Amazon Managed Blockchain
 
 > fully managed service that makes it easy to create, manage and scale blockchain networks
@@ -980,6 +998,11 @@ aws s3 ls s3://my-bucket-name/
 ## Amazon Q
 
 > generative AI assistant design to help users analyze data, write code and answer questions using natural language
+
+- includes:
+  - IDE assistant (Q Developer)
+  - business insights tools (Q Business)
+- integrates with [Amazon Connect](#amazon-connect)
 
 ## Amazon WorkSpaces
 
@@ -1089,7 +1112,7 @@ client <= REST API => API gateway <= proxy requests => lambda <= CRUD => DynamoD
 - highly available
 - costs more than rds, but is more efficient
 - supports postgresql and mysql
-- auto scales in increments of 10 GB
+- continuous auto scaling
 
 ## Auto Scaling Group
 
@@ -1162,12 +1185,6 @@ client <= REST API => API gateway <= proxy requests => lambda <= CRUD => DynamoD
   - check whether all resources are in approved regions
   - make sure CloudTrail is enabled and logging correctly
 
-## aws connect
-
-> AI-powered application that provides contact center
-
-- set up call centers or customer service systems
-
 ## aws directory services
 
 > suite of managed directory services that makes it easy to set up, manage and scale directory services in the AWS Cloud
@@ -1239,18 +1256,22 @@ client <= REST API => API gateway <= proxy requests => lambda <= CRUD => DynamoD
 - allows management of permissions
 - AWS organizations Service Control Policies (SCPs): centrally manage and restrict permissions across all accounts
   - SCPs do not grand permissions, they **limit** them
-  - does not apply to master account
+  - does not apply to management account
   - applies to all the users and roles of the account, including root
 - api is available to automate aws account creation
 
 - Organizational Unit (OU): used to group accounts within the organization
+
+## aws prescriptive guidance
+
+TODO
 
 ## aws professional services and partner network
 
 > global group of experts available to work alongside your team and help achieve cloud goals faster
 
 - often partner with APN (Aws Partner Network) members
-- APN: global community of partners that help customers build, market and sell their offerings on aws
+- APN (Aws Partner Network): global community of partners that help customers build, market and sell their offerings on aws
   - offerings = products, services or solutions that apn provides to customers using aws infrastructure
 - types of APN partners
   - APN technology partners: provide hardware, connectivity or software solutions
@@ -2282,7 +2303,7 @@ you can use aws management console or aws cli
   - fully managed service
 - compatible services: ec2, ebs, s3, eks, ecs, rds, emr
 
-## Personalize
+## Personalize (out-of-scope)
 
 > fully managed ML service to build apps with real-time personalized recommendations
 
@@ -2427,7 +2448,7 @@ ns-1234.awsdns-01.co.uk
   - has primary instance and failover instance
   - has health checks
 
-## SageMaker
+## SageMaker AI
 
 > fully managed service for developers to train machine learning models that can make predictions
 
@@ -2440,9 +2461,21 @@ lets say you want to build a model that predicts your exam score
   - train and tune ML model
   - SageMaker now make predictions
 
+## SCT (Schema Convertion Tool)
+
+> help migrate databases from one database engine to another
+
+- e.g. oracle to Aurora, sql server to postgresql
+- often used with aws DMS (Database Migration Service)
+- not needed when the source and target databases are the same engine (homogeneous migration)
+
+## Security Blog
+
+> official source of security guidance, best practices and service updates from aws
+
 ## Security Hub CSPM (Cloud Security Posture Management)
 
-> gives centralized view of aws security status
+> centralized security monitoring that makes compliance checks
 
 - helps identify security issues across aws accounts and services
 - continuously monitors security best practices and compliance standards
@@ -2525,13 +2558,16 @@ lets say you want to build a model that predicts your exam score
 
 ## Step Functions
 
-> fully managed service that allows you to coordinate multiple AWS services into serverless workflows
+> fully managed service that allows you to coordinate and sequence tasks with AWS services into serverless workflows
+
+- automate business processes, data processing pipelines or application workflows
 
 ## Storage Gateway
 
 > hybrid cloud storage service that enables on-premises applications to seamlessly use aws cloud storage
 
 - bridge between on-premise data and cloud data in S3
+- data encryption enabled by default
 - use cases
   - back up and archive on-premises data to aws
   - provide low-latency access to frequently used data via local caching
@@ -2654,7 +2690,10 @@ sudo chmod 666 /var/run/docker.sock
 > use private IP to save money and better network performance.
 > use same AZ for maximum savings (at the cost of high availability)
 
-TODO
+- between 2 resources in the same AZ: free
+- between 2 resources in different AZs
+  - via private IP: USD 0.01/GB
+  - via public IP: USD 0.02/GB
 
 ## tutorials
 
