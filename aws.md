@@ -41,18 +41,12 @@
     - each region is completely independent from others
     - each region has 3 to 6 Availability Zones, with few exceptions (AZ ⊂ region)
   - Availability Zone (AZ): isolated locations within each region
-  - edge location : physical aws data center located close to users, caching content and reducing latency
+    - each AZ has its own power, cooling and networking, so they do not share single points of failure
+  - edge location: physical facility AWS uses to cache and deliver content to users with low latency
 
 - aws global services: services that are NOT tied to a specific region and operate across all regions
-  - e.g. IAM, Route 53, CloudFront, WAF, Shield, aws organizations, aws artifact, DynamoDB, WorkDocs, WorkMail, WorkSpaces
+  - e.g. IAM, Route 53, CloudFront, WAF, Shield, aws organizations, aws artifact, DynamoDB, WorkSpaces
   - TIP: if a service manages access, identity or DNS for your entire aws environment, it's likely global
-
-- shared responsibility model: the line of responsibility shifts based on the level of abstraction provided by the service
-  - aws is responsible for security **OF** the cloud
-    - buildings, computers, storage, network systems, base software (hypervisors, etc)
-  - I am responsible for security **IN** the cloud
-    - you protect what you do inside the cloud
-      - files, data, etc
 
 ## table of contents
 
@@ -212,6 +206,8 @@
 
 > compute service that allows you to launch virtual servers in the cloud
 
+- every EC2 instance is launched in a VPC
+
 - instance: a virtual server in the cloud
 - AMI: a template for your instance (OS + configs)
 - EBS (Elastic Block Store): persistent block storage for instances
@@ -245,11 +241,14 @@
   - up to 72% discount compared to on-demand
 - spot instances: bid for unused capacity, cheapest
   - no guaranteed availability, aws can terminate them when the spot price exceeds your bid price
-- savings plans: commit to an amount of usage
+- savings plans: flexible pricing model where you commit to an amount of usage for 1 or 3 years
   - discount based on long-term usage
+  - best for users who want cost savings, but with more flexibility than reserved instances
 - capacity reservations: reserve instance capacity in a specific AZ
-- dedicated instances: instances that run on hardware dedicated to your account, but aws manages the host
 - dedicated hosts: get an entire physical server to yourself
+  - an isolated server with configurations you can control
+- dedicated instances: instances that run on hardware dedicated to your account, but aws manages the host
+  - cheaper than dedicated host
 
 ### instance types (out-of-scope)
 
@@ -281,17 +280,18 @@
 
 - tools that can help: cloudwatch, cost explorer, trusted advisor
 
-### ec2 instance tenancy
+### instance tenancy
 
 - shared (default): multiple aws accounts may share the same physical hardware
 - dedicated instance: instance runs on single-tenant hardware
 - dedicated host: instance runs on a physical server with ec2 instance capacity fully dedicated to your use
 
-### ec2 image builder
+### image builder
 
-> automate the creation, testing and distribution of AMIs or container images
+> automate the creation, testing and distribution of AMIs
 
 - can be run on a schedule (weekly, whenever packages are updated, etc)
+- fully managed
 
 1. ec2 image builder initiates temporary builder ec2 instance
 1. temporary builder ec2 instance builds the image
@@ -299,7 +299,7 @@
 1. new ec2 instance is launched to test ec2 instance, if it fails, the pipeline stops here
 1. if the test is successful, the AMI is made available to other aws regions or accounts
 
-### local ec2 instance store
+### instance store volumes
 
 > fast, ephemeral block-level storage that is physically attached to the host machine running your ec2 instance
 
@@ -308,6 +308,7 @@
   - os can read/write any block
 - high-performance hardware disk
 - **loses storage if stopped (ephemeral)**
+  - if your workload needs durable storage, use EBS instead of instance store
 - good buffer/cache/temporary content
 - risk of data loss if hardware fails
 - backups and replication are your responsibility
@@ -329,8 +330,11 @@
 
 ### types of identity management
 
+- aws account: container for all your aws resources and identities
+  - when you create it, you start by setting up a root account/user
+  - root user is tied to the aws account, but the aws account is not the root user
 - root account/user: has complete and unrestricted access to all aws services, resources and billing features in the account
-  - original identity created when you dign up for aws account
+  - original identity created when you sign up for aws account
   - root user is not an IAM user
   - exclusive capabilities
     - change the aws account's settings (name, password, email, access keys, MFA)
@@ -423,7 +427,9 @@
 ### IAM Security Tools
 
 - IAM Credentials Report (account-level)
+  - generates a csv report that lists all IAM users in your account and the status of their credentials
 - IAM Access Advisor (user-level)
+  - shows to a user which aws services they have permission to access and when those services were last accessed
   - use this information to revise your policies (least privilege principle)
 - IAM policy simulator: test and debug IAM policies to check what actions are allowed/denied for specific users, groups, roles
 
@@ -436,26 +442,24 @@
     - create a groups with the policy "administrator access" and create an aws user that belongs to this group
 - create strong password policy
   - use and enforce MFA
-- create and use roles to give permisssions to aws srevices
-
-- dedicated host: your instance runs on a physical server fully dedicated to your use
-  - an isolated server with configurations you can control
+- create and use roles to give permisssions to aws services
 
 ### IAM access analyzer
 
-> used to find out which resources are shared outside your trusted boundaries (called a Zone of Trust)
+> used to find out which resources are accessible to entities outside your AWS account or organization (called a Zone of Trust)
 
 - checks these types of resources:
   - s3 buckets, iam roles, kms keys, lambda functions, sqs queues, Secrets Manager secrets
-- iam access analyzer creates a finding if a resource (like an s3 bucket or iam role) allows access from:
-  - an aws not in your organization
-  - the public internet
-  - anonymous users
-  - unrelated external aws account
+- finding: alert that indicates a resource in your aws environment is accessible outside your Zone of Trust
+  - IAM Access Analyzer creates a **finding** if a resource (such as an S3 bucket or IAM role) allows access from:
+    - an aws not in your organization
+    - the public internet
+    - anonymous users
+    - unrelated external aws account
 
 ## security groups
 
-> facilitates managing network traffic
+> virtual firewalls that control inbound and outbound traffic at the instance level
 
 - acts as a "firewall"
 - supports ALLOW rules only
@@ -469,21 +473,13 @@
   - if traffic is blocked, the EC2 instance won't see it
 
 > [!TIP]
-> it's good to keep 1 separate security group for SSH access.
-> if your application is not accessible (time out), then it's a security group issue.
-> if you application gives a "connection refused" error, then it's an application error or it's not launched.
+> It's good to keep 1 separate security group for SSH access.
+> If your application is not accessible (time out), then it's a security group issue.
+> If you application gives a "connection refused" error, then it's an application error or it's not launched.
 
 > [!IMPORTANT]
-> all inbound traffic is blocked by default
-> all outbound traffic is authorized by default
-
-- Ports:
-  - 22 = SSH (Secure Shell): log into a linux instance
-  - 3389 = RDP (Remote Desktop Protocol): log into a windows instance
-  - 21 = FTP (File Transfer Protocol)
-  - 22 = SFTP (Secure File Transfer Protocol)
-  - 80 = HTTP : access unsecured websites
-  - 443 = HTTPS: access secured websites
+> All inbound traffic is blocked by default.
+> All outbound traffic is authorized by default.
 
 #### security groups vs firewalls
 
@@ -509,20 +505,20 @@
 
 > [!IMPORTANT]
 > Varies slightly depending on the aws service.
-> depends partially in which category the service belongs: IaaS, PaaS, SaaS.
+> Depends partially in which category the service belongs: on-premises, IaaS, PaaS, SaaS.
 > Not every IaaS service has exactly the same responsibility model. The same applies to PaaS and SaaS categories.
 
-|                     | On-site | IaaS             | PaaS                 | SaaS             |
-|---------------------|---------|------------------|----------------------|------------------|
-| **Data**            | You     | You              | You                  | You              |
-| **Applications**    | You     | You              | You/Service provider | Service provider |
-| **Runtime**         | You     | You              | Service provider     | Service provider |
-| **Middleware**      | You     | You              | Service provider     | Service provider |
-| **OS**              | You     | You              | Service provider     | Service provider |
-| **Virtualization**  | You     | Service provider | Service provider     | Service provider |
-| **Servers**         | You     | Service provider | Service provider     | Service provider |
-| **Storage**         | You     | Service provider | Service provider     | Service provider |
-| **Networking**      | You     | Service provider | Service provider     | Service provider |
+|                    | On-premises | IaaS             | PaaS                 | SaaS             |
+|--------------------|-------------|------------------|----------------------|------------------|
+| **Data**           | You         | You              | You                  | You              |
+| **Applications**   | You         | You              | You/Service provider | Service provider |
+| **Runtime**        | You         | You              | Service provider     | Service provider |
+| **Middleware**     | You         | You              | Service provider     | Service provider |
+| **OS**             | You         | You              | Service provider     | Service provider |
+| **Virtualization** | You         | Service provider | Service provider     | Service provider |
+| **Servers**        | You         | Service provider | Service provider     | Service provider |
+| **Storage**        | You         | Service provider | Service provider     | Service provider |
+| **Networking**     | You         | Service provider | Service provider     | Service provider |
 
 - data: information your application uses (e.g. customer records, documents, transactions)
   - you are ALWAYS responsible for your data
@@ -536,14 +532,7 @@
 - networking: The communication layer (e.g. routers, switches, firewalls, internet access, VPCs, load balancers)
   - it allows components to talk to each other or external users
 
-- you/customer: responsibility for security in the cloud
-  - customer data
-  - platform, applications, IAM
-  - OS, networking traffic protection (encryption, integrity, identity)
-  - client-side and server-side encryption
-  - authentication
-- aws: responsibility for security of the cloud
-  - compute, storage, database, networking
+![IaaS shared responsibility model](./images/aws_shared_responsibility_model.jpeg)
 
 - examples of each category:
   - on-premises: aws outposts
@@ -555,19 +544,19 @@
 
 > virtual network that allows you to launch AWS resources in a logically isolated section of the cloud
 
+- global service
 - allows management over IP addresses, subnets, routing and security
 - must have a CIDR block
 - elastic ip: fixed public IPv4 address attached to ec2 instance
   - ongoing cost if not attached to ec2 instance or if the instance is stopped
 - allows the creation of public and private subnets
-  - subnet: smaller network inside larger network
-    - helps organize and manage traffic in a network by dividing it into chunks
-    - subnets allow better allocation of IPs from a larger IP range
-    - each subnet in aws is associated with one route table
+  - subnet: segments of a VPC's IP address range where you can place groups of isolated resources
+    - each subnet must be associated with a route table
     - use CIDR notation (e.g. `192.168.1.0/24`)
 
 - **public vs private subnet**
   - public subnets in AWS need an Internet Gateway to allow internet access
+    - but not all public subnets have an internet gateway
     - this means:
       - instances can send traffic to the internet
       - instances can receive traffic from the internet, if security rules allows it
@@ -576,14 +565,22 @@
       - instances CANNOT initiate outbound internet traffic (unless via NAT gateway)
       - instances CANNOT receive ANY inbound traffic directly from the internet
 
-| Feature        | Route Tables       | Security Groups            | Internet Gateway               |
-| -------------- | ------------------ | -------------------------- | ------------------------------ |
-| **Scope**      | Subnet-level       | Instance-level             | VPC-level                      |
-| **Purpose**    | Direct traffic     | Allow or deny traffic      | Enable internet connectivity   |
-| **Layer**      | Layer 3 (Network)  | Layer 4 (Transport)        | Layer 3 (Network)              |
-| **Stateful?**  | No                 | Yes                        | Yes                            |
-| **Controls**   | Where traffic goes | Whether traffic is allowed | Provides external access point |
-| **Applied To** | Subnets            | EC2 instances, ENIs        | Entire VPC                     |
+| Feature    | Route Tables       | Security Groups             | Internet Gateway               | NAT Gateway                                        | NACL (Network ACL)                           |
+| ---------- | ------------------ | --------------------------- | ------------------------------ | -------------------------------------------------- | -------------------------------------------- |
+| Scope      | Subnet-level       | Instance-level              | VPC-level                      | Subnet-level                                       | Subnet-level                                 |
+| Purpose    | Direct traffic     | Allow or deny traffic       | Enable internet connectivity   | Allow outbound internet access for private subnets | Allow or deny traffic at the subnet level    |
+| Layer      | Layer 3 (Network)  | Layer 4 (Transport)         | Layer 3 (Network)              | Layer 3 (Network)                                  | Layer 3 (Network)                            |
+| Stateful?  | No                 | Yes                         | Yes                            | Yes                                                | No                                           |
+| Controls   | Where traffic goes | Whether traffic is allowed  | Provides external access point | Outbound internet for private resources            | Whether traffic is allowed in/out of subnets |
+| Applied To | Subnets            | EC2 and RDS instances, ENIs | Entire VPC                     | Private subnet traffic                             | Subnets                                      |
+
+| Component        | Purpose                             | Level    | Stateful? | Allows Internet Access?   |
+| ---------------- | ----------------------------------- | -------- | --------- | ------------------------- |
+| Route Table      | Sends traffic where it should go    | Subnet   | No        | Indirectly (via gateways) |
+| NACL             | Subnet-level firewall               | Subnet   | No        | Yes (if rules allow)      |
+| Security Group   | Instance-level firewall             | Instance | Yes       | Yes (if rules allow)      |
+| Internet Gateway | Connects VPC to internet            | VPC      | Yes       | Yes (for public subnets)  |
+| NAT Gateway      | Internet access for private subnets | Subnet   | Yes       | Outbound only             |
 
 - route table: defines how traffic flows within the VPC (between subnets) and between the VPC and external networks (like the internet), by specifying the next hop for outbound traffic
   - hop: one step in the path that network traffic takes from a source to a destination
@@ -600,20 +597,32 @@
   - required for ec2 instances in public subnets to:
     - download packages
     - be accessed via SSH or a browser
-- NAT (Network Address Translation) gateway (aws-managed): managed aws service that allows instances in a private subnet to connect to the internet, but prevents the internet from initiating a connection back
+- NAT (Network Address Translation) gateway (aws-managed): managed AWS service that allows instances in a private subnet to initiate outbound connections to the internet (e.g. for updates or API calls), but prevents the internet from initiating inbound connections to those instances
   - e.g. private ec2 can download updates or access external APIs without being publicly exposed
   - usually are placed in a public subnet and route private subnet traffic through it
 - NAT instances (self-managed): is an ec2 instance configured manually to perform the same function as NAT gateway
+- NACL (Network Access Control List): security layer used in networks to control inbound/outbound traffic at the subnet level
+  - stateless
 
-- Network ACL (Access Control List): security layer used in networks to control inbound/outbound traffic at the subnet level
-  - stateless: rules must be defined for both inbound and outbound traffic
+- stateful: tracks active connections and allows return traffic automatically
+- stateless: doesn't track connection state
+  - you must define both inbound and outbound rules explicitly, like with NACLs
   - supports ALLOW and DENY rules
   - rules only include IP addresses
 
+- VPC peering: connect 2 VPCs privately using aws' network and make them behave as if they are the same network
+  - IP address ranges can't overlap
+
+> [!TIP]
+> Route Tables: control the roads each neighborhood (subnet) uses to reach other places.
+> Security Groups: control the doors and who can enter/exit each house (instance).
+> Internet Gateway: acts like a main entrance to the city (VPC) that lets traffic in/out from the internet, but only if neighborhoods (subnets) build roads (routes) to it.
+
 ### ENI (Elastic Network Interface)
 
-> manages network connectivity for an ec2 instance in a vpc
+> manages networking for ec2 instance in a vpc
 
+- network interface: virtual network card that connects ec2 instances and other aws resources to a vpc network
 - allows you to create multiple network interfaces for an ec2 instance
 - use cases
   - creating a management network interface
@@ -623,7 +632,6 @@
 
 > feature that captures information about the ip traffic going to and from network interfaces
 
-- network interface: virtual network card that connects ec2 instances and other aws resources to a vpc network
 - captures network information from aws managed interfaces like ELB, elasticache, rds, aurora, etc
 - vpc flow logs data can go to S3, cloudwatch logs, kinesis data firehose
 - what the vpc flow logs capture
@@ -635,17 +643,11 @@
 
 ### endpoints
 
-> privately connect VPC to aws services without using public IPs or going through the internet
+> privately connect your VPC to aws services without using public IPs or going through the internet
 
 - provides better security and lower latency to access aws services
-- VPC endpoint gateway if you want to connect to s3 or DynamoDB
-- VPC endpoint interface if you want to connect to other aws services
-
-### peering
-
-> connect 2 VPCs privately using aws' network and make them behave as if they are the same network
-
-- IP address ranges can't overlap
+- use VPC endpoint gateway if you want to connect to s3 or [DynamoDB](#dynamodb)
+- use VPC endpoint interface if you want to connect to other aws services
 
 ### PrivateLink
 
@@ -1211,8 +1213,9 @@ client <= REST API => API gateway <= proxy requests => lambda <= CRUD => DynamoD
 
 ## aws iam identity center
 
-> easy single login
+> allows users to sign into AWS using external identity providers (like Microsoft or Google), so they can access multiple AWS accounts or applications with single sign-on (SSO)
 
+- supports federated access
 - one login for all your
   - aws accounts in aws organizations
   - business cloud applications (e.g. salesforce, box, microsoft 365)
