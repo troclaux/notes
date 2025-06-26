@@ -2281,6 +2281,12 @@ you can use aws management console or aws cli
 - replication across 3 AZ
 - great for knowledge graphs
 
+## OpenSearch Service
+
+> managed service that searches, analyzes and visualizes large amounts of data
+
+- used for log analytics, monitoring, search and real-life data analysis
+
 ## OpsWorks
 
 > manages chef and puppet
@@ -2316,6 +2322,22 @@ you can use aws management console or aws cli
 - implement in days, not months
 - no need to build, train and deploy ML solutions
 - use cases: retail stores, media, entertainment, etc
+
+## Pinpoint (out-of-scope)
+
+> customer engagement service that allows businesses to communicate with their customers through multiple channels
+
+- supports email, SMS, push notifications (mobile apps), voice messages, in-app messaging
+- capable of receiving replies
+- use cases: run campaigns by sending marketing, bulk, transactional SMS messages
+
+- what is the difference when comparing with SNS or SES?
+  - in SNS and SES, you managed each message's audience, content and delivery schedule
+  - in Pinpoint, you create
+    - message templates
+    - delivery schedules
+    - highly-targeted segments
+    - full campaigns
 
 ## Polly
 
@@ -2728,6 +2750,16 @@ sudo chmod 666 /var/run/docker.sock
 - automate to make architectural architectural experimentation easier
 - allow for evolutionary architecture
   - design based on changing requirements
+
+### disaster recovery strategies
+
+cost comparison: (cheap) Backup and Restore < Pilot Light < Warm Standby < Multi-Site/Hot-Site (expensive)
+
+- backup and restore
+- pilot light: keeps core functions of the app ready to scale, with minimal setup
+- warm standby: keeps full version of the app, but at minimum size
+  - when there's a problem, it just increases the size of the app
+- multi-site/hot-site: full version of the app, at full size
 
 ### security
 
