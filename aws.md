@@ -664,22 +664,18 @@
   - network load balancer
   - [ENI](#eni-elastic-network-interface)
 
-### direct connect + site-to-site vpn
+### hybrid connectivity
 
-- site-to-site vpn: connect on-premises network to your aws vpc
-  - secure "bridge" between physical data center and cloud network
-- direct connect (DX): dedicated network connection between your on-premises, bypassing the public internet
-
-### client vpn
-
-> securely access AWS resources and on-premises networks that are not publicly accessible (i.e. private networks)
-
-- the connection goes over the public internet, but the traffic is encrypted end-to-end
-- allows your device to act as if it's inside the private network
+- aws vpn: establishes an encrypted connection between your on-premises network and AWS over the public internet
+  - client vpn: allows **individual** users to securely access AWS resources and on-premises private networks
+    - the connection goes over the public internet, but the traffic is encrypted
+    - the client device behaves as if it is part of the private network
+  - site-to-site vpn: creates an encrypted connection between your on-premises network and your Amazon VPC over the public internet
+- direct connect (DX): dedicated private network connection between your on-premises, bypassing the public internet
 
 ### transit gateway
 
-> connecto to multiple VPCs and/or on-premises infrastructure through a centralized hub
+> connect to multiple VPCs and/or on-premises infrastructure through a centralized hub
 
 - works with
   - connect gateway
