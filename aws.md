@@ -58,150 +58,190 @@
 
 ## table of contents
 
-### compute
-
-- [Auto Scaling Group](#auto-scaling-group)
-- [Batch](#batch)
-- [EC2 (Elastic Compute Cloud)](#ec2-elastic-compute-cloud)
-- [Elastic Beanstalk](#elastic-beanstalk)
-- [Fargate](#fargate)
-- [Lambda](#lambda)
-- [Lightsail](#lightsail)
-- [Outposts](#outposts)
-
-### storage
-
-- [EFS (Elastic File System)](#efs-elastic-file-system)
-- [FSx](#fsx)
-- [S3 (Simple Storage Service)](#s3-simple-storage-service)
-- [Storage Gateway](#storage-gateway)
-
-### database
-
-- [Aurora](#aurora)
-- [DocumentDB](#documentdb)
-- [DynamoDB](#dynamodb)
-- [ElastiCache](#elasticache)
-- [Neptune](#neptune)
-- [QLDB](#qldb-quantum-ledger-database)
-- [RDS (Relational Database Service)](#rds-relational-database-service)
-
 ### analytics and big data
 
-- [Athena](#athena)
-- [EMR (Elastic MapReduce)](#emr-elastic-mapreduce)
-- [Glue](#glue)
-- [Kinesis](#kinesis)
-- [OpenSearch Service](#opensearch-service)
-- [QLDB (Quantum Ledger Database)](#qldb-quantum-ledger-database)
-- [QuickSight](#quicksight)
-- [Redshift](#redshift)
+- [Amazon Athena](#athena)
+- [Amazon EMR (Elastic MapReduce)](#emr-elastic-mapreduce)
+- [AWS Glue](#glue)
+- [Amazon Kinesis](#kinesis)
+- [Amazon OpenSearch Service](#opensearch-service)
+- [Amazon QuickSight](#quicksight)
+- [Amazon Redshift](#redshift)
+- [Amazon QLDB (Quantum Ledger Database)](#qldb-quantum-ledger-database)
 
-### networking and content delivery
+### application integration
 
-- [API Gateway](#api-gateway)
-- [CloudFront](#cloudfront)
-- [Direct Connect](#direct-connect-site-to-site-vpn)
-- [Elastic Load Balancer (ELB)](#elb-elastic-load-balancer)
-- [Global Accelerator](#global-accelerator)
-- [Route 53](#route-53)
-- [VPC (Virtual Private Cloud)](#vpc-virtual-private-cloud)
+- [Amazon EventBridge](#eventbridge)
+- [Amazon SNS (Simple Notification Service)](#sns-simple-notification-service)
+- [Amazon SQS (Simple Queue Service)](#sqs-simple-queue-service)
+- [AWS Step Functions](#step-functions)
 
-### security
+- [Amazon API Gateway](#api-gateway)
 
-- [AWS Firewall Manager](#aws-firewall-manager)
-- [Artifact](#aws-artifact)
-- [CloudHSM](#cloudhsm-cloud-hardware-security-module)
-- [Cognito](#cognito)
-- [Detective](#detective)
-- [Directory Services](#aws-directory-services)
-- [GuardDuty](#guardduty)
-- [IAM (Identity and Access Management)](#iam-identity-and-access-management)
-- [Inspector](#inspector)
-- [KMS (Key Management Service)](#kms-key-management-service)
-- [Macie](#macie)
-- [STS (Security Token Service)](#sts-security-token-service)
-- [Secrets Manager](#aws-secrets-manager)
-- [Security Groups](#security-groups)
-- [Security Hub (CSPM)](#security-hub-cspm-cloud-security-posture-management)
-- [Shield](#shield)
-- [WAF (Web Application Firewall)](#waf-web-application-firewall)
+### business applications
+
+- [Amazon Connect](#amazon-connect)
+- [Amazon SES (Simple Email Service)](#ses-simple-email-service)
 
 ### cloud financial management
 
-- Billing Alarms: notifications to monitor billing
-- Billing Dashboard: high level overview + free tier dashboard
 - [Budgets](#budgets): track usage, costs, reserved instances and get alerts
+- Cost and Usage Reports: most comprehensive billing dataset, most granular report in aws
+- Cost Explorer: view detailed current usage and forecast usage, also create custom reports
+- [Marketplace](#marketplace)
+
 - Compute Optimizer: recommends resources configurations to reduce cost (used for EC2, EC2 auto scaling group, EBS, Lambda)
 - [Consolidated Billing](#consolidated-billing): centralized billing across all aws accounts in an aws organization
 - [Cost Allocation Tags](#cost-allocation-tags): tag resources to create detailed reports
 - [Cost Anomaly Detection](#cost-anomaly-detection): detect unusual spending using machine learning
-- Cost Explorer: view detailed current usage and forecast usage, also create custom reports
-- Cost and Usage Reports: most comprehensive billing dataset, most granular report in aws
+- Billing Alarms: notifications to monitor billing
+- Billing Dashboard: high level overview + free tier dashboard
 - Pricing Calculator: estimates costs in the cloud
 - Savings Plans: easy way to save based on long-term usage of aws of compute services (ec2, fargate, lambda)
 - [Service Quotas](#service-quotas): notifies you when you're close to service quota threshold
-- [Marketplace](#marketplace)
 
-### devops and site reliability engineering
+### compute
 
-- [CDK (Cloud Development Kit)](#cdk-cloud-development-kit)
-- [Cloud9](#cloud9)
-- [CloudFormation](#cloudformation)
-- [CodeBuild](#codebuild)
-- [CodeCommit](#codecommit)
-- [CodeDeploy](#codedeploy)
-- [CodePipeline](#codepipeline)
-- [CodeStar](#codestar)
-- [ECR (Elastic Container Registry)](#ecr-elastic-container-registry)
-- [Elastic Container Service (ECS)](#ecs-elastic-container-service)
-- [Elastic Kubernetes Service (EKS)](#eks-elastic-kubernetes-service)
-- [EventBridge](#eventbridge)
-- [FIS](#fis-fault-injection-simulator)
-- [Infrastructure Composer](#infrastructure-composer)
-- [OpsWorks](#opsworks)
-- [Step Functions](#step-functions)
-- [X-Ray](#x-ray)
+- [AWS Batch](#batch)
+- [Amazon EC2 (Elastic Compute Cloud)](#ec2-elastic-compute-cloud)
+- [AWS Elastic Beanstalk](#elastic-beanstalk)
+- [Amazon Lightsail](#lightsail)
+- [AWS Outposts](#outposts)
 
-### ai and machine learning
+### containers
 
-- [Amazon Connect](#amazon-connect)
+- [Amazon ECR (Elastic Container Registry)](#ecr-elastic-container-registry)
+- [Amazon ECS (Elastic Container Service)](#ecs-elastic-container-service)
+- [Amazon EKS (Elastic Kubernetes Service)](#eks-elastic-kubernetes-service)
+
+### customer enablement
+
+- [AWS Support Plans](#aws-support-plans)
+
+### database
+
+- [Amazon Aurora](#aurora)
+- [Amazon DocumentDB](#documentdb)
+- [Amazon DynamoDB](#dynamodb)
+- [Amazon ElastiCache](#elasticache)
+- [Amazon Neptune](#neptune)
+- [Amazon RDS (Relational Database Service)](#rds-relational-database-service)
+
+### developer tools
+
+- [AWS CLI](#aws-cli)
+- [AWS CodeBuild](#codebuild)
+- [AWS CodePipeline](#codepipeline)
+- [AWS X-Ray](#x-ray)
+
+### end user computing
+
+- [Amazon AppStream 2.0](#appstream-20)
+- [Amazon WorkSpaces](#amazon-workspaces)
+- [Amazon WorkSpaces Secure Browser](#amazon-workspaces-secure-browser)
+
+### frontend web and mobile
+
+- [AWS Amplify](#amplify)
+- [AWS AppSync](#appsync)
+
+### internet of things (iot)
+
+- [AWS IoT Core](#iot-core)
+
+### machine learning
+
+- [Amazon Comprehend](#comprehend)
+- [Amazon Kendra](#kendra)
+- [Amazon Lex](#lex)
+- [Amazon Polly](#polly)
 - [Amazon Q](#amazon-q)
-- [CodeGuru](#codeguru)
-- [Comprehend](#comprehend)
-- [Forecast](#forecast)
-- [GuardDuty](#guardduty)
-- [Kendra](#kendra)
-- [Lex](#lex)
-- [Macie](#macie)
-- [Personalize](#personalize)
-- [Polly](#polly)
-- [QuickSight](#quicksight)
-- [Rekognition](#rekognition)
-- [SageMaker](#sagemaker)
-- [Textract](#textract)
-- [Transcribe](#transcribe)
-- [Translate](#translate)
-
-### application integration
-
-- [API Gateway](#api-gateway)
-- [EventBridge](#eventbridge)
-- [SNS (Simple Notification Service)](#sns-simple-notification-service)
-- [SQS (Simple Queue Service)](#sqs-simple-queue-service)
-- [Step Functions](#step-functions)
+- [Amazon Rekognition](#rekognition)
+- [Amazon SageMaker](#sagemaker)
+- [Amazon Textract](#textract)
+- [Amazon Transcribe](#transcribe)
+- [Amazon Translate](#translate)
 
 ### management and governance
 
+- [AWS Auto Scaling](#auto-scaling-group)
+- [AWS CloudFormation](#cloudformation)
+- [AWS CloudTrail](#cloudtrail)
+- [Amazon CloudWatch](#cloudwatch)
+- AWS Compute Optimizer
 - [AWS Config](#aws-config)
-- [CloudTrail](#cloudtrail)
-- [CloudWatch](#cloudwatch)
-- [Control Tower](#control-tower)
+- [AWS Control Tower](#control-tower)
 - [Health Dashboard](#health-dashboard)
-- [SSM (Systems Manager)](#ssm-systems-manager)
+- [AWS License Manager](#license-manager)
+- [AWS Service Catalog](#service-catalog)
 - [Service Quotas](#service-quotas)
-- [Trusted Advisor](#trusted-advisor)
-- [Well-Architected Framework](#aws-well-architected-framework)
+- [AWS SSM (SyStems Manager)](#ssm-systems-manager)
+- [AWS Trusted Advisor](#trusted-advisor)
+- [AWS Well-Architected Framework](#aws-well-architected-framework)
+
+### migration and transfer
+
+- [AWS Application Discovery Service](#application-discovery-service)
+- [AWS Application Migration Service](#application-migration-service)
+- [AWS Database Migration Service (DMS)](#dms-database-migration-service)
+- [Migration Evaluator](#migration-evaluator)
+- [AWS Migration Hub](#migration-hub)
+- [AWS Schema Conversion Tool (AWS SCT)](#sct-schema-convertion-tool)
+- [AWS Snow Family](#snow-family)
+
+### networking and content delivery
+
+- [Amazon API Gateway](#api-gateway)
+- [Amazon CloudFront](#cloudfront)
+- [AWS Direct Connect](#hybrid-connectivity)
+- [AWS Global Accelerator](#global-accelerator)
+- [AWS PrivateLink](#privatelink)
+- [Amazon Route 53](#route-53)
+- [AWS Transit Gateway](#transit-gateway)
+- [Amazon VPC (Virtual Private Cloud)](#vpc-virtual-private-cloud)
+- [AWS VPN](#hybrid-connectivity)
+- [AWS site-to-site VPN](#hybrid-connectivity)
+- [AWS client VPN](#hybrid-connectivity)
+
+### security, identity and compliance
+
+- [AWS Artifact](#aws-artifact)
+- [AWS Audit Manager](#audit-manager)
+- [AWS Certificate Manager](#aws-certificate-manager)
+- [AWS CloudHSM](#cloudhsm-cloud-hardware-security-module)
+- [Amazon Cognito](#cognito)
+- [Amazon Detective](#detective)
+- [AWS Directory Service](#aws-directory-service)
+- [AWS Firewall Manager](#aws-firewall-manager)
+- [Amazon GuardDuty](#guardduty)
+- [AWS IAM (Identity and Access Management)](#iam-identity-and-access-management)
+- [AWS IAM Identity Center](#aws-iam-identity-center)
+- [Amazon Inspector](#inspector)
+- [AWS KMS (Key Management Service)](#kms-key-management-service)
+- [Amazon Macie](#macie)
+- [AWS RAM (Resource Access Manager)](#ram-resource-access-manager)
+- [AWS Secrets Manager](#aws-secrets-manager)
+- [AWS Security Hub (CSPM)](#security-hub-cspm-cloud-security-posture-management)
+- [AWS Shield](#shield)
+- [AWS WAF (Web Application Firewall)](#waf-web-application-firewall)
+
+- [Security Groups](#security-groups)
+
+### serverless
+
+- [AWS Fargate](#fargate)
+- [AWS Lambda](#lambda)
+
+### storage
+
+- [AWS Backup](#aws-backup)
+- [Amazon Elastic Block Store (Amazon EBS)](#ebs-elastic-block-store)
+- [Amazon EFS (Elastic File System)](#efs-elastic-file-system)
+- [AWS Elastic Disaster Recovery](#drs-disaster-recovery-service-or-elastic-disaster-recovery)
+- [Amazon FSx](#fsx)
+- [Amazon S3 (Simple Storage Service)](#s3-simple-storage-service)
+- [Amazon S3 Glacier](#storage-classes)
+- [AWS Storage Gateway](#storage-gateway)
 
 ## AWS CLI
 
@@ -661,8 +701,7 @@
 
 > privately connect to a service in a 3rd party vpc
 
-- most secure and scalable way to
-  - expose a service to 1000s of vpcs
+- most secure and scalable way to expose a service to 1000s of vpcs
 - doesn't require
   - vpc peering
   - internet gateway
@@ -678,31 +717,16 @@
   - client vpn: allows **individual** users to securely access AWS resources and on-premises private networks
     - the connection goes over the public internet, but the traffic is encrypted
     - the client device behaves as if it is part of the private network
-  - site-to-site vpn: creates an encrypted connection between your on-premises network and your Amazon VPC over the public internet
+  - site-to-site vpn: creates an encrypted connection between your on-premises network and your VPC over the public internet
 - direct connect (DX): dedicated private network connection between your on-premises, bypassing the public internet
 
 ### transit gateway
 
 > connect to multiple VPCs and/or on-premises infrastructure through a centralized hub
 
-- works with
-  - connect gateway
-  - vpn connections
-  - vpc
-  - subnets
-  - internet gateway
-  - nat gateway/instances
-  - nacl
-  - security groups
-  - vpc peering
-  - elastic ip
-  - vpc endpoints
-  - PrivateLink
-  - pc flow logs
-  - site-to-site vpn
-  - client vpn
-  - direct connect
-  - transit gateway
+- simplifies network architecture
+- makes it easier to manage connectivity at scale
+- works with everything (connect gateway, vpn connections, vpc, subnets, internet gateway, nat gateway/instances, nacl, security groups, vpc peering, elastic ip, vpc endpoints, PrivateLink, pc flow logs, site-to-site vpn, client vpn, direct connect, transit gateway)
 
 ## lambda
 
@@ -710,6 +734,7 @@
 
 - short-lived functions: each invocation runs in an isolated environment with max duration of 15 minutes
 - stateless: each function runs independently
+- automatically scales based on number of requests
 - price based on number of calls and duration of compute time
 - increasing ram also improves cpu and network
 - event-driven
@@ -717,17 +742,12 @@
     - file uploads
     - http requests
     - database changes
-- supports
-  - node.js
-  - python
-  - golang
-  - java
-  - c# (.NET core and powershell)
+- supports: node.js, python, golang, java, rust, ruby, c# (.NET core and powershell)
 
 ### workflow
 
 1. write a function in Python, Node.js, Java, Go, etc
-1. deploy it to Lambda (manually, with the CLI, or using IaC like Terraform)
+1. deploy it to Lambda (manually, with the CLI or using IaC like Terraform)
 1. configure a trigger (e.g. HTTP endpoint, S3 upload)
 1. lambda runs your code when the event occurs
 1. get billed per request and per compute time (in milliseconds)
@@ -745,20 +765,20 @@ use case example: resize images uploaded to an S3 bucket
 - supports multiple engines:
   - [postgresql](./postgresql.md)
   - [mysql](./mysql.md)
+  - [aurora](#aurora)
   - [mariadb](./mariadb.md)
   - oracle
   - microsoft sql server
-  - aurora
 
-- read replica: is a copy of a database that can be used to offload read operations from the primary database
+- read replica: copy of a database that improves performance by offloading read operations from the primary database
   - doesn't contribute to high availability, since they are all located in a single AZ
 - multi-AZ: failover in case of AZ outage (high availability)
 - multi-region (uses read replicas): spans multiple aws regions (e.g. `sa-east-1` and `us-east-1`)
   - disaster recovery in case of region issue
   - how it works:
-    - Your main DB lives in one region (e.g. eu-west-1 in Ireland)
+    - Your main DB lives in one region (e.g. `eu-west-1` in Ireland)
     - you create read replicas in other regions (e.g. U.S. or Asia)
-    - local apps can read from these replicas — reduces latency
+    - local apps can read from these replicas, reducing latency
     - writes still go to the main DB only
 
 ## S3 (Simple Storage Service)
@@ -779,8 +799,7 @@ use case example: resize images uploaded to an S3 bucket
 - properties
   - serverless: no server or infrastructure to manage
   - scalable: automatically scales to any amount of data
-  - durable
-  - event-driven: can trigger lambda, sqs, sns on object creation or deletion
+  - event-driven: can trigger lambda, SQS, SNS on object creation or deletion
   - durable: 11 9s (99.999999999%) durability
 
 - versioning: option to retain multiple versions of objects
@@ -795,15 +814,15 @@ use case example: resize images uploaded to an S3 bucket
 - to give access to IAM User in another AWS account, create a bucket policy that allows access to that specific user
 
 - key: unique identifier for an object within a bucket (often a filename or path)
-  - must be unique in the bucket
+  - must be unique in the bucket (e.g. `documents/2025/invoices/invoice_001.pdf`)
   - similar to full file path
     - aren't directories, just long names that contain slashes ("/")
   - prefix: path without file name
 - object (similar to file): stored data (file + metadata + unique key)
 - url structure to an s3 object: `https://<bucket-name>.s3.<region>.amazonaws.com/<object-key>`
-  - `https://my-unique-bucket.s3.us-east-1.amazonaws.com/documents/report.pdf`
+  - `https://my-unique-bucket.s3.us-east-1.amazonaws.com/documents/2025/invoices/invoice_001.pdf`
 - bucket (similar to directory): container that stores objects
-  - must have unique name globally
+  - must have unique name globally across all existing bucket names in S3 (not just your account)
   - created in a region
   - pay attention to naming requirements
     - 3 to 63 characters
@@ -820,9 +839,9 @@ use case example: resize images uploaded to an S3 bucket
   - [postgresql](./postgresql.md)
   - [mysql](./mysql.md)
   - [mariadb](./mariadb.md)
+  - [aurora](#aurora)
   - oracle
   - microsoft sql server
-  - aurora
 
 - bucket policies examples:
   - you can enable public access with an S3 Bucket Policy
@@ -900,6 +919,8 @@ aws s3 ls s3://my-bucket-name/
   - use cases: disaster recovery, backups
 - one zone-IA
   - high durability in a single AZ
+  - cheaper than standard IA
+  - less resiliant than standard IA (no AZ redundancy)
   - 99.5% availability
 - glacier: long-term storage
   - cheap
@@ -911,11 +932,12 @@ aws s3 ls s3://my-bucket-name/
         - standard: 3 to 5 hours (medium cost)
         - bulk: 5 to 12 hours (lowest cost)
     - glacier deep archive
+      - lowest cost
       - retrieval options:
         - standard: 12 hours (medium cost)
-        - bulk: under 24 hours (lowest cost)
+        - bulk: under 48 hours (lowest cost)
 
-### Replication (CRR and SRR)
+### replication (CRR and SRR)
 
 > automatically copy objects from one S3 bucket to another
 
@@ -935,7 +957,7 @@ aws s3 ls s3://my-bucket-name/
 
 #### snow family
 
-- snow code
+- snowcone
   - 8 TB of HDD storage
   - 14 TB of SSD storage
 - snowball edge: move less than 10 PBs of data
@@ -943,7 +965,7 @@ aws s3 ls s3://my-bucket-name/
   - compute optimized: 42 TB HDD capacity + 28 TB NVMe SSD
 - snowmobile: literally a truck
   - use when transfering more than 10 PB
-  - each has 100 PB (equals to 100,000 PB) of capacity (1 PB = 1000 TBs)
+  - each has 100 PB (100,000 TB) of capacity (1 PB = 1000 TBs)
 
 ### EBS vs EFS vs S3
 
@@ -991,7 +1013,7 @@ aws s3 ls s3://my-bucket-name/
 
 - set up call centers or customer service systems
 
-## Amazon Managed Blockchain
+## Amazon Managed Blockchain (out-of-scope)
 
 > fully managed service that makes it easy to create, manage and scale blockchain networks
 
@@ -1024,6 +1046,7 @@ aws s3 ls s3://my-bucket-name/
 
 > complete snapshot of a virtual machine
 
+- an AMI is neither a docker image nor a container image
 - customize an ec2 instance
 - faster boot and configuration times
 - can be copied across regions
@@ -1049,8 +1072,8 @@ aws s3 ls s3://my-bucket-name/
 > build and deploy full-stack web and mobile application quickly
 
 - features:
-  - hosting static web apps
-  - authenticatoin
+  - hosting dynamic and static web apps
+  - authentication
   - graphql/rest apis
   - works with frameworks like react, angular, vue and mobile platforms (iOS/android)
 
@@ -1058,7 +1081,7 @@ aws s3 ls s3://my-bucket-name/
 
 > fully managed service that makes it easy for developers to create, publish, maintain, monitor and secure APIs at any scale
 
-client <= REST API => API gateway <= proxy requests => lambda <= CRUD => DynamoDB
+client (e.g. browser) <= REST API => API Gateway <= proxy requests => Lambda <= CRUD => DynamoDB
 
 - scalable and serverless API
 - supports
@@ -1066,7 +1089,7 @@ client <= REST API => API gateway <= proxy requests => lambda <= CRUD => DynamoD
   - websocket apis
   - security
   - user authentication
-  - api throttling
+  - api throttling: limiting the number of api requests a client can make in a time period
   - api keys
   - monitoring
 
@@ -1108,7 +1131,7 @@ client <= REST API => API gateway <= proxy requests => lambda <= CRUD => DynamoD
 > automate audit preparation for compliance with regulations and standards
 
 - automates evidence collection
-- continuously collects and organizes aws resource configurations and activity
+- continuously collects and organizes aws resource configurations and activity data
 
 ## Aurora
 
@@ -1138,7 +1161,7 @@ client <= REST API => API gateway <= proxy requests => lambda <= CRUD => DynamoD
 
 ## aws artifact
 
-> provides on-demand access to aws compliance documentation, agreements and audits
+> provides customers on-demand access to aws compliance documentation, agreements and audits
 
 - doesn't do audits, only provides access to the results of audits done on aws
 
@@ -1168,8 +1191,11 @@ client <= REST API => API gateway <= proxy requests => lambda <= CRUD => DynamoD
 
 > helps customers meet security, regulatory and compliance requirements
 
-- shares responsibility model
+- exists so AWS can demonstrate and publish how its infrastructure and services meet various regulatory and industry standards
+  - helps AWS be compliant **for** the cloud
+  - helps customers be compliant **in** the cloud
 - while AWS infrastructure is compliant, customers must configure their services and applications properly to remain compliant
+- provides certifications, attestations, and assessments to show compliance with global standards
 - aws complies with global compliance standards like:
   - ISO 27001
   - SOC 1, SOC 2, SOC 3
@@ -1191,7 +1217,7 @@ client <= REST API => API gateway <= proxy requests => lambda <= CRUD => DynamoD
   - check whether all resources are in approved regions
   - make sure CloudTrail is enabled and logging correctly
 
-## aws directory services
+## aws directory service
 
 > suite of managed directory services that makes it easy to set up, manage and scale directory services in the AWS Cloud
 
@@ -1271,7 +1297,7 @@ client <= REST API => API gateway <= proxy requests => lambda <= CRUD => DynamoD
 
 ## aws prescriptive guidance
 
-TODO
+> collection of strategies, guides and best practices to help customers plan, implement and scale their cloud adoption
 
 ## aws professional services and partner network
 
@@ -1372,8 +1398,6 @@ TODO
 - evolve
   - cloudformation
   - codebuild
-  - codecommit
-  - codedeploy
   - codepipeline
 
 ### security
@@ -1486,7 +1510,7 @@ TODO
 - improve efficiency across system lifecycle
 - use managed services to reduce waste
 
-## batch
+## Batch
 
 > fully managed batch processing at any scale
 
@@ -1530,7 +1554,7 @@ six key perspectives:
 | Security    | Data and asset protection     | Security teams        |
 | Operations  | Manage/monitor cloud services | IT ops, admins        |
 
-## CDK (Cloud Development Kit)
+## CDK (Cloud Development Kit) (out-of-scope)
 
 > define cloud infrastructure using familiar programming languages
 
@@ -1690,7 +1714,7 @@ six key perspectives:
   - service api usage
 - custom metrics
 
-## Cloud9
+## Cloud9 (out-of-scope)
 
 > cloud IDE that can be used in the browser
 
@@ -1719,7 +1743,7 @@ six key perspectives:
   - run tests
   - produce packages that are ready to be deployed (by CodeDeploy, for example)
 
-## CodeCommit
+## CodeCommit (out-of-scope)
 
 > fully managed source control service that makes it easy for teams to host secure and highly scalable private Git repositories
 
@@ -1773,7 +1797,7 @@ six key perspectives:
 
 codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, ecs, etc)
 
-## CodeStar
+## CodeStar (out-of-scope)
 
 > unified user interface to easily manage software development activities
 
@@ -2055,14 +2079,14 @@ event example:
 - fully managed
 - allocates the exact cpu and ram requested
 
-## FIS (Fault Injection Simulator)
+## FIS (Fault Injection Simulator) (out-of-scope)
 
 > test the resilience of your applications (chaos engineering)
 
 - similar to netflix's chaos monkey
 - supports EC2, ECS, EKS, RDS, etc
 
-## Forecast
+## Forecast (out-of-scope)
 
 > fully managed service that uses ML to deliver highly accurate forecasts
 
@@ -2164,7 +2188,7 @@ event example:
   - proactive notification to help you plan for scheduled activities
   - aggregate data from entire AWS Organization
 
-## Infrastructure Composer
+## Infrastructure Composer (out-of-scope)
 
 > no-code tool that helps you design and deploy aws infrastructure using cloudformation
 
@@ -2294,7 +2318,7 @@ you can use aws management console or aws cli
 
 - used for log analytics, monitoring, search and real-life data analysis
 
-## OpsWorks
+## OpsWorks (out-of-scope)
 
 > manages chef and puppet
 
@@ -2352,7 +2376,7 @@ you can use aws management console or aws cli
 
 - allows development of applications that talk
 
-## QLDB (Quantum Ledger DataBase)
+## QLDB (Quantum Ledger DataBase) (out-of-scope)
 
 > fully managed ledger database
 
@@ -2603,7 +2627,7 @@ lets say you want to build a model that predicts your exam score
   - migrate data to aws over time
   - extend on-premises storage without buying new hardware
 
-## STS (Security Token Service)
+## STS (Security Token Service) (out-of-scope)
 
 > create temporary, short-term credentials to access your aws resources with limited privileges
 
@@ -2805,6 +2829,8 @@ cost comparison: (cheap) Backup and Restore < Pilot Light < Warm Standby < Multi
 
 ---
 
+- durability: ability of a service to retain and protect data over time without loss
+  - measure of how likely your data is to survive intact even in the face of hardware failures, disasters or other problems
 - aws workloads: applications, services or processes that are running on aws infrastructure
 - server provisioning: the process of setting up physical or virtual hardware; installing and configuring software, such as the operating system and applications; and connecting it to middleware, network, and storage components
 - failover: ability of a system/service to automatically switch to a backup/secondary system when the primary system becomes unavailable or experiences a failure
