@@ -4,6 +4,14 @@
 > cloud computing platform that provides a wide range of services and tools for building and managing applications and infrastructure in the cloud
 
 - cloud computing: the delivery of computing services over the internet
+  - advantages:
+    - on demand resources can be provisioned without human interaction
+    - resources are available over the network, and can be accessed by diverse client platforms
+    - quickly and easily scale based on demand (stop guessing capacity)
+    - measured payment for resources (pay only what you use)
+    - benefits from massive economies of scale
+    - trade CAPital EXpense (CAPEX) for OPerational EXpense (OPEX)
+    - easily access global infrastructure
 - serverless: server doesn't requires provisioning and scaling
   - e.g. aws lambda, azure functions, google cloud functions
 - service: a software that provides functionality and performs a task or set of tasks for your system
