@@ -1195,8 +1195,7 @@ client (e.g. browser) <= REST API => API Gateway <= proxy requests => Lambda <= 
   - helps AWS be compliant **for** the cloud
   - helps customers be compliant **in** the cloud
 - while AWS infrastructure is compliant, customers must configure their services and applications properly to remain compliant
-- provides certifications, attestations, and assessments to show compliance with global standards
-- aws complies with global compliance standards like:
+- achieves certifications and passes assessments to demonstrate compliance with global standards, such as:
   - ISO 27001
   - SOC 1, SOC 2, SOC 3
   - PCI DSS (for payment data)
@@ -1207,9 +1206,8 @@ client (e.g. browser) <= REST API => API Gateway <= proxy requests => Lambda <= 
 
 > assess, audit and evaluate the configurations of your aws resources
 
-- records configurations and changes over time
-
-- aws config rules: check if your aws resources comply with specific desired configurations or policies
+- continuously monitors and records AWS resource configurations and evaluates them against desired configurations using rules
+  - aws config rules: check if your aws resources comply with specific desired configurations or policies
 
 - use cases
   - enforce encryption on RDS databases
@@ -1219,12 +1217,11 @@ client (e.g. browser) <= REST API => API Gateway <= proxy requests => Lambda <= 
 
 ## aws directory service
 
-> suite of managed directory services that makes it easy to set up, manage and scale directory services in the AWS Cloud
+> helps organizations use Microsoft Active Directory (AD) with aws services
 
-- directory services: systems that manage information about users, computers, printers and other resources in the network
+- directory services: stores information about users, groups, devices and other resources in the network
   - usually on on-premises systems
-- can integrate with microsoft active directory services
-- microsoft active directory: directory service for windows domain networks
+- Microsoft Active Directory: directory service for windows domain networks
   - windows domain network: type of computer network in that manages user accounts, computers and other resources
     - features
       - centralized authentication: users log in with one set of credentials across all computers in the domain
@@ -1232,8 +1229,9 @@ client (e.g. browser) <= REST API => API Gateway <= proxy requests => Lambda <= 
 
 ## aws firewall manager
 
-> allows you to centrally manage and configure firewall rules across aws accounts and resources
+> allows you to **centrally** manage and configure firewall rules across aws accounts and resources
 
+- organization-wide security policy enforcement
 - helps you manage
   - WAF rules
   - aws Shield advanced protections
@@ -1253,6 +1251,7 @@ client (e.g. browser) <= REST API => API Gateway <= proxy requests => Lambda <= 
 
 ## aws knowledge center
 
+- basically an official FAQ
 - contains most frequent and common questions and requests about:
   - popular services
   - compute
@@ -1288,7 +1287,7 @@ client (e.g. browser) <= REST API => API Gateway <= proxy requests => Lambda <= 
 
 - allows management of permissions
 - AWS organizations Service Control Policies (SCPs): centrally manage and restrict permissions across all accounts
-  - SCPs do not grand permissions, they **limit** them
+  - SCPs do not grant permissions, they define the maximum available permissions and can restrict actions, even if IAM policies allow them
   - does not apply to management account
   - applies to all the users and roles of the account, including root
 - api is available to automate aws account creation
@@ -2844,4 +2843,8 @@ cost comparison: (cheap) Backup and Restore < Pilot Light < Warm Standby < Multi
   - decentralized
 - hybrid service: service that can operate both in the cloud and on-premises
 - principal: an entity that can make a request to aws (e.g. IAM users, IAM roles, federated users, aws services)
+- AWS organizations Service Control Policies (SCPs): centrally manage and restrict permissions across all accounts
+  - SCPs do not grand permissions, they **limit** them
+  - does not apply to management account
+  - applies to all the users and roles of the account, including root
 
