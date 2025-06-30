@@ -12,12 +12,16 @@
     - benefits from massive economies of scale
     - trade CAPital EXpense (CAPEX) for OPerational EXpense (OPEX)
     - easily access global infrastructure
-- serverless: server doesn't requires provisioning and scaling
-  - e.g. aws lambda, azure functions, google cloud functions
 - service: a software that provides functionality and performs a task or set of tasks for your system
   - e.g. apache, nginx, postgresql, auth0
 - infrastructure: the physical or virtual resources that support the operation of a system
   - e.g. servers, storage, network, databases, etc
+- managed service: aws handles maintenance and scaling, but you still configure some infrastructure components
+- fully managed service: aws handles everything (infrastructure, scaling, patching, backups, etc)
+  - you don't manage servers or infrastructure
+  - serverless: run code or services without managing any servers at all
+    - is a type of fully managed service, but not all fully managed services are serverless
+    - e.g. aws lambda, aws step functions, Amazon EventBridge, azure functions, google cloud functions
 
 - types of pricing in AWS
   - pay for compute time: EC2, Lambda, Fargate
@@ -1300,56 +1304,44 @@ client (e.g. browser) <= REST API => API Gateway <= proxy requests => Lambda <= 
 
 ## aws professional services and partner network
 
-> global group of experts available to work alongside your team and help achieve cloud goals faster
+- aws professional services: global group of experts available to work alongside your team and help achieve cloud goals faster
+  - often partner with APN (Aws Partner Network) members
+- APN (Aws Partner Network): global community 3rd party companies that help customers build, market and sell their offerings on aws
+  - offerings = products, services or solutions that APN provides to customers using aws infrastructure
+  - types of APN partners
+    - APN technology partners: provide hardware, connectivity or software solutions
+    - APN consulting partners: help customers desing, architect, build, migrate and manage workloads on aws
+    - APN training partners: deliver aws-authored training to organizations and individuals
+  - aws competency program: recognize APN partners that have demonstrated technical expertise
+  - aws navigate program: helps APN partners improve specialized skills
 
-- often partner with APN (Aws Partner Network) members
-- APN (Aws Partner Network): global community of partners that help customers build, market and sell their offerings on aws
-  - offerings = products, services or solutions that apn provides to customers using aws infrastructure
-- types of APN partners
-  - APN technology partners: provide hardware, connectivity or software solutions
-  - APN consulting partners: help customers desing, architect, build, migrate and manage workloads on aws
-  - APN training partners: deliver aws-authored training to organizations and individuals
-- aws competency program: recognize APN partners that have demonstrated technical expertise
-- aws navigate program: helps apn partners improve specialized skills
+### aws partner training and certification
+
+> help individuals/organizations build cloud skills through online courses and credentials
 
 ## aws secrets manager
 
-> stores secrets
+> fully managed service that stores secrets
 
 - can force rotation of secrets after a period of time
 - automate generation of secrets on rotations (uses lambda)
 - integrates with [rds](#rds-relational-database-service)
 - secrets are encrypted using [KMS](#kms-key-management-service)
 
-## aws storage gateway
-
-> seamless integration between on-premises environments and aws cloud storage, helping with backup, archiving and disaster recovery
-
-- hybrid cloud storage service
-- types of gateways
-  - file gateway: stores files as objects in S3
-  - tape gateway
-  - volume gateway
-
 ## aws support plans
 
 - basic/free: available to all aws customers by default
-- developer
-- business
-- enterprise
+  - offers access to aws documentation and discussion forums
+- developer: cheapest paid tier for testing
+- business: for production systems
+- enterprise: mission-critical + TAM (Technical Account Manager)
 
-| Plan       | Cost (Starting)     | Access Type          | Use Case         | Response Time (Critical) |
-| ---------- | ------------------- | -------------------- | ---------------- | ------------------------ |
-| Basic      | Free                | Docs & Forums        | Learning/Test    | Not available            |
-| Developer  | $29/mo or 3%        | Email (Business hrs) | Dev/Test         | < 12–24 hrs              |
-| Business   | $100/mo or % usage  | 24/7 Chat/Phone      | Production       | < 1 hr                   |
-| Enterprise | $15k/mo or % usage  | TAM + 24/7 support   | Mission-Critical | < 15 mins                |
-
-- TAM (Technical Account Manager)
-
-## aws training and certification
-
-> help individuals/organizations build cloud skills through online courses and credentials
+| Plan       | Cost (Starting)     | Access Type          | Use Case         | Response Time (Critical) | Trusted Advisor |
+| ---------- | ------------------- | -------------------- | ---------------- | ------------------------ | --------------- |
+| Basic      | Free                | AWS Docs & Forums    | Learning/Test    | Not available            | Limited access  |
+| Developer  | $29/mo or 3%        | Email (Business hrs) | Dev/Test         | < 12–24 hrs              | Limited access  |
+| Business   | $100/mo or % usage  | 24/7 Chat/Phone      | Production       | < 1 hr                   | Full access     |
+| Enterprise | $15k/mo or % usage  | TAM + 24/7 support   | Mission-Critical | < 15 mins                | Full access     |
 
 ## aws well-architected framework
 
@@ -1621,14 +1613,9 @@ six key perspectives:
 
 - dedicated: the hardware is exclusively assigned to your organization
 - single-tenant: only your organization uses the hardware
-
-- types of CMKs (Customer Master Key)
-  - customer-managed CMKs: created, managed and used by the customer
-  - aws-managed CMKs: created, managed and used by aws
-  - aws-owned CMKs: collection of CMKs that aws services own and managed, used across multiple accounts
-  - CloudHSM keys: CMKs generated and stored in dedicated CloudHSM hardware
-    - the customer has full control over key management
-    - required for highly regulated environments
+- CloudHSM keys
+  - the customer has full control over key management
+  - required for highly regulated environments
 
 ## CloudTrail
 
@@ -1637,20 +1624,17 @@ six key perspectives:
 - provides governance and auditing
   - governance: monitoring activity, ensuring compliance, auditability and accountability
 - enabled by default
-- to store logs long-term, put logs from cloudtrail into: cloudwatch logs or s3
+- to store logs long-term, put logs from CloudTrail into CloudWatch Logs or S3
+- cloudtrail insights: automates the analysis of cloudtrail events to detect unusual activity
 
 > [!TIP]
 > cloudtrAIl => ApI
-
-### insights
-
-> automates the analysis of cloudtrail events to detect unusual activity
 
 ## CloudWatch
 
 > monitoring and observability service that provides data and insights
 
-- monitors resources, applications,  performance and operational health
+- monitors resources, applications, performance and operational health
   - unified view of operational health
 - respond to system-wide performance changes
 - optimize resource utilization
@@ -1685,7 +1669,7 @@ six key perspectives:
 
 - adjustable cloudwatch logs retention: can be 1 week, month, year, etc
 
-### CloudWatch Logs for EC2
+#### CloudWatch Logs for EC2
 
 - by default, no logs from ec2 instance will go to cloudwatch
 - run cloudwatch agent on ec2 to push log files
@@ -2230,6 +2214,11 @@ event example:
 
 > managed service that allows you to create and control the encryption keys used to encrypt your data
 
+- uses CMKs (Customer Master Key): primary resource in KMS used to encrypt and decrypt data
+  - customer-managed CMKs: created, managed and used by the customer
+  - aws-managed CMKs: created, managed and used by aws
+  - aws-owned CMKs: collection of CMKs that aws services own and managed, used across multiple accounts
+
 ### workflow
 
 you can use aws management console or aws cli
@@ -2616,15 +2605,19 @@ lets say you want to build a model that predicts your exam score
 
 ## Storage Gateway
 
-> hybrid cloud storage service that enables on-premises applications to seamlessly use aws cloud storage
+> seamless integration between on-premises environments and aws cloud storage, helping with backup, archiving and disaster recovery
 
-- bridge between on-premise data and cloud data in S3
+- hybrid cloud storage service, bridge between on-premise data and cloud data in S3
 - data encryption enabled by default
 - use cases
   - back up and archive on-premises data to aws
   - provide low-latency access to frequently used data via local caching
   - migrate data to aws over time
   - extend on-premises storage without buying new hardware
+- types of gateways
+  - file gateway: stores files as objects in S3
+  - tape gateway
+  - volume gateway
 
 ## STS (Security Token Service) (out-of-scope)
 
@@ -2830,6 +2823,7 @@ cost comparison: (cheap) Backup and Restore < Pilot Light < Warm Standby < Multi
 
 - durability: ability of a service to retain and protect data over time without loss
   - measure of how likely your data is to survive intact even in the face of hardware failures, disasters or other problems
+- workload: set of components that together deliver business value
 - aws workloads: applications, services or processes that are running on aws infrastructure
 - server provisioning: the process of setting up physical or virtual hardware; installing and configuring software, such as the operating system and applications; and connecting it to middleware, network, and storage components
 - failover: ability of a system/service to automatically switch to a backup/secondary system when the primary system becomes unavailable or experiences a failure
