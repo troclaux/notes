@@ -60,6 +60,13 @@
   - e.g. IAM, Route 53, CloudFront, WAF, Shield, aws organizations, aws artifact, DynamoDB, WorkSpaces
   - TIP: if a service manages access, identity or DNS for your entire aws environment, it's likely global
 
+- global applications: applications deployed in multiple geographies
+  - global applications decrease latency
+  - Disaster Recovery (DR): if an AWS Region goes down (earthquake, storms, power shutdown, politics)
+    - in this cenario, you can switch to another region and keep the application working
+    - DR plan increases the availability of your application
+  - attack protection: distributed global infrastructure is harder to attack
+
 ## table of contents
 
 ### analytics and big data
@@ -94,12 +101,12 @@
 - Cost Explorer: view detailed current usage and forecast usage, also create custom reports
 - [Marketplace](#marketplace)
 
+- Billing Alarms: notifications to monitor billing
+- Billing Dashboard: high level overview + free tier dashboard
 - Compute Optimizer: recommends resources configurations to reduce cost (used for EC2, EC2 auto scaling group, EBS, Lambda)
 - [Consolidated Billing](#consolidated-billing): centralized billing across all aws accounts in an aws organization
 - [Cost Allocation Tags](#cost-allocation-tags): tag resources to create detailed reports
 - [Cost Anomaly Detection](#cost-anomaly-detection): detect unusual spending using machine learning
-- Billing Alarms: notifications to monitor billing
-- Billing Dashboard: high level overview + free tier dashboard
 - Pricing Calculator: estimates costs in the cloud
 - Savings Plans: easy way to save based on long-term usage of aws of compute services (ec2, fargate, lambda)
 - [Service Quotas](#service-quotas): notifies you when you're close to service quota threshold
@@ -1725,6 +1732,7 @@ six key perspectives:
   - compile source code
   - run tests
   - produce packages that are ready to be deployed (by CodeDeploy, for example)
+- integrates with github, codecommit and bitbucket
 
 ## CodeCommit (out-of-scope)
 
@@ -1794,7 +1802,7 @@ codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, 
 - similar to auth0 and firebase
 - identity for web/mobile application's users
 - don't create an IAM user for the clients of your application, use Cognito
-- instead of giving your app's users aws iam accounts (which are meant for admins and systems), you use cognito to manage their identities securely
+- instead of giving your app's users aws iam accounts (which are meant for admins and systems), use cognito to manage their identities securely
 - also capable of signing in with google/facebook/twitter accounts
 
 ## Comprehend
@@ -1819,7 +1827,7 @@ codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, 
 
 > automatically set up aws organizations to organize accounts and implements SCPs (Service Control Policies)
 
-- easy way to set up and govern a secure multi-account aws environment
+- helps manage multiple AWS accounts, not individual IAM users
 - benefits
   - automate the setup of multiple aws accounts in a few clicks
   - automatically apply recommended security, compliance and operational settings
@@ -1830,9 +1838,7 @@ codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, 
 > organize and track aws costs by assigning metadata to your aws resources
 
 - how it works: you apply tags (key-value pairs) to resources, like `Environment=Production` or `Team=Finance`
-- types of tags
-  - aws-generated
-  - user-defined
+- types of tags: aws-generated and user-defined
 
 ## Cost Anomaly Detection
 
@@ -1843,10 +1849,11 @@ codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, 
 > investigates and identifies the root cause of security issues or suspicious activities using ML and graphs
 
 - generates visualizations with details and context to get to the root cause
+- helps analyzing findings from [GuardDuty](#guardduty) and other services
 
 ## DMS (Database Migration Service)
 
-> migrate databases to aws
+> fully managed service that helps you migrate databases to aws quickly and securely
 
 - resilient and self healing
 - source database remains available during the migration
@@ -1868,12 +1875,13 @@ codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, 
 
 - provides disaster recovery for on-premises and cloud-based applications by continuously replicating your servers to aws
 - enables fail over to aws and fail back once systems are restored
+- recovery time is faster than [AWS Backup](#aws-backup)
 
 ## DynamoDB
 
 > fully managed NoSQL database service that provides fast and predictable performance with seamless scalability
 
-- key-value database
+- TIP: dYnamodb => keY-value database
 - highly available with replication across 3 AZ
 - auto scalability
 - distributed "serverless" database, scales to massive workloads
@@ -1907,11 +1915,20 @@ codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, 
 
 ## ECS (Elastic Container Service)
 
-> fully managed container orchestration service that allows you to run, stop, and manage Docker containers on a cluster of EC2 instances
+> fully managed container orchestration service that allows you to run, stop and manage Docker containers on a cluster of EC2 instances
+
+- launch containers with ec2 instances or [fargate](#fargate)
+
+| Feature           | ECS on EC2                       | ECS with Fargate                  |
+| ----------------- | -------------------------------- | --------------------------------- |
+| Server Management | You manage EC2 instances         | No server management (serverless) |
+| Scalability       | You scale EC2 cluster manually   | Fargate scales automatically      |
+| Pricing           | Pay for EC2 instances            | Pay per vCPU and memory used      |
+| Flexibility       | More control over infrastructure | Simpler, less overhead            |
 
 ## ECR (Elastic Container Registry)
 
-> fully managed Docker container registry that makes it easy to store, manage, and deploy Docker container images
+> fully managed Docker container registry that makes it easy to store, manage and deploy Docker container images
 
 - private docker registry
 - stored docker images can be run by [ECS](#ecs-elastic-container-service) or [fargate](#fargate)
@@ -1941,13 +1958,13 @@ codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, 
 
 ## EKS (Elastic Kubernetes Service)
 
-> fully managed Kubernetes service that allows you to run, manage, and scale containerized applications using Kubernetes
+> fully managed Kubernetes service that allows you to run, manage and scale containerized applications using Kubernetes
 
 ## ElastiCache
 
 > fully managed service that deploys, operates and scales popular open-source compatible in-memory data stores in the cloud
 
-- used to manage redis or memcached
+- used to manage [redis](./redis.md) or memcached
 - in-memory db
 - high performance, low-latency
 - managed by aws
@@ -1963,6 +1980,7 @@ codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, 
 
 > service that automatically distributes incoming application traffic across multiple targets
 
+- similar to [nginx](./nginx.md)
 - targets can be ec2 instances, ip addresses, containers
 - can have high availability (multi AZ)
   - multi-AZ ELB: can distribute traffic across multiple AZs
@@ -1988,7 +2006,6 @@ codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, 
 - offers support for apache spark
 - offers auto-scaling
 - can be integrated with spot instances
-
 - use cases
   - data processing
   - machine learning
@@ -1999,22 +2016,20 @@ codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, 
 
 > fully managed service that allows you to deploy and manage web applications and services
 
-- developer is only responsible for the application
 - PaaS
-- uses CloudFormation to provision the application
+- developer is only responsible for the application
+- elastic beanstalk uses CloudFormation to provision the application, but you don't need to managed it (all automated)
 - managed service
   - instance configuration and OS is handled by Beanstalk
   - deployment strategy is configurable but managed by Beanstalk
-- load balancing and auto-scaling
-- 3 architecture models: 
-  - singe instance deployment
-  - LB + ASG
-    - good for production or pre-production web applications
-  - ASG only
-    - good for non-web apps in productions (workers, etc)
+- automatically handles: provisioning (e.g. ec2 instances), load balancing, auto scaling and monitoring
+- 3 architecture models:
+  - single instance deployment
+  - LB + ASG: good for production or pre-production web applications
+  - ASG only: good for non-web apps in productions (workers, etc)
 
 - support for:
-  - go
+  - golang
   - java se
   - node.js
   - php
@@ -2031,16 +2046,14 @@ codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, 
 
 > serverless event bus service that makes it easy to build event-driven applications at scale
 
-- serverless
-- use events to connect application components together
-
+- uses events to connect application components together
 - event: json message that describes something that happened in a system
-  - events come from aws services, custom apps or saas providers
+  - events come from aws services, custom apps or SaaS providers (e.g. auth0)
 - event bus: pipeline where events are sent and rules are applied to process them
 - event source: origin of the event
 - rules: match certain events and define what should happen when a match occurs
 - targets: aws services or resources that receive matched events and act on them
-  - common targets: lambda (run code), step functions (start workflow), sqs (enqueue messsage), sns (publish to topic), etc
+  - common targets: lambda (run code), step functions (start workflow), sqs (enqueue message), sns (publish to topic), etc
 
 event example:
 
@@ -2057,10 +2070,10 @@ event example:
 
 ## Fargate
 
-> launch docker containers on aws
+> fully managed service that runs docker containers on aws
 
-- fully managed
 - allocates the exact cpu and ram requested
+- used with [ECS](#ecs-elastic-container-service) and [EKS](#eks-elastic-kubernetes-service)
 
 ## FIS (Fault Injection Simulator) (out-of-scope)
 
@@ -2083,56 +2096,31 @@ event example:
 
 > fully managed service that allows you to launch high-performance file systems in the cloud
 
-- amazon FSx for Windows File Server: for windoes-based applications that require SMB protocol and Active Directory integration
+- amazon FSx for Windows File Server: for windows-based applications, Active Directory and SMB protocol
+  - built on Microsoft Windows Server
 - amazon FSx for Lustre (out-of-scope): used for machine learning, analytics, video processing, financial modeling
 
 ## Global Accelerator
 
 > improve application availability and performance using the aws global network
 
-- uses private network to optimize the route to your application
+- provides static IP addresses (doesn't change over time)
 
-### cloudfront vs global accelerator
+[cloudfront](#cloudfront) vs global accelerator:
 
-- both
-  - use AWS global network
-  - use edge locations around the world
-  - integrate with AWS Shield for DDoS protection
-- Cloudfront is a Content Delivery Network
-  - improves performance for cacheable content
-  - content is served at the edge
-- Global Accelerator
-  - no caching
-  - proxying packets at the edge to the application over TCP or UDP
-  - good for HTTP use cases that require static IP addresses
-  - good for HTTP use cases that require deterministic, fast regional failover
-
-## global applications
-
-> applications deployed in multiple geographies
-
-- global applications decrease latency
-- Disaster Recovery (DR): If An AWS Region Goes Down (Earthquake, Storms, Power Shutdown, Politics)
-  - in this cenario, you can switch to another region and keep the application working
-  - DR plan increases the availability of your application
-- attack protection: distributed global infrastructure is harder to attack
-
-### global applications architecture
-
-> how an application is set up to run across different regions
-
-- active-active: multiple instances in different regions executes read/write operations
-  - lowers read's latency
-  - lowers write's latency
-- active-passive: when 1 instance executes read/write, while the other only executes read
-  - lowers read's latency
-- multi-region
-- single-region
+| Feature       | Amazon CloudFront                                 | AWS Global Accelerator                                 |
+| ------------- | ------------------------------------------------- | ------------------------------------------------------ |
+| Purpose       | Content delivery (CDN)                            | Improves global application performance & availability |
+| Optimized for | Static and dynamic content (e.g., images, videos) | Any type of application (web apps, APIs, etc.)         |
+| Routing Type  | HTTP/HTTPS only                                   | TCP and UDP traffic                                    |
+| IP Type       | Uses domain name (e.g., `d123.cloudfront.net`)    | Uses static IP addresses                               |
+| Best For      | Fast content delivery to end users worldwide      | Fast and reliable routing to regional AWS endpoints    |
 
 ## Glue
 
 > managed Extract, Transform, Load (ETL) service
 
+- "glue" data together from different sources
 - prepare and transform data for analytics
 - fully serverless
 - glue data catalog: catalog of datasets
