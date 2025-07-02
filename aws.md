@@ -17,10 +17,10 @@
 - infrastructure: the physical or virtual resources that support the operation of a system
   - e.g. servers, storage, network, databases, etc
 - managed service: aws handles maintenance and scaling, but you still configure some infrastructure components
-- fully managed service: aws handles everything (infrastructure, scaling, patching, backups, etc)
+- fully-managed service: aws handles everything (infrastructure, scaling, patching, backups, etc)
   - you don't manage servers or infrastructure
   - serverless: run code or services without managing any servers at all
-    - is a type of fully managed service, but not all fully managed services are serverless
+    - is a type of fully-managed service, but not all fully-managed services are serverless
     - e.g. aws lambda, aws step functions, Amazon EventBridge, azure functions, google cloud functions
 
 - types of pricing in AWS
@@ -57,7 +57,7 @@
   - edge location: physical facility AWS uses to cache and deliver content to users with low latency
 
 - aws global services: services that are NOT tied to a specific region and operate across all regions
-  - e.g. IAM, Route 53, CloudFront, WAF, Shield, aws organizations, aws artifact, DynamoDB, WorkSpaces
+  - e.g. IAM, Route 53, CloudFront, WAF, Shield, aws organizations, aws artifact, DynamoDB, WorkSpaces, Health Dashboard
   - TIP: if a service manages access, identity or DNS for your entire aws environment, it's likely global
 
 - global applications: applications deployed in multiple geographies
@@ -66,6 +66,10 @@
     - in this cenario, you can switch to another region and keep the application working
     - DR plan increases the availability of your application
   - attack protection: distributed global infrastructure is harder to attack
+
+> [!WARNING]
+> Not all fully-managed services are global.
+> Not all global services are fully-managed.
 
 ## table of contents
 
@@ -168,7 +172,7 @@
 - [Amazon Polly](#polly)
 - [Amazon Q](#amazon-q)
 - [Amazon Rekognition](#rekognition)
-- [Amazon SageMaker](#sagemaker)
+- [Amazon SageMaker](#sagemaker-ai)
 - [Amazon Textract](#textract)
 - [Amazon Transcribe](#transcribe)
 - [Amazon Translate](#translate)
@@ -350,7 +354,7 @@
 > automate the creation, testing and distribution of AMIs
 
 - can be run on a schedule (weekly, whenever packages are updated, etc)
-- fully managed
+- fully-managed
 
 1. ec2 image builder initiates temporary builder ec2 instance
 1. temporary builder ec2 instance builds the image
@@ -1026,7 +1030,7 @@ aws s3 ls s3://my-bucket-name/
 
 ## Amazon Managed Blockchain (out-of-scope)
 
-> fully managed service that makes it easy to create, manage and scale blockchain networks
+> fully-managed service that makes it easy to create, manage and scale blockchain networks
 
 - transactions without the need for a trusted, central authority
 - use cases
@@ -1090,7 +1094,7 @@ aws s3 ls s3://my-bucket-name/
 
 ## API Gateway
 
-> fully managed service that makes it easy for developers to create, publish, maintain, monitor and secure APIs at any scale
+> fully-managed service that makes it easy for developers to create, publish, maintain, monitor and secure APIs at any scale
 
 client (e.g. browser) <= REST API => API Gateway <= proxy requests => Lambda <= CRUD => DynamoDB
 
@@ -1116,11 +1120,11 @@ client (e.g. browser) <= REST API => API Gateway <= proxy requests => Lambda <= 
 
 ## AppStream 2.0
 
-> fully managed service that lets you stream desktop applications to users over the internet
+> fully-managed service that lets you stream desktop applications to users over the internet
 
 ## AppSync
 
-> fully managed service that simplifies developing graphql APIs
+> fully-managed service that simplifies developing graphql APIs
 
 ## Athena
 
@@ -1148,17 +1152,16 @@ client (e.g. browser) <= REST API => API Gateway <= proxy requests => Lambda <= 
 
 > proprietary relational database engine that is part of rds
 
-- fully managed
+- fully-managed
 - highly available
 - costs more than rds, but is more efficient
 - supports postgresql and mysql
 - continuous auto scaling
 
-## Auto Scaling Group
+## Auto Scaling Group (ASG)
 
-> feature that allows aws to automatically manage the number of instances based on demand
+> feature that allows aws to automatically manage the number of ec2 instances based on demand
 
-- available in the following services: ec2, cloudwatch, elb
 - scaling strategies
   - manual scaling: you update the size of an ASG manually
   - dynamic scaling
@@ -1167,8 +1170,11 @@ client (e.g. browser) <= REST API => API Gateway <= proxy requests => Lambda <= 
       - when CloudWatch alarm is triggered (example CPU < 30%), then remove 1 unit
     - target tracking scaling
       - average ASG CPU must stay around 40%
-    - schedules scaling: anticipate scaling based on known usage patterns
+    - scheduled scaling: anticipate scaling based on known usage patterns
   - predictive scaling: uses machine learning to predict future traffic
+
+> [!IMPORTANT]
+> Auto Scaling is also available in other AWS services (not using ASGs), such as: ECS, DynamoDB and Aurora
 
 ## aws artifact
 
@@ -1178,7 +1184,7 @@ client (e.g. browser) <= REST API => API Gateway <= proxy requests => Lambda <= 
 
 ## aws backup
 
-> fully managed backup service that makes it easy to centralize and automate the backup of data across aws services
+> fully-managed backup service that makes it easy to centralize and automate the backup of data across aws services
 
 - can automate backups for:
   - EBS volumes
@@ -1328,7 +1334,7 @@ client (e.g. browser) <= REST API => API Gateway <= proxy requests => Lambda <= 
 
 ## aws secrets manager
 
-> fully managed service that stores secrets
+> fully-managed service that stores secrets
 
 - can force rotation of secrets after a period of time
 - automate generation of secrets on rotations (uses lambda)
@@ -1510,7 +1516,7 @@ client (e.g. browser) <= REST API => API Gateway <= proxy requests => Lambda <= 
 
 ## Batch
 
-> fully managed batch processing at any scale
+> fully-managed batch processing at any scale
 
 - batch: tasks that can be run in parallel and don't require real-time interaction
   - typically large volumes of data
@@ -1565,7 +1571,7 @@ six key perspectives:
 
 ## CloudFormation
 
-> fully managed service that allows you to create and manage AWS resources using templates
+> fully-managed service that allows you to create and manage AWS resources using templates
 
 - IaC, similar to terraform
 - template: configuration file that defines infrastructure
@@ -1712,7 +1718,7 @@ six key perspectives:
 
 ## CodeArtifact (out-of-scope)
 
-> fully managed artifact repository service
+> fully-managed artifact repository service
 
 - use cases:
   - publish your executable/binary in common dependency management tools (e.g. npm, yarn, pip, maven, gradle)
@@ -1722,10 +1728,10 @@ six key perspectives:
 
 ## CodeBuild
 
-> fully managed build service that compiles source code, runs tests and produces software packages that are ready to deploy
+> fully-managed build service that compiles source code, runs tests and produces software packages that are ready to deploy
 
 - similar to github actions and gitlab ci
-- fully managed, serverless
+- fully-managed, serverless
 - pay-as-you-go pricing
 - can be triggered by [CodePipeline](#codepipeline)
 - use cases
@@ -1736,15 +1742,15 @@ six key perspectives:
 
 ## CodeCommit (out-of-scope)
 
-> fully managed source control service that makes it easy for teams to host secure and highly scalable private Git repositories
+> fully-managed source control service that makes it easy for teams to host secure and highly scalable private Git repositories
 
 - aws' github competitor
 - source control service
-- fully managed
+- fully-managed
 
 ## CodeDeploy (out-of-scope)
 
-> fully managed deployment service that automates software deployments to a variety of compute services
+> fully-managed deployment service that automates software deployments to a variety of compute services
 
 - works with
   - ec2 instance
@@ -1774,7 +1780,7 @@ six key perspectives:
 
 > service that orchestrates full CI/CD workflow
 
-- fully managed
+- fully-managed
 - can activate [codebuild](#codebuild)
 - compatible with:
   - [CodeCommit](#codecommit)
@@ -1797,7 +1803,7 @@ codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, 
 
 ## Cognito
 
-> fully managed identity service that allows you to add user sign-up, sign-in and access control to your apps quickly and easily
+> fully-managed identity service that allows you to add user sign-up, sign-in and access control to your apps quickly and easily
 
 - similar to auth0 and firebase
 - identity for web/mobile application's users
@@ -1809,7 +1815,7 @@ codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, 
 
 > uses Natural Language Processing (NLP) to extract insights about the content of documents
 
-- fully managed and serverless service
+- fully-managed and serverless service
 - uses machine learning to find insights and relationships in text
 - capabilities
   - analyzes text using tokenization
@@ -1818,9 +1824,12 @@ codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, 
 
 ## Consolidated Billing
 
-- when enabled, combine usage across all aws accounts in the aws organization to share
-  - volume pricing
-  - reserved instances
+- when enabled, combine billing for multiple aws accounts into one
+
+- no extra cost to use
+- get discounts:
+  - volume discounts applied across accounts (e.g. data transfer, s3 storage)
+  - RI discount sharing: AWS organizations share Reserved Instance discounts across all accounts in the organization
   - savings plans discounts
 
 ## Control Tower
@@ -1853,7 +1862,7 @@ codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, 
 
 ## DMS (Database Migration Service)
 
-> fully managed service that helps you migrate databases to aws quickly and securely
+> fully-managed service that helps you migrate databases to aws quickly and securely
 
 - resilient and self healing
 - source database remains available during the migration
@@ -1863,7 +1872,7 @@ codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, 
 
 ## DocumentDB
 
-> fully managed aws implementation of mongodb
+> fully-managed aws implementation of mongodb
 
 - nosql database
 - store, query and index json data
@@ -1879,7 +1888,7 @@ codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, 
 
 ## DynamoDB
 
-> fully managed NoSQL database service that provides fast and predictable performance with seamless scalability
+> fully-managed NoSQL database service that provides fast and predictable performance with seamless scalability
 
 - TIP: dYnamodb => keY-value database
 - highly available with replication across 3 AZ
@@ -1908,14 +1917,14 @@ codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, 
 
 ### DAX (DynamoDB Accelerator)
 
-> fully managed in-memory cache for DynamoDB
+> fully-managed in-memory cache for DynamoDB
 
 - 10x performance improvement
 - secure, highly scalable and highly available
 
 ## ECS (Elastic Container Service)
 
-> fully managed container orchestration service that allows you to run, stop and manage Docker containers on a cluster of EC2 instances
+> fully-managed container orchestration service that allows you to run, stop and manage Docker containers on a cluster of EC2 instances
 
 - launch containers with ec2 instances or [fargate](#fargate)
 
@@ -1928,14 +1937,14 @@ codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, 
 
 ## ECR (Elastic Container Registry)
 
-> fully managed Docker container registry that makes it easy to store, manage and deploy Docker container images
+> fully-managed Docker container registry that makes it easy to store, manage and deploy Docker container images
 
 - private docker registry
 - stored docker images can be run by [ECS](#ecs-elastic-container-service) or [fargate](#fargate)
 
 ## EFS (Elastic File System)
 
-> fully managed cloud-based file storage service
+> fully-managed cloud-based file storage service
 
 > provides a network file system
 
@@ -1958,11 +1967,11 @@ codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, 
 
 ## EKS (Elastic Kubernetes Service)
 
-> fully managed Kubernetes service that allows you to run, manage and scale containerized applications using Kubernetes
+> fully-managed Kubernetes service that allows you to run, manage and scale containerized applications using Kubernetes
 
 ## ElastiCache
 
-> fully managed service that deploys, operates and scales popular open-source compatible in-memory data stores in the cloud
+> fully-managed service that deploys, operates and scales popular open-source compatible in-memory data stores in the cloud
 
 - used to manage [redis](./redis.md) or memcached
 - in-memory db
@@ -2014,7 +2023,7 @@ codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, 
 
 ## Elastic Beanstalk
 
-> fully managed service that allows you to deploy and manage web applications and services
+> fully-managed service that allows you to deploy and manage web applications and services
 
 - PaaS
 - developer is only responsible for the application
@@ -2070,7 +2079,7 @@ event example:
 
 ## Fargate
 
-> fully managed service that runs docker containers on aws
+> fully-managed service that runs docker containers on aws
 
 - allocates the exact cpu and ram requested
 - used with [ECS](#ecs-elastic-container-service) and [EKS](#eks-elastic-kubernetes-service)
@@ -2084,7 +2093,7 @@ event example:
 
 ## Forecast (out-of-scope)
 
-> fully managed service that uses ML to deliver highly accurate forecasts
+> fully-managed service that uses ML to deliver highly accurate forecasts
 
 - example scenario: predict the future sales of a raincoat
 - use cases
@@ -2094,7 +2103,7 @@ event example:
 
 ## FSx
 
-> fully managed service that allows you to launch high-performance file systems in the cloud
+> fully-managed service that allows you to launch high-performance file systems in the cloud
 
 - amazon FSx for Windows File Server: for windows-based applications, Active Directory and SMB protocol
   - built on Microsoft Windows Server
@@ -2136,28 +2145,25 @@ event example:
   - vpc flow logs
   - dns logs
 
-## Health Dashboard
+## Health Dashboard (Your Account – Personalized View)
 
-> global service that provides personalized alerts and remediation guidance for aws outages that might impact your aws account or resources
+> provides personalized alerts and remediation guidance for aws outages that might impact your aws account or resources
 
-- shows status and availability of your aws resources
-- can be used to subscribe to an RSS feed to be notified of the status of all aws service interruptions
-
-### service health (public view)
-
-- shows
-  - all regions
-  - all services health
-  - historical information for each day
-
-### your account (personalized view)
-
+- global service
 - provides
   - alerts and remediation guidance when AWS is experiencing events that may impact you
   - personalized view into the performance and availability of AWS services you are using
   - relevant or timely information to help you manage events in progress
   - proactive notification to help you plan for scheduled activities
   - aggregate data from entire AWS Organization
+  - subscription to an RSS feed to be notified of the status of all aws service interruptions
+
+### Service Health Dashboard (Public View)
+
+- shows
+  - all regions
+  - all services health
+  - historical information for each day
 
 ## Infrastructure Composer (out-of-scope)
 
@@ -2170,8 +2176,9 @@ event example:
 
 > automated security assessment service that helps improve security and compliance
 
-- only for ec2 instances, ecr container images and lambda functions
 - scans aws workloads for vulnerabilities and unintended network exposure
+- only for ec2 instances, ecr container images and lambda functions
+- not used for tracking user actions or api calls
 
 ## IoT core
 
@@ -2184,7 +2191,7 @@ event example:
 
 ## Kendra
 
-> fully managed document search service powered by ML
+> fully-managed document search service powered by ML
 
 - extract answers from within a document (text, pdf, html, powerpoint, etc)
 - natural language search capabilities
@@ -2193,8 +2200,9 @@ event example:
 
 ## Kinesis
 
-> fully managed service that allows you to collect, process and analyze real-time streaming data
+> fully-managed service that allows you to collect, process and analyze real-time streaming data
 
+- streaming data: data that arrives continuously and in small chunks
 - unlimited scalability
 - cloud-native service: proprietary protocol from aws
 
@@ -2230,7 +2238,9 @@ you can use aws management console or aws cli
 
 > deploy and manage applications/websites with pre-configured cloud resources
 
+- great for people with little cloud experience
 - simpler alternative to using ec2, rds, elb, ebs, route 53...
+  - sets up a virtual server, database, storage and networking
 - high availability
 - no auto-scaling
 - limited aws integrations, kinda of a standalone service
@@ -2240,7 +2250,7 @@ you can use aws management console or aws cli
   - websites
     - has templates for: wordpress, magento, etc
 
-## Local Zones
+## Local Zones (out-of-scope)
 
 > extend VPC to more locations
 
@@ -2249,9 +2259,10 @@ you can use aws management console or aws cli
 
 ## Macie
 
-> fully managed data security service that uses machine learning and pattern matching to discover and protect sensitive data
+> fully-managed data security service that uses machine learning and pattern matching to discover and protect sensitive data
 
 - helps identify and alert you to sensitive data, such as Personally Identifiable Information (PII) in s3 buckets
+- uses s3 buckets as data source
 
 ## Marketplace
 
@@ -2259,6 +2270,8 @@ you can use aws management console or aws cli
 
 - sell SaaS solutions to aws customers
 - buy software that has been bundled into customized AMIs by the aws marketplace sellers
+- provides cost, governance and entitlement management
+  - entitlement: manage who has access to software licenses
 
 ## Migration Evaluator
 
@@ -2282,7 +2295,7 @@ you can use aws management console or aws cli
 
 ## Neptune
 
-> fully managed graph database
+> fully-managed graph database
 
 - high availability
 - replication across 3 AZ
@@ -2293,6 +2306,7 @@ you can use aws management console or aws cli
 > managed service that searches, analyzes and visualizes large amounts of data
 
 - used for log analytics, monitoring, search and real-life data analysis
+- keyword-based search, unlike [Kendra](#kendra)
 
 ## OpsWorks (out-of-scope)
 
@@ -2303,7 +2317,7 @@ you can use aws management console or aws cli
 
 ## Outposts
 
-> fully managed service that extends aws infrastructure, services and tools to virtually any on-premises or edge locations
+> fully-managed service that extends aws infrastructure, services and tools to virtually any on-premises or edge locations
 
 > run aws services locally on your own hardware, while still being managed from the aws cloud
 
@@ -2313,12 +2327,12 @@ you can use aws management console or aws cli
   - local data processing
   - data residency
   - easier migration from on-premises to the cloud
-  - fully managed service
+  - fully-managed service
 - compatible services: ec2, ebs, s3, eks, ecs, rds, emr
 
 ## Personalize (out-of-scope)
 
-> fully managed ML service to build apps with real-time personalized recommendations
+> fully-managed ML service to build apps with real-time personalized recommendations
 
 - same technology used by amazon
 - integrates with
@@ -2348,13 +2362,13 @@ you can use aws management console or aws cli
 
 ## Polly
 
-> convert text to speech using deep learnign
+> fully-managed service that converts text to speech using deep learning
 
 - allows development of applications that talk
 
 ## QLDB (Quantum Ledger DataBase) (out-of-scope)
 
-> fully managed ledger database
+> fully-managed ledger database
 
 > track all changes to your application data over time and maintain a verifiable history of changes
 
@@ -2373,11 +2387,7 @@ you can use aws management console or aws cli
   - business analytics
   - building visualizations
   - perform ad-hoc analysis
-- integrated with
-  - RDS
-  - Aurora
-  - Athena
-  - S3
+- integrated with RDS, Aurora, Athena, S3
 
 ## RAM (Resource Access Manager)
 
@@ -2385,10 +2395,10 @@ you can use aws management console or aws cli
 
 ## Redshift
 
-> fully managed data warehouse service that allows you to run complex queries on large datasets
+> fully-managed data warehouse service that allows you to run complex queries on large datasets
 
 - based on postgresql, but it's not used for OLTP
-- used for OLAP (analytics and data warehouse)
+- used for [OLAP](/business_intelligence.md#olap-online-analytical-processing) (analytics and data warehouse)
 - 10x better performance in comparison to other data ware houses
 - load data every hour, not every second
 - has sql interface for queries
@@ -2436,11 +2446,9 @@ you can use aws management console or aws cli
   - authoritative NS record: specifies which nameservers have definitive information about dns records for the domain
   - domain registrar: responsible for managing official domain records, registration, renewals and assignments
 
-```
-Visitor enters URL → Domain Registrar → Nameservers → Hosted Zone → DNS Records → IP Address
-```
-
 ### registering domain
+
+visitor enters URL → Domain Registrar → Nameservers → Hosted Zone → DNS Records → IP Address
 
 1. access route 53 in AWS console
 1. select "Register Domains"
@@ -2479,7 +2487,7 @@ ns-1234.awsdns-01.co.uk
 
 ## SageMaker AI
 
-> fully managed service for developers to train machine learning models that can make predictions
+> fully-managed service for developers to train machine learning models that can make predictions
 
 lets say you want to build a model that predicts your exam score
 
@@ -2497,6 +2505,11 @@ lets say you want to build a model that predicts your exam score
 - e.g. oracle to Aurora, sql server to postgresql
 - often used with aws DMS (Database Migration Service)
 - not needed when the source and target databases are the same engine (homogeneous migration)
+- SCT vs [DMS](#dms-database-migration-service)
+  - DMS migrates data between databases
+  - SCT
+    - converts database schema from one engine to another
+    - doesn't move data, only schema and sql code conversion
 
 ## Security Blog
 
@@ -2511,9 +2524,23 @@ lets say you want to build a model that predicts your exam score
 - aggregates alerts from various aws services
   - config, GuardDuty, inspector, macie, iam access analyzer, aws firewall manager, aws health, aws partner network solutions
 
+Security Hub CSPM vs [Detective](#detective) vs [guardduty:](#guardduty)
+
+| Feature                     | **Security Hub (CSPM)**                        | **Amazon Detective**                        | **Amazon GuardDuty**                         |
+| --------------------------- | ---------------------------------------------- | ------------------------------------------- | -------------------------------------------- |
+| Purpose                     | Monitors security posture and compliance       | Investigates and analyzes security findings | Detects threats and suspicious activity      |
+| Does it detect threats?     | ❌ No (relies on other services)               | ❌ No (investigation only)                  | ✅ Yes (main purpose)                        |
+| Does it analyze findings?   | ❌ Not deeply                                  | ✅ Yes (deep analysis & root cause)         | ❌ No (just alerts)                          |
+| Does it aggregate findings? | ✅ Yes (e.g. from GuardDuty, Macie, Inspector) | ❌ No (uses findings from GuardDuty)        | ❌ No                                        |
+| Compliance checks?          | ✅ Yes (e.g. CIS, PCI-DSS)                     | ❌ No                                       | ❌ No                                        |
+| Data sources used           | From other services                            | CloudTrail, VPC Flow Logs, GuardDuty        | CloudTrail, VPC Flow Logs, DNS logs          |
+| Typical use                 | Posture & compliance dashboard                 | Investigate a GuardDuty alert               | Alert on suspicious API calls or IP behavior |
+
 ## Service Catalog
 
 > allows organizations to manage/distribute approved resources (can be applications or aws resources)
+
+- typically used by IT administrators to control what AWS resources and services end-users (like developers) can deploy
 
 ## Service Quotas
 
@@ -2521,7 +2548,7 @@ lets say you want to build a model that predicts your exam score
 
 ## SES (Simple Email Service)
 
-> fully managed service for sending emails
+> fully-managed service for sending emails
 
 ## Shield
 
@@ -2529,11 +2556,11 @@ lets say you want to build a model that predicts your exam score
 
 - shield standard: free protection from DDoS attacks, SYN/UDP floods, reflection attacks
 - shield advanced: paid 24/7 DDoS protection
-  - 24/7 access to aws DDoS response team
+  - 24/7 access to aws DDoS response team and detailed attack diagnostics
 
 ## SNS (Simple Notification Service)
 
-> fully managed messaging service that allows you to send notifications to a large number of recipients
+> fully-managed messaging service that allows you to send notifications to a large number of recipients
 
 - unlimited scalability
 - cloud-native service: proprietary protocol from aws
@@ -2541,27 +2568,17 @@ lets say you want to build a model that predicts your exam score
 
 - event publishers: sends message to one SNS topic
 - event subscribers: listens to the sns topic notifications
-  - each subscriberto the topic will get all the messages
-  - services that can be target subscribers:
-    - sqs
-    - lambda
-    - kinesis data firehose
-    - emails
-    - sms
-    - mobile notifications
-    - http(s) endpoints
+  - each subscriber to a topic will get all the messages
+  - services that can be target subscribers: sqs, lambda, kinesis data firehose, emails, sms, mobile notifications, http(s) endpoints
 
 ## SQS (Simple Queue Service)
 
 > message queuing service that allows you to decouple and scale microservices, distributed systems and serverless applications
 
-- fully managed
+- fully-managed
 - unlimited scalability
-- low latency
 - messages are kept for 14 days
-- messages can be
-  - xml
-  - json
+- messages can be xml or json
 
 - producer service: produces requests to sqs
 - consumer service: consumers requests from sqs
@@ -2569,15 +2586,15 @@ lets say you want to build a model that predicts your exam score
 
 ## SSM (SystemS Manager)
 
-> centrally view, manage, and operate nodes (ec2 or on-premises) at scale in AWS, on-premises and multicloud environments
+> centrally view, manage and operate nodes (ec2 or on-premises) at scale in AWS, on-premises and multicloud environments
 
-- run commands, patch and configure servers
 - hybrid service
+- uses IAM for access control
 - not just a single service, it is a suite of products
 - features
+  - run commands, patch and configure servers without using SSH
   - patching automation for enhanced compliance
-  - run commands across entire fleet of servers
-  - store parameter configuration with the SSM Parameter Store
+  - SSM Parameter Store: store configuration data and secrets
 
 ### workflow
 
@@ -2587,16 +2604,20 @@ lets say you want to build a model that predicts your exam score
 
 ## Step Functions
 
-> fully managed service that allows you to coordinate and sequence tasks with AWS services into serverless workflows
+> serverless orchestration service that lets you coordinate multiple AWS services into automated workflows (aka state machines)
 
+- runs tasks in sequence or parallel
+- automatically handles retries, timeouts, and error handling
 - automate business processes, data processing pipelines or application workflows
+- integrates with services like Lambda, ECS, SQS, DynamoDB, etc
 
 ## Storage Gateway
 
-> seamless integration between on-premises environments and aws cloud storage, helping with backup, archiving and disaster recovery
+> extends storage of on-premises environments to aws cloud storage, helping with backup, archiving and disaster recovery
 
 - hybrid cloud storage service, bridge between on-premise data and cloud data in S3
 - data encryption enabled by default
+- works with s3, glacier and ebs
 - use cases
   - back up and archive on-premises data to aws
   - provide low-latency access to frequently used data via local caching
@@ -2619,15 +2640,14 @@ lets say you want to build a model that predicts your exam score
 
 ## Translate
 
-> natural and accurate language translation
+> natural and accurate language translation of text using ML
 
 ## Trascribe
 
-> automatically converts speech to text
+> fully-managed service that automatically converts speech to text using ML
 
 - uses deep learning process called Automatic Speech Recognition
-- fully managed
-- automatically removes Personally Identifiable Information (PII) using Redaction
+- automatically removes Personally Identifiable Information (PII) using redaction
 
 ## Trusted Advisor
 
@@ -2646,9 +2666,12 @@ lets say you want to build a model that predicts your exam score
 
 > protects web application from common web exploits (layer 7)
 
-- deploy on ALB, API gateway, cloudfront
+- deploy on [ALB](#elb-elastic-load-balancer) [API gateway](#api-gateway), cloudfront and [AppSync](#appsync)
+  - ALB (Application Load Balancer) is part of ELB
 
 ## Well-Architected Tool
+
+[Well-Architected Framework](#aws-well-architected-framework)
 
 > free tool to review your architectures against the 6 pillars of the Well-Architected Framework and adopt best practices
 
@@ -2656,11 +2679,9 @@ lets say you want to build a model that predicts your exam score
 1. review your answers against the 6 pillars
 1. obtain advice
 
-## x-ray
+## X-ray
 
-> visual analysis of applications services
-
-> helps developers gain insights into the performance/behavior of applications running in a microservices architecture or distributed system
+> provides visual analysis of application services by collecting data about requests your application serves, helping developers gain insights into performance and behavior, especially in microservices or distributed systems
 
 - distributed tracing service
   - tracing service: tool that helps developers track/visualize the flow of requests through an application
@@ -2715,18 +2736,20 @@ sudo chmod 666 /var/run/docker.sock
 
 - inbound (data going into aws services): free
 - within the same Availability Zone (AZ): free
-- from aws to the internet (first 100GB/month): free
+  - between AZs within the same region: charged
+- between regions: charged
+- from aws to the internet (first 100GB/month): first 100 GB/month is free, after that, it's charged
 
 ### networking costs per GB
 
 > [!TIP]
-> use private IP to save money and better network performance.
-> use same AZ for maximum savings (at the cost of high availability)
+> Use private IPs and same AZ for lower costs and better network performance.
+> Using different AZs increases availability but adds networking costs.
 
-- between 2 resources in the same AZ: free
-- between 2 resources in different AZs
-  - via private IP: USD 0.01/GB
-  - via public IP: USD 0.02/GB
+- same AZ (private IP): Free
+- different AZs (within same region):
+  - private IP: ~$0.01/GB (approximate; actual pricing may vary)
+  - public IP or elastic IP: ~$0.02/GB (also approximate)
 
 ## tutorials
 
@@ -2829,4 +2852,6 @@ cost comparison: (cheap) Backup and Restore < Pilot Light < Warm Standby < Multi
   - SCPs do not grand permissions, they **limit** them
   - does not apply to management account
   - applies to all the users and roles of the account, including root
+- PII (Personally Identifiable Information): information that can identify a specific individual
+  - e.g. full name, email address, phone number, credit card numbers
 
