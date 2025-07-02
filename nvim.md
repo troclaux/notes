@@ -1,6 +1,6 @@
 # Neovim
 
-- Stay in search mode in Vim after searching for a pattern, instead of pressing enter:
+- stay in search mode in Vim after searching for a pattern, instead of pressing enter:
   - ctrl-g
   - ctrl-t
 
@@ -16,6 +16,7 @@
 
 ## registers
 
+- view register contents: `:reg`
 - black hole register
   - discards any text you yank or delete into it
   - to delete without saving: `"_d`
@@ -26,6 +27,17 @@
   - print name of file ('tail'): `:echo expand('%:t')`
   - print full path: `:echo expand('%:p')`
   - print directory containing file ('head'): `:echo expand('%:p:h')`
+
+## macro
+
+- replay last macro: `Q` or `@@`
+- replay macro in register `a` 10 times: `10@a`
+- use different **lowercase letters** (e.g. `qa`, `qb`) for separate macros
+
+> [!TIP]
+> Uppercase registers append in macros.
+> When recording macros in Neovim: `qw` records to register `w` (overwrites it), but `qW` **appends** to register `w`.
+> So `qW` doesn't create a new macro, it adds to the existing one in `w`.
 
 ## range
 
@@ -48,16 +60,17 @@ range can be specified before most commands
 
 ## substitute command
 
-after running the command `:%s/old/new/c`, the prompt "replace with new (y/n/a/q/l/^E/^Y)?" appears, which provides several options:
-- y (yes): replace the current instance of the old word with the new word
-- n (no): do not replace the current instance of the old word, and move on to the next instance
-- a (all): replace all remaining instances of the old word with the new word, without prompting again
-- q (quit): stop the substitution process entirely
-- l (last): replace the current instance of the old word with the new word, and stop prompting for replacements
-- ^E (scroll down): scroll the screen down one line
-- ^Y (scroll up): scroll the screen up one line
+after running the command `:%s/old/new/c`, the prompt `replace with new (y/n/a/q/l/^E/^Y)?` appears, which provides several options:
 
-- you can use other delimiters for the s command:
+- `y (yes)`: replace the current instance of the old word with the new word
+- `n (no)`: do not replace the current instance of the old word, and move on to the next instance
+- `a (all)`: replace all remaining instances of the old word with the new word, without prompting again
+- `q (quit)`: stop the substitution process entirely
+- `l (last)`: replace the current instance of the old word with the new word, and stop prompting for replacements
+- `^E (scroll down)`: scroll the screen down one line
+- `^Y (scroll up)`: scroll the screen up one line
+
+- you can use other delimiters for the substitute command:
   - `s#old#new#` (using # instead of /)
   - `s|old|new|` (using | instead of /)
   - `s@old@new@` (using @ instead of /)
@@ -66,10 +79,10 @@ after running the command `:%s/old/new/c`, the prompt "replace with new (y/n/a/q
 ### format
 
 - format: `:range s/old/new/cgil`
-  - c: confirm each substitution
-  - g: replace all occurrences in the line
-  - i: ignore case for pattern
-  - l: don't ignore case for pattern
+  - `c`: confirm each substitution
+  - `g`: replace all occurrences in the line
+  - `i`: ignore case for pattern
+  - `l`: don't ignore case for pattern
 
 ### grouping and backreferences
 
@@ -92,3 +105,4 @@ after running the command `:%s/old/new/c`, the prompt "replace with new (y/n/a/q
 - commit amend: `ca`
 - git stash: `czz`
 - git unstash: `czA`
+
