@@ -345,6 +345,23 @@ Acceptance Criteria:
 - service choreography: decentralized system
   - each service is autonomous and flexible
 
+## SDLC (Software Development LifeCycle)
+
+> structured process used by software developers to plan, design, build, test and maintain software systems
+
+1. planning
+1. analysis
+1. design
+1. implementation
+1. testing and integration
+1. maintenance
+
+- models that implement SDLC:
+  - waterfall
+  - iterative
+  - spiral
+  - agile
+
 ## SOA (Service-Oriented Architecture)
 
 > principles and practices that makes software components interoperable and reusable
