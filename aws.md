@@ -5,12 +5,19 @@
 
 - cloud computing: the delivery of computing services over the internet
   - advantages:
+    - trade fixed expense for variable expense
+    - benefit from massive economies of scale
+    - stop guessing capacity
+    - increase speed and agility
+    - stop spending money running and maintaining data centers
+    - go global in minutes
     - on demand resources can be provisioned without human interaction
     - resources are available over the network, and can be accessed by diverse client platforms
     - quickly and easily scale based on demand (stop guessing capacity)
     - measured payment for resources (pay only what you use)
-    - benefits from massive economies of scale
     - trade CAPital EXpense (CAPEX) for OPerational EXpense (OPEX)
+      - capital expense: no large upfront costs for servers, buildings, etc
+      - operational expense: only pay for what you use
     - easily access global infrastructure
 - service: a software that provides functionality and performs a task or set of tasks for your system
   - e.g. apache, nginx, postgresql, auth0
@@ -101,8 +108,10 @@
 ### cloud financial management
 
 - [Budgets](#budgets): track usage, costs, reserved instances and get alerts
-- Cost and Usage Reports: most comprehensive billing dataset, most granular report in aws
-- Cost Explorer: view detailed current usage and forecast usage, also create custom reports
+- Cost and Usage Reports: most comprehensive billing dataset, most granular report in aws (view billing activity of last month)
+- Cost Explorer: view detailed current/historical usage, forecast future costs, create custom reports and identify under-utilized resources
+  - used for analyzing costs after migrating to aws
+  - not typically used for estimating costs before migrating to aws
 - [Marketplace](#marketplace)
 
 - Billing Alarms: notifications to monitor billing
@@ -111,7 +120,7 @@
 - [Consolidated Billing](#consolidated-billing): centralized billing across all aws accounts in an aws organization
 - [Cost Allocation Tags](#cost-allocation-tags): tag resources to create detailed reports
 - [Cost Anomaly Detection](#cost-anomaly-detection): detect unusual spending using machine learning
-- Pricing Calculator: estimates costs in the cloud
+- Pricing Calculator: estimates costs in the cloud, also get detailed pricing **before migration**
 - Savings Plans: easy way to save based on long-term usage of aws of compute services (ec2, fargate, lambda)
 - [Service Quotas](#service-quotas): notifies you when you're close to service quota threshold
 
@@ -308,10 +317,12 @@
   - discount based on long-term usage
   - best for users who want cost savings, but with more flexibility than reserved instances
 - capacity reservations: reserve instance capacity in a specific AZ
+  - ensures that you have compute capacity available when you need it
 - dedicated hosts: get an entire physical server to yourself
   - an isolated server with configurations you can control
 - dedicated instances: instances that run on hardware dedicated to your account, but aws manages the host
   - cheaper than dedicated host
+  - you don't have control over hardware configuration
 
 ### instance types (out-of-scope)
 
@@ -608,6 +619,7 @@
 > virtual network that allows you to launch AWS resources in a logically isolated section of the cloud
 
 - global service
+- **NOT** fully managed, you have to manage networking components (e.g. subnets, route tables, ip address ranges, etc)
 - allows management over IP addresses, subnets, routing and security
 - must have a CIDR block
 - elastic ip: fixed public IPv4 address attached to ec2 instance
@@ -660,21 +672,21 @@
   - required for ec2 instances in public subnets to:
     - download packages
     - be accessed via SSH or a browser
-- NAT (Network Address Translation) gateway (aws-managed): managed AWS service that allows instances in a private subnet to initiate outbound connections to the internet (e.g. for updates or API calls), but prevents the internet from initiating inbound connections to those instances
-  - e.g. private ec2 can download updates or access external APIs without being publicly exposed
+- NAT (Network Address Translation) gateway: managed AWS service that allows instances in a private subnet to initiate outbound connections to the internet (e.g. for updates or API calls), but prevents the internet from initiating inbound connections to those instances
+  - use case: allows a private ec2 to download updates or access external APIs without being publicly exposed
   - usually are placed in a public subnet and route private subnet traffic through it
+  - stateful: keeps track of active connections
 - NAT instances (self-managed): is an ec2 instance configured manually to perform the same function as NAT gateway
 - NACL (Network Access Control List): security layer used in networks to control inbound/outbound traffic at the subnet level
   - stateless
+- VPC peering: connect 2 VPCs privately using aws' network and make them behave as if they are the same network
+  - IP address ranges can't overlap
 
 - stateful: tracks active connections and allows return traffic automatically
 - stateless: doesn't track connection state
   - you must define both inbound and outbound rules explicitly, like with NACLs
   - supports ALLOW and DENY rules
   - rules only include IP addresses
-
-- VPC peering: connect 2 VPCs privately using aws' network and make them behave as if they are the same network
-  - IP address ranges can't overlap
 
 > [!TIP]
 > Route Tables: control the roads each neighborhood (subnet) uses to reach other places.
@@ -708,7 +720,7 @@
 
 > privately connect your VPC to aws services without using public IPs or going through the internet
 
-- provides better security and lower latency to access aws services
+- a VPC endpoint provides better security and lower latency to access aws services
 - use VPC endpoint gateway if you want to connect to s3 or [DynamoDB](#dynamodb)
 - use VPC endpoint interface if you want to connect to other aws services
 
@@ -733,7 +745,11 @@
     - the connection goes over the public internet, but the traffic is encrypted
     - the client device behaves as if it is part of the private network
   - site-to-site vpn: creates an encrypted connection between your on-premises network and your VPC over the public internet
-- direct connect (DX): dedicated private network connection between your on-premises, bypassing the public internet
+- direct connect (DX): dedicated private network connection between your on-premises infrastructure and aws
+  - bypasses the public internet
+  - cannot connect 2 VPCs
+  - reduces network latency
+  - increases bandwidth throughput
 
 ### transit gateway
 
@@ -785,8 +801,10 @@ use case example: resize images uploaded to an S3 bucket
   - oracle
   - microsoft sql server
 
+- you still need to manage scaling, backups and patches
 - read replica: copy of a database that improves performance by offloading read operations from the primary database
   - doesn't contribute to high availability, since they are all located in a single AZ
+  - improves database scalability
 - multi-AZ: failover in case of AZ outage (high availability)
 - multi-region (uses read replicas): spans multiple aws regions (e.g. `sa-east-1` and `us-east-1`)
   - disaster recovery in case of region issue
@@ -801,7 +819,7 @@ use case example: resize images uploaded to an S3 bucket
 > scalable object storage service that allows you to store and retrieve data from anywhere on the web
 
 - use cases
-  - storage
+  - object storage, **NOT** for database storage
   - backup and restore
   - application hosting
   - static websites
@@ -817,7 +835,9 @@ use case example: resize images uploaded to an S3 bucket
   - event-driven: can trigger lambda, SQS, SNS on object creation or deletion
   - durable: 11 9s (99.999999999%) durability
 
-- versioning: option to retain multiple versions of objects
+- versioning (not enabled by default): option to retain multiple versions of objects
+- S3 Transfer Acceleration: enables fast, secure transfers of files over long distances between your client and S3 bucket
+  - leverages cloudfront's globally distributed edge locations
 - there are no real folders
 - max object size is 5 TB
   - if file is bigger than 5 TB, upload is segmented into multiple parts
@@ -928,11 +948,12 @@ aws s3 ls s3://my-bucket-name/
     - archive instant access tier: objects not accessed for 90 days
     - archive access tier: configurable from 90 days to 700+ days
     - deep archive access tier: configurable from 180 days to 700+ days
+  - no retrieval charges for accessing your data
 - standard IA (Infrequent Access)
   - pay to retrieve data
   - 99% availability
   - use cases: disaster recovery, backups
-- one zone-IA
+- one zone-IA: for data that is accessed less frequently but requires rapid access when needed
   - high durability in a single AZ
   - cheaper than standard IA
   - less resiliant than standard IA (no AZ redundancy)
@@ -1061,6 +1082,7 @@ aws s3 ls s3://my-bucket-name/
 
 > complete snapshot of a virtual machine
 
+- **not** a global service, you cannot use an AMI from one region in another region directly
 - an AMI is neither a docker image nor a container image
 - customize an ec2 instance
 - faster boot and configuration times
@@ -1346,8 +1368,9 @@ client (e.g. browser) <= REST API => API Gateway <= proxy requests => Lambda <= 
 - basic/free: available to all aws customers by default
   - offers access to aws documentation and discussion forums
 - developer: cheapest paid tier for testing
+  - AWS Support API
 - business: for production systems
-- enterprise: mission-critical + TAM (Technical Account Manager)
+- enterprise: mission-critical + TAM (Technical Account Manager) + Concierge Support (billing and account assistance)
 
 | Plan       | Cost (Starting)     | Access Type          | Use Case         | Response Time (Critical) | Trusted Advisor |
 | ---------- | ------------------- | -------------------- | ---------------- | ------------------------ | --------------- |
@@ -1432,13 +1455,8 @@ client (e.g. browser) <= REST API => API Gateway <= proxy requests => Lambda <= 
   - Inspector
 - data protection
   - KMS
-  - S3
-  - ELB
-  - EBS (Elastic Block Store)
-  - RDS
 - incident response
   - IAM
-  - CloudFormation
   - CloudWatch events
 
 ### reliability
@@ -1448,13 +1466,14 @@ client (e.g. browser) <= REST API => API Gateway <= proxy requests => Lambda <= 
 - automated recovery
 - failure management
 - distributed system design
+- load balancing
 
 #### services
 
-- failure management
-  - CloudFormation
-  - route 53
-  - s3
+- CloudFormation
+- route 53
+- s3
+- elb
 
 ### performance efficiency
 
@@ -1463,6 +1482,7 @@ client (e.g. browser) <= REST API => API Gateway <= proxy requests => Lambda <= 
 - use serverless and managed services where possible
 - monitor and improve performance
 - test different instance types and configurations
+- scalability
 
 #### services
 
@@ -1594,6 +1614,9 @@ six key perspectives:
 > CDN service that delivers data, videos, applications and APIs to customers globally with low latency and high transfer speeds
 
 - CDN (Content Delivery Network): caches static content (images, css, js) at edge locations globally
+  - origin server: original source of the content that CDN retrieves when the content is not already cached at the edge
+- AWS Edge Locations: cache copies of content close to users to reduce latency and improve performance
+  - part of cloudfront's CDN
 - PoP (Points of Presence): edge locations used by cloudfront
 - improves content delivery by caching the content at edge locations
 - DDoS protections
@@ -1806,10 +1829,11 @@ codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, 
 > fully-managed identity service that allows you to add user sign-up, sign-in and access control to your apps quickly and easily
 
 - similar to auth0 and firebase
+- supports encryption of data at rest and while it's in transit
 - identity for web/mobile application's users
 - don't create an IAM user for the clients of your application, use Cognito
 - instead of giving your app's users aws iam accounts (which are meant for admins and systems), use cognito to manage their identities securely
-- also capable of signing in with google/facebook/twitter accounts
+- also capable of signing in with google/facebook/twitter accounts for federated authentication
 
 ## Comprehend
 
@@ -1908,6 +1932,10 @@ codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, 
 - auto scaling
 - high availability
 
+- global tables: replicate data automatically across your choice of AWS Regions
+  - automatically scale capacity to accommodate your workloads
+  - globally distributed applications can access data locally in selected regions to get single-digit millisecond read/write performance
+
 ### DynamoDB streams
 
 > change log for table
@@ -1991,6 +2019,7 @@ codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, 
 
 - similar to [nginx](./nginx.md)
 - targets can be ec2 instances, ip addresses, containers
+- improves fault tolerance
 - can have high availability (multi AZ)
   - multi-AZ ELB: can distribute traffic across multiple AZs
   - single-AZ ELB: can only send traffic to its own AZ
@@ -2054,6 +2083,8 @@ codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, 
 ## EventBridge
 
 > serverless event bus service that makes it easy to build event-driven applications at scale
+
+> task scheduler
 
 - uses events to connect application components together
 - event: json message that describes something that happened in a system
@@ -2133,6 +2164,7 @@ event example:
 - prepare and transform data for analytics
 - fully serverless
 - glue data catalog: catalog of datasets
+- glue databrew: tool that enables users to clean and normalize data without writing any code
 - can be used by [athena](#athena), [redshift](#redshift), [EMR](#emr-elastic-mapreduce)
 
 ## GuardDuty
@@ -2177,6 +2209,7 @@ event example:
 > automated security assessment service that helps improve security and compliance
 
 - scans aws workloads for vulnerabilities and unintended network exposure
+- inspects running OS against known vulnerabilities
 - only for ec2 instances, ecr container images and lambda functions
 - not used for tracking user actions or api calls
 
@@ -2399,6 +2432,7 @@ you can use aws management console or aws cli
 
 - based on postgresql, but it's not used for OLTP
 - used for [OLAP](/business_intelligence.md#olap-online-analytical-processing) (analytics and data warehouse)
+- requires a well-defined schema
 - 10x better performance in comparison to other data ware houses
 - load data every hour, not every second
 - has sql interface for queries
@@ -2541,6 +2575,8 @@ Security Hub CSPM vs [Detective](#detective) vs [guardduty:](#guardduty)
 > allows organizations to manage/distribute approved resources (can be applications or aws resources)
 
 - typically used by IT administrators to control what AWS resources and services end-users (like developers) can deploy
+- permissions management through IAM roles and policies
+- ensures users can only deploy compliant and pre-approved configurations
 
 ## Service Quotas
 
@@ -2588,12 +2624,19 @@ Security Hub CSPM vs [Detective](#detective) vs [guardduty:](#guardduty)
 
 > centrally view, manage and operate nodes (ec2 or on-premises) at scale in AWS, on-premises and multicloud environments
 
-- hybrid service
-- uses IAM for access control
+> provides you with browser-based shell and CLI experience
+
+- fully-managed, hybrid service
 - not just a single service, it is a suite of products
+- uses IAM for access control
 - features
-  - run commands, patch and configure servers without using SSH
-  - patching automation for enhanced compliance
+  - automate common administrative tasks: running commands, patching (for compliance) and configuring servers without using SSH
+  - quickly identify any issues that might impact applications using a specific resource by checking:
+    - API activity
+    - resource configuration changes
+    - related notifications
+    - operational alerts
+    - software inventory
   - SSM Parameter Store: store configuration data and secrets
 
 ### workflow
@@ -2654,7 +2697,7 @@ Security Hub CSPM vs [Detective](#detective) vs [guardduty:](#guardduty)
 > analyze your aws accounts and provides recommendations
 
 - provides recommendations on 5 categories:
-  - cost optimization
+  - cost optimization (e.g. identity unattached or underutilized EBS elastic volumes)
   - performance
   - security
   - fault tolerance
@@ -2751,6 +2794,12 @@ sudo chmod 666 /var/run/docker.sock
   - private IP: ~$0.01/GB (approximate; actual pricing may vary)
   - public IP or elastic IP: ~$0.02/GB (also approximate)
 
+### cloud licensing strategies
+
+- on-premises: buy long-term licenses
+- BYOL (Bring Your Own License): use existing licenses in the cloud
+- license included: aws bundles license cost into usage fee (e.g. windows/sql server)
+
 ## tutorials
 
 - [setup kubernetes in ec2 instance tutorial](https://varunmanik1.medium.com/setting-up-a-kubernetes-cluster-on-aws-ec2-with-ubuntu-22-04-lts-and-kubeadm-5c54930a4659)
@@ -2834,6 +2883,7 @@ cost comparison: (cheap) Backup and Restore < Pilot Light < Warm Standby < Multi
 
 - durability: ability of a service to retain and protect data over time without loss
   - measure of how likely your data is to survive intact even in the face of hardware failures, disasters or other problems
+- elasticity: ability to automatically scale resources based on demand
 - workload: set of components that together deliver business value
 - aws workloads: applications, services or processes that are running on aws infrastructure
 - server provisioning: the process of setting up physical or virtual hardware; installing and configuring software, such as the operating system and applications; and connecting it to middleware, network, and storage components
