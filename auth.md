@@ -282,21 +282,31 @@ example of a payload:
 
 [Oauth](https://developer.okta.com/blog/2017/06/21/what-the-heck-is-oauth)
 
-- _OAuth 2.0_ vs _OpenID Connect_ vs _SSO_ vs _SAML_:
-  - OAuth 2.0: authorization protocol
-    - the app gets an access token to access the user's resources from a provider (e.g. Google, Github, etc)
-    - authorization only
-    - e.g. allow a 3rd party app to read your gmail
+- OAuth 2.0 vs OpenID Connect vs SSO vs SAML:
+  - OAuth 2.0: authorization protocol (not authentication) that does not identity who the user is, it only authorizes access
+    - the app gets an access token to access the user's resources from a resource server (e.g. Google, Github, etc)
+    - e.g. allow a 3rd party app to read your gmail or access your github repos
   - OpenID Connect (OIDC): adds authentication layer on top of OAuth 2.0
-    - authorization + authentication
-    - allow users to authenticate using a third-party identity provider
+    - supports authorization + authentication
+    - allow users to authenticate using a third-party identity provider (IdP)
+    - returns an ID token (JWT) that identifies the user
     - e.g. "Sign in with Google" button on a website that gives an ID token
-  - SSO (Single Sign-On): allows users to authenticate once and access multiple applications
-    - e.g. sign in with google and access multiple apps
-    - implemented using protocols like SAML, OAuth, OpenID Connect
-  - SAML (Security Assertion Markup Language): XML-based open standard for exchanging authentication and authorization data between parties
+  - SSO (Single Sign-On): allows users to log in once and access multiple systems without re-authenticating
+    - isn't a protocol
+    - e.g. sign in to your organization's portal and get access to email, file storage and Salesforce
+    - implemented using protocols like SAML, OAuth 2.0 (less common), OpenID Connect
+  - SAML (Security Assertion Markup Language): XML-based authentication and authorization standard
     - enables SSO implementation
-    - supports OIDC and OAuth 2.0
+    - older than OIDC, but still widely used
+
+| Feature             | OAuth 2.0        | OpenID Connect    | SAML            | SSO               |
+| ------------------- | ---------------- | ----------------- | --------------- | ----------------- |
+| Type                | Authorization    | Authentication    | Authentication  | Concept           |
+| Protocol Base       | Token-based      | OAuth 2.0         | XML-based       | Uses SAML/OIDC    |
+| Token Format        | Access Token     | ID Token (JWT)    | SAML Assertion  | N/A               |
+| Main Use Case       | API access       | Login with Google | Enterprise SSO  | Seamless access   |
+| Used In             | Mobile, Web APIs | Web, Mobile, SSO  | Enterprise Apps | All login systems |
+| Supports Federation | No               | Yes               | Yes             | Yes               |
 
 ### step-by-step
 
