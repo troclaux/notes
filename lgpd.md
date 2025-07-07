@@ -1,3 +1,4 @@
+
 # Lei Geral de Proteção de Dados (LGPD) 13.709/2018
 
 - disposições gerais
@@ -193,6 +194,12 @@
 
 - mandato de 4 anos
 - membros escolhidos pelo presidente da república + sabatina do senado
+
+## exercícios
+
+- a coleta de cpf não é obrigatória para todas as vendas, depende do tipo de produto comprado
+- o tratamento de dados pessoais somente pode ocorrer após o consentimento do titular
+- o titular deve acesso e a capacidade de eliminação dos dados tratados
 
 ---
 
