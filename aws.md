@@ -30,6 +30,10 @@
     - is a type of fully-managed service, but not all fully-managed services are serverless
     - e.g. aws lambda, aws step functions, Amazon EventBridge, azure functions, google cloud functions
 
+> [!TIP]
+> Fully managed (RDS, ElastiCache, EMR): you still pick instance types/sizes. AWS handles patching, scaling, backups.
+> Serverless (Lambda, Fargate, DynamoDB, S3): you don't manage or choose servers. Autoscaling is built-in.
+
 - types of pricing in AWS
   - pay for compute time: EC2, Lambda, Fargate
   - pay for data stored in the cloud: S3, EBS, RDS
@@ -37,16 +41,18 @@
     - data transfer into aws is free
 
 - options to manage aws
-  - aws management console
+  - AWS management console
   - AWS Command Line Interface (CLI)
   - AWS Software Developer Kit (SDK): allows developers to interact with aws services using programming languages
     - allows the access and management of aws services programmatically
     - supports python, java, javascript, .NET, ruby, golang, etc
     - Used whenever you want to call APIs
 
-- reliability: ability to recover from failures and maintain availability
-  - dynamically acquire computing resources to meet demand
+- reliability: ability of a system to perform its intended function consistently over time without failure
 - high availability: design and implementation of systems that are resilient to failures and can continue operating with minimal downtime
+  - optimizes its uptime/availability (much higher than in a normal system)
+    - able to quickly recover from failures, usually in an automated way
+    - there can still be downtime/unavailability while recovering, but the outage will be much shorter than without HA
   - running instances for the same application on at least 2 Availability Zones
   - key characteristics
     - redundancy
@@ -54,6 +60,12 @@
     - geographic distribution
     - health monitoring
     - scalability and elasticity
+- fault tolerance: ability to continues operating despite failures in some components
+  - no downtime, even if in the process of auto-healing
+- durability: ability of a service to retain and protect data over time without loss
+  - measure of how likely your data is to survive intact even in the face of hardware failures, disasters or other problems
+- scalability: ability of a system to increase or decrease its resources to meet changing demand
+  - elasticity: automate scalability
 
 - aws global infrastructure
   - region: separate geographic areas (e.g. `us-east-1` or `sa-east-1`)
@@ -64,7 +76,7 @@
   - edge location: physical facility AWS uses to cache and deliver content to users with low latency
 
 - aws global services: services that are NOT tied to a specific region and operate across all regions
-  - e.g. IAM, Route 53, CloudFront, WAF, Shield, aws organizations, aws artifact, DynamoDB, WorkSpaces, Health Dashboard
+  - IAM, Route 53, CloudFront, WAF, Shield, aws organizations, Artifact, DynamoDB, WorkSpaces, Health Dashboard, Trusted Advisor
   - TIP: if a service manages access, identity or DNS for your entire aws environment, it's likely global
 
 - global applications: applications deployed in multiple geographies
@@ -116,7 +128,6 @@
 
 - Billing Alarms: notifications to monitor billing
 - Billing Dashboard: high level overview + free tier dashboard
-- Compute Optimizer: recommends resources configurations to reduce cost (used for EC2, EC2 auto scaling group, EBS, Lambda)
 - [Consolidated Billing](#consolidated-billing): centralized billing across all aws accounts in an aws organization
 - [Cost Allocation Tags](#cost-allocation-tags): tag resources to create detailed reports
 - [Cost Anomaly Detection](#cost-anomaly-detection): detect unusual spending using machine learning
@@ -188,11 +199,11 @@
 
 ### management and governance
 
-- [AWS Auto Scaling](#auto-scaling-group)
+- [AWS Auto Scaling](#auto-scaling-group-asg)
 - [AWS CloudFormation](#cloudformation)
 - [AWS CloudTrail](#cloudtrail)
+- [AWS Compute Optimizer](#aws-compute-optimizer)
 - [Amazon CloudWatch](#cloudwatch)
-- AWS Compute Optimizer
 - [AWS Config](#aws-config)
 - [AWS Control Tower](#control-tower)
 - [Health Dashboard](#health-dashboard)
@@ -249,6 +260,7 @@
 - [AWS Shield](#shield)
 - [AWS WAF (Web Application Firewall)](#waf-web-application-firewall)
 
+- [AWS Security Center](#security-center)
 - [Security Groups](#security-groups)
 
 ### serverless
@@ -311,6 +323,7 @@
 - reserved: commit to 1 or 3 years, cheaper
   - long workloads
   - up to 72% discount compared to on-demand
+  - allow instance size flexibility within the same instance family, but only for Linux and in a Region, and when using regional RIs (not zonal)
 - spot instances: bid for unused capacity, cheapest
   - no guaranteed availability, aws can terminate them when the spot price exceeds your bid price
 - savings plans: flexible pricing model where you commit to an amount of usage for 1 or 3 years
@@ -320,6 +333,7 @@
   - ensures that you have compute capacity available when you need it
 - dedicated hosts: get an entire physical server to yourself
   - an isolated server with configurations you can control
+  - ideal for BYOL model, because licenses are tied to the physical server
 - dedicated instances: instances that run on hardware dedicated to your account, but aws manages the host
   - cheaper than dedicated host
   - you don't have control over hardware configuration
@@ -387,6 +401,33 @@
 - risk of data loss if hardware fails
 - backups and replication are your responsibility
 
+### EC2 Auto Scaling
+
+> provides automatic scaling for EC2 instances
+
+> [!NOTE]
+> Other AWS services (e.g. ECS, DynamoDB, Aurora) also support Auto Scaling but not through ASGs.
+
+- relies on predictive scaling using ML
+
+#### Auto Scaling Group (ASG)
+
+> feature within EC2 Auto Scaling that allows aws to automatically manage the number of ec2 instances based on demand
+
+- scaling strategies
+  - manual scaling: you update the size of an ASG manually
+  - dynamic scaling
+    - simple/step scaling
+      - when CloudWatch alarm is triggered (example CPU > 70%), then add 2 units
+      - when CloudWatch alarm is triggered (example CPU < 30%), then remove 1 unit
+    - target tracking scaling
+      - average ASG CPU must stay around 40%
+    - scheduled scaling: anticipate scaling based on known usage patterns
+  - predictive scaling: uses machine learning to predict future traffic
+
+> [!IMPORTANT]
+> Auto Scaling is also available in other AWS services (not using ASGs), such as: ECS, DynamoDB and Aurora
+
 ### EBS (Elastic Block Store)
 
 > provides block-level storage that can be attached to ec2 instances
@@ -397,6 +438,13 @@
   - the system can read/write to these blocks individually
 - EBS snapshots: backup for an ebs volume
   - use ebs snapshots as a buffer to copy ebs volumes across AZ
+
+- volume types
+  - gp3 (General Purpose SSD): default for most use cases
+  - gp2 (Legacy General Purpose SSD): similar to gp3, but older generation
+  - io2/io2 Block Express (Provisioned IOPS SSD): for high-performance databases
+  - st1 (Throughput Optimized HDD): big data, data warehouses, log processing
+  - sc1 (Cold HDD): for infrequently accessed data (archive)
 
 ## IAM (Identity and Access Management)
 
@@ -493,10 +541,11 @@
   - configuration and vulnerability analysis
   - compliance validation
 - me
-  - users, groups, roles, policies, management and monitoring
-  - enable MFA on all accounts
+  - management and monitoring of users, groups, roles and policies
+  - enable and enforce MFA on all accounts
   - rotate all keys often
   - use iam tools to apply appropriate permissions
+  - analyze access patterns and review permissions
 
 ### IAM Security Tools
 
@@ -556,6 +605,8 @@
 > All outbound traffic is authorized by default.
 
 #### security groups vs firewalls
+
+SGs protect at resource-level, NACLs protect at subnet-level, AWS Network Firewall protects at VPC-level
 
 | Feature  | AWS Security Groups                                       | Traditional Firewalls (e.g., `ufw`, `iptables`) |
 |----------|-----------------------------------------------------------|-------------------------------------------------|
@@ -791,7 +842,7 @@ use case example: resize images uploaded to an S3 bucket
 
 ## RDS (Relational Database Service)
 
-> managed database service that allows you to set up, operate and scale relational databases in the cloud
+> fully managed database service that allows you to set up, operate and scale relational databases in the cloud
 
 - supports multiple engines:
   - [postgresql](./postgresql.md)
@@ -836,13 +887,16 @@ use case example: resize images uploaded to an S3 bucket
   - durable: 11 9s (99.999999999%) durability
 
 - versioning (not enabled by default): option to retain multiple versions of objects
+- doesn't encrypt data at rest by default, aws provides encryption tools, but customers must use and configure them properly
+- server-side encryption is enabled by default (instead of client-side encryption)
+  - client-side encryption: data is encrypted on the client (user's) side before it is sent to the server
+  - server-side encryption: data is encrypted by the server after it is uploaded and decrypted before it is served back to the client
 - S3 Transfer Acceleration: enables fast, secure transfers of files over long distances between your client and S3 bucket
   - leverages cloudfront's globally distributed edge locations
 - there are no real folders
 - max object size is 5 TB
   - if file is bigger than 5 TB, upload is segmented into multiple parts
 
-- server-side encryption is enabled by default (instead of client-side encryption)
 - you can enable public access with an S3 bucket policy
 - to give user access to S3, use IAM policy to give access
 - to give access to an EC2 instance, always use EC2 instance roles with IAM permissions
@@ -1180,24 +1234,6 @@ client (e.g. browser) <= REST API => API Gateway <= proxy requests => Lambda <= 
 - supports postgresql and mysql
 - continuous auto scaling
 
-## Auto Scaling Group (ASG)
-
-> feature that allows aws to automatically manage the number of ec2 instances based on demand
-
-- scaling strategies
-  - manual scaling: you update the size of an ASG manually
-  - dynamic scaling
-    - simple/step scaling
-      - when CloudWatch alarm is triggered (example CPU > 70%), then add 2 units
-      - when CloudWatch alarm is triggered (example CPU < 30%), then remove 1 unit
-    - target tracking scaling
-      - average ASG CPU must stay around 40%
-    - scheduled scaling: anticipate scaling based on known usage patterns
-  - predictive scaling: uses machine learning to predict future traffic
-
-> [!IMPORTANT]
-> Auto Scaling is also available in other AWS services (not using ASGs), such as: ECS, DynamoDB and Aurora
-
 ## aws artifact
 
 > provides customers on-demand access to aws compliance documentation, agreements and audits
@@ -1208,6 +1244,7 @@ client (e.g. browser) <= REST API => API Gateway <= proxy requests => Lambda <= 
 
 > fully-managed backup service that makes it easy to centralize and automate the backup of data across aws services
 
+- integrates with AWS organizations to provide centralized backup management for all accounts within the organization
 - can automate backups for:
   - EBS volumes
   - RDS databases
@@ -1240,6 +1277,14 @@ client (e.g. browser) <= REST API => API Gateway <= proxy requests => Lambda <= 
   - PCI DSS (for payment data)
   - HIPAA (for healthcare data)
   - GDPR (EU data protection)
+
+## aws compute optimizer
+
+> service that helps you optimize your aws resources by recommending the most cost-effective and performance-efficient options
+
+- supports: ec2 instances, auto scaling groups, ebs volumes and lambda functions
+- analyzes historical usage (e.g. CPU, memory, I/O)
+- provides right-sizing recommendations
 
 ## aws config
 
@@ -1280,9 +1325,12 @@ client (e.g. browser) <= REST API => API Gateway <= proxy requests => Lambda <= 
 
 ## aws iam identity center
 
-> allows users to sign into AWS using external identity providers (like Microsoft or Google), so they can access multiple AWS accounts or applications with single sign-on (SSO)
+> one login for multiple AWS accounts and applications
 
 - supports federated access
+  - integrates with external identity providers (IdPs) like Microsoft Entra ID (Azure AD), Okta, etc (using SAML 2.0 or OIDC)
+  - use case: enterprise users accessing AWS services through identity providers (e.g. Okta, Azure AD, Google Workspace)
+- can integrate with STS to generate temporary security credentials for users
 - one login for all your
   - aws accounts in aws organizations
   - business cloud applications (e.g. salesforce, box, microsoft 365)
@@ -1315,6 +1363,8 @@ client (e.g. browser) <= REST API => API Gateway <= proxy requests => Lambda <= 
 
 > filter traffic entering and leaving a VPC
 
+- VPC-level protection
+- stateful firewall
 - features
   - traffic filtering
   - inspect the content of packets, not just headers
@@ -1366,9 +1416,11 @@ client (e.g. browser) <= REST API => API Gateway <= proxy requests => Lambda <= 
 ## aws support plans
 
 - basic/free: available to all aws customers by default
-  - offers access to aws documentation and discussion forums
+  - offers access to aws documentation and discussion forums (AWS Support Forums)
 - developer: cheapest paid tier for testing
-  - AWS Support API
+  - offers access to aws documentation and discussion forums (AWS Support Forums)
+  - AWS Support API: allows you to integrate aws support into your applications
+    - allows you to programmatically interact with your aws support cases
 - business: for production systems
 - enterprise: mission-critical + TAM (Technical Account Manager) + Concierge Support (billing and account assistance)
 
@@ -1464,7 +1516,7 @@ client (e.g. browser) <= REST API => API Gateway <= proxy requests => Lambda <= 
 > ensure a system can recover from failures and meet customer demands
 
 - automated recovery
-- failure management
+- failure management (e.g. backups)
 - distributed system design
 - load balancing
 
@@ -1619,6 +1671,8 @@ six key perspectives:
   - part of cloudfront's CDN
 - PoP (Points of Presence): edge locations used by cloudfront
 - improves content delivery by caching the content at edge locations
+- scales automatically to accommodate traffic spikes
+- does **not** directly improve database performance
 - DDoS protections
 - integrated with
   - shield
@@ -1657,10 +1711,15 @@ six key perspectives:
 
 > get history of events or API calls made within your aws account via aws cli, aws console, aws sdk or aws services
 
-- provides governance and auditing
-  - governance: monitoring activity, ensuring compliance, auditability and accountability
+- features:
+  - governance and auditing
+    - governance: monitoring account activity to ensure compliance
+  - API call logging:
+    - view history of AWS API calls across your account
+    - log data events such as S3 object-level API activity
+  - IAM integration that provides detailed information on who performed the actions
 - enabled by default
-- to store logs long-term, put logs from CloudTrail into CloudWatch Logs or S3
+- to store logs long-term, put logs from CloudTrail into [CloudWatch Logs](#cloudwatch-logs) or S3
 - cloudtrail insights: automates the analysis of cloudtrail events to detect unusual activity
 
 > [!TIP]
@@ -1668,7 +1727,7 @@ six key perspectives:
 
 ## CloudWatch
 
-> monitoring and observability service that provides data and insights
+> real-time system health and performance monitoring
 
 - monitors resources, applications, performance and operational health
   - unified view of operational health
@@ -1832,8 +1891,8 @@ codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, 
 - supports encryption of data at rest and while it's in transit
 - identity for web/mobile application's users
 - don't create an IAM user for the clients of your application, use Cognito
-- instead of giving your app's users aws iam accounts (which are meant for admins and systems), use cognito to manage their identities securely
-- also capable of signing in with google/facebook/twitter accounts for federated authentication
+- instead of giving your app's users aws iam accounts (which are meant for admins and systems), use Cognito to manage their identities securely
+- supports federated access: sign in with google/facebook accounts
 
 ## Comprehend
 
@@ -1888,6 +1947,7 @@ codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, 
 
 > fully-managed service that helps you migrate databases to aws quickly and securely
 
+- primary function is migrating data, NOT the conversion of database schemas, use [SCT](#sct-schema-convertion-tool) for that
 - resilient and self healing
 - source database remains available during the migration
 - supports
@@ -2110,10 +2170,11 @@ event example:
 
 ## Fargate
 
-> fully-managed service that runs docker containers on aws
+> fully-managed serverless compute engine for running containers on AWS
 
 - allocates the exact cpu and ram requested
-- used with [ECS](#ecs-elastic-container-service) and [EKS](#eks-elastic-kubernetes-service)
+- provides compute runtime for [ECS](#ecs-elastic-container-service) and [EKS](#eks-elastic-kubernetes-service)
+- removes the need to provision and manage ec2 instances
 
 ## FIS (Fault Injection Simulator) (out-of-scope)
 
@@ -2206,7 +2267,7 @@ event example:
 
 ## Inspector
 
-> automated security assessment service that helps improve security and compliance
+> find software vulnerabilities in compute resources
 
 - scans aws workloads for vulnerabilities and unintended network exposure
 - inspects running OS against known vulnerabilities
@@ -2243,6 +2304,8 @@ event example:
 
 > managed service that allows you to create and control the encryption keys used to encrypt your data
 
+- keys can be managed by customers or aws
+- customer is responsible for controlling who has access to encrypted data
 - uses CMKs (Customer Master Key): primary resource in KMS used to encrypt and decrypt data
   - customer-managed CMKs: created, managed and used by the customer
   - aws-managed CMKs: created, managed and used by aws
@@ -2355,6 +2418,7 @@ you can use aws management console or aws cli
 > run aws services locally on your own hardware, while still being managed from the aws cloud
 
 - you are responsible for the outposts rack physical security
+- outposts require an active connection to an aws region for service control plane operations (like management and monitoring)
 - benefits
   - low latency access to on-premise systems
   - local data processing
@@ -2413,14 +2477,14 @@ you can use aws management console or aws cli
 
 ## QuickSight
 
-> serverless machine learning-powered business intelligence serve to create interactive dashboards
+> serverless machine learning-powered business intelligence (BI) service that provides visual tools for data analytics
 
 - per-session pricing
 - use cases
+  - create and publish interactive dashboards
+  - visualize data form various sources (S3, RDS, redshift, Aurora, Athena, etc)
   - business analytics
-  - building visualizations
   - perform ad-hoc analysis
-- integrated with RDS, Aurora, Athena, S3
 
 ## RAM (Resource Access Manager)
 
@@ -2549,14 +2613,25 @@ lets say you want to build a model that predicts your exam score
 
 > official source of security guidance, best practices and service updates from aws
 
-## Security Hub CSPM (Cloud Security Posture Management)
+## Security Center
+
+> official resource for security and compliance information from aws
+
+## Security Hub
 
 > centralized security monitoring that makes compliance checks
 
 - helps identify security issues across aws accounts and services
 - continuously monitors security best practices and compliance standards
-- aggregates alerts from various aws services
+- aggregates alerts from various aws services across multiple AWS accounts
   - config, GuardDuty, inspector, macie, iam access analyzer, aws firewall manager, aws health, aws partner network solutions
+
+### CSPM (Cloud Security Posture Management)
+
+> subset of security hub capabilities
+
+- audit configurations
+- run compliance checks
 
 Security Hub CSPM vs [Detective](#detective) vs [guardduty:](#guardduty)
 
@@ -2694,7 +2769,7 @@ Security Hub CSPM vs [Detective](#detective) vs [guardduty:](#guardduty)
 
 ## Trusted Advisor
 
-> analyze your aws accounts and provides recommendations
+> analyze your aws accounts with predefined rules and provides recommendations
 
 - provides recommendations on 5 categories:
   - cost optimization (e.g. identity unattached or underutilized EBS elastic volumes)
@@ -2703,13 +2778,17 @@ Security Hub CSPM vs [Detective](#detective) vs [guardduty:](#guardduty)
   - fault tolerance
   - service limits
 
+- [AWS Support Plan](#aws-support-plans) benefits:
+  - Basic: limited checks (e.g. service limits and security)
+  - Business/Enterprise: full set of checks and recommendations
+
 ## WAF (Web Application Firewall)
 
 > create security rules that control bot traffic and block common attack patterns
 
 > protects web application from common web exploits (layer 7)
 
-- deploy on [ALB](#elb-elastic-load-balancer) [API gateway](#api-gateway), cloudfront and [AppSync](#appsync)
+- deploy on [ALB](#elb-elastic-load-balancer), [API gateway](#api-gateway), [cloudfront](#cloudfront) and [AppSync](#appsync)
   - ALB (Application Load Balancer) is part of ELB
 
 ## Well-Architected Tool
@@ -2846,31 +2925,30 @@ cost comparison: (cheap) Backup and Restore < Pilot Light < Warm Standby < Multi
 
 ### security
 
-- penetrationg testing
-  - you dont need prior approval to run penetrationg tests for the following services
-    - ec2 instances
-    - nat gateways
-    - ELB
-    - RDS
-    - cloudfront
-    - aurora
-    - api gateways
-    - lambda and lambda edge functions
-    - lightsail resources
-    - elastic beanstalk environments
-    - this list can increase overtime
-  - prohibited activities
-    - DNS zone walking via route 53 hosted zones
-    - Denial of Service (DoS)
-    - Distributed Denial of Service (DDoS)
-    - Simulated DoS
-    - Simullated DDoS
+- services that don't require prior approval for penetration testing
+  - ec2 instances
+  - nat gateways
+  - ELB
+  - RDS
+  - cloudfront
+  - aurora
+  - api gateways
+  - lambda and lambda edge functions
+  - lightsail resources
+  - elastic beanstalk environments
+  - this list can increase overtime
+- aws prohibits certain attacks
+  - DNS zone walking via route 53 hosted zones
+  - Denial of Service (DoS)
+  - Distributed Denial of Service (DDoS)
+  - Simulated DoS
+  - Simulated DDoS
     - Port flooding
     - protocol flooding
     - request flooding
       - login request flooding
       - API request flooding
-    - for any other simulated events, contact aws-security-simulated-event@amazon.com
+  - for any other simulated events, contact aws-security-simulated-event@amazon.com
 
 ### DDoS protection on aws
 
@@ -2881,9 +2959,6 @@ cost comparison: (cheap) Backup and Restore < Pilot Light < Warm Standby < Multi
 
 ---
 
-- durability: ability of a service to retain and protect data over time without loss
-  - measure of how likely your data is to survive intact even in the face of hardware failures, disasters or other problems
-- elasticity: ability to automatically scale resources based on demand
 - workload: set of components that together deliver business value
 - aws workloads: applications, services or processes that are running on aws infrastructure
 - server provisioning: the process of setting up physical or virtual hardware; installing and configuring software, such as the operating system and applications; and connecting it to middleware, network, and storage components
@@ -2904,4 +2979,6 @@ cost comparison: (cheap) Backup and Restore < Pilot Light < Warm Standby < Multi
   - applies to all the users and roles of the account, including root
 - PII (Personally Identifiable Information): information that can identify a specific individual
   - e.g. full name, email address, phone number, credit card numbers
+- aws whitepapers: official documents published by aws that provide best practices, technical guidance and foundational knowledge for using aws cloud services
+  - some examples of aws whitepapers: WAF, CAF
 
