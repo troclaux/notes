@@ -92,7 +92,12 @@
 
 ## table of contents
 
-[AWS Documentation](https://docs.aws.amazon.com/): official aws service documentation provided by amazon
+- [AWS Documentation](https://docs.aws.amazon.com/): official aws service documentation provided by amazon
+- [AWS Knowledge Center](#aws-knowledge-center): offers official advice to common support questions and troubleshooting
+- [AWS Prescriptive Guidance](#aws-prescriptive-guidance): provides best practices and architectural patterns from aws experts
+- [AWS Security Blog](#security-blog): covers AWS security topics, updates and best practices
+- [AWS Security Center](#security-center): official resource for security and compliance information from aws
+- [AWS re:Post](#repost): community-driven Q&A site with AWS expert and user responses
 
 ### analytics and big data
 
