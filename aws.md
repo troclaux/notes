@@ -92,6 +92,8 @@
 
 ## table of contents
 
+[AWS Documentation](https://docs.aws.amazon.com/): official aws service documentation provided by amazon
+
 ### analytics and big data
 
 - [Amazon Athena](#athena)
@@ -316,19 +318,22 @@
 
 ### purchasing options
 
-- on-demand: ideal for short-term use, expensive
+- on-demand instances: ideal for short-term use, expensive
   - predictable pricing
   - highest cost but no upfront payment
   - no long-term commitment
-- reserved: commit to 1 or 3 years, cheaper
+- reserved instances (RI): commit to 1 or 3 years, cheaper
   - long workloads
   - up to 72% discount compared to on-demand
   - allow instance size flexibility within the same instance family, but only for Linux and in a Region, and when using regional RIs (not zonal)
+  - if you pick convertible reserved instances, you can change instance family later, OS, tenancy or region
+    - as long as the new instance is of equal or greater value
 - spot instances: bid for unused capacity, cheapest
   - no guaranteed availability, aws can terminate them when the spot price exceeds your bid price
 - savings plans: flexible pricing model where you commit to an amount of usage for 1 or 3 years
   - discount based on long-term usage
   - best for users who want cost savings, but with more flexibility than reserved instances
+  - have largely superseded RI as they offer more flexibility and similar or better savings
 - capacity reservations: reserve instance capacity in a specific AZ
   - ensures that you have compute capacity available when you need it
 - dedicated hosts: get an entire physical server to yourself
@@ -338,13 +343,14 @@
   - cheaper than dedicated host
   - you don't have control over hardware configuration
 
-### instance types (out-of-scope)
+### instance types
 
-- general pupose: T3, M5
-- compute optimized: C5
-- memory optimized: R5
-- storage optimized: I3
-- accelerated computing: P3, for GPU-based workloads
+- general pupose (t3, t4g, m5): balance of compute, memory and networking resources
+  - best for high-performance web servers, batch processing, multiplayer gaming servers
+- compute optimized (c5, c6g)
+- memory optimized (r5, x1e): best for in-memory databases (e.g. redis), real-time data analytics, high-performance databases
+- storage optimized (i3, d2): best for data warehouses, large-scale transactional databases, distributed file systems
+- accelerated computing (p3, inf1): best for gpu-intensive workloads
 
 ### sizing and configuration options
 
@@ -633,6 +639,14 @@ SGs protect at resource-level, NACLs protect at subnet-level, AWS Network Firewa
 > Depends partially in which category the service belongs: on-premises, IaaS, PaaS, SaaS.
 > Not every IaaS service has exactly the same responsibility model. The same applies to PaaS and SaaS categories.
 
+- aws & me
+  - patch management:
+    - aws is responsible for patching the infrastructure (hardware, software, networking and facilities)
+    - the customer is responsible for patching their own guest operating systems and applications
+  - configuration management
+    - AWS maintains the configuration of its infrastructure
+    - the customer is responsible for configuring their own instances, databases and applications
+
 |                    | On-premises | IaaS             | PaaS                 | SaaS             |
 |--------------------|-------------|------------------|----------------------|------------------|
 | **Data**           | You         | You              | You                  | You              |
@@ -720,6 +734,7 @@ SGs protect at resource-level, NACLs protect at subnet-level, AWS Network Firewa
   - a vpc can have multiple route tables
 - internet gateway: allows instances in vpc to send traffic to the internet and enables the instances to receive responses from the internet
   - attached to a VPC
+  - does **not** encrypt traffic
   - required for ec2 instances in public subnets to:
     - download packages
     - be accessed via SSH or a browser
@@ -727,6 +742,7 @@ SGs protect at resource-level, NACLs protect at subnet-level, AWS Network Firewa
   - use case: allows a private ec2 to download updates or access external APIs without being publicly exposed
   - usually are placed in a public subnet and route private subnet traffic through it
   - stateful: keeps track of active connections
+  - does **not** encrypt traffic
 - NAT instances (self-managed): is an ec2 instance configured manually to perform the same function as NAT gateway
 - NACL (Network Access Control List): security layer used in networks to control inbound/outbound traffic at the subnet level
   - stateless
@@ -816,14 +832,11 @@ SGs protect at resource-level, NACLs protect at subnet-level, AWS Network Firewa
 
 - short-lived functions: each invocation runs in an isolated environment with max duration of 15 minutes
 - stateless: each function runs independently
-- automatically scales based on number of requests
+- event-driven, examples of events are file uploads, http requests, database changes
+- automatically scales based on number of events
 - price based on number of calls and duration of compute time
-- increasing ram also improves cpu and network
-- event-driven
-  - examples of events
-    - file uploads
-    - http requests
-    - database changes
+- you must allocate memory to your lambda function, from 128 MB (default) to 10 GB
+  - increasing ram also improves cpu and network
 - supports: node.js, python, golang, java, rust, ruby, c# (.NET core and powershell)
 
 ### workflow
@@ -890,17 +903,19 @@ use case example: resize images uploaded to an S3 bucket
 - doesn't encrypt data at rest by default, aws provides encryption tools, but customers must use and configure them properly
 - server-side encryption is enabled by default (instead of client-side encryption)
   - client-side encryption: data is encrypted on the client (user's) side before it is sent to the server
-  - server-side encryption: data is encrypted by the server after it is uploaded and decrypted before it is served back to the client
+  - server-side encryption: data is encrypted by the server after it is uploaded and decrypted by the server before it is served back to the client
 - S3 Transfer Acceleration: enables fast, secure transfers of files over long distances between your client and S3 bucket
   - leverages cloudfront's globally distributed edge locations
 - there are no real folders
-- max object size is 5 TB
-  - if file is bigger than 5 TB, upload is segmented into multiple parts
+- max object size is 5 TB, if a file is bigger than 5 TB, upload is segmented into multiple parts
 
 - you can enable public access with an S3 bucket policy
 - to give user access to S3, use IAM policy to give access
 - to give access to an EC2 instance, always use EC2 instance roles with IAM permissions
 - to give access to IAM User in another AWS account, create a bucket policy that allows access to that specific user
+
+- s3 data migration: process of moving data into, out of or between S3 buckets
+  - use cases: large data cloud migrations, decommission (means data center retirement), disaster recovery
 
 - key: unique identifier for an object within a bucket (often a filename or path)
   - must be unique in the bucket (e.g. `documents/2025/invoices/invoice_001.pdf`)
@@ -912,13 +927,12 @@ use case example: resize images uploaded to an S3 bucket
   - `https://my-unique-bucket.s3.us-east-1.amazonaws.com/documents/2025/invoices/invoice_001.pdf`
 - bucket (similar to directory): container that stores objects
   - must have unique name globally across all existing bucket names in S3 (not just your account)
-  - created in a region
+  - created in a region (bucket location), which affects latency
   - pay attention to naming requirements
     - 3 to 63 characters
     - no spaces or underscores
     - no leading or trailing dots or hyphens
     - names can only contain lowercase letters, numbers, periods and hyphens
-- region: bucket location (affects latency)
 
 > [!NOTE]
 > When you upload data (objects), server-side encryption is enabled by default, rather than client-side encryption.
@@ -939,7 +953,7 @@ use case example: resize images uploaded to an S3 bucket
   - to give access to IAM User in another AWS account, create a bucket policy that allows access to that specific user
 
 > [!WARNING]
-> to fix 403 error, you need to give public access to your bucket
+> to fix 403 error, give public access to your bucket
 
 ### workflow
 
@@ -964,7 +978,7 @@ aws s3 cp s3://my-bucket-name/file.txt .
 aws s3 ls s3://my-bucket-name/
 ```
 
-### shared responsibility model
+### shared responsibility
 
 - aws is responsible for
   - infrastructure
@@ -975,6 +989,7 @@ aws s3 ls s3://my-bucket-name/
   - configuration and vulnerability analysis
   - compliance validation
 - me
+  - access and permissions
   - s3 versioning
   - s3 bucket policies
   - s3 replication setup
@@ -1041,10 +1056,6 @@ aws s3 ls s3://my-bucket-name/
   - Same-Region Replication (SRR): Replicates data to a bucket in the same AWS region
     - use cases: log aggregation, live replication between production and testing accounts
 
-### s3 data migration
-
-- use cases: large data cloud migrations, decommission (means data center retirement), disaster recovery
-
 #### snow family
 
 - snowcone
@@ -1096,6 +1107,13 @@ aws s3 ls s3://my-bucket-name/
 - contact the aws abuse team via
   - aws abuse form
   - abuse@amazonaws.com
+
+## ALB (Application Load Balancer)
+
+> modern layer 7 (HTTP/HTTPS/gRPC) load balancer
+
+- classic [ELB](#elb-elastic-load-balancer) is legacy and supports basic TCP/HTTP traffic
+- similar to [nginx](./nginx.md)
 
 ## Amazon Connect
 
@@ -1201,6 +1219,8 @@ client (e.g. browser) <= REST API => API Gateway <= proxy requests => Lambda <= 
 ## AppSync
 
 > fully-managed service that simplifies developing graphql APIs
+
+> store and sync data across mobile and web apps in real-time
 
 ## Athena
 
@@ -1391,7 +1411,7 @@ client (e.g. browser) <= REST API => API Gateway <= proxy requests => Lambda <= 
 
 - aws professional services: global group of experts available to work alongside your team and help achieve cloud goals faster
   - often partner with APN (Aws Partner Network) members
-- APN (Aws Partner Network): global community 3rd party companies that help customers build, market and sell their offerings on aws
+- APN (Aws Partner Network): global community of 3rd party companies that help customers build, market and sell their offerings on aws
   - offerings = products, services or solutions that APN provides to customers using aws infrastructure
   - types of APN partners
     - APN technology partners: provide hardware, connectivity or software solutions
@@ -1399,6 +1419,8 @@ client (e.g. browser) <= REST API => API Gateway <= proxy requests => Lambda <= 
     - APN training partners: deliver aws-authored training to organizations and individuals
   - aws competency program: recognize APN partners that have demonstrated technical expertise
   - aws navigate program: helps APN partners improve specialized skills
+- APN Portal: provides partners with resources, tools and content to support their business growth
+- Partner Volume Discounts: reduced pricing based on the volume of aws services that an APN partner manages
 
 ### aws partner training and certification
 
@@ -1626,7 +1648,7 @@ six key perspectives:
 | Business    | Business value and goals      | Executives, finance   |
 | People      | Skills and change management  | HR, training teams    |
 | Governance  | Risk and compliance           | Risk officers, legal  |
-| Platform    | Cloud architecture            | Architects, engineers |
+| Platform    | Cloud architecture/DevOps     | Architects, engineers |
 | Security    | Data and asset protection     | Security teams        |
 | Operations  | Manage/monitor cloud services | IT ops, admins        |
 
@@ -1712,8 +1734,8 @@ six key perspectives:
 > get history of events or API calls made within your aws account via aws cli, aws console, aws sdk or aws services
 
 - features:
-  - governance and auditing
-    - governance: monitoring account activity to ensure compliance
+  - governance: monitoring account activity to ensure **compliance**
+  - auditing
   - API call logging:
     - view history of AWS API calls across your account
     - log data events such as S3 object-level API activity
@@ -2015,6 +2037,7 @@ codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, 
 > fully-managed container orchestration service that allows you to run, stop and manage Docker containers on a cluster of EC2 instances
 
 - launch containers with ec2 instances or [fargate](#fargate)
+- use ECS Service Auto Scaling for elasticity (not enabled by default)
 
 | Feature           | ECS on EC2                       | ECS with Fargate                  |
 | ----------------- | -------------------------------- | --------------------------------- |
@@ -2075,7 +2098,7 @@ codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, 
 
 ## ELB (Elastic Load Balancer)
 
-> service that automatically distributes incoming application traffic across multiple targets
+> legacy service that automatically distributes incoming application traffic across multiple targets
 
 - similar to [nginx](./nginx.md)
 - targets can be ec2 instances, ip addresses, containers
@@ -2083,11 +2106,10 @@ codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, 
 - can have high availability (multi AZ)
   - multi-AZ ELB: can distribute traffic across multiple AZs
   - single-AZ ELB: can only send traffic to its own AZ
-- improve fault tolerance
-- improve scalability
-- do regular health checks to your instances
+- improves scalability
+- does regular health checks to your instances
 - types of load balancers
-  - application load balancer (network layer): uses HTTP/HTTPS/gRPC protocols
+  - [ALB](#alb-application-load-balancer) (network layer): uses HTTP/HTTPS/gRPC protocols
   - network load balancer (transport layer): ultra-high performance, allows for tcp
     - balances incoming network traffic
     - routes traffic based on IP, doesn't inspect request content
@@ -2147,8 +2169,8 @@ codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, 
 > task scheduler
 
 - uses events to connect application components together
-- event: json message that describes something that happened in a system
-  - events come from aws services, custom apps or SaaS providers (e.g. auth0)
+  - event: json message that describes something that happened in a system
+    - events come from aws services, custom apps or SaaS providers (e.g. auth0)
 - event bus: pipeline where events are sent and rules are applied to process them
 - event source: origin of the event
 - rules: match certain events and define what should happen when a match occurs
@@ -2388,13 +2410,14 @@ you can use aws management console or aws cli
 > managed message broker service for rabbitmq and activemq
 
 - doesn't scale as much as [sqs](#sqs-simple-queue-service) and [sns](#sns-simple-notification-service)
+- **not** serverless
 
 ## Neptune
 
 > fully-managed graph database
 
 - high availability
-- replication across 3 AZ
+- replication across 3 AZ enabled by default
 - great for knowledge graphs
 
 ## OpenSearch Service
@@ -2675,7 +2698,8 @@ Security Hub CSPM vs [Detective](#detective) vs [guardduty:](#guardduty)
 
 - unlimited scalability
 - cloud-native service: proprietary protocol from aws
-- no message retention
+- no message retention, unlimited queues
+- [pub-sub](/system_design.md#pubsub-architecture) paradigm
 
 - event publishers: sends message to one SNS topic
 - event subscribers: listens to the sns topic notifications
@@ -2693,7 +2717,7 @@ Security Hub CSPM vs [Detective](#detective) vs [guardduty:](#guardduty)
 
 - producer service: produces requests to sqs
 - consumer service: consumers requests from sqs
-- decoupling: when both producers and consumers scale independently from each other
+- decoupling: independent scaling of apps and isolated failing of apps
 
 ## SSM (SystemS Manager)
 
@@ -2788,8 +2812,10 @@ Security Hub CSPM vs [Detective](#detective) vs [guardduty:](#guardduty)
 
 > protects web application from common web exploits (layer 7)
 
-- deploy on [ALB](#elb-elastic-load-balancer), [API gateway](#api-gateway), [cloudfront](#cloudfront) and [AppSync](#appsync)
-  - ALB (Application Load Balancer) is part of ELB
+- deploy on [ALB](#alb-application-load-balancer), [API gateway](#api-gateway), cloudfront and [AppSync](#appsync)
+  - ALB is part of [ELB](#elb-elastic-load-balancer)
+- you are responsible for
+  - setting WAF rules and conditions that match your security requirements
 
 ## Well-Architected Tool
 
@@ -2828,6 +2854,14 @@ sudo service docker start
 sudo usermod -a -G docker ec2-user
 sudo chmod 666 /var/run/docker.sock
 ```
+
+## migration strategies
+
+- active-active: multiple environments (regions or data centers) are actively running and serving traffic at the same time
+- active-passive: one environment is active, the other is on standby (only takes over if the active one fails)
+- big bang migration: all systems switch to AWS at once, often during a scheduled downtime window
+- phased migration (trickle or hybrid)
+- blue/green deployment
 
 ## pricing
 
