@@ -109,7 +109,7 @@
 
 ### application integration
 
-- [Amazon EventBridge](#eventbridge): event bus
+- [Amazon EventBridge](#eventbridge): event bus, task scheduler
 - [Amazon SNS (Simple Notification Service)](#sns-simple-notification-service)
 - [Amazon SQS (Simple Queue Service)](#sqs-simple-queue-service)
 - [AWS Step Functions](#step-functions): workflow orchestration
@@ -155,13 +155,13 @@
 
 ### customer enablement
 
-- [AWS Support Plans](#aws-support-plans): paid subscription
+- [AWS Support Plans](#aws-support-plans)
 
 ### database
 
 - [Amazon Aurora](#aurora): proprietary relational database engine that is part of rds
 - [Amazon DocumentDB](#documentdb): fully-managed aws implementation of mongodb
-- [Amazon DynamoDB](#dynamodb): fully-managed NoSQL database service with automatic scalability
+- [Amazon DynamoDB](#dynamodb): fully-managed NoSQL (key-value/document) database service with automatic scalability
 - [Amazon ElastiCache](#elasticache): fully-managed in-memory database (redis/memcached)
 - [Amazon Neptune](#neptune): fully-managed graph database
 - [Amazon RDS (Relational Database Service)](#rds-relational-database-service): fully-managed relational database service
@@ -1332,6 +1332,7 @@ client (e.g. browser) <= REST API => API Gateway <= proxy requests => Lambda <= 
 
 > one login for multiple AWS accounts and applications
 
+- manage access for workforce users (employees) across AWS accounts and business applications
 - supports federated access
   - integrates with external identity providers (IdPs) like Microsoft Entra ID (Azure AD), Okta, etc (using SAML 2.0 or OIDC)
   - use case: enterprise users accessing AWS services through identity providers (e.g. Okta, Azure AD, Google Workspace)
@@ -1426,9 +1427,9 @@ client (e.g. browser) <= REST API => API Gateway <= proxy requests => Lambda <= 
   - offers access to aws documentation and discussion forums (AWS Support Forums)
 - developer: cheapest paid tier for testing
   - offers access to aws documentation and discussion forums (AWS Support Forums)
+- business: for production systems
   - AWS Support API: allows you to integrate aws support into your applications
     - allows you to programmatically interact with your aws support cases
-- business: for production systems
 - enterprise: mission-critical + TAM (Technical Account Manager) + Concierge Support (billing and account assistance)
 
 | Plan       | Cost (Starting)     | Access Type          | Use Case         | Response Time (Critical) | Trusted Advisor |
@@ -1470,22 +1471,6 @@ client (e.g. browser) <= REST API => API Gateway <= proxy requests => Lambda <= 
 > [!TIP]
 > operational excellence is the devops pillar
 
-#### services
-
-- prepare
-  - CloudFormation
-  - AWS Config
-- operate
-  - CloudFormation
-  - AWS Config
-  - cloudtrail
-  - cloudwatch
-  - aws x-ray (tracy api calls/http requests)
-- evolve
-  - cloudformation
-  - codebuild
-  - codepipeline
-
 ### security
 
 > protect information, systems and assets
@@ -1495,73 +1480,24 @@ client (e.g. browser) <= REST API => API Gateway <= proxy requests => Lambda <= 
 - incident response
 - threat detection
 
-#### services
-
-- identity and access management
-  - IAM
-  - STS (Security Token Service): grants temporary credentials to users or services
-  - MFA token
-  - AWS organizations: centrally manage multiple aws accounts
-- detective controls
-  - aws config
-  - CloudTrail
-  - CloudWatch
-- infrastructure protection
-  - CloudFront
-  - VPC
-  - shield
-  - WAF (Web Application Firewall)
-  - Inspector
-- data protection
-  - KMS
-- incident response
-  - IAM
-  - CloudWatch events
-
 ### reliability
 
 > ensure a system can recover from failures and meet customer demands
 
 - automated recovery
-- scalability
 - failure management (e.g. backups)
 - distributed system design
 - load balancing
-
-#### services
-
-- CloudFormation
-- route 53
-- s3
-- elb
+- scalability
 
 ### performance efficiency
 
 > use computing resources efficiently to meet system requirements as demand changes
 
+- scalability
 - use serverless and managed services where possible
 - monitor and improve performance
 - test different instance types and configurations
-- scalability
-
-#### services
-
-- selection
-  - auto scaling
-  - lambda
-  - ebs
-  - s3
-  - rds
-- review
-  - cloudformation
-  - aws news blog
-- monitoring
-  - cloudwatch
-- tradeoffs
-  - rds
-  - elasticache
-  - snowball
-  - cloudfront
 
 ### cost optimization
 
@@ -1578,15 +1514,6 @@ client (e.g. browser) <= REST API => API Gateway <= proxy requests => Lambda <= 
     - cost and usage report
     - cost explorer
     - reserved instance reporting
-
-- match supply and demand
-  - auto scaling
-  - lambda
-- optimize overtime
-  - trusted advisor: analyzes your aws account provides recommendations to optimize your aws environment
-    - improves security, performance, fault tolerance, service limits and cost optimization
-  - cost and usage report
-  - news blog
 
 ### sustainability
 
@@ -1895,6 +1822,7 @@ codecommit => codebuild => codedeploy => compute resource (can be ec2 instance, 
 
 > fully-managed identity service that allows you to add user sign-up, sign-in and access control to your apps quickly and easily
 
+- authenticate end-users of web or mobile applications
 - similar to auth0 and firebase
 - supports encryption of data at rest and while it's in transit
 - identity for web/mobile application's users
