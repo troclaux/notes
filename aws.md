@@ -127,7 +127,7 @@
 - Cost and Usage Reports: most comprehensive billing dataset, most granular report in aws (view billing activity of last month)
 - Cost Explorer: view detailed current/historical usage, forecast future costs, create custom reports and identify under-utilized resources
   - used for analyzing costs after migrating to aws
-  - not typically used for estimating costs before migrating to aws
+  - estimate costs **after** migrating to aws
 - [AWS Marketplace](#marketplace): search, buy and deploy 3rd-party software and services
 
 - Billing Alarms: notifications to monitor billing
@@ -232,13 +232,13 @@
 
 ### networking and content delivery
 
-- [Amazon API Gateway](#api-gateway)
-- [Amazon CloudFront](#cloudfront)
-- [AWS Direct Connect](#hybrid-connectivity)
-- [AWS Global Accelerator](#global-accelerator)
-- [AWS PrivateLink](#privatelink)
-- [Amazon Route 53](#route-53)
-- [AWS Transit Gateway](#transit-gateway)
+- [Amazon API Gateway](#api-gateway): helps developers manage APIs at scale
+- [Amazon CloudFront](#cloudfront): CDN service that delivers data globally with low latency and high trasfer speeds
+- [AWS Direct Connect](#hybrid-connectivity): dedicated private network connection between on-premises infrastructure and aws
+- [AWS Global Accelerator](#global-accelerator): improve application availability and performance using the aws global network
+- [AWS PrivateLink](#privatelink): privately connect to a service in a 3rd party vpc
+- [Amazon Route 53](#route-53): DNS web service
+- [AWS Transit Gateway](#transit-gateway): connect to multiple VPCs and/or on-premises infrastructure through a centralized hub
 - [Amazon VPC (Virtual Private Cloud)](#vpc-virtual-private-cloud)
 - [AWS VPN](#hybrid-connectivity)
 - [AWS site-to-site VPN](#hybrid-connectivity)
@@ -246,25 +246,25 @@
 
 ### security, identity and compliance
 
-- [AWS Artifact](#aws-artifact)
-- [AWS Audit Manager](#audit-manager)
-- [AWS Certificate Manager](#aws-certificate-manager)
-- [AWS CloudHSM](#cloudhsm-cloud-hardware-security-module)
+- [AWS Artifact](#aws-artifact): provides aws compliance documentation, agreements and audits
+- [AWS Audit Manager](#audit-manager): automate audit preparation for compliance with regulations and standards
+- [AWS Certificate Manager](#aws-certificate-manager): easily manage SSL/TLS certificates
+- [AWS CloudHSM](#cloudhsm-cloud-hardware-security-module): dedicated, single-tenant hardware to manage cryptographic keys
 - [Amazon Cognito](#cognito)
-- [Amazon Detective](#detective)
+- [Amazon Detective](#detective): identifies the root cause of security issues using ML
 - [AWS Directory Service](#aws-directory-service)
-- [AWS Firewall Manager](#aws-firewall-manager)
-- [Amazon GuardDuty](#guardduty)
+- [AWS Firewall Manager](#aws-firewall-manager): centrally manage and configure firewall rules across aws accounts & resources
+- [Amazon GuardDuty](#guardduty): threat detection service that continuously monitors aws data sources
 - [AWS IAM (Identity and Access Management)](#iam-identity-and-access-management)
 - [AWS IAM Identity Center](#aws-iam-identity-center)
-- [Amazon Inspector](#inspector)
+- [Amazon Inspector](#inspector): find software vulnerabilities in compute resources
 - [AWS KMS (Key Management Service)](#kms-key-management-service)
 - [Amazon Macie](#macie): uses ML to discover and protect sensitive data
-- [AWS RAM (Resource Access Manager)](#ram-resource-access-manager)
+- [AWS RAM (Resource Access Manager)](#ram-resource-access-manager): grants access to the resources you own to other accounts
 - [AWS Secrets Manager](#aws-secrets-manager): store secrets and automate secrets rotation
 - [AWS Security Hub (CSPM)](#security-hub): centralized security monitoring that makes compliance checks
 - [AWS Shield](#shield): protects networks and applications against DDoS attacks
-- [AWS WAF (Web Application Firewall)](#waf-web-application-firewall)
+- [AWS WAF (Web Application Firewall)](#waf-web-application-firewall): create security rules that control bot traffic and block common attack patterns
 
 - [AWS Security Center](#security-center)
 - [Security Groups](#security-groups)
@@ -272,7 +272,7 @@
 ### serverless
 
 - [AWS Fargate](#fargate): compute engine for running containers on AWS
-- [AWS Lambda](#lambda)
+- [AWS Lambda](#lambda): compute service that lets you run code in response to events
 
 ### storage
 
@@ -283,7 +283,7 @@
 - [Amazon FSx](#fsx): launch high-performance file systems for windows-based applications
 - [Amazon S3 (Simple Storage Service)](#s3-simple-storage-service)
 - [Amazon S3 Glacier](#storage-classes)
-- [AWS Storage Gateway](#storage-gateway)
+- [AWS Storage Gateway](#storage-gateway): extends storage of on-premises environments to aws cloud storage
 
 ## AWS CLI
 
