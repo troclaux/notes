@@ -1565,6 +1565,16 @@ six key perspectives:
 | Security    | Data and asset protection     | Security teams        |
 | Operations  | Manage/monitor cloud services | IT ops, admins        |
 
+- CAF Transformation Phases:
+  - Envision: demonstrate how the cloud will accelerate business outcomes
+    - identify transformation opportunities
+    - create a foundation for your digital transformation
+  - Align: identify capability gaps across the 6 AWS CAF Perspectives
+    - results in an action plan
+  - Launch: build and deliver pilot initiatives in production
+    - demonstrate incremental business value
+  - Scale: expand pilot initiatives to the desired scale while realizing the desired business benefits
+
 ## CDK (Cloud Development Kit) (out-of-scope)
 
 > define cloud infrastructure using familiar programming languages
@@ -2282,7 +2292,7 @@ you can use aws management console or aws cli
   - websites
     - has templates for: wordpress, magento, etc
 
-## Local Zones (out-of-scope)
+## Local Zones
 
 > extend VPC to more locations
 
