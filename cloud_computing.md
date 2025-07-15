@@ -13,7 +13,7 @@
 - infrastructure: the physical or virtual resources that support the operation of a system
   - e.g. servers, storage, network, databases, etc
 
-- serverless
+- serverless: cloud provider handles all the underlying infrastructure, maintenance, updates and operational tasks
   - no visibility in the machines
   - no server management
     - automatic scaling
@@ -133,7 +133,6 @@
   - object: a collection of data that contains both data and metadata
   - ideal for non-structured data
 
-
 ## Compute
 
 | **Azure**                          | **AWS**                            | **GCP**                            |
@@ -213,3 +212,4 @@
 - cloud-native: building apps specifically designed to run in cloud environment
   - fully leverages the benefits of cloud computing
 - edge computing: computing model where data processing happens close to where the data is generated, at the edge of the network
+- hybrid service: service that can operate both in the cloud and on-premises

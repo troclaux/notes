@@ -1813,7 +1813,7 @@ six key perspectives:
   - [CodeCommit](#codecommit)
   - [CodeBuild](#codebuild)
   - [CodeDeploy](#codedeploy)
-  - [elastic Beanstalk](#elastic-beanstalk)
+  - [elastic beanstalk](#elastic-beanstalk)
   - [CloudFormation](#cloudformation)
   - [github](./github.md)
   - 3rd party services
