@@ -4,6 +4,7 @@
 > in-memory key-value store, often used as cache, message broker or lightweight database
 
 - in-memory: all data lives in RAM, which makes it very fast
+- not structured
 - REmote DIctionary Server
 - use cases:
   - caching: fast response for API data, DB queries
