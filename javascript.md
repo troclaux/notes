@@ -13,6 +13,9 @@
 - function-scoped: once a variable is declared inside a function, it is accessible anywhere inside that function
 - hoisted declarations: variables and functions can be used before they are declared
 - immutable strings
+- single-threaded: can only do one thing at the time
+  - v8 engine + browser api is multi-threaded
+  - node is single-threaded
 
 ## data types
 
@@ -483,7 +486,7 @@ try {
     - rejected: operation failed
 - `async`/`await` (recommended)
   - `async`: marks a function that returns a Promise
-  - `await`: pauses the execution of the function until a Promise is resolved
+  - `await`: pauses the execution of the function until a Promise is resolved or rejected
     - frequently used with `fetch('https://api.example.com/data')` to make HTTP requests
   - more readable
   - prevents callback hell
@@ -540,6 +543,30 @@ fetchData()
 
 - `#` indicates that a variable is private and should not be accesses directly from outside the class
   - e.g. `#age`
+
+## javascript execution model
+
+> javascript execution requires the cooperation of two pieces of harwdware: javascript engine and host environment
+
+> javascript runs inside an environment, and each environment gives it new functionalities
+
+- browser: `document`, `window`, events (e.g. `click`)
+- node.js: `require()`, file system access, etc
+- react native: its own API and event system
+- deno: its own API and event system
+
+## event loop
+
+> waits for and handles events
+
+- functions:
+  - wait for user actions
+  - runs event handler functions
+  - timers like `setTimeout`
+
+- is part of the host environment (e.g. browser engine or node.js)
+  - implemented by the browser engine (in chrome: blink + V8)
+  - implemented in node using the library libuv
 
 ## ECMAScript
 
