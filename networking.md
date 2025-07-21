@@ -107,6 +107,25 @@ properties of the internet:
   - destination checks packets for errors, using the error-checking data in the packet header
   - if errors are detected, the packet is retransmitted
 
+## inbound and outbound traffic
+
+- inbound traffic: traffic that comes into a resource from the outside
+  - instance <= traffic = outside
+- outbound traffic: traffic that goes out from a resource to an external destination
+  - instance = traffic => outside
+
+- allowed:
+  - outbound traffic is generally unrestricted on most devices
+  - inbound traffic is allowed only if a program is listening on the port and the firewall/network rules allow it
+    - for example, when you open a website or connect to something online, your computer:
+      - chooses a random high-numbered port (e.g. 52345)
+      - sends a request to the destination ip and port (e.g. google.com:443)
+      - the response comes back to your IP and your chosen port (52345)
+- forbidden/blocked:
+  - inbound traffic to closed or firewalled ports
+  - ports used by malicious software may be blocked by security tools
+  - some ports are privileged (0–1023) and can only be opened by root/admin
+
 ## OSI model
 
 [OSI-model explained in a simple way](https://osi-model.com)
@@ -677,7 +696,6 @@ TODO
 - NAT (Network Address Translation): converts private IPs to public IPs
 - firewalls: control network traffic based on rules
   - security groups (aws): stateful filtering for inbound/outbound traffic
-- CDN (Content Delivery Network)
-  - caches static content (images, css, js) at edge locations globally
+- CDN (Content Delivery Network): caches static content (images, css, js) at edge locations globally
   - reduces latency by serving users from the nearest data center
   - examples: cloudflare, aws cloudfront, akamai
