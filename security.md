@@ -16,6 +16,7 @@
     - something you are (biometrics)
   - adaptive multi-factor authentication: uses multiple factors to determine which form of authentication to use
     - e.g. if a user logs in from a new device or a new location, they may be required to provide additional verification
+  - U2F (Universal 2nd Factor): extra layer of security used during MFA that leverages hardware security keys
 
 - hashing: process that takes an input of arbitrary size and returns a fixed-size string of characters, known as a hash
   - hash value output is unique to the input
@@ -46,8 +47,8 @@
 - data theft: unauthorized access to data
 - traffic interception: unauthorized access to data in transit
 - brute force attacks: trying all possible combinations to guess a password
-- DDOS (Distributed Denial of Service) attack: prevent legitimate users from accessing the service
-  - a cyberattack where multiple systems flood a target with traffic to make it unavailable
+- DoS (Denial of Service): single source attack that floods a target system with traffic or requests, overwhelming it and causing it to crash or become unresponsive
+- DDOS (Distributed Denial of Service) attack: coordinated attack using multiple systems to overwhelm the target simultaneously
   - overwhelms network/server resources so legitimate users can't access services
   - uses botnets to generate massive traffic
     - botnets: infected computers
@@ -67,6 +68,10 @@
 - SQL Injection: malicious SQL code injected into application queries to manipulate database
 - XSS (Cross-Site Scripting): malicious scripts injected into trusted websites to run in users' browsers
 - CSRF (Cross-Site Request Forgery): tricks users into submitting malicious requests to websites they're authenticated with
+
+## best practices
+
+- penetration testing (also called pen testing or ethical hacking): simulated cyberattack against a computer system, network or application to identify security vulnerabilities
 
 ## types of authentication
 
