@@ -1,3 +1,4 @@
+[docker](/docker.md)
 
 # kubernetes
 
@@ -10,7 +11,14 @@
 
 [kubernetes documentation](https://kubernetes.io/docs/)
 [kubernetes tutorials by katacoda](https://www.katacoda.com/courses/kubernetes)
-[docker](/docker.md)
+
+> [!TIP]
+> The easiest way to install Kubernetes on a low-spec computer is by using **`kubectl` + `minikube`**.
+> `kubectl` is the command-line tool to manage Kubernetes and `minikube` runs a lightweight local cluster
+
+- resources in kubernetes run on a private, isolated network by default
+  - they can communicate with other resources within kubernetes unless explicitly configured
+  - they are **not** exposed to anything outside kubernetes (e.g. from your browser or mobile app)
 
 ## key components
 
@@ -79,6 +87,7 @@ kubernetes cluster architecture:
 - create Kubernetes Secret from .env: `kubectl create secret generic peso-secrets --from-env-file=.env.local`
 - update Kubernetes Secret :`kubectl delete secret peso-secrets && kubectl create secret generic peso-secrets --from-env-file=.env.local`
 - delete resources created by YAML files: `kubectl delete -f file1.yaml -f file2.yaml`
+- delete pod: `kubectl delete pod test-nginx`
 
 ## kinds
 
@@ -167,6 +176,8 @@ spec:
 ### cluster management
 
 - Namespace: creates isolated environments within the cluster
+  - groups related resources (pods, services, deployments, etc)
+  - resources go to `default` namespace if a namespace isn't specified
 - ResourceQuota: limits CPI, memory and storage per namespace
 - LimitRange: sets minimum and maximum resource limits for pods
 
