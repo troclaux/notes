@@ -7,6 +7,10 @@
 [lua](./lua.md)
 [c#](./c#.md)
 
+# programming concepts
+
+- computer science: the study of computation, information and automation
+
 - variable: the name given to a memory location
 - field: data encapsulated within a class or object
 
@@ -64,7 +68,7 @@ class Printer {
   - also known as lambda functions in many languages (e.g. python, java)
 
 - higher-order functions: function that takes one or more functions as arguments and/or return a function
-- first-class citizen: objects that can be:
+- first-class citizen: entities that can be:
   - created at runtime
   - passed as arguments to other functions
   - returned as values from other functions
@@ -84,7 +88,7 @@ class Printer {
 - low-code: create software with minimal coding required
   - examples: microsoft powerapps, salesforce lightning
 
-- idempotent: operation that has the same result when repeated
+- idempotent: operation that has the same effect no matter how many times it is performed
 
 - stateful: maintains information (state) about past events or user interactions
   - examples:
