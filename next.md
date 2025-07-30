@@ -70,10 +70,48 @@ setting scripts in `package.json`:
 4. wait for the installation to finish
 5. `npm run dev` to start the development server
 6. start editing `src/pages/index.tsx` to see the changes in the browser
+7. install basic dependencies
+
+```bash
+npm install <dependency>
+```
+
+- `clsx`: utility to conditionally apply css classes
+- `jsonwebtoken`: create and verify tokens
+- `bcrypt`: password hashing
+- `pg`: postgresql client
+- `cookies-next`: cookie management
+- `tailwind-merge`: merge tailwind classes without style conflicts
+
+- if auth provider is `better-auth`:
+  - `lucide-react`: customizable icons
+  - `tailwindcss-animate`: animations for tailwind
+  - `sonner`: sound effects
+  - `npx shadcn@latest init -d` [see the documentation before adding](https://ui.shadcn.com): beautiful components
+- if auth provider is `next-auth@beta`:
+  - `npx auth secret`: create a secret key
+- if auth provider is `@clerk/nextjs`:
+  - `@clerk/nextjs`
 
 ## directory structure
 
-next.js uses a file-system based routing system
+> next.js uses a file-system based routing system
+
+```
+my-app/
+├── src/
+│   ├── app/
+│   │   ├── api/
+│   │   │   └── items/
+│   │   │       ├── route.ts       # Handles GET, POST for /api/items
+│   │   │       └── [id]/
+│   │   │           └── route.ts   # Handles GET, PUT, DELETE for /api/items/:id
+│   ├── lib/
+│   │   └── db.ts                  # DB mock or DB logic
+├── next.config.js
+├── package.json
+├── tsconfig.json
+```
 
 - `src/`: optional application source folder
   - `src/app/` (new and recommended): app router, contains `api` (back end) and each page directory
@@ -108,9 +146,30 @@ next.js uses a file-system based routing system
   - `package.json`:
   - `middleware.ts`:
   - `.env`: file that stores environment variables at the root of the project
-  - `.env.local`: local environment variables
-  - `.env.production`: production environment variables
-  - `.env.developent`: developent environment variables
+    - examples of env vars:
+      - `DATABASE_HOST`: database credentials for connection pool
+      - `DATABASE_NAME`: database credentials for connection pool
+      - `DATABASE_USER`: database credentials for connection pool
+      - `DATABASE_PASSWORD`: database credentials for connection pool
+      - `GOOSE_DBSTRING`: allows database migration with goose
+      - `GOOSE_DRIVER`: allows database migration with goose
+      - `AUTH_SECRET`: used to encrypt session tokens in Auth.js
+      - `NEXTAUTH_URL`: sets the canonical base URL of your application (e.g. `pesodevops.com`)
+        - used for OAuth callbacks, redirect URLs, email links and CSRF protection
+      - `AUTH_TRUST_HOST`: when set to `true`, allows Auth.js to trust the `NEXTAUTH_URL` in production if it's not `localhost`
+        - used for deployment
+      - `AUTH_GOOGLE_ID`: enables OAuth/OIDC authentication
+      - `AUTH_GOOGLE_SECRET`: enables OAuth/OIDC authentication
+      - `AWS_ACCESS_KEY_ID`: aws credentials for terraform
+      - `AWS_SECRET_ACCESS_KEY`: aws credentials for terraform
+      - `ECR_REPO_URL`
+      - `EC2_PUBLIC_IP`
+    - if the same variable is defined in multiple `.env` files (`.env.local`, `.env.production`, `.env.development`), the final value will be the one in the file with highest priority
+    - `.env.local`: highest priority
+    - `.env.production`and `.env.development`: medium priority
+    - `.env`: lowest priority
+  - `.env.developent` (recommended at the beggining): developent environment variables
+  - `.env.production` (use for production): production environment variables
   - `eslintrc.json`: config file for eslint
   - `tsconfig.json`: config file for typescript
   - `jsconfig.json`: config file for javascript
@@ -131,7 +190,7 @@ next.js uses a file-system based routing system
 > [!TIP]
 > try to use `app` folder purely for routing purposes
 
-- separate `client` and `server` folders vs single next.js application handling bothe frontend and api routes (recommended)
+- separate `client` and `server` folders vs single next.js application handling both frontend and api routes (recommended)
   - separate `client` and `server` folders:
     - advantages
       - separation of concerts
@@ -295,7 +354,7 @@ export async function DELETE(request: NextRequest) {
 - `NextResponse`: object that allows you to create custom responses (e.g. status code, headers, etc)
   - `return NextResponse.json({ error: 'Internal server error' }, { status: 500 });`
 
-Example:
+example:
 
 ```typescript
 return new Response('Hello', {
@@ -311,19 +370,20 @@ return new Response('Hello', {
 - `useSearchParams`: convert url parameters of the current url to json
 - `usePathName`: get current URL's pathname
 - `useRouter`: hook that enables client-side navigation and access to router information (current route, query parameters, etc)
-
-## pagination
-
-> process of dividing a large dataset into smaller pages and providing navigation controls to allow users to browse them
-
----
+- `useSession`: hook that provides access to the current user's session data (e.g. user id, email, etc)
+  - available only client-side
 
 ## Client-Side Rendering vs Server-Side Rendering
 
-> [!IMPORTANT]
-> components in the `app/` folder are server components by default
-> to convert a server component into a Client component, add this to the beggining of the file: `'use client';`
+- components in the `app/` folder are server components by default
 
+- `"use client"`: add it to the top of a file before all `import` statements to convert component into a client component
+  - required to use client-side react features, such as `useState`, `useEffect`, event handlers, etc
+  - marks a file and all its dependencies as part of the client bundle
+  - all child components and imports are also considered client components
+- `"use server"`: marks all exported functions as server actions
+  - enables "server actions"
+    - server actions: server functions that can be called directly from client components
 
 > [!TIP]
 > a project usually uses a mix of both types
@@ -404,11 +464,65 @@ export default function Home({ message }) {
 
 ---
 
+## implementation
+
+### add a new route
+
+### add auth
+
+### add layout
+
+### get users data client-side
+
+### add route that blocks unauthenticated users
+
+### test api routes with authentication
+
+1. login to get a session token
+2. inspect => application => cookies => copy authjs.session-token
+3. use the token in the request to test the api route
+
+```bash
+curl -X POST http://localhost:3000/api/exercises \
+  -H "Content-Type: application/json" \
+  -H "Cookie: authjs.session-token=<your-session-token>" \
+  -d '{
+    "name": "Push-up",
+    "description": "A basic exercise for upper body strength"
+  }'
+```
+
+---
+
 ## questions
 
-- how do i make http requests?
+- [x] how do i make http requests?
+  - just create the routes in the `app` folder
+  - [example](https://github.com/troclaux/peso/tree/main/src/app/api/users)
+- [x] Should i use express.js or does next.js have a built-in solution for this?
+  - no need to install express.js
+  - Next.js has a built-in API routing system that can replace express.js
+- [x] what is the best method to fetch data from the database?
+  - in my opinion, the best way to fetch data is to use `pg`, without any ORM
+- [x] if i have a route for a resource, how do i use the routing system to create endpoints for a specific resource (using the id)?
+  - should all endpoints be in one file?
+    - no, each resource (`/workouts`) has a folder, and the id-based routes (`/workouts/:id`) go inside `[id].ts` file
+    - `route.ts`: handle GET all and POST new
+    - `[id].ts`: handle GET 1, PUT 1 and DELETE 1
 
-  - do i use express.js or does next.js have a built-in solution for this?
+```
+app/
+  api/
+    workouts/
+      route.ts      → Handles `/api/workouts` (GET all, POST new)
+      [id].ts → Handles `/api/workouts/:id` (GET, PUT, DELETE)
+```
 
-- best way to fetch data?
-- how do i make http requests with next.js for postgresql?
+- [x] ensure database connection is always released
+  - problem: if an error occurs before client.release(), the connection is not released
+  - fix: use a try-finally block
+- [x] Use Secure HTTP-Only Cookies for Tokens
+  - Problem: Tokens are sent in JSON response, making them vulnerable to XSS
+  - Fix: Use `NextResponse.cookies.set()` for storing tokens securely
+- [x] Return Only the Access Token in Response
+  - Why? Refresh tokens should not be sent to the frontend. They should be stored in HTTP-only cookies
