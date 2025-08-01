@@ -1,3 +1,4 @@
+[os](./os.md)
 
 # computer architecture
 
@@ -88,7 +89,42 @@ examples: x86, ARM, RISC-V
 - Pipelining: Overlaps instruction stages to improve throughput
 - Parallelism: Uses multiple cores or threads for simultaneous operations
 
+## von neumann architecture
+
+> computer design model that forms the foundation for most modern computers
+
+- key features
+  - single memory for data and instructions
+    - both program instructions and data are stores in the same memory space
+    - this allows the CPU to fetch and execute instruction sequentially
+  - Central Processing Unit (CPU)
+    - Arithmetic Logic Unit (ALU)
+    - Control Unit (CU)
+  - input/output system
+  - sequential execution of instructions
+  - program stored in memory
+- innovations
+  - programs can be written, stored and modified electronically
+    - no need to rewire circuits for each task
+    - previously, computers were hardwired to perform specific tasks
+  - a computer can load and run different programs without hardware changes
+  - programming languages and compilers became possible
+  - software can be debugged, improved and reused
+
+![von neumann architecture](./images/von_neumann_architecture.png)
+
+- Memory: where data and instructions are stored, it allows for the storage and retrieval of information
+- Control Unit: manages the operations of the computer, it directs the flow of data between the CPU and other components
+- Arithmetic Logic Unit (ALU): performs arithmetic and logical operations
+  - responsible for calculations and decision-making processes
+- Input: This refers to the devices or methods through which data is entered into the computer system
+- Output: This refers to the devices or methods through which data is presented to the user or other systems
+- Central Processing Unit (CPU): central component that carries out the instructions of a computer program
+  - contains the ALU and Control Unit
+- Accumulator: This is a register in the CPU that stores intermediate results of arithmetic and logic operations
+
 ---
 
 - firmware: software that is stored in hardware and tells it how to work
   - e.g. BIOS or UEFI (starts boot process in computers)
+
