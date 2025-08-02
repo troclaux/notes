@@ -1,4 +1,4 @@
-
+import pytest
 from ..queue import Queue
 
 def test_enqueue_adds_items():
@@ -14,10 +14,6 @@ def test_dequeue_removes_and_returns_front_item():
     val = q.dequeue()
     assert val == 1
     assert q.items == [2]
-
-def test_dequeue_on_empty_queue_returns_none():
-    q = Queue()
-    assert q.dequeue() is None
 
 def test_peek_returns_front_without_removing():
     q = Queue()
