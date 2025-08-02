@@ -1,3 +1,9 @@
+
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.next = None
+
 class Queue:
     def __init__(self):
         self.head = None
@@ -5,39 +11,36 @@ class Queue:
         self.length = 0
 
     def enqueue(self, item):
-        if self.length > 0:
+        if not isinstance(item, Node):
+            item = Node(item)
+
+        if self.tail:
             self.tail.next = item
-        if self.length == 0:
+        else:
             self.head = item
+
         self.tail = item
         self.length += 1
-        print("inserted node", item.value, "into queue's end")
+        print("Inserted node", item.value, "into queue's end")
         return self.head
 
     def dequeue(self):
         if self.length == 0:
-            print("queue is empty, can't dequeue")
+            print("Queue is empty, can't dequeue")
             return None
-        if self.length == 1:
-            print("removed node", self.head, "from the front of the queue")
+
+        dequeued = self.head
+        print("Removed node", dequeued.value, "from the front of the queue")
+
+        self.head = self.head.next
+        if self.head is None:
             self.tail = None
-            self.head = None
-        if self.length > 0:
-            print("removed node", self.head, "from the front of the queue")
-            dequeued = self.head
-            self.head = dequeued.next
+
         self.length -= 1
         return dequeued
 
-    def qprint(self):
+    def display(self):
         current = self.head
-        for i in range(self.length):
+        while current:
             print(current.value)
-            if current.next is not None:
-                current = current.next
-
-
-class Node:
-    def __init__(self, value):
-        self.value = value
-        self.next = None
+            current = current.next
