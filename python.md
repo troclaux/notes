@@ -119,14 +119,12 @@ print(formatted_pi)  # outputs "Pi is 3.14"
 ### type checking
 
 ```python
-
 elem = 5.1
 
 # checks if variable is a number
 isinstance(elem, (int, float)) # returns True
 isinstance(5, list) # returns False
 isinstance([5, 6], list) # returns True
-
 ```
 
 ### type casting
@@ -164,7 +162,6 @@ else:
 ## loops
 
 ```python
-
 i = 0
 while i < 5:
     print(i)
@@ -183,25 +180,83 @@ for i, fruit in enumerate(fruits):
 
 squares = [x**2 for x in range(5)]
 print(squares) # output: [0, 1, 4, 9, 16]
+```
 
+## generator expression
+
+```python
+numbers = [3, 7, 1, 5]
+
+if all(n > 0 for n in numbers):
+    print("All numbers are positive!")
+else:
+    print("There are negative numbers.")
+```
+
+## list comprehension
+
+> concise method to create lists in a single line of code
+
+```python
+squares = [x**2 for x in range(5)]
+# Output: [0, 1, 4, 9, 16]
+
+evens = [x for x in range(10) if x % 2 == 0]
+# Output: [0, 2, 4, 6, 8]
 ```
 
 ## functions
 
 ```python
 def my_function(input1, input2):
-  print(input1, input2)
+    print(input1, input2)
 
 my_function('hello', 'world')
 ```
 
-## basic methods
+### built-in functions
 
 - `len(obj1)`: returns the number of elements in an object (string, list, set, etc)
 - `type(obj1)`: returns the type of an object
+- `name = input("Enter your name: ")`: reads input from the user
 - `min(iter1)`: returns the minimum value of an iterable
 - `max(iter1)`: returns the maximum value of an iterable
 - `sum(iter1)`: returns the sum of all values in an iterable
+- `any(x > 0 for x in nums)`: returns trus if at least one item is positive
+- `if all(n > 0 for n in numbers):` check if all numbers are positive
+- `for i, v in enumerate(lista):`: `i` receives the index and `v` the value of the current iteration
+
+### lambda functions
+
+> basically small functions that are declared with the `lambda` keyword
+
+syntax: `lambda arguments: operation that will generate output`
+
+- `map()` applies a function to each item in an iterable and returns a new iterable with the results.
+- `filter()` selects items from an iterable for which a function returns True.
+- `sorted()` returns a new sorted list and does not modify the original
+- `list.sort()`: sorts in-place
+
+```python
+add_nums = lambda x, y: x + y
+print(add_nums(2, 3)) # 5
+
+numbers = [1, 2, 3, 4, 5]
+squared = map(lambda x: x ** 2, numbers)
+print(list(squared))  # Outputs: [1, 4, 9, 16, 25]
+
+# keep only even numbers
+nums = [1, 2, 3, 4, 5, 6]
+evens = list(filter(lambda x: x % 2 == 0, nums))
+print(evens)  # output: [2, 4, 6]
+
+# sort words by length
+words = ["apple", "fig", "banana", "kiwi"]
+sorted_words = sorted(words, key=lambda w: len(w))
+print(sorted_words)  # output: ['fig', 'kiwi', 'apple', 'banana']
+```
+
+## basic methods
 
 - `str1.upper()`: return str1 in upper case
 - `str1.lower()`: return str1 in lower case
@@ -224,6 +279,7 @@ my_function('hello', 'world')
 - `list1.clear()`: removes all elements of list1
 - `list1.reverse()`: reverse the order of elements in list1
 - `list1.sort()`: sort elements in list1
+
 - `dict1.clear()`: removes all elements in dict1
 - `dict1.copy()`: returns copy of dict1
 - `dict1.keys()`: returns a list with all keys in dict1
@@ -269,7 +325,6 @@ print(s2.isalnum())  # Outputs: False
 ## classes/objects
 
 ```python
-
 # Define a class
 class Dog:
     def __init__(self, name):
@@ -313,22 +368,44 @@ class ChildClass(ParentClass):
 child = ChildClass("Alice", 20)
 child.greet()         # Method inherited from ParentClass
 child.display_age()   # Method of ChildClass
+```
 
+## exception handling
+
+> gracefully handle errors without crashing
+
+```python
+try:
+    number = int("abc")
+    result = 10 / number
+except ValueError:
+    print("Could not convert string to integer.")
+except ZeroDivisionError:
+    print("Division by zero.")
+```
+
+```python
+try:
+    risky_code()
+except Exception as e:
+    print(f"Something went wrong: {e}")
+finally:
+    print("This always runs.")
 ```
 
 ## modules
 
-> modules are individual python files (.py) that can be imported and reused in other python files.
+> modules are individual python files (.py) that can be imported and reused in other python files
 
-types of imports:
-- importing the whole module
-    - `import module_name`
-- importing specific functions or variables from a module
-    - `from module_name import function_name`
-- importing all functions and variables from a module
-    - `from module_name import *`
-- renaming a module during import
-    - `import module_name as alias`
+- types of imports:
+    - importing the whole module
+        - `import module_name`
+    - importing specific functions or variables from a module
+        - `from module_name import function_name`
+    - importing all functions and variables from a module
+        - `from module_name import *`
+    - renaming a module during import
+        - `import module_name as alias`
 
 ```python
 import my_module as mm
@@ -411,34 +488,22 @@ except AttributeError:
     print("Color.TEAL is not a valid member")
 ```
 
-## lambda functions
+## docstring
 
-> basically small functions that are declared with the `lambda` keyword
-
-syntax: `lambda arguments: operation that will generate output`
-
-- `map()` applies a function to each item in an iterable and returns a new iterable with the results.
-- `filter()` selects items from an iterable for which a function returns True.
-- `sorted()` returns a new sorted list and does not modify the original
-- `list.sort()`: sorts in-place
+> documentation string used to describe a function, class or module
 
 ```python
-add_nums = lambda x, y: x + y
-print(add_nums(2, 3)) # 5
+def soma(a, b):
+    """
+    Retorna a soma de dois números.
 
-numbers = [1, 2, 3, 4, 5]
-squared = map(lambda x: x ** 2, numbers)
-print(list(squared))  # Outputs: [1, 4, 9, 16, 25]
+    Parâmetros:
+    a -- primeiro número
+    b -- segundo número
+    """
+    return a + b
 
-# keep only even numbers
-nums = [1, 2, 3, 4, 5, 6]
-evens = list(filter(lambda x: x % 2 == 0, nums))
-print(evens)  # output: [2, 4, 6]
-
-# sort words by length
-words = ["apple", "fig", "banana", "kiwi"]
-sorted_words = sorted(words, key=lambda w: len(w))
-print(sorted_words)  # output: ['fig', 'kiwi', 'apple', 'banana']
+print(soma.__doc__) # print the function's docstring
 ```
 
 ## automation with scripts
@@ -457,3 +522,5 @@ print(sorted_words)  # output: ['fig', 'kiwi', 'apple', 'banana']
 - OpenPyXL: reads and writes excel files
 - PyXLL: allows you to create excel functions with python
 - XlsxWriter: creates excel files
+
+- pep8: provides style guidelines for writing clean and readable python code
