@@ -8,19 +8,16 @@ class Stack:
         self.size += 1
 
     def pop(self):
-        if self.is_empty():
+        if len(self.stack) == 0:
             raise IndexError("can't pop when stack is empty")
         removed_value = self.stack.pop()
         self.size -= 1
         return removed_value
 
     def peek(self):
-        if self.is_empty():
+        if len(self.stack) == 0:
             raise IndexError("can't peek when stack is empty")
-        print(self.stack[-1])
-
-    def is_empty(self):
-        return len(self.stack) == 0
+        return self.stack[-1]
 
     def __str__(self):
-        print(str(self.stack))
+        return str(self.stack)
