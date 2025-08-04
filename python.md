@@ -395,17 +395,21 @@ finally:
 
 ## modules
 
-> modules are individual python files (.py) that can be imported and reused in other python files
+> individual python files (.py) that can be imported and reused in other python files
 
 - types of imports:
     - importing the whole module
-        - `import module_name`
-    - importing specific functions or variables from a module
-        - `from module_name import function_name`
+        - `import module`
+        - `import math`
+    - importing specific attributes or functions from a module
+        - `from module import attribute_or_function`
+        - `from math import sqrt, pi`
     - importing all functions and variables from a module
-        - `from module_name import *`
+        - `from module import *`
+        - `from math import *`
     - renaming a module during import
-        - `import module_name as alias`
+        - `import module as alias`
+        - `import numpy as np`
 
 ```python
 import my_module as mm
@@ -438,7 +442,8 @@ my_project/
 └── main.py
 ```
 
-to import a module from a package, use the following syntax:
+import a module from a package:
+
 ```python
 import math as m        # creates alias for module
 from module import *
@@ -460,7 +465,8 @@ from my_package.module_b import Node
         - need to be installed
         - e.g. `numpy`, `pandas`, `matplotlib`, `requests`, etc
 
-standard library example
+standard library example:
+
 ```python
 import math
 
