@@ -76,18 +76,26 @@ kubernetes cluster architecture:
 
 > CLI tool that enables cluster management
 
-- view nodes: `kubectl get nodes`
-- apply YAML file: `kubectl apply -f <filename>.yaml`
-- open shell inside running container: `kubectl exec -it <nextjs-pod-name> -- /bin/sh`
-- create Secret: `sudo kubectl create secret generic peso-secrets --from-env-file=.env`
-- generate Secret yaml file: `kubectl get secret nextjs-env -o yaml`
-- ensure Kubernetes cluster is running: `kubectl cluster-info`
-- check the pod logs: `kubectl logs <pod-name>`
-- check the service status: `kubectl describe service nginx-service`
-- create Kubernetes Secret from .env: `kubectl create secret generic peso-secrets --from-env-file=.env.local`
-- update Kubernetes Secret :`kubectl delete secret peso-secrets && kubectl create secret generic peso-secrets --from-env-file=.env.local`
-- delete resources created by YAML files: `kubectl delete -f file1.yaml -f file2.yaml`
-- delete pod: `kubectl delete pod test-nginx`
+- `kubectl get nodes`: view nodes
+- `kubectl apply -f <filename>.yaml`: apply YAML file
+- `kubectl exec -it <nextjs-pod-name> -- /bin/sh`: open shell inside running container
+- `sudo kubectl create secret generic peso-secrets --from-env-file=.env`: create Secret
+- `kubectl get secret nextjs-env -o yaml`: generate Secret yaml file
+- `kubectl cluster-info`: ensure Kubernetes cluster is running
+- `kubectl logs <pod-name>`: check the pod logs
+- `kubectl describe service nginx-service`: check the service status
+- `kubectl create secret generic peso-secrets --from-env-file=.env.local`: create Kubernetes Secret from .env
+- `kubectl delete secret peso-secrets && kubectl create secret generic peso-secrets --from-env-file=.env.local`: update Kubernetes Secret
+- `kubectl delete -f file1.yaml -f file2.yaml`: delete resources created by YAML files
+- `kubectl delete pod test-nginx`: delete pod
+- `kubectl proxy`: start a proxy server on `http://localhost:8001`
+  - useful for
+    - accessing the kubernetes dashboard without exposing it externally
+    - testing or scripting against the api server without manually handling authentication tokens
+    - creating tools or scripts that interact with kubernetes via rest calls
+- `kubectl port-forward PODNAME 8080:8080`: redirects `localhost:8080` requests to the container inside the pod with name `PODNAME`
+  - only works while the command is running
+- `kubectl proxy`
 
 ## kinds
 
@@ -125,6 +133,8 @@ spec:
   - ensures specified number of pod replicas are running
   - supports rolling updates and rollbacks
   - used for stateless applications
+  - a Deployment wraps around a ReplicaSet, and manages the ReplicaSet for you
+  - normally you will interact only with Deployment (not with ReplicaSet)
   - example: deploy a web application with 3 replicas
 - ReplicaSet
   - maintains a stable set of replica pods
@@ -175,8 +185,7 @@ spec:
 
 ### cluster management
 
-- Namespace: creates isolated environments within the cluster
-  - groups related resources (pods, services, deployments, etc)
+- Namespace: way to organize and isolate resources (Deployments, Pods, Services, etc) within a kubernetes cluster
   - resources go to `default` namespace if a namespace isn't specified
 - ResourceQuota: limits CPI, memory and storage per namespace
 - LimitRange: sets minimum and maximum resource limits for pods
@@ -261,6 +270,10 @@ spec:
 - service: exposes those pods on port 80, optionally as a cloud load‑balancer if your environment supports it
 
 ## networking
+
+- every pod in a kubernetes cluster hass a unique internal-to-k8s IP address
+- pods within the same node or across different nodes can easily communicate
+- ip address of a pod != ip address of the node it's running on
 
 - pod-to-pod communication: all pods within the cluster can communicate directly with each other
   - each pod has its own private ip
