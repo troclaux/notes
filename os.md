@@ -1,3 +1,6 @@
+[computer architecture](./computer_architecture.md)
+[programming concepts](./programming_concepts.md)
+
 # Operating Systems
 
 > software that manages computer hardware and software resources and provides essential services for computer programs and users
@@ -153,10 +156,10 @@ categories of scheduling algorithms:
 - Shortest Remaining Time Next (SRT)
 - Round Robin: preemptive algorithm that assigns each process/thread a fixed time slot in a rotating order
 
-- Priority scheduling
-- Multi-level queue scheduling
-- Guaranteed scheduling
-- Lottery scheduling
+- priority scheduling
+- multi-level queue scheduling
+- guaranteed scheduling
+- lottery scheduling
 
 ## Deadlock
 
@@ -196,17 +199,17 @@ Possible solutions:
 
 ### Virtual Memory
 
-- Allows processes to use secondary memory instead of main memory (RAM)
-- Allows the system to run larger applications on machines with limited RAM
-- Divides physical and virtual memory into small units called 'pages'
+- allows processes to use secondary memory instead of main memory (RAM)
+- allows the system to run larger applications on machines with limited RAM
+- divides physical and virtual memory into small units called 'pages'
 
 - Page: virtual memory
   - Usually has a fixed size of 4 KB
 - Frame: physical memory (RAM)
 
-Types of virtual memory:
-- Paging
-- Segmentation
+- types of virtual memory:
+  - paging
+  - segmentation
 
 - TLB (Translation Lookaside Buffer)
 - Dirty bit: indicates whether a memory page has been modified since it was loaded into memory
@@ -258,4 +261,7 @@ TODO
 
 ## File Systems
 
-TODO
+> method and data structure that an operating system uses to manage files on a storage device
+
+> defines how data is stored, organized, accessed and managed
+
