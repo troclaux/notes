@@ -12,7 +12,9 @@
 
 - while in insert mode, use `Alt` to execute normal mode commands
 - repeat the last recorded register count times: `Q`
-- insert the output of a terminal command: `:.!<terminal command>`
+
+- insert the output of a shell command below the current line: `:r !<command>`
+- replace current line with the output of a shell command: `:.!<command>`
 
 ## registers
 
