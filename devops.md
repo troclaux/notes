@@ -219,13 +219,11 @@ jobs:
 
 - Culture: collaboration, shared responsibility and breaking silos between dev, ops, QA and security
 - Automation: emphasizes automation of repetitive tasks like: testing, building, deployment, infrastructure provisioning
-- [Lean](/software_engineering.md#lean-methodology)
+- [Lean](./software_engineering.md#lean-methodology)
 - Measurement: data-driven decision making
 - Sharing: transparencey and knowledge sharing across teams
 
----
-
-# DevSecOps
+## DevSecOps
 
 > integrate security at every stage of software development lifecycle
 
