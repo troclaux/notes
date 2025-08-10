@@ -11,9 +11,10 @@
   - can contain code, documentation, images, and other project-related files
   - tracks all changes made to files in your project
 - branch: allow you to work on different versions of your project at the same time without mixing up new features or bug fixes until they’re ready
-- fork: personal copy of someone else’s project
+- fork: personal copy of someone else's project
 - pull request: submit changes from one branch to another
   - typically used to propose changes to a project
+  - allows for discussion and review before merging changes
 - issues: github feature that tracks tasks, enhancements, or bugs
   - can be used to:
     - track bugs and feature requests
