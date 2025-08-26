@@ -61,8 +61,9 @@ name = 'John'
 tuple1 = ("apple", "banana", "orange", "apple")
 tuple2 = (1, 5, 7, 9, 3)
 tuple3 = (True, False, False)
-tuple4 = ("abc", 34, True, 40, "male")
-my_set = {1, 2, 3}
+tuple4 = ("abc", 34, True, [1, 2, 3], "male")
+my_set1 = {1, 2, 3}
+my_set2 = set([7, 8, 9])
 my_set.add(4)  # Now my_set is {1, 2, 3, 4}
 my_frozenset = frozenset([1, 2, 3])
 ```
@@ -145,6 +146,21 @@ str_num = str(5)
 ```python
 import datetime
 x = datetime.datetime.now()
+```
+
+### type hints/annotations
+
+> used to indicate the expected data type of a variable, function parameter or return value
+
+```python
+# Variable annotations
+age: int = 25
+name: str = "Alice"
+is_active: bool = True
+
+# Function annotations
+def greet(name: str, age: int) -> str:
+    return f"Hello, {name}. You are {age} years old."
 ```
 
 ## if else
@@ -499,17 +515,18 @@ except AttributeError:
 > documentation string used to describe a function, class or module
 
 ```python
-def soma(a, b):
-    """
-    Retorna a soma de dois números.
+def greet(name):
+    """Return a friendly greeting.
 
-    Parâmetros:
-    a -- primeiro número
-    b -- segundo número
-    """
-    return a + b
+    Args:
+        name (str): Person's name.
 
-print(soma.__doc__) # print the function's docstring
+    Returns:
+        str: Greeting like "Hello, Ana!".
+    """
+    return f"Hello, {name}!"
+
+print(greet.__doc__) # print the function's docstring
 ```
 
 ## automation with scripts
@@ -530,3 +547,4 @@ print(soma.__doc__) # print the function's docstring
 - XlsxWriter: creates excel files
 
 - pep8: provides style guidelines for writing clean and readable python code
+
