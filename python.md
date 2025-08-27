@@ -163,6 +163,30 @@ def greet(name: str, age: int) -> str:
     return f"Hello, {name}. You are {age} years old."
 ```
 
+- common types:
+    - `int`: integer
+    - `float`: floating-point number
+    - `str`: string
+    - `bool`: boolean
+    - `list[type]`: list of elements of specified type
+    - `dict[key_type, value_type]`: dictionary with specified key and value types
+    - `set[type]`: set of elements of specified type
+- union types:
+    - `Union[type1, type2]`: variable can be of type1 or type2
+    - `Union[type1, None]` (recommended): variable can be of specified type or None
+        - `Optional[type]` (not recommended): shorthand for `Union[type, None]`
+
+classes as types
+
+```python
+class Person:
+    def __init__(self, name: str):
+        self.name = name
+
+def get_person_name(one_person: Person):
+    return one_person.name
+```
+
 ## if else
 
 ```python
@@ -487,6 +511,53 @@ standard library example:
 import math
 
 print(math.sqrt(16))  # Outputs: 4.0
+```
+
+### pydantic
+
+> python library for data validation and settings management using python type annotations
+
+- ensure data conforms to specified types and constraints
+- automatic parsing and conversion
+- used in [FastAPI](./fastapi.md), Django, Flask, etc
+- great error messages
+- model-based
+    - model: class that defines the structure and validation rules for data
+
+```python
+from pydantic import BaseModel
+
+class User(BaseModel):
+    id: int
+    name: str
+    is_active: bool = True  # default value
+
+# ✅ valid data
+user = User(id="123", name="Alice")
+print(user)
+# id=123 name='Alice' is_active=True
+# automatically converts id from str to int
+
+# ❌ invalid data
+user = User(id="abc", name="Bob")
+# Raises pydantic.error_wrappers.ValidationError
+# "abc" cannot be converted to int => validation error
+```
+
+manage environment variables:
+
+```python
+from pydantic import BaseSettings
+
+class Settings(BaseSettings):
+    app_name: str = "My App"
+    debug: bool = False
+
+    class Config:
+        env_file = ".env"
+
+settings = Settings()
+print(settings.app_name, settings.debug)
 ```
 
 ## enums
