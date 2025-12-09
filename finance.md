@@ -1,0 +1,73 @@
+
+- equity = assets - liabilities
+    - asset: things someone can own that have value
+    - liabilities: things a person or business owes (debts, obligations)
+    - equity price: price for 1 share of a company on the stock exchange
+- alfa: retorno extra de ativo ou estratégia que gera além do que seria esperado dado o risco do mercado
+- beta: mede a sensibilidade de um ativo em relação ao mercado
+    - beta = 0 => não tem relação com o mercado
+    - beta = 1 => o ativo se move junto com o mercado
+    - beta = 2 => o ativo tende a subir ou cair o dobro do mercado
+- resíduo: parte do retorno que sobra depois de explicar o ativo pelo mercado/setor/fatores
+    - exemplo: se uma ação deveria subir 1% (segundo o modelo), mas subiu 1,3%, o resíduo é +0,3%
+- sinal: indicação de compra ou venda que o modelo gera
+    - se o resíduo está muito positivo => sinal de venda (ação cara)
+    - se o resíduo está muito negativo => sinal de compra (ação barata)
+- bonds: debt issued by governments or companies
+- closing price: last traded price of a security at the end of the regular trading session on an exchange
+    - represents the final consensus value of that day and is the standard reference for:
+        - performance measurement (daily returns, benchmarks, NAV)
+        - accounting and valuation (fund reporting, regulatory fillings)
+        - historical data (price history)
+- intraday: any market data or activity that happens within the trading day, before the official close
+    - intraday high: most expensive trade of the day
+- bips: Abreviação de basis points (pontos-base).
+    - 1 bip = 0,01% (ou 0,0001 em termos decimais).
+    - Ex: “O fundo subiu 25 bips hoje” = +0,25%.
+- P&L (lucro e prejuízo): resultado financeiro (realizado + não realizado) das posições do dia.
+- Risco: Medida da incerteza do P&L, normalmente expressa como volatilidade esperada (ex: % ao ano).
+    - Pode ser risco total, por fator, por ativo, por estratégia, etc.
+- Corretagem: Taxas pagas às corretoras por executar operações (compra/venda).
+- Aluguéis de corretagem: custo de stock lending — o aluguel de ativos para montar posições vendidas.
+- Resultado contábil
+- Resultado apurado segundo as regras de contabilidade (nem sempre igual ao P&L “de risco” do gestor, que pode usar marcação a mercado diferente).
+- Carry: Ganho esperado simplesmente por “carregar” uma posição ao longo do tempo, sem mudança de preço.
+- CDI contra exposição de caixa de cada produto: refere-se ao rendimento do caixa (CDI) menos o custo de financiamento da posição.
+- Retorno do fator: Em modelos multifatoriais, é o retorno explicado por um fator (ex: momentum, value, carry, size, etc)
+- Fator: variável que captura um estilo de risco/retorno comum entre ativos.
+- Betas de cada fator: sensibilidade (exposição) de cada ativo a esses fatores.
+- Valor residual / tirar o retorno dos fatores
+- É o retorno “não explicado” pelos fatores — o alpha idiossincrático.
+    - “Tirar o retorno dos fatores” = remover a parte explicada pelos betas.
+- Attribution (atribuição de performance): Análise que decompõe o P&L total em componentes: por fator, por estratégia, por ativo, por efeito de câmbio, etc.
+- Componentes do resultado: As parcelas que formam o resultado total: retorno de fatores, carry, residual, custos (corretagem, financiamento), etc.
+- Fatores calculados no início do dia
+    - Os fatores (momentum, value, risco, etc.) são calculados antes da abertura e usados para gerar sinais/posições
+- Pesos dos PCs (no começo do dia)
+    - PCs = Principal Components (componentes principais), de uma análise PCA
+    - Os pesos indicam quanto cada ativo carrega de cada componente principal no modelo de risco
+    - Parâmetros de PC (PCA): Resultados da Principal Component Analysis, usada para identificar fatores de risco a partir das correlações entre ativos
+- Exposição da correlação entre os fatores: Mede o quanto os fatores estão correlacionados entre si — importante para evitar sobreposição de risco
+- Risco em vol: “Risco expresso em volatilidade” — normalmente anualizada (ex: 10% ao ano)
+- Risco expresso de maneira nominal
+- Valor monetário em risco (ex: R$ 10 milhões de VaR), em vez de percentual de vol
+- Volatilidade de cada ativo: Desvio padrão dos retornos — pode ser estimado intraday, diária ou anualizada
+    - Atualizada no fim do dia: recalculada após fechamento dos preços
+- Underlying: O ativo subjacente de um derivativo (ex: o índice Bovespa é o underlying do contrato futuro de Ibovespa)
+- Consolidation group: conjunto de entidades/contas do fundo que são agregadas para o cálculo consolidado de risco e P&L
+- Volatilidade: Grau de oscilação dos preços, sinônimo de risco
+- App de risco: Ferramenta (interna ou de fornecedor) usada para monitorar risco, P&L, exposições, fatores, VaR, etc
+- Posição em mais de um futuro
+- Ter múltiplos contratos (ex: Bovespa + dólar + DI) — importante consolidar o risco total e correlações entre eles
+- Índice de bolsa: Benchmark de ações (ex: Ibovespa, S&P500) — usado para medir exposição direcional ou para hedge
+- Intraday vs End-of-day
+    - Intraday: operações/atualizações que ocorrem durante o pregão (tempo real)
+    - End-of-day (EOD): fechamento do dia, quando o sistema atualiza preços, vol, risco, P&L, etc
+    - Quais são as operações end-of-day? (perguntar para Nicholas)
+        - Normalmente inclui:
+            - Marcação a mercado de todas as posições
+            - Atualização de fatores e volatilities
+            - Consolidação de P&L
+            - Rebalanceamento automático (se aplicável)
+            - Geração de relatórios de risco/performance
+            - intraday low: cheapest value for the stock
