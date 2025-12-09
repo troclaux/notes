@@ -581,6 +581,36 @@ except AttributeError:
     print("Color.TEAL is not a valid member")
 ```
 
+## poetry
+
+- use cases:
+    - manage dependencies
+    - build and publish python packages
+    - create and activate isolate environments automatically
+
+- `pip install poetry`: install poetry
+- `poetry add requests`: add dependency
+- `poetry remove numpy`: remove dependency
+- `poetry install`: update dependency
+
+## miniconda
+
+- conda environment is an isolated workspace that has:
+    - its own python interpreter
+    - its own installed packages
+    - its own dependencies and version of each
+- you can check if it is installed in the corrent env with `which`
+
+- `conda env list`: list all conda environments
+- `conda activate my_env`: activate a conda environment
+- `conda deactivate`: deactivate a conda environment
+- `conda create --name my_env python=3.10`: create a new conda environment that uses python version 3.10
+- `conda env remove --name myenv`: delete a environment
+
+- download quantique private package: `pip install quantique --extra-index-url https://prod_quantique:${AZURE_TOKEN}@pkgs.dev.azure.com/macroquant/_packaging/prod_quantique/pypi/simple/`
+    - activate a conda environment that uses python 3.10 before running this command
+    - also check if `AZURE_TOKEN` environment variable is set
+
 ## docstring
 
 > documentation string used to describe a function, class or module
