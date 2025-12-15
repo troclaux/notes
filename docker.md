@@ -175,6 +175,11 @@ RUN <bash_command1> \
   - put the stuff that changes less on top of the docker file to speed up the build command
   - following the same logic, put the stuff that changes most on the bottom of the dockerfile
 
+- build image with a secret from `.env` without baking it into the final image:
+  - `docker build --no-cache -t quantm3airflowimages.azurecr.io/my_image:latest --secret id=azuretoken,src=./.env .tmux-sessionizer`
+  - `--secret` uses BuildKit to mount `.env` as a temporary file only for `RUN --mount=type=secret,id=azuretoken` steps, so the values never enter the build context, image layers, `docker history`, or the container runtime environment
+  - `--no-cache` avoids reusing layers that might have touched an old secret, reducing the chance of credentials lingering in cached layers
+
 - build image: `docker build --tag imagename:imagetag .`
   - `--tag imagename:imagetag`: tags image with the name `imagename` and `imagetag` tag
     - `docker tag <image-name> <new-tag>`
