@@ -8,6 +8,7 @@
 - workflows are defined as code
 - DAGs (Directed Acyclic Graphs): the workflow
   - schedule: cron (`"0 2 * * *"` or presets `"@daily"`)
+    - set `schedule=None` for manual/externally triggered DAGs; if you omit it, Airflow defaults to a schedule (`@daily`) and will create runs automatically
   - catchup
   - tags
 - task: unit of work (python, bash, sql, spark, etc)
