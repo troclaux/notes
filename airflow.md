@@ -49,3 +49,47 @@ def example_etl():
 
 example_etl()
 ```
+
+passing params into tasks
+
+```python
+import pendulum, datetime as dt, pytz
+from airflow import DAG
+from airflow.models.param import Param
+from airflow.operators.python import PythonOperator
+
+with DAG(
+    dag_id="bbg_dag",
+    schedule=None,  # manual/external trigger only; omit => @daily kicks in
+    start_date=pendulum.now("America/Sao_Paulo").subtract(days=2),
+    catchup=False,
+    params={
+        "query_date": Param(
+            default=str(dt.datetime.now(pytz.timezone("America/Sao_Paulo")).date()),
+            type=["string"],
+            format="date",
+        ),
+        "overwrite": Param(default=False, type="boolean"),
+        "ref_params_names": Param(
+            default=[
+                "param_bond_pricing_request",
+                "param_crypto_pricing_request",
+                "param_index_pricing_request",
+            ],
+            type="array",
+        ),
+    },
+    render_template_as_native_obj=True,
+) as dag:
+    load_prices = PythonOperator(
+        task_id="load_prices",
+        python_callable=raw_bloomberg_equity_pricing,
+        op_kwargs={
+            "query_date": "{{ params.query_date }}",
+            "overwrite": "{{ params.overwrite }}",
+            "ref_params_names": "{{ params.ref_params_names }}",
+        },
+    )
+```
+
+- define DAG-level `params` (optionally with `Param` for types/defaults) and reference them inside tasks with Jinja (`{{ params.<key> }}`) via `op_kwargs` or templates.
