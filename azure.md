@@ -3,13 +3,89 @@
 
 > cloud computing platform that provides a wide range of services and tools for building and managing applications and infrastructure in the cloud
 
+- resource group: logical container in azure
+  - holds related resources for an application, workload or project (e.g. VMs, databases, storage accounts, virtual networks, etc)
+
+## shared responsibility model
+
+## Azure Active Directory (AD) or Entra ID
+
+> identity and access management service that helps you manage user identities, authentication and access to applications and services in Azure
+
+- AD DS (Active Directory Domain Services): on-premises directory service
+  - domain controller: server that runs AD DS
+- azure ad/entra id: the cloud version, equivalent to aws iam
+  - doesn't include the organizational unit (OU) class
+  - doesn't use kerberos authentication, uses http and https protocols like SAML, ws-federation and openid connect for authentication
+  - uses oauth for authorization
+
+- service principal: application/automation identity in a tenant that can be assigned roles to access resources
+  - created when you register an app (app registration = global template; service principal = tenant-local instance)
+  - authenticate with a client secret or certificate; prefer certificates for longer-lived automation
+  - assign Azure RBAC roles at the right scope (resource, resource group, subscription) with least privilege
+  - managed identity is a Microsoft-managed service principal bound to a resource; use it instead of manual credentials when available
+
+- also known as a directory
+- provides authentication and authorization
+- provides SSO (login once and access multiple apps)
+- common authentication protocols:
+  - SAML 2.0: XML assertions for SSO between an identity provider (Entra ID) and a service provider; popular with enterprise SaaS
+  - WS-Federation: older Microsoft token-based protocol for legacy apps; similar use case to SAML but less common today
+  - OpenID Connect (OIDC): identity layer on OAuth 2.0; returns ID tokens (JWTs) to prove who the user is for modern web/mobile apps
+  - OAuth 2.0: authorization framework that issues access tokens for API access; pair with OIDC when you need authentication
+
+### users, roles and identity basics
+
+- tenant: isolated directory for an org; holds users, groups, app registrations and service principals
+- security principals: what you assign roles to
+  - users: `member` (internal) or `guest` (B2B from another tenant)
+  - groups: bundle users for easier role assignment
+  - service principals: app/automation identities created from app registrations
+  - managed identities: azure-managed service principals
+    - system-assigned ties lifecycle to one resource; deleted when the resource is removed
+    - user-assigned is reusable across resources
+- azure RBAC controls access to resources: `role assignment = principal + role definition + scope`
+  - scopes: management group > subscription > resource group > resource; prefer least privilege
+  - role definitions can be built-in (e.g., Owner, Contributor, Reader) or custom
+- directory roles (e.g., Global Administrator) control Entra/Azure AD features; RBAC roles control resource access
+- PIM (Privileged Identity Management) can make high-privilege roles just-in-time with approvals and time limits
+
 ## Azure CLI
 
 > CLI tool that allows users to manage and automate Azure resources and services from a terminal or script, supporting a wide range of operations like creating, managing and deleting resources across Azure's cloud platform
 
+```bash
+az <resource group> <subcomand> [parameters]
+```
+
+- `az login`: log in
+- `az ... --help`: see available options
+- `az vm create ...`: create virtual machines
+
+## Azure Virtual Network (VNet)
+
+> network service that enables secure, isolated and private communication between Azure resources, including VMs, services and on-premises networks
+
+- 
+
 ## Azure Virtual Machines
 
 > compute service that allows you to create and manage virtualized instances of computers running on Azure's infrastructure
+
+### sizes
+
+- general purpose
+  - A, B, D-series
+- compute optimized: more cpu, less ram
+  - F-series
+- memory optimized: lots of ram per cpu
+  - E, M-series
+- storage optimized: fast I/O
+  - L-series
+- gpu optimized: AI, ML, rendering
+  - NC, ND, NV-series
+- high performance compute: very powerful CPU, low latency
+  - H-series
 
 ## Azure Functions
 
