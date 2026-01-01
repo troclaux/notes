@@ -50,6 +50,24 @@
 - directory roles (e.g., Global Administrator) control Entra/Azure AD features; RBAC roles control resource access
 - PIM (Privileged Identity Management) can make high-privilege roles just-in-time with approvals and time limits
 
+- reliability: ability of a system to perform its intended function consistently over time without failure
+- High Availability (HA): design and implementation of systems that are resilient to failures and can continue operating with minimal downtime
+  - optimizes its uptime/availability (much higher than in a normal system)
+    - able to quickly recover from failures, usually in an automated way
+    - there can still be downtime/unavailability while recovering, but the outage will be much shorter than without HA
+  - running instances for the same application on at least 2 Availability Zones
+  - key characteristics
+    - redundancy
+    - failover mechanisms
+    - geographic distribution
+    - health monitoring
+    - scalability and elasticity
+- fault tolerance: ability to continue operating despite failures in some components
+  - no downtime, even if in the process of auto-healing
+- durability: ability of a service to retain and protect data over time without loss
+  - measure of how likely your data is to survive intact even in the face of hardware failures, disasters or other problems
+- scalability: ability of a system to increase or decrease its resources to meet changing demand
+  - elasticity: automate scalability
 ## Azure CLI
 
 > CLI tool that allows users to manage and automate Azure resources and services from a terminal or script, supporting a wide range of operations like creating, managing and deleting resources across Azure's cloud platform

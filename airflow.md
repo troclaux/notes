@@ -12,10 +12,24 @@
   - catchup
   - tags
 - task: unit of work (python, bash, sql, spark, etc)
+    - nodes: tasks
+        - task: unit of work (python, bash, sql, spark, etc)
+    - edges: dependencies
+    - schedule: cron (`"0 2 * * *"` or presets `"@daily"`)
+    - catchup
+    - tags
+    - properties
+        - each DAG run covers a fixed time interval (e.g. 1 day)
+        - each task instance processes data for that interval
+        - tasks should be idempotent (re-running a task for the same interval should not change the result)
+        - tasks can pass small amounts of data (XComs) but not large datasets
+        - tasks can be retried on failure
+        - tasks can be run in parallel
+        - tasks can be distributed across multiple workers
 - operators: template for a predefined Task
-  - `BashOperator`: executes a bash command
-  - `PythonOperator`: calls an arbitrary Python function
-  - `EmailOperator`: sends an email
+    - `BashOperator`: executes a bash command
+    - `PythonOperator`: calls an arbitrary Python function
+    - `EmailOperator`: sends an email
 
 example of minimal DAG
 
