@@ -32,13 +32,13 @@ new_rows = [
 
 df = pd.concat([df, pd.DataFrame(new_rows)], ignore_index=True)
 
+print(df)
+
 # name  age city
 # 0     Ana   25   SP
 # 1   Bruno   30   RJ
 # 2  Carlos   35   BH
 # 3   Diana   28  NaN
-
-print(df)
 ```
 
 - read from file: `df = pd.read_csv('data.csv')`
@@ -112,6 +112,56 @@ top = (
     .sort_values("total_revenue", ascending=False)
 )
 top.to_csv("top_regions.csv", index=False)
+```
+
+## string accessor (.str)
+
+- `.str` is the pandas "string accessor." It exposes vectorized string methods on a Series (or Index) so you can apply string logic element-wise without looping.
+
+Quick rules
+
+- works on Series/Index with string/object dtype (or mixed with strings)
+- handles missing values; many methods accept `na=`
+- most methods mirror Python string methods or regex tools
+
+Common patterns
+
+```python
+s = df["SECURITIES"]
+
+# contains / match
+s.str.contains("AUAU", na=False)
+s.str.match(r"^AU")          # regex match from start
+s.str.fullmatch(r"AU\\d+")
+
+# case / normalization
+s.str.lower()
+s.str.upper()
+s.str.strip()                # trim whitespace
+
+# replace / extract
+s.str.replace(r"\\s+", " ", regex=True)
+s.str.extract(r"(AU\\d+)", expand=False)
+
+# split / join
+s.str.split("-", n=1, expand=True)
+s.str.join(",")
+
+# length / slicing
+s.str.len()
+s.str[:4]
+```
+
+Filtering example
+
+```python
+df[df["SECURITIES"].str.contains("AUAU", na=False)]
+```
+
+If you are working with non-strings, convert first:
+
+```python
+df["SECURITIES"].astype("string").str.contains("AUAU", na=False)
 ```
 
 ## operations
