@@ -117,6 +117,21 @@ az <resource group> <subcomand> [parameters]
 
 > scalable object storage service for unstructured data like text, images, videos, and backups
 
+- BLOB: Binary Large OBject
+  - blobs: the actual objects/files
+    - types of blobs
+      - block blob: for text, images, videos, backups (most common)
+        - suppots large files (up to ~190 TB)
+      - append blob: optimized for logs and data that must be appended
+      - page blob: random-access storage, used for virtual disks in azure virtual machines
+- containers: life folders inside the storage account
+
+### storage tiers (cost optimization)
+
+- hot tier: optimized for frequently accessed data
+- cool tier: cheaper, optimized for infrequently accessed data
+- archive tier: very cheap, for rarely accessed data (retrieval may take hours)
+
 ## Azure Disk Storage
 
 > block-level storage that provides persistent storage for Azure Virtual Machines
@@ -137,10 +152,6 @@ az <resource group> <subcomand> [parameters]
 
 > in-memory data store based on Redis, used to improve the performance of applications by caching frequently accessed data
 
-## Azure Virtual Network
-
-> network service that enables secure, isolated, and private communication between Azure resources, including VMs, services, and on-premises networks
-
 ## Azure DNS
 
 > domain name system service that enables you to host and manage your DNS records for domain names
@@ -148,10 +159,6 @@ az <resource group> <subcomand> [parameters]
 ## Azure Content Delivery Network (CDN)
 
 > distributed content delivery network service that accelerates the delivery of websites, media, and APIs by caching content in multiple locations worldwide
-
-## Azure Active Directory (AD) or Entra ID
-
-> identity and access management service that helps you manage user identities, authentication, and access to applications and services in Azure
 
 ## Azure Key Vault
 
@@ -177,6 +184,25 @@ az <resource group> <subcomand> [parameters]
 
 > continuous integration and delivery (CI/CD) service that automates the building, testing, and deployment of applications
 
+- basics:
+  - pipelines are defined in YAML and can be triggered by branches, PRs, schedules or manual runs
+  - `stages` group related jobs, `jobs` run on an agent, and `steps` are individual tasks or scripts
+  - agents come from hosted pools (e.g., `ubuntu-latest`) or self-hosted pools; each run gets a fresh workspace
+  - variables let you centralize values (paths, tags, service connections) and can be secret-protected in variable groups or key vaults
+  - service connections (e.g., to ACR) handle authentication without hardcoding credentials
+
+- example pipeline (multi-image Docker build/push to ACR):
+  - trigger on `main`; uses only the self repo as a resource
+  - variables define the ACR service connection, registry name, image repositories, Dockerfile paths, build contexts and agent image
+  - stage `Build` runs one job on `ubuntu-latest`
+  - `PipAuthenticate@1` injects an authenticated `PIP_EXTRA_INDEX_URL` for the `prod_quantique` feed without hardcoding credentials in the YAML
+  - inline `Bash@3` step writes that feed URL into `$(Agent.TempDirectory)/azure_token.txt`, scoped to the agent’s temp space
+  - multiple `Docker@2` tasks:
+    - build images for `commercial_app_dash`, `commercial_app_daily_ihfa`, `commercial_app_quarterly_ihfa`, `commercial_app_daily_cvm_returns`, and `commercial_app_daily_cdi_fund_data`
+    - each build uses `--secret id=azuretoken,src=$(Agent.TempDirectory)/azure_token.txt` so the pip token is provided to BuildKit only during `RUN --mount=type=secret` steps and never baked into layers or logs
+    - each build tags `latest` and targets the shared `quantm3airflowimages.azurecr.io` registry via the `azure-container-registry-conn` service connection
+    - corresponding `Docker@2` push tasks publish the `latest` tag for each repository to ACR
+
 ## Azure Repos
 
 > source code management service that allows teams to collaborate on code using Git or Team Foundation Version Control (TFVC)
@@ -192,6 +218,12 @@ az <resource group> <subcomand> [parameters]
 ## Azure Container Registry
 
 > private registry for storing and managing Docker container images and Helm charts for use in Azure Kubernetes Service or other containerized environments
+
+- `<registry-name>.azurecr.io/<repository>:<tag>`
+- `myregistry.azurecr.io/webapp:1.0`
+
+- registry: the root namespace for all your images
+- repositories: logical collection of related images
 
 ## Azure Synapse Analytics
 
@@ -212,3 +244,26 @@ az <resource group> <subcomand> [parameters]
 ## Azure Databricks
 
 > Apache Spark-based analytics platform that simplifies big data processing and machine learning tasks by providing a collaborative environment for data engineers, data scientists, and analysts
+
+## Cost Management
+
+- inbound data (into azure) is always free
+- outbound data (out of azure) is charged when data leaves to the public internet
+
+- within azure
+  - same region transfers: free
+  - across regions: charged (e.g. vm in east us => storage in west us)
+  - between services: some inter-service transfers are free if in same region, but cross-region always costs
+
+### Azure Cost Management
+
+> tools for analyzing usage, forecasting future costs and optimizing spending
+
+- cost analysis: similar to aws' cost explorer
+- budgets
+- forecasting
+- exports: automatically push usage and cost data to azure storage or power BI for custom reporting
+
+### Azure Billing
+
+> see invoices, payment methods, subscriptions, charges
